@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:layoutDirection="rtl"
+              android:padding="5dp">
+
+    <LinearLayout style="@style/list_search_row">
+        <info.elyasi.android.elyasilib.Controls.ClearableEditText.ClearableEditText
+            android:id="@+id/search_person_code"
+            style="@style/textBoxCode"
+            android:layout_width="50dp"
+            android:layout_weight="1"
+            android:gravity="start"/>
+
+        <info.elyasi.android.elyasilib.Controls.ClearableEditText.ClearableEditText
+            android:id="@+id/search_person_name"
+            style="@style/textBoxStandard"
+            android:layout_weight="5"
+            android:gravity="start" />
+    </LinearLayout>
+
+    <!--<LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="horizontal">-->
+        <!--<TextView style="@style/Label" android:text="@string/list_count_label"/>-->
+        <!--<TextView style="@style/Label" android:id="@+id/fragment_person_list_row_count" />-->
+    <!--</LinearLayout>-->
+
+    <LinearLayout
+        style="@style/list_header_row">
+
+        <TextView
+            android:id="@+id/column_person_code"
+            style="@style/list_textView"
+            android:background="@android:color/transparent"
+            android:layout_weight="1"
+            android:text="@string/list_code_hesab"/>
+
+
+        <TextView
+            android:id="@+id/column_person_description"
+            style="@style/list_textView"
+            android:background="@android:color/transparent"
+            android:layout_weight="5"
+            android:text="@string/list_name_heasb" />
+
+    </LinearLayout>
+
+
+    <fragment
+        android:tag="@string/fragment_person_list_row_tag"
+        android:id="@+id/fragment_person_list_row"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        tools:layout="@layout/fragment_person_list_row"
+        class="ir.caspiansoftware.caspianandroidapp.PresentationLayer.Person.List.PersonListRowFragment"/>
+
+
+
+</LinearLayout>

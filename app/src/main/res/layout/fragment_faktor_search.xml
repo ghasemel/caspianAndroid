@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:layoutDirection="rtl"
+              android:padding="5dp">
+
+    <LinearLayout style="@style/list_search_row">
+        <TextView
+            android:id="@+id/search_radif"
+            style="@style/label"
+            android:layout_width="0dp"
+            android:layout_weight="1"/>
+
+        <info.elyasi.android.elyasilib.Controls.ClearableEditText.ClearableEditText
+            android:id="@+id/search_num"
+            style="@style/textBoxCode"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:gravity="start"/>
+
+        <info.elyasi.android.elyasilib.Controls.ClearableEditText.ClearableEditText
+            android:id="@+id/search_date"
+            style="@style/textBoxDate"
+            android:layout_width="0dp"
+            android:layout_weight="2"
+            android:enabled="true"
+            android:gravity="start" />
+
+        <info.elyasi.android.elyasilib.Controls.ClearableEditText.ClearableEditText
+            android:id="@+id/search_customer"
+            style="@style/textBoxStandard"
+            android:layout_weight="6"
+            android:layout_width="0dp"
+            android:gravity="start" />
+
+        <info.elyasi.android.elyasilib.Controls.ClearableEditText.ClearableEditText
+            android:id="@+id/search_total_price"
+            style="@style/textBoxNumber"
+            android:layout_weight="2"
+            android:layout_width="0dp"
+            android:gravity="start" />
+
+
+        <TextView
+            style="@style/label"
+            android:layout_width="0dp"
+            android:layout_weight="1"/>
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        style="@style/list_header_row">
+
+        <TextView
+            style="@style/list_textView"
+            android:background="@android:color/transparent"
+            android:layout_weight="1"
+            android:text="@string/radif"/>
+
+
+        <TextView
+            android:id="@+id/column_num"
+            style="@style/list_textView"
+            android:background="@android:color/transparent"
+            android:layout_weight="1"
+            android:text="@string/faktor_num_list" />
+
+
+        <TextView
+            android:id="@+id/column_date"
+            style="@style/list_textView"
+            android:background="@android:color/transparent"
+            android:layout_weight="2"
+            android:text="@string/date_list" />
+
+
+        <TextView
+            android:id="@+id/column_customer"
+            style="@style/list_textView"
+            android:background="@android:color/transparent"
+            android:layout_weight="6"
+            android:text="@string/list_name_heasb" />
+
+        <TextView
+            android:id="@+id/column_price_total"
+            style="@style/list_textView"
+            android:background="@android:color/transparent"
+            android:layout_weight="2"
+            android:text="@string/list_price_total"
+            android:gravity="center"/>
+
+        <TextView
+            style="@style/list_textView"
+            android:background="@android:color/transparent"
+            android:layout_weight="1"
+            android:text="@string/list_synced"
+            android:gravity="center"
+            android:textSize="13sp"
+            android:ellipsize="none"
+            android:scrollHorizontally="false"
+            android:layout_height="match_parent"
+             />
+
+    </LinearLayout>
+
+
+    <fragment
+        android:tag="@string/fragment_invoice_search_row_tag"
+        android:id="@+id/fragment_invoice_search_row"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        tools:layout="@layout/fragment_faktor_search_row"
+        class="ir.caspiansoftware.caspianandroidapp.PresentationLayer.Faktor.Search.PFaktorSearchRow"/>
+
+
+</LinearLayout>

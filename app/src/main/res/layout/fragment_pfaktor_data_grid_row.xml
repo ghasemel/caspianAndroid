@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="horizontal"
+              android:padding="5dp"
+              android:layoutDirection="rtl">
+
+    <TextView
+        android:id="@+id/cell_radif"
+        style="@style/list_textView_number"
+        android:layout_weight="1" />
+
+
+    <!--<TextView-->
+    <!--android:id="@+id/column_kala_code"-->
+    <!--style="@style/list_textView"-->
+    <!--android:layout_weight="2"-->
+    <!--android:gravity="start"-->
+    <!--android:text="@string/pre_invoice_column_kala_code"/>-->
+
+
+    <TextView
+        android:id="@+id/cell_kala_name"
+        style="@style/list_textView"
+        android:layout_weight="7" />
+
+
+
+    <TextView
+        android:id="@+id/cell_mcount"
+        style="@style/list_textView_number"
+        android:layout_weight="2"/>
+
+
+    <TextView
+        android:id="@+id/cell_scount"
+        style="@style/list_textView_number"
+        android:layout_weight="2" />
+
+
+
+    <TextView
+        android:id="@+id/cell_price"
+        style="@style/list_textView_number"
+        android:layout_weight="2" />
+
+
+    <TextView
+        android:id="@+id/cell_total_price"
+        style="@style/list_textView_number"
+        android:layout_weight="2"/>
+
+
+    <ImageView
+        android:id="@+id/cell_delete"
+        style="@style/ImageViewCell"
+        android:src="@drawable/datagrid_delete"
+        android:layout_weight="1"/>
+</LinearLayout>

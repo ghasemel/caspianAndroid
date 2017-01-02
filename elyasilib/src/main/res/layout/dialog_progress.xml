@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="10dp"
+                android:layoutDirection="rtl"
+                >
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_gravity="end">
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/progressing_minTextView"
+                android:textAlignment="textEnd"
+                android:textStyle="bold"
+                android:textSize="16sp"
+                android:text="@string/progressing_min"/>
+
+            <TextView
+                android:layout_width="20dp"
+                android:layout_height="wrap_content"
+                android:textAlignment="center"
+                android:textStyle="bold"
+                android:textSize="14sp"
+                android:text="@string/progressing_slash"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/progressing_maxTextView"
+                android:textAlignment="textEnd"
+                android:textStyle="bold"
+                android:textSize="14sp"
+                android:text="@string/progressing_max"/>
+
+        </LinearLayout>
+
+
+        <!--android:secondaryProgress="50"
+        style="@style/progressBarRectangle"
+        -->
+        <ProgressBar
+            android:id="@+id/progressing_progressbar"
+            style="@style/progressBarRectangle"
+            android:progress="25" />
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/progressing_descriptionTextView"
+            android:textAlignment="textEnd"
+            android:textStyle="bold"
+            android:textSize="14sp" />
+
+    </LinearLayout>
+</RelativeLayout>

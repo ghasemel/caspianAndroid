@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Initial Fragment -->
+    <string name="initial_title">Initial Setting</string>
+    <string name="initial_IP">Server IP:</string>
+    <string name="initial_API">API Key:</string>
+    <string name="initial_DeviceID">Device ID:</string>
+    <string name="initial_save">Save</string>
+    <string name="initial_cancel">Cancel</string>
+    <string name="initial_port">Port:</string>
+    <string name="initial_ip_error">IP وارد شده اشتباه است</string>
+    <string name="initial_DeviceID_error">Device نمیتواند خالی باشد</string>
+    <string name="initial_API_error">App ID نمیتواند خالی باشد</string>
+    <string name="initial_port_error">Port نمیتواند خالی باشد</string>
+    <string name="initial_company">Company Name:</string>
+    <string name="initial_device">Device:</string>
+
+    <string name="unauthorized_access_duplicate_DeviceId">شماره سریال دستگاه روی سرور تکراری است</string>
+</resources>

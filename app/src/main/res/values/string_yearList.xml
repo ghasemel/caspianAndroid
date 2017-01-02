@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="yearList_daftar">دفتر</string>
+    <string name="yearList_company">شرکت</string>
+    <string name="yearList_year">سال</string>
+</resources>

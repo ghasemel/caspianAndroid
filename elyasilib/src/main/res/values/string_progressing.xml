@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="progressing_title">عنوان</string>
+    <string name="progressing_max">2000</string>
+    <string name="progressing_min">6</string>
+    <string name="progressing_slash">از</string>
+</resources>

@@ -1,0 +1,61 @@
+<resources>
+    <string name="app_name">مالی کاسپین</string>
+    <string name="caspian_software">نرم افزار کاسپین</string>
+    <string name="action_settings">menu</string>
+
+
+    <string name="welcome">به برنامه مالی کاسپین خوش آمدید</string>
+
+    <string name="first_activity_waiting">
+        درحال بارگذاری ...
+    </string>
+
+    <string name="app_full_title">نرم افزار مالی کاسپین</string>
+
+
+
+    <!-- common -->
+    <string name="enter">ورود</string>
+    <string name="exit">خروج</string>
+    <string name="close">بستن</string>
+    <string name="error_code">کد خطا:</string>
+    <string name="error_message">توضیحات:</string>
+    <string name="comma">،</string>
+    <string name="not_found">اطلاعات مورد نظر یافت نشد</string>
+
+
+    <string name="error_title">خطا</string>
+
+    <string name="ok">OK</string>
+    <string name="cancel">Cancel</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
+
+
+    <string name="success_save">با موفقیت ذخیره شد.</string>
+    <string name="success_delete">با موفقیت حذف شد.</string>
+    <!-- year -->
+    <string name="year_title">انتخاب سال مالی</string>
+
+
+    <string name="date_label">تاریخ:</string>
+    <string name="date_list">تاریخ</string>
+
+
+    <string name="radif">ردیف</string>
+
+    <string name="required_info_title">ورود اطلاعات مورد نیاز</string>
+    <string name="delete">حذف</string>
+
+
+    <string name="description_label">توضیحات: </string>
+
+    <string name="sending_to_server">در حال ارسال اطلاعات به سرور</string>
+
+    <string name="reset_app_title">راه اندازی مجدد</string>
+    <string name="reset_app_question">آیا میخواهید برنامه را مجددا راه اندازی کنید؟ در اینصورت کل اطلاعات برنامه پاک خواهد شد.</string>
+
+
+    <string name="successful_operation">با موفقیت انجام شد.</string>
+
+</resources>

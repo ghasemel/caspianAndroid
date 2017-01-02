@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:layoutDirection="rtl">
+
+    <include layout="@layout/image_logo" android:id="@+id/initial_setting_hidden" />
+
+    <LinearLayout style="@style/frame">
+        <TextView
+            android:text="@string/login_title"
+            style="@style/pageTitle" />
+
+        <LinearLayout style="@style/frame_content" android:id="@+id/login_frame">
+            <TableLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <TableRow style="@style/row">
+                    <TextView style="@style/label" android:text="@string/login_username" android:id="@+id/login_label_username" />
+
+                    <EditText android:id="@+id/login_userName" style="@style/textBoxStandard" android:textDirection="ltr"
+                              android:labelFor="@id/login_label_username"/>
+                </TableRow>
+
+                <TableRow style="@style/row">
+                    <TextView style="@style/label" android:text="@string/login_pass" android:id="@+id/login_label_pass" />
+                    <EditText android:id="@+id/login_pass" style="@style/passTextBox" android:labelFor="@id/login_label_pass" />
+                </TableRow>
+
+                <TableRow style="@style/row">
+                    <LinearLayout />
+
+                    <LinearLayout android:layout_gravity="center"
+                                  android:orientation="horizontal"
+                                  android:layout_width="match_parent"
+                                  android:layout_height="wrap_content">
+                        <Button
+                            style="@style/button"
+                            android:id="@+id/btnLogin"
+                            android:text="@string/enter"/>
+
+                        <Button
+                            style="@style/button"
+                            android:id="@+id/btnExit"
+                            android:text="@string/exit"
+                            android:layout_marginStart="5dp"/>
+                    </LinearLayout>
+                </TableRow>
+            </TableLayout>
+        </LinearLayout>
+
+        <ProgressBar
+            style="@style/progressBarCircle"
+            android:id="@+id/login_progressBar" />
+
+        <TextView style="@style/errorLabel" android:id="@+id/login_error" />
+    </LinearLayout>
+
+
+</RelativeLayout>

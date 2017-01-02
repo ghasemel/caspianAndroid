@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:layoutDirection="rtl"
+              android:padding="5dp">
+
+    <LinearLayout style="@style/list_search_row">
+        <info.elyasi.android.elyasilib.Controls.ClearableEditText.ClearableEditText
+            android:id="@+id/search_kala_code"
+            style="@style/textBoxCode"
+            android:layout_width="50dp"
+            android:gravity="start"
+            android:layout_weight="1"/>
+
+        <info.elyasi.android.elyasilib.Controls.ClearableEditText.ClearableEditText
+            android:id="@+id/search_kala_name"
+            style="@style/textBoxStandard"
+            android:layout_weight="5"
+            android:gravity="start" />
+    </LinearLayout>
+
+
+    <LinearLayout
+        style="@style/list_header_row">
+
+        <TextView
+            android:id="@+id/column_kala_code"
+            style="@style/list_textView"
+            android:background="@android:color/transparent"
+            android:layout_weight="1"
+            android:text="@string/list_kala_code"/>
+
+
+        <TextView
+            android:id="@+id/column_kala_name"
+            style="@style/list_textView"
+            android:background="@android:color/transparent"
+            android:layout_weight="5"
+            android:text="@string/list_kala_name" />
+
+    </LinearLayout>
+
+
+    <fragment
+        android:tag="@string/fragment_kala_list_row_tag"
+        android:id="@+id/fragment_kala_list_row"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        tools:layout="@layout/fragment_kala_list_row"
+        class="ir.caspiansoftware.caspianandroidapp.PresentationLayer.Kala.List.KalaListRowFragment"/>
+
+
+
+</LinearLayout>

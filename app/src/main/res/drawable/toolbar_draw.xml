@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item>
+        <shape android:shape="rectangle">
+            <stroke android:width="1dp" android:color="#f8f8ff"  android:dashGap="@dimen/abc_control_inset_material" />
+            <solid android:color="@color/menuBackground" />
+        </shape>
+    </item>
+
+    <item android:bottom="1dp">
+        <shape android:shape="rectangle">
+            <stroke android:width="1dp" android:color="#FFDDDDDD" android:dashGap="@dimen/abc_control_inset_material" />
+        </shape>
+    </item>
+</layer-list>
+
+
+    <!--<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item>
+        <shape android:shape="rectangle">
+             <gradient android:type="linear" android:useLevel="false"
+                        android:startColor="#444444"
+                        android:endColor="#222222"
+                        android:angle="90" />
+            #3d3c3c"-->
+    <!--        <stroke android:width="1dp" android:color="#222222" />
+        </shape>
+    </item>
+-->
+    <!--
+    <item android:bottom="1dp">
+        <shape android:shape="rectangle">
+            <stroke android:width="1dp" android:color="#222222" />
+        </shape>
+    </item>
+    -->
+<!--</layer-list>-->

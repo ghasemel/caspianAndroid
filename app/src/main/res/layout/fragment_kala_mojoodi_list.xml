@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:layoutDirection="rtl"
+              android:padding="5dp">
+
+    <LinearLayout style="@style/list_search_row">
+        <TextView
+            android:id="@+id/search_radif"
+            style="@style/label"
+            android:layout_width="0dp"
+            android:layout_weight="1"/>
+
+        <info.elyasi.android.elyasilib.Controls.ClearableEditText.ClearableEditText
+            android:id="@+id/search_kala_code"
+            style="@style/textBoxCode"
+            android:gravity="start"
+            android:layout_width="0dp"
+            android:layout_weight="1.5"/>
+
+        <info.elyasi.android.elyasilib.Controls.ClearableEditText.ClearableEditText
+            android:id="@+id/search_kala_name"
+            style="@style/textBoxStandard"
+            android:layout_width="0dp"
+            android:layout_weight="5"
+            android:gravity="start" />
+
+        <!--<TextView-->
+            <!--style="@style/label"-->
+            <!--android:gravity="start"-->
+            <!--android:layout_width="0dp"-->
+            <!--android:layout_weight="2"/>-->
+
+        <LinearLayout
+            android:id="@+id/toolbar_exit"
+            style="@style/toolbar_button_close"
+            android:gravity="end"
+            android:layout_width="0dp"
+            android:layout_weight="2">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:src="@drawable/toolbar_close"/>
+
+            <TextView
+                style="@style/toolbar_label"
+                android:text="@string/main_exit" />
+        </LinearLayout>
+    </LinearLayout>
+
+
+    <LinearLayout
+        style="@style/list_header_row">
+
+        <TextView
+            style="@style/list_textView"
+            android:background="@android:color/transparent"
+            android:layout_weight="1"
+            android:text="@string/radif"/>
+
+        <TextView
+            android:id="@+id/column_kala_code"
+            style="@style/list_textView"
+            android:background="@android:color/transparent"
+            android:layout_weight="1.5"
+            android:text="@string/list_kala_code"/>
+
+
+        <TextView
+            android:id="@+id/column_kala_name"
+            style="@style/list_textView"
+            android:background="@android:color/transparent"
+            android:layout_weight="5"
+            android:text="@string/list_kala_name" />
+
+        <TextView
+            android:id="@+id/column_kala_mojoodi"
+            style="@style/list_textView"
+            android:background="@android:color/transparent"
+            android:layout_weight="2"
+            android:text="@string/list_kala_mojoodi" />
+
+    </LinearLayout>
+
+
+    <fragment
+        android:tag="@string/fragment_kala_list_mojoodi_row_tag"
+        android:id="@+id/fragment_kala_list_mojoodi_row"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        tools:layout="@layout/fragment_kala_mojoodi_list_row"
+        class="ir.caspiansoftware.caspianandroidapp.PresentationLayer.Kala.MojoodiList.KalaMojoodiListRow"/>
+
+
+
+</LinearLayout>

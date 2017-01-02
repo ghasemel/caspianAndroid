@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+    <include layout="@layout/image_logo" android:id="@+id/caspian_logo"/>
+
+    <LinearLayout style="@style/frame">
+        <TextView
+            android:text="@string/initial_title"
+            style="@style/pageTitle" />
+
+        <LinearLayout style="@style/frame_content" android:id="@+id/login_frame">
+            <TableLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layoutDirection="ltr">
+
+                <TableRow style="@style/row">
+                    <TextView style="@style/label_latin" android:text="@string/initial_IP" android:id="@+id/initial_label_IP" android:labelFor="@+id/initial_ip" />
+                    <EditText  android:id="@id/initial_ip" style="@style/textBoxIP"  />
+                </TableRow>
+
+                <TableRow style="@style/row">
+                    <TextView style="@style/label_latin" android:text="@string/initial_API" android:id="@+id/initial_label_API" />
+                    <TextView android:id="@+id/initial_api_key" style="@style/textBoxLatin" android:labelFor="@id/initial_label_API" />
+
+                    <ImageView
+                        android:layout_width="50dp"
+                        android:layout_height="40dp"
+                        android:id="@+id/initial_btnApiKeyGenerate"
+                        android:src="@drawable/add_btn"/>
+                </TableRow>
+
+                <TableRow style="@style/row">
+                    <TextView style="@style/label_latin" android:text="@string/initial_DeviceID" android:id="@+id/initial_label_device_id" />
+                    <TextView android:id="@+id/initial_device_id" style="@style/textBoxLatin" android:labelFor="@id/initial_label_device_id" />
+
+                    <ImageView
+                        android:layout_width="50dp"
+                        android:layout_height="40dp"
+                        android:id="@+id/initial_btnDeviceIdGenerate"
+                        android:src="@drawable/add_btn"/>
+                </TableRow>
+
+                <TableRow style="@style/row">
+                    <TextView style="@style/label_latin" android:text="@string/initial_port" android:id="@+id/initial_label_port" android:labelFor="@+id/initial_port" />
+                    <EditText android:id="@id/initial_port" style="@style/textBoxLatinDigit" />
+                </TableRow>
+
+                <TableRow style="@style/row">
+                    <LinearLayout />
+
+                    <LinearLayout android:layout_gravity="center"
+                                  android:orientation="horizontal"
+                                  android:layout_width="match_parent"
+                                  android:layout_height="wrap_content">
+                        <Button
+                            style="@style/button"
+                            android:id="@+id/initial_btnSave"
+                            android:text="@string/initial_save"/>
+
+                        <Button
+                            style="@style/button"
+                            android:id="@+id/initial_btnCancel"
+                            android:text="@string/initial_cancel"
+                            android:layout_marginStart="5dp"/>
+                    </LinearLayout>
+                </TableRow>
+            </TableLayout>
+        </LinearLayout>
+
+        <ProgressBar
+            style="@style/progressBarCircle"
+            android:id="@+id/initial_progressBar" />
+
+        <TextView style="@style/errorLabel" android:id="@+id/login_error" />
+    </LinearLayout>
+
+
+</RelativeLayout>

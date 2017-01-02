@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="UnsupportedOperationException">Unimplemented Exception</string>
+    <string name="failed">عملیات با شکست مواجه شد.</string>
+
+    <string name="customer_code_cant_be_empty">کد مشتری نمیتواند خالی باشد</string>
+    <string name="date_invalid">تاریخ معتبر نیست</string>
+    <string name="invoice_num_is_invalid">شماره فاکتور معتبر نیست</string>
+    <string name="customer_invalid">کد حساب معتبر نیست</string>
+
+    <string name="error_saving">خطا در ذخیره سازی</string>
+
+
+    <!-- webservice -->
+    <string name="webservice_failed_connection">برقراری ارتباط با سرور با شکست مواجه شد، لطفا ارتباط اینترنت یا تنظیمات راه اندازی برنامه را بررسی کنید</string>
+    <!--<string name="webservice_response400">تنظیمات برقراری ارتباط با سرور معتبر نیست یا سرور دردسترس نیست. با شرکت سازنده نرم افزار تماس حاصل فرمایید</string>-->
+    <string name="webservice_configuration_is_invalid">آدرس سرور مشخص شده در تنظیمات معتبر نیست.</string>
+    <string name="webservice_timeout">مهلت برقراری ارتباط با سرور تمام شد. لطفا کمی بعد دوباره تلاش کنید</string>
+    <string name="webservice_time_is_not_sync" formatted="false">تاریخ و ساعت سرور هم اکنون %s است، لطفا تاریخ و ساعت تبلت/موبایل خود را تنظیم کنید</string>
+
+
+    <string name="invalid_userName_password">نام کاربری و یا کلمه عبور وارد شده معتبر نیست</string>
+    <string name="null_permission">هیچ دسترسی برای این کاربر در سرور تعریف نشده است</string>
+    <string name="device_not_defined_on_server">دستگاهی با این مشخصات روی سرور تعریف نشده است.</string>
+    <string name="no_year_mali_found">هیچ سال مالی برای شما مشخص نشده است.</string>
+
+
+    <!-- userModel -->
+    <string name="user_not_active">این کاربر توسط مدیر سیستم غیرفعال شده است</string>
+    <string name="user_incorrect_login">نام کاربری و یا رمز عبور وارد شده معتبر نیست</string>
+    <string name="user_should_logout">باید یک بار از برنامه خارج و دوباره وارد شوید.</string>
+
+
+    <string name="unauthorized_access">دسترسی به سرور معتبر نیست.</string>
+
+    <string name="no_HTTP_resource_was_found">درخواست نامعتبر است</string>
+    <string name="unknown_error">خطایی رخ داده است</string>
+
+    <string name="invalid_parameter">Invalid Parameter</string>
+
+    <string name="year_not_specified">سال مالی مشخص نشده است</string>
+
+    <string name="person_not_exist" formatted="false">مشتری با شماره %s وجود ندارد</string>
+    
+    <string name="database_need_create">دیتابیس برنامه باید مجددا ساخته شود. لطفا برنامه را دوباره اجرا کنید.</string>
+
+
+    <string name="pfaktor_person_is_null" formatted="false">خریدار پیش فاکتور %s مشخص نشده است.</string>
+    <string name="pfaktor_kala_is_null" formatted="false">کالای پیش فاکتور %s مشخص نشده است.</string>
+
+    <string name="gps_should_be_ON">لطفا GPS دستگاه خود را روشن کنید</string>
+    <string name="location_not_available">مختصات فعلی شما در دسترس نیست. اگر GPS را هم اکنون روشن کرده اید لطفا کمی تامل کرده و مجددا سعی نمایید. در غیر اینصورت GPS را یکبار خاموش و دوباره روشن کنید.</string>
+
+
+    <string name="you_can_just_see_bed">شما تنها قادر به دیدن اطلاعات حساب بدهکارهان هستید </string>
+</resources>

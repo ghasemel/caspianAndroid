@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="list_kala_code">کد کالا</string>
+    <string name="list_kala_name">نام کالا</string>
+    <string name="list_kala_mojoodi">موجودی</string>
+    <string name="kala_list">لیست کالاها</string>
+    <string name="kala_list_mojoodi">لیست موجودی کالاها</string>
+    <string name="fragment_kala_list_row_tag">fragment_kala_list_row</string>
+    <string name="fragment_kala_list_mojoodi_row_tag">fragment_kala_list_mojoodi_row</string>
+</resources>
