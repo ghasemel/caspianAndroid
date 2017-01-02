@@ -1,0 +1,21 @@
+<resources>
+    <string name="app_name">ElyasiLib</string>
+
+    <string name="error_code">کد خطا:</string>
+    <string name="error_message">توضیحات:</string>
+    <string name="comma">،</string>
+
+    <string name="select_date_title">انتخاب تاریخ</string>
+
+
+
+    <string name="error_title">خطا</string>
+
+    <string name="list_count_label">تعداد:</string>
+
+    <string name="cancel_button">لغو</string>
+    <string name="yes_button">بله</string>
+    <string name="no_button">خیر</string>
+    <string name="ok_button">تایید</string>
+
+</resources>

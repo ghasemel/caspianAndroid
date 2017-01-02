@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="preInvoice_list_title">لیست پیش فاکتورها</string>onCreate
+    <string name="preInvoice_title">پیش فاکتور</string>onCreate
+    <string name="upload_selection">ارسال به سرور</string>
+    <string name="select_all">انتخاب همه</string>
+    <string name="new_object">جدید</string>
+    <string name="code_kh_label">کد خریدار:</string>
+    <string name="name_kh_label">نام خریدار:</string>
+
+    <string name="faktor_num_label">شماره فاکتور:</string>
+    <string name="faktor_num_list">فاکتور</string>
+    <string name="add_kala">درج کالا</string>
+    <string name="faktor_total_price">جمع کل:</string>
+
+    <string name="pre_invoice_data_grid_fragment_dag">pre_invoice_data_grid_fragment_dag</string>
+
+    <string name="pre_invoice_column_kala_code">کد کالا</string>
+    <string name="pre_invoice_column_kala_name">نام کالا</string>
+    <string name="pre_invoice_column_scount">تعداد جزء</string>
+    <string name="pre_invoice_column_mcount">تعداد کل</string>
+    <string name="pre_invoice_column_price">قیمت جزء</string>
+    <string name="pre_invoice_column_price_total">مبلغ کل</string>
+
+    <string name="invoice_kala_activity_title">کالا</string>
+    <string name="invoice_label_kala_code">کد کالا:</string>
+    <string name="invoice_label_scount">تعداد جزء:</string>
+    <string name="invoice_label_mcount">تعداد کل:</string>
+    <string name="invoice_label_price">قیمت جزء:</string>
+    <string name="invoice_label_price_total">قیمت کل:</string>
+    <string name="list_price_total">مبلغ کل</string>
+    <string name="list_synced">ارسال شده</string>
+    <string name="list_synchronization">همگام\n سازی</string>
+
+    <string name="invoice_kala_title_new">افزودن کالا به فاکتور</string>
+    <string name="invoice_kala_title_edit">ویرایش کالای فاکتور</string>
+
+    <string name="invoice_spfaktor_id_not_found">اطلاعات سطر مورد نظر یافت نشد</string>
+    <string name="invoice_kala_kala_not_select">هیچ کالایی انتخاب نشده است</string>
+    <string name="invoice_kala_scount_mcount_not_entered">وارد کردن تعداد/مقدار فروش الزامی است</string>
+    <string name="invoice_kala_price_not_entered">هیچ قیمتی وارد نشده است</string>
+
+
+
+    <string name="delete_invoice_kala_title">حذف کالا از فاکتور</string>
+    <string name="delete_invoice_kala">آیا میخواهید کالای مورد نظر را حذف کنید؟</string>
+
+    <string name="pfaktor_save_title">ذخیره پیش فاکتور</string>
+    <string name="pfaktor_delete_title">حذف پیش فاکتور</string>
+    <string name="pfaktor_delete_confirm">آیا میخواهید این پیش فاکتور را حذف کنید؟</string>
+    <string name="ask_to_save">آیا فاکتور فعلی ذخیره شود؟</string>
+    <string name="pfaktor_readonly_for_sync_question">این فاکتور با سرور همگام سازی شده است و حذف آن موجب حذف از روی سرور نخواهد شد. آیا ادامه می دهید؟</string>
+    <string name="pfaktor_readonly_for_sync">این فاکتور با سرور همگام سازی شده است و امکان ویرایش آن وجود ندارد.</string>
+
+    <string name="pfaktor_search_title">جستجوی پیش فاکتورها</string>
+    <string name="fragment_invoice_search_row_tag">fragment_invoice_search_row_tag</string>
+    <string name="fragment_invoice_confirm_row_tag">fragment_invoice_confirm_row_tag</string>
+
+
+    <string name="pfaktor_synced_already">این پیش فاکتور قبلا به سرور ارسال شده است و امکان تغییر وضعیت آن وجود ندارد</string>
+
+    <string name="no_rows_selected">هیچ سطری انتخاب نشده است</string>
+
+    <style name="pfaktor_summery_button_frame" parent="toolbar_button">
+        <!--<item name="android:layout_height">match_parent</item>-->
+    </style>
+
+
+
+    <string name="sync_title">همگام سازی اطلاعات حسابها/کالاها</string>
+    <string name="sync_question" formatted="false">اطلاعات %s کالا و %s مشتری برای بروز رسانی یافت شد. آیا ادامه می دهید؟</string>
+    <string name="sync_success_message" formatted="false">اطلاعات %s کالا و %s مشتری بروز شد.</string>
+    <string name="sync_not_exist_message" formatted="false">موردی برای بروز رسانی یافت نشد.</string>
+
+
+    <string name="pfaktor_send_list_to_server_title">ارسال پیش فاکتورها به سرور</string>
+    <string name="pfaktor_send_list_question" formatted="false">آیا اطلاعات %s پیش فاکتور به سرور ارسال شود؟</string>
+
+    <string name="pfaktor_is_empty">فاکتور انتخابی خالی است و امکان ارسال فاکتورهای خالی به سرور وجود ندارد</string>
+
+    <string name="person_mande_question" formatted="false">آیا میخواهید مانده حساب %s را از سرور بگیرید؟</string>
+    <string name="person_mande_title">مانده حساب</string>
+    <string name="person_mande_progressing">در حال دریافت مانده حساب</string>
+    <string name="person_mande_result" formatted="false">مانده حساب %s: %s ریال</string>
+
+    <string name="kala_moj_question" formatted="false">آیا میخواهید موجودی کالای %s را از سرور بگیرید؟</string>
+    <string name="kala_moj_title">موجودی کالا</string>
+    <string name="kala_moj_progressing">در حال دریافت موجودی کالا</string>
+    <string name="kala_moj_result" formatted="false">موجودی کالای %s:\n %s %s</string>
+
+    <string name="person_last_sell_price_question" formatted="false">آیا میخواهید آخرین قیمت فروش کالای %s برای حساب %s را از سرور بگیرید؟</string>
+    <string name="person_last_sell_price_title">در یافت آخرین قیمت فروش رفته</string>
+    <string name="person_last_sell_price_progressing">در حال دریافت آخرین قیمت</string>
+    <string name="person_last_sell_price_result" formatted="false">
+        آخرین قیمت: %s\n
+        تاریخ: %s\n
+        فاکتور: %s\n
+        درصد تخفیف: %s\n
+        مبلغ خالص: %s
+    </string>
+
+    <string name="synced_pfaktor">ارسال شده به سرور</string>
+
+    <string name="pfaktor_save_location">روی نقشه:</string>
+    <string name="pfaktor_save_location_title">محل ذخیره فاکتور</string>
+    <string name="pfaktor_save_location_is_not_available">محل ذخیره فاکتور در دسترس نیست. برای رفع مشکل دوباره دکمه ذخیره را فشار دهید</string>
+
+
+    <string name="pfaktor_mande">مانده حساب:</string>
+    <string name="pfaktor_mojoodi">موجودی کالا:</string>
+    <string name="pfaktor_last_sell_price">آخرین قیمت فروش:</string>
+    <string name="not_already_sold">کالای مورد نظر برای این مشتری فاکتور نشده است.</string>
+</resources>

@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="listHeaderRowBackColor">#f8b6cbf2</color>
+    <color name="listHeaderSearchRowBackColor">#f8ecf2b6</color>
+
+    <color name="textBoxBorderColor">#616568</color>
+    <color name="textBoxOnFocus">#f2e580</color>
+</resources>

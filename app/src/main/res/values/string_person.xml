@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="person_list">لیست اشخاص/حساب ها</string>
+    <string name="person_list_mande">لیست مانده اشخاص/حساب ها</string>
+    <string name="list_code_hesab">کد حساب</string>
+    <string name="list_name_heasb">نام حساب</string>
+    <string name="list_mande_heasb">مانده حساب</string>
+
+    <string name="fragment_person_list_row_tag">fragment_person_list_row</string>
+    <string name="fragment_person_mande_list_row_tag">fragment_person_mande_list_row</string>
+    
+
+</resources>

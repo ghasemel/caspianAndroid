@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="horizontal"
+              android:padding="5dp"
+              android:layoutDirection="rtl">
+
+    <TextView
+        android:id="@+id/year_daftar"
+        style="@style/list_textView"
+        android:layout_weight="1"/>
+
+
+
+    <TextView
+        android:id="@+id/year_company"
+        style="@style/list_textView"
+        android:layout_weight="5"
+        android:gravity="start"/>
+
+
+
+    <TextView
+        android:id="@+id/year_year"
+        style="@style/list_textView"
+        android:layout_weight="1"/>
+</LinearLayout>

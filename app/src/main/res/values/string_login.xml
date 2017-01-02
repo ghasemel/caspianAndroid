@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Login form -->
+    <string name="login_username">نام کاربری:</string>
+    <string name="login_pass">رمز ورود:</string>
+    <string name="login_title">** ورود کاربر **</string>
+    <string name="login_emptyUserName">نام کاربری نمیتواند خالی باشد</string>
+    <string name="login_emptyPassword">رمز ورود نمیتواند خالی باشد</string>
+
+
+</resources>

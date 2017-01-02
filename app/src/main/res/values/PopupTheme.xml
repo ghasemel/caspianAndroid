@@ -1,0 +1,9 @@
+<resources>
+    <style name="PopupTheme" parent="AppTheme"> <!-- android:Theme.Holo.Light.Dialog   Theme.AppCompat.Light.DarkActionBar-->
+        <item name="android:windowIsFloating">false</item>
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="android:windowSoftInputMode">stateAlwaysHidden</item>
+        <item name="android:windowActionModeOverlay">true</item>
+        <item name="android:windowIsTranslucent">true</item>
+    </style>
+</resources>

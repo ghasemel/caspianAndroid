@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                android:padding="10dp"
+                android:layoutDirection="rtl">
+
+        <LinearLayout style="@style/frame_content" android:layout_height="match_parent" android:layout_width="match_parent" >
+            <TextView style="@style/label_title" android:id="@+id/label_invoiceKalaTitle" />
+
+            <LinearLayout style="@style/row">
+                <TextView style="@style/label" android:layout_width="80dp" android:text="@string/invoice_label_kala_code" android:labelFor="@+id/editText_invoiceKalaCode" />
+                <EditText style="@style/textBoxCode" android:id="@id/editText_invoiceKalaCode"
+                          android:enabled="false"/>
+                <ImageView style="@style/ImageViewBtnTouch" android:id="@+id/btn_kala_select"/>
+                <TextView android:id="@+id/label_invoiceKalaName" android:layout_width="wrap_content" style="@style/label_red" />
+            </LinearLayout>
+
+
+            <LinearLayout style="@style/row">
+                <TextView style="@style/label" android:layout_width="80dp" android:text="@string/invoice_label_mcount" android:labelFor="@+id/editText_invoiceMCount" />
+                <info.elyasi.android.elyasilib.Controls.ClearableEditText.ClearableEditText style="@style/textBoxNumber" android:id="@id/editText_invoiceMCount" android:layout_marginEnd="5dp" android:nextFocusDown="@+id/editText_invoiceSCount" />
+                <TextView style="@style/label_red" android:id="@+id/label_invoiceVahedF" />
+
+                <TextView style="@style/label" android:text="@string/invoice_label_scount" android:labelFor="@id/editText_invoiceSCount" android:layout_marginStart="80dp" android:layout_width="80dp" />
+                <info.elyasi.android.elyasilib.Controls.ClearableEditText.ClearableEditText android:id="@id/editText_invoiceSCount" style="@style/textBoxNumber" android:layout_marginEnd="5dp" />
+                <TextView style="@style/label_red" android:id="@+id/label_invoiceVahedA" />
+
+
+            </LinearLayout>
+
+
+            <LinearLayout style="@style/row">
+                <TextView style="@style/label" android:layout_width="80dp" android:text="@string/invoice_label_price" android:labelFor="@+id/editText_invoicePrice" />
+                <!--<EditText style="@style/textBoxPrice" android:id="@id/editText_invoicePrice" android:layout_marginEnd="40dp" />-->
+                <info.elyasi.android.elyasilib.Controls.ClearableEditText.ClearableEditText
+                    style="@style/textBoxPrice" android:id="@id/editText_invoicePrice" android:layout_marginEnd="40dp"  />
+
+                <TextView style="@style/label" android:text="@string/invoice_label_price_total" android:labelFor="@+id/label_invoiceTotalPrice" android:layout_width="80dp" />
+                <TextView android:id="@+id/label_invoiceTotalPrice" style="@style/textBoxPrice" />
+
+
+
+            </LinearLayout>
+
+
+            <LinearLayout style="@style/row" android:layout_marginBottom="30dp">
+                <TextView style="@style/label" android:layout_height="match_parent"
+                          android:id="@+id/label_mojoodi"
+                          android:text="@string/pfaktor_mojoodi"
+                          android:labelFor="@+id/btn_mojoodi" android:layout_marginStart="50dp" />
+
+                <ImageView
+                    android:id="@id/btn_mojoodi"
+                    android:layout_width="50dp"
+                    android:layout_height="match_parent"
+                    android:src="@drawable/stuff_report" />
+
+
+                <TextView style="@style/label" android:layout_height="match_parent"
+                          android:id="@+id/label_last_sell_price"
+                          android:text="@string/pfaktor_last_sell_price"
+                          android:labelFor="@+id/btn_last_sell_price" android:layout_marginStart="100dp" />
+
+                <ImageView
+                    android:id="@id/btn_last_sell_price"
+                    android:layout_width="50dp"
+                    android:layout_height="match_parent"
+                    android:src="@drawable/last_sell" />
+            </LinearLayout>
+        </LinearLayout>
+
+
+    <LinearLayout android:layout_alignParentBottom="true" style="@style/row" android:gravity="center_horizontal">
+        <Button
+            style="@style/button"
+            android:id="@+id/btn_invoiceKalaOK"
+            android:text="@string/ok_button" android:layout_marginEnd="10dp"/>
+
+        <Button
+            style="@style/button"
+            android:id="@+id/btn_invoiceKalaCancel"
+            android:text="@string/cancel_button"/>
+    </LinearLayout>
+
+    <ProgressBar
+        style="@style/progressBarCircle"
+        android:id="@+id/progressBar" />
+</RelativeLayout>

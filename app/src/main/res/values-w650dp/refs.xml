@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <item name="activity_master_detail" type="layout">@layout/two_fragments_activity</item>
+    <item name="popup_width" type="integer" format="integer">1050</item>
+    <item name="popup_height" type="integer" format="integer">380</item>
+</resources>

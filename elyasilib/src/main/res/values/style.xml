@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="progressBarRectangle" parent="@android:style/Widget.ProgressBar.Horizontal">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">40dp</item>
+        <item name="android:layout_gravity">center_horizontal</item>
+        <item name="android:layout_marginTop">10dp</item>
+        <item name="android:layout_centerInParent">true</item>
+        <item name="android:layout_alignParentBottom">true</item>
+        <item name="android:indeterminateDrawable">@drawable/progressbar_rectangle_custom</item>
+    </style>
+
+    <style name="textBoxStandard">
+        <item name="android:layout_width">240dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:minHeight">30dp</item>
+        <item name="android:background">@drawable/textbox_theme</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:paddingEnd">5dp</item>
+        <item name="android:paddingStart">5dp</item>
+        <item name="android:paddingTop">3dp</item>
+        <item name="android:textSize">15sp</item>
+        <item name="android:maxLength">200</item>
+        <item name="android:singleLine">true</item>
+        <item name="android:maxLines">1</item>
+        <item name="android:textDirection">rtl</item>
+        <item name="android:textColor">@android:color/black</item>
+        <item name="android:typeface">monospace</item>
+        <item name="android:gravity">start|fill_vertical</item>
+        <!--<item name="android:nestedScrollingEnabled">false</item> -->
+    </style>
+
+    <style name="textBoxLatin" parent="textBoxStandard">
+        <item name="android:textDirection">ltr</item>
+        <item name="android:textAlignment">viewStart</item>
+        <item name="android:typeface">serif</item>
+    </style>
+
+    <style name="textBoxLatinDigit" parent="textBoxLatin">
+        <item name="android:digits">0123456789</item>
+        <item name="android:inputType">number</item>
+    </style>
+
+    <style name="textBoxIP" parent="textBoxLatinDigit">
+        <item name="android:digits">0123456789.</item>
+    </style>
+
+    <style name="textBoxCode" parent="textBoxStandard">
+        <item name="android:layout_width">100dp</item>
+        <item name="android:inputType">number</item>
+        <item name="android:digits">"0123456789"</item>
+    </style>
+
+    <style name="textBoxPrice" parent="textBoxCode">
+        <item name="android:layout_width">150dp</item>
+        <item name="android:inputType">numberDecimal</item>
+        <item name="android:digits">"0123456789"</item>
+        <item name="android:typeface">sans</item>
+    </style>
+
+    <style name="textBoxNumber" parent="textBoxCode">
+        <item name="android:inputType">numberDecimal</item>
+        <item name="android:digits">"0123456789."</item>
+        <item name="android:typeface">sans</item>
+    </style>
+
+    <style name="textBoxDigit" parent="textBoxStandard">
+        <item name="android:layout_width">150dp</item>
+        <item name="android:inputType">numberSigned</item>
+        <item name="android:digits">"0123456789"</item>
+    </style>
+
+    <style name="textBoxDate" parent="textBoxStandard">
+        <item name="android:layout_width">100dp</item>
+        <item name="android:enabled">false</item>
+        <item name="android:inputType">date</item>
+        <item name="android:digits">"0123456789/"</item>
+    </style>
+
+    <style name="passTextBox" parent="textBoxStandard">
+        <item name="android:password">true</item>
+        <item name="android:maxLength">20</item>
+    </style>
+
+    <style name="label">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">30dp</item>
+        <item name="android:textSize">15sp</item>
+        <!--<item name="android:textStyle">bold</item>-->
+        <item name="android:paddingEnd">2dp</item>
+        <item name="android:paddingRight">2dp</item>
+        <item name="android:gravity">center_vertical</item>
+    </style>
+
+    <style name="label_latin" parent="label">
+        <item name="android:textDirection">ltr</item>
+        <!--<item name="android:typeface">serif</item>-->
+    </style>
+
+    <style name="label_red" parent="label">
+        <item name="android:textColor">@android:color/holo_red_light</item>
+    </style>
+
+    <style name="label_title" parent="label">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textSize">20sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:padding">5dp</item>
+        <item name="android:layout_marginBottom">20dp</item>
+        <item name="android:gravity">center_horizontal|center_vertical</item>
+        <item name="android:background">@android:color/holo_green_light</item>
+    </style>
+</resources>
