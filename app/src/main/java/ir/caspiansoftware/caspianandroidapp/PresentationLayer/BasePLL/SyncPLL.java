@@ -31,7 +31,7 @@ public class SyncPLL {
     private static final String TAG = "SyncPLL";
     private Context mContext;
     private CaspianFragment mAsyncForm;
-    private IActivityCallback mActivityCallback;
+   // private IActivityCallback mActivityCallback;
     private int mCountKala;
     private int mCountPerson;
     private ProgressDialog mProgressDialog;
@@ -41,7 +41,7 @@ public class SyncPLL {
     public SyncPLL(Context context, CaspianFragment fragment, IActivityCallback activityCallback) {
         mContext = context;
         mAsyncForm = fragment;
-        mActivityCallback = activityCallback;
+        //mActivityCallback = activityCallback;
     }
 
     private void sync() {

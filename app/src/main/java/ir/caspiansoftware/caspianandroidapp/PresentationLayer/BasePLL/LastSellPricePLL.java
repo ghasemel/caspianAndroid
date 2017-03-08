@@ -22,24 +22,62 @@ import ir.caspiansoftware.caspianandroidapp.Vars;
 /**
  * Created by Canada on 9/10/2016.
  */
-public class LastSellPricePLL {
+public class LastSellPricePLL extends APLL_TWO_MODEL<PersonModel, KalaModel, PersonLastSellInfoModel>  {
 
     private static final String TAG = "LastSellPricePLL";
-    private Context mContext;
+    /*private Context mContext;
     private IAsyncForm mAsyncForm;
     private IFragmentCallback mFragmentCallback;
-    //private ProgressDialog mProgressDialog;
     private boolean mCancel = false;
     private PersonModel mPerson;
-    private KalaModel mKala;
+    private KalaModel mKala;*/
 
     public LastSellPricePLL(Context context, IAsyncForm fragment, IFragmentCallback fragmentCallback) {
-        mContext = context;
-        mAsyncForm = fragment;
-        mFragmentCallback = fragmentCallback;
+        super(context, fragment, fragmentCallback);
     }
 
-    public void start(PersonModel person, KalaModel kala) {
+    @Override
+    protected int getMessageBoxTitle() {
+        return R.string.person_last_sell_price_title;
+    }
+
+    @Override
+    protected String getMessageBoxText() {
+        return String.format(
+                getContext().getString(R.string.person_last_sell_price_question),
+                getModel2().getName(),
+                getModel().getName()
+        );
+    }
+
+    @Override
+    protected void onCancelClick() {
+        getFragmentCallback().activity_callback(Actions.ACTION_GET_LAST_SELL_PRICE, Activity.RESULT_CANCELED, null);
+    }
+
+    @Override
+    protected PersonLastSellInfoModel doInBackgroundThread(RunAsync runAsync) throws Exception {
+        Log.d(TAG, "doInBackgroundThread(): entered the function");
+
+        PersonBLL personBLL = new PersonBLL(getContext());
+
+        PersonLastSellInfoModel lastSellInfo =
+                personBLL.FetchPersonLastSellInfo(getModel().getCode(), getModel2().getCode());
+
+            if (lastSellInfo != null)
+                runAsync.updateProgressbar(String.valueOf(String.valueOf(lastSellInfo.getSellPrice())));
+
+        return lastSellInfo;
+    }
+
+    @Override
+    protected void onBackgroundComplete(PersonLastSellInfoModel lastSellInfo) {
+        Log.d(TAG, "onBackgroundComplete(): entered the function");
+        getFragmentCallback().activity_callback(Actions.ACTION_GET_LAST_SELL_PRICE, lastSellInfo, null);
+    }
+
+
+    /* public void start(PersonModel person, KalaModel kala) {
         Log.d(TAG, "start()");
         if (person != null) {
             if (mAsyncForm.getActivity() instanceof ActivityFragmentExt) {
@@ -64,9 +102,9 @@ public class LastSellPricePLL {
                     new LastSellPriceDialogCallBack());
 
         }
-    }
+    }*/
 
-    private class LastSellPriceDialogCallBack implements IDialogCallback<Integer> {
+    /*private class LastSellPriceDialogCallBack implements IDialogCallback<Integer> {
         @Override
         public void dialog_callback(DialogResult dialogResult, Integer result, int requestCode) {
             if (dialogResult != DialogResult.Yes) {
@@ -143,5 +181,5 @@ public class LastSellPricePLL {
                 runAsync.execute();
             }
         }
-    }
+    }*/
 }

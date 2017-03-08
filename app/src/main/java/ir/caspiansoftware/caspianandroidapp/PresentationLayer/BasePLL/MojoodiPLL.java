@@ -1,6 +1,7 @@
 package ir.caspiansoftware.caspianandroidapp.PresentationLayer.BasePLL;
 
 import android.content.Context;
+import android.renderscript.Double2;
 import android.util.Log;
 import android.widget.ProgressBar;
 
@@ -19,23 +20,53 @@ import ir.caspiansoftware.caspianandroidapp.Vars;
 /**
  * Created by Canada on 8/19/2016.
  */
-public class MojoodiPLL {
+public class MojoodiPLL extends APLL<KalaModel, Double> {
 
     private static final String TAG = "MojoodiPLL";
-    private Context mContext;
+    /*private Context mContext;
     private IAsyncForm mAsyncForm;
     private IFragmentCallback mFragmentCallback;
-    //private ProgressDialog mProgressDialog;
     private boolean mCancel = false;
-    private KalaModel mKala;
+    private KalaModel mKala;*/
 
     public MojoodiPLL(Context context, IAsyncForm fragment, IFragmentCallback fragmentCallback) {
-        mContext = context;
-        mAsyncForm = fragment;
-        mFragmentCallback = fragmentCallback;
+        super(context, fragment, fragmentCallback);
     }
 
-    public void start(KalaModel kala) {
+    @Override
+    protected int getMessageBoxTitle() {
+        return R.string.kala_moj_title;
+    }
+
+    @Override
+    protected String getMessageBoxText() {
+        return String.format(
+                getContext().getString(R.string.kala_moj_question),
+                getModel().getName()
+        );
+    }
+
+    @Override
+    protected void onCancelClick() {
+        getFragmentCallback().activity_callback(Actions.ACTION_GET_MOJOODI, getModel().getMojoodi(), null);
+    }
+
+    @Override
+    protected Double doInBackgroundThread(RunAsync runAsync) throws Exception {
+        KalaBLL kalaBLL = new KalaBLL(getContext());
+
+        double mojoodi = kalaBLL.FetchKalaMojoodi(Vars.YEAR.getDataBase(), getModel().getCode());
+        runAsync.updateProgressbar(String.valueOf(mojoodi));
+
+        return mojoodi;
+    }
+
+    @Override
+    protected void onBackgroundComplete(Double mojoodi) {
+        getFragmentCallback().activity_callback(Actions.ACTION_GET_MOJOODI, mojoodi, null);
+    }
+
+    /* public void start(KalaModel kala) {
         Log.d(TAG, "start()");
         if (kala != null) {
             if (mAsyncForm.getActivity() instanceof ActivityFragmentExt) {
@@ -55,9 +86,11 @@ public class MojoodiPLL {
                     new MojoodiDialogCallBack());
 
         }
-    }
+    }*/
 
-    private class MojoodiDialogCallBack implements IDialogCallback<Integer> {
+
+
+   /* private class MojoodiDialogCallBack implements IDialogCallback<Integer> {
         @Override
         public void dialog_callback(DialogResult dialogResult, Integer result, int requestCode) {
             if (dialogResult != DialogResult.Yes) {
@@ -133,5 +166,5 @@ public class MojoodiPLL {
                 runAsync.execute();
             }
         }
-    }
+    }*/
 }

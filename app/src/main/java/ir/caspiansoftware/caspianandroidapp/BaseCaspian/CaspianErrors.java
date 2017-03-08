@@ -34,6 +34,8 @@ public class CaspianErrors {
     public static final String location_not_available = "location_not_available";
 
     public static final String permissions_are_null = "permissions are null";
+
+    public static final String gps_provider_not_exist = "provider doesn't exist: gps";
     //public static final String didnot_sell_already = "didn't sell already";
 
     //private static LinkedHashMap<String, Integer> sErrorsList = new LinkedHashMap<>();
@@ -123,6 +125,7 @@ public class CaspianErrors {
         errorList4000.addSubError(pfaktor_kala_null, R.string.pfaktor_kala_is_null);
         errorList4000.addSubError(gps_is_off, R.string.gps_should_be_ON);
         errorList4000.addSubError(location_not_available, R.string.location_not_available);
+        errorList4000.addSubError(gps_provider_not_exist, R.string.gps_module_not_available);
         sErrorsList.add(errorList4000);
 
 
