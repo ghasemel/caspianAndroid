@@ -59,7 +59,7 @@
                             android:text="@string/main_stuff_report"/>
                     </LinearLayout>
 
-                    <LinearLayout style="@style/main_button_frame" android:id="@+id/main_button_customer_report" android:tag="mande">
+                    <LinearLayout style="@style/main_button_frame" android:id="@+id/main_button_customer_report" android:tag="customer_report">
                         <ImageView
                             style="@style/main_menu_button"
                             android:src="@drawable/customer_report" />
@@ -68,7 +68,6 @@
                             style="@style/main_menu_caption"
                             android:text="@string/main_customer_report"/>
                     </LinearLayout>
-
 
 
 

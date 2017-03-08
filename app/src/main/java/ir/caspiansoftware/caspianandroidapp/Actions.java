@@ -17,6 +17,8 @@ public class Actions {
     public static final String ACTION_CONFIRM_PFaktor_DONE = "action_confirm_pfaktor_done";
 
     public static final String ACTION_KALA_MOJOODI_LIST = "action_kala_mojoodi_list";
+
+    public static final String ACTION_CUSTOMER_REPORT = "action_customer_report";
     public static final String ACTION_PERSON_MANDE_LIST = "action_person_mande_list";
 
     public static final String ACTION_GET_MANDE = "action_get_mande";

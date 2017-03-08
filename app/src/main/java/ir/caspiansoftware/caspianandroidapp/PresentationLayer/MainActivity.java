@@ -165,8 +165,9 @@ public class MainActivity extends CaspianActivityTwoFragments {
                 showKalaMojoodiListShow();
                 break;
 
-            case Actions.ACTION_PERSON_MANDE_LIST:
-                showPersonMandeListShow();
+            case Actions.ACTION_CUSTOMER_REPORT:
+
+                //showPersonMandeListShow();
                 break;
         }
     }

@@ -361,9 +361,25 @@ public class FaktorKalaFragment extends CaspianFragment implements IFragmentCall
             mMCountEditText.setText(String.valueOf(spFaktorModel.getMCount()));
             mSCountEditText.setText(String.valueOf(spFaktorModel.getSCount()));
             mPriceEditText.setText(String.valueOf(spFaktorModel.getPrice()));
-            setKala(spFaktorModel.getKalaModel());
+
+            setKala(spFaktorModel);
+            //setKala(spFaktorModel.getKalaModel());
         }
     }
+
+
+    private void setKala(SPFaktorModel spFaktorModel) {
+        if (spFaktorModel != null) {
+            setKala(spFaktorModel.getKalaModel());
+
+            mPriceEditText.setEnabled(false);
+            mPriceEditText.setText(
+                    String.valueOf(spFaktorModel.getPrice())
+            );
+            mPriceEditText.setEnabled(true);
+        }
+    }
+
 
     private void setKala(KalaModel kala) {
         mKala = kala;

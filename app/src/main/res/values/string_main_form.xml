@@ -10,7 +10,8 @@
     <string name="main_pre_invoice">پیش فاکتور</string>
     <string name="main_confirm_list">تایید پیش فاکتورها</string>
     <string name="main_stuff_report">گزارش مانده کالا</string>
-    <string name="main_customer_report">گزارش مانده مشتری</string>
+    <string name="main_customer_report">گزارش مشتری</string>
+    <string name="main_daftar_taf_report">دفتر تفضیلی حساب</string>
     <string name="main_setting">تنظیمات</string>
     <string name="main_change_year">تغییر سال مالی</string>
     <string name="main_sync">همگام سازی</string>

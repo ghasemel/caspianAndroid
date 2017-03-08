@@ -578,6 +578,9 @@ public class PFaktorFragment extends CaspianDataGridFragment<SPFaktorModel> impl
                 }
             } catch (SecurityException ex) {
 
+            } catch (Exception ex) {
+                Log.d(TAG, ex.getMessage());
+                showError(ex, null);
             }
 
 

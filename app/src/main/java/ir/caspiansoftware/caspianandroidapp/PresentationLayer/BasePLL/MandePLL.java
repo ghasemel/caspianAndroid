@@ -1,6 +1,7 @@
 package ir.caspiansoftware.caspianandroidapp.PresentationLayer.BasePLL;
 
 import android.content.Context;
+import android.renderscript.Double2;
 import android.util.Log;
 import android.widget.ProgressBar;
 
@@ -20,23 +21,56 @@ import ir.caspiansoftware.caspianandroidapp.Vars;
 /**
  * Created by Canada on 8/19/2016.
  */
-public class MandePLL {
+public class MandePLL extends APLL<PersonModel, Double> {
 
     private static final String TAG = "MandePLL";
-    private Context mContext;
-    private IAsyncForm mAsyncForm;
-    private IFragmentCallback mFragmentCallback;
+    //private Context mContext;
+    //private IAsyncForm mAsyncForm;
+    //private IFragmentCallback mFragmentCallback;
     //private ProgressDialog mProgressDialog;
-    private boolean mCancel = false;
-    private PersonModel mPerson;
+    //private boolean mCancel = false;
+    //private PersonModel mPerson;
 
     public MandePLL(Context context, IAsyncForm fragment, IFragmentCallback fragmentCallback) {
-        mContext = context;
-        mAsyncForm = fragment;
-        mFragmentCallback = fragmentCallback;
+        super(context, fragment, fragmentCallback);
     }
 
-    public void start(PersonModel person) {
+
+    @Override
+    protected void onCancelClick() {
+        getFragmentCallback().activity_callback(Actions.ACTION_GET_MANDE, getModel().getMande(), null);
+    }
+
+    @Override
+    protected Double doInBackgroundThread(RunAsync runAsync) throws Exception {
+        PersonBLL personBLL = new PersonBLL(getContext());
+
+        double mande = personBLL.FetchPersonMande(Vars.YEAR.getDataBase(), getModel().getCode());
+        runAsync.updateProgressbar(String.valueOf(mande));
+
+        return mande;
+    }
+
+    @Override
+    protected void onBackgroundComplete(Double mande) {
+        getFragmentCallback().activity_callback(Actions.ACTION_GET_MANDE, mande, null);
+    }
+
+    @Override
+    protected int getMessageBoxTitle() {
+        return R.string.person_mande_title;
+    }
+
+    @Override
+    protected String getMessageBoxText() {
+        return String.format(
+                getContext().getString(R.string.person_mande_question),
+                getModel().getName()
+        );
+    }
+
+
+    /*public void start(PersonModel person) {
         Log.d(TAG, "start()");
         if (person != null) {
             if (mAsyncForm.getActivity() instanceof ActivityFragmentExt) {
@@ -54,11 +88,10 @@ public class MandePLL {
                             person.getName()
                     ),
                     new MandeDialogCallBack());
-
         }
-    }
+    }*/
 
-    private class MandeDialogCallBack implements IDialogCallback<Integer> {
+    /*private class MandeDialogCallBack implements IDialogCallback<Integer> {
         @Override
         public void dialog_callback(DialogResult dialogResult, Integer result, int requestCode) {
             if (dialogResult != DialogResult.Yes) {
@@ -69,14 +102,6 @@ public class MandePLL {
                 mFragmentCallback.activity_callback(Actions.ACTION_GET_MANDE, mPerson.getMande(), null);
                 return;
             }
-
-//            mProgressDialog = new ProgressDialog();
-//            mProgressDialog.setTitle(mContext.getString(R.string.person_mande_title));
-//            mProgressDialog.setMax(1);
-//            mProgressDialog.setDialogCallback(new ProgressDialogCallback());
-//            //mProgressDialog.setAutoClose(false);
-//            mProgressDialog.show(mAsyncForm.getActivity().getFragmentManager(), "send_PFaktor");
-
 
             class RunAsync extends AAsyncTask<Void, String, Double> {
 
@@ -134,6 +159,6 @@ public class MandePLL {
                 runAsync.execute();
             }
         }
-    }
+    }*/
 
 }

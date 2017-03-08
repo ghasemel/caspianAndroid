@@ -59,7 +59,7 @@ public class SendPreInvoiceListPLL {
                     R.string.pfaktor_send_list_to_server_title,
                     String.format(
                             mContext.getString(R.string.pfaktor_send_list_question),
-                            mpFaktorModelList.size()
+                            String.valueOf(mpFaktorModelList.size())
                     ),
                     new DoSendingDialogCallBack());
 

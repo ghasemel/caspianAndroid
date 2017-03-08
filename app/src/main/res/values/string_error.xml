@@ -50,6 +50,7 @@
 
     <string name="gps_should_be_ON">لطفا GPS دستگاه خود را روشن کنید</string>
     <string name="location_not_available">مختصات فعلی شما در دسترس نیست. اگر GPS را هم اکنون روشن کرده اید لطفا کمی تامل کرده و مجددا سعی نمایید. در غیر اینصورت GPS را یکبار خاموش و دوباره روشن کنید.</string>
+    <string name="gps_module_not_available">دستگاه شما از GPS پشتیبانی نمی کند.</string>
 
 
     <string name="you_can_just_see_bed">شما تنها قادر به دیدن اطلاعات حساب بدهکارهان هستید </string>

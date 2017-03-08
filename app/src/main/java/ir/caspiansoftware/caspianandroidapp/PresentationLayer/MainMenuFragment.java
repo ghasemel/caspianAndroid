@@ -33,7 +33,7 @@ public class MainMenuFragment extends CaspianFragment implements IFragmentCallba
 
     private LinearLayout mBtnSetting;
     private LinearLayout mBtnPreInvoice;
-    private LinearLayout mBtnPersonMande;
+    private LinearLayout mBtnCustomerReport;
     private LinearLayout mBtnKalaMojoodi;
     private LinearLayout mBtnSync;
     private TextView mLabelChangeYear;
@@ -125,7 +125,7 @@ public class MainMenuFragment extends CaspianFragment implements IFragmentCallba
         mBtnPreInvoice = (LinearLayout) v.findViewById(R.id.main_button_pre_invoice);
 
         // customer report button
-        mBtnPersonMande = (LinearLayout) v.findViewById(R.id.main_button_customer_report);
+        mBtnCustomerReport = (LinearLayout) v.findViewById(R.id.main_button_customer_report);
 
         // stuff report button
         mBtnKalaMojoodi = (LinearLayout) v.findViewById(R.id.main_button_stuff_report);
@@ -178,10 +178,10 @@ public class MainMenuFragment extends CaspianFragment implements IFragmentCallba
             Log.d(TAG, Actions.ACTION_KALA_MOJOODI_LIST + " called");
             mActivityCallback.fragment_callback(Actions.ACTION_KALA_MOJOODI_LIST, null, (Object) null);
 
-        } else if (v.equals(mBtnPersonMande)) {
+        } else if (v.equals(mBtnCustomerReport)) {
             Log.d(TAG, Actions.ACTION_PERSON_MANDE_LIST + " called");
-            mActivityCallback.fragment_callback(Actions.ACTION_PERSON_MANDE_LIST, null, (Object) null);
-
+            //mActivityCallback.fragment_callback(Actions.ACTION_PERSON_MANDE_LIST, null, (Object) null);
+            mActivityCallback.fragment_callback(Actions.ACTION_CUSTOMER_REPORT, null, (Object) null);
         }
     }
 
