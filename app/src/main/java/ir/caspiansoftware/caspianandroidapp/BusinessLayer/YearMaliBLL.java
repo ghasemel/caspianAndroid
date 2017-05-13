@@ -86,8 +86,12 @@ public class YearMaliBLL extends ABusinessLayer {
             yearMaliDataSource.open();
             YearMaliModel year = yearMaliDataSource.getCurrentYearByUserId(userId);
 
-            if (year.getDoreModel().getStartDore() == null || year.getDoreModel().getStartDore().isEmpty() ||
-                year.getDoreModel().getEndDore() == null || year.getDoreModel().getEndDore().isEmpty())
+            if (year != null &&
+                    (
+                        year.getDoreModel().getStartDore() == null || year.getDoreModel().getStartDore().isEmpty() ||
+                        year.getDoreModel().getEndDore() == null || year.getDoreModel().getEndDore().isEmpty()
+                    )
+                )
                 year = null;
 
             return year;

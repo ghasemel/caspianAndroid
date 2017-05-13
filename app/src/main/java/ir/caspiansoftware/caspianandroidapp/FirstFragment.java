@@ -121,8 +121,6 @@ public class FirstFragment extends CaspianFragment implements IPauseUI {
 
                 YearMaliBLL yearMaliBLL = new YearMaliBLL(getActivity().getApplicationContext());
                 Vars.YEAR = yearMaliBLL.getCurrentYearMali(userModel.getUserId());
-
-
             }
 
 

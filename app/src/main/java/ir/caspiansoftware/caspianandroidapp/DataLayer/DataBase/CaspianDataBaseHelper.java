@@ -116,7 +116,7 @@ public class CaspianDataBaseHelper extends SQLiteOpenHelper {
 
             // select right upgrade way
             switch (oldVersion) {
-                case 3:
+                case 1:
                     execSQLFile(mContext, db, R.raw.dore_mali_sql);
             }
 
@@ -152,13 +152,16 @@ public class CaspianDataBaseHelper extends SQLiteOpenHelper {
         BufferedReader insertReader = new BufferedReader(new InputStreamReader(insertsStream));
 
         // Iterate through lines (assuming each insert has its own line and theres no other stuff)
+        String sql = "";
         while (insertReader.ready()) {
-            String sql = insertReader.readLine();
-            if (!sql.trim().isEmpty() && !sql.startsWith("--")) {
+            sql += insertReader.readLine();
+            if (!sql.trim().isEmpty() && !sql.startsWith("--") && sql.contains(";")) {
                 db.execSQL(sql);
                 result++;
+                sql = "";
             }
         }
+
         insertReader.close();
 
         // returning number of inserted rows
