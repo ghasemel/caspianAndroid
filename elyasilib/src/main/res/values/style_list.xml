@@ -17,6 +17,7 @@
         <item name="android:textStyle">bold</item>
         <item name="android:gravity">center_vertical|start</item>
         <item name="android:textAlignment">viewStart</item>
+
         <!--<item name="android:background">@android:color/transparent</item>-->
         <!--<item name="android:focusable">false</item>-->
         <!--<item name="android:background">@drawable/textbox_theme</item>-->

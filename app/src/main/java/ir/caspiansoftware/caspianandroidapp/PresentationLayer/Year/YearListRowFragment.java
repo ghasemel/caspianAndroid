@@ -13,9 +13,7 @@ import java.util.List;
 import info.elyasi.android.elyasilib.UI.AListRowFragment;
 import ir.caspiansoftware.caspianandroidapp.BusinessLayer.YearMaliBLL;
 import ir.caspiansoftware.caspianandroidapp.Models.YearMaliModel;
-import info.elyasi.android.elyasilib.Persian.PersianConvert;
 import ir.caspiansoftware.caspianandroidapp.R;
-import ir.caspiansoftware.caspianandroidapp.Setting;
 import ir.caspiansoftware.caspianandroidapp.Vars;
 
 /**
@@ -53,7 +51,7 @@ public class YearListRowFragment extends AListRowFragment<YearMaliModel> { //Arr
     protected ArrayList<YearMaliModel> inBackground(Object... params) throws Exception {
         if (getActivity() != null && getActivity().getApplicationContext() != null && Vars.USER != null) {
             YearMaliBLL yearMaliBLL = new YearMaliBLL(getActivity().getApplicationContext());
-            return yearMaliBLL.getYearMali(Vars.USER.getUserId());
+            return yearMaliBLL.FetchYearMali(Vars.USER.getUserId());
         }
         return null;
     }

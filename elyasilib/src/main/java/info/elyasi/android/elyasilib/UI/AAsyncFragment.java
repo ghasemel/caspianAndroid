@@ -107,6 +107,7 @@ public abstract class AAsyncFragment extends Fragment implements IAsyncForm {
         }
     }
 
+
     public void clearError() {
         if (getErrorLabel() != null) {
             getErrorLabel().setVisibility(View.GONE);

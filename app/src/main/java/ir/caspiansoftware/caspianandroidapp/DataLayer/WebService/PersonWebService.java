@@ -39,6 +39,24 @@ public class PersonWebService extends RESTDotNetWebService {
         return responseWebService;
     }
 
+    public ResponseWebService GetPersonDaftarTaf(String dbName, String code, String fromDate, String tillDate) throws Exception {
+        Log.d(TAG, "GetPersonDaftarTaf start");
+
+        NameValue[] parameter = {
+                // new NameValue<>("userId", String.valueOf(userId)),
+                new NameValue<>("dbName", dbName),
+                new NameValue<>("code", code),
+                new NameValue<>("fromDate", fromDate),
+                new NameValue<>("tillDate", tillDate)
+        };
+
+        ResponseWebService responseWebService = sendRequest(SettingWebService.getAPI_URL(), "GetDaftar", parameter, true,
+                RequestType.create(RequestType.RType.GET));
+
+        Log.d(TAG, "GetPersonDaftarTaf finished");
+        return responseWebService;
+    }
+
     public ResponseWebService GetPersonCount(String dbName) throws Exception {
         Log.d(TAG, "GetPersonCount start");
 

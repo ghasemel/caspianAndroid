@@ -17,10 +17,10 @@ import ir.caspiansoftware.caspianandroidapp.Vars;
  */
 
 // it's no need to call
-public class shouldLogoutPLL {
-    private static final String TAG = "shouldLogoutPLL";
+public class ShouldLogoutPLL {
+    private static final String TAG = "ShouldLogoutPLL";
 
-    public static void shouldLogout1(final Context context, final IAsyncForm fragment, final IActivityCallback activityCallback) {
+    public static void ShouldLogoutPLL(final Context context, final IAsyncForm fragment, final IActivityCallback activityCallback) {
         Log.d(TAG, "shouldLogout start");
         fragment.startProgress();
 

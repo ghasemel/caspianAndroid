@@ -15,6 +15,7 @@ import ir.caspiansoftware.caspianandroidapp.DataLayer.WebService.ResponseToModel
 import ir.caspiansoftware.caspianandroidapp.DataLayer.WebService.YearMaliWebService;
 import ir.caspiansoftware.caspianandroidapp.Models.YearMaliModel;
 import info.elyasi.android.elyasilib.Constant;
+import ir.caspiansoftware.caspianandroidapp.Vars;
 
 /**
  * Created by Canada on 3/6/2016.
@@ -29,20 +30,20 @@ public class YearMaliBLL extends ABusinessLayer {
     }
 
 
-    public ArrayList<YearMaliModel> getYearMali(int userId) throws Exception {
-        Log.d(TAG, "getYearMali start");
+    public ArrayList<YearMaliModel> FetchYearMali(int userId) throws Exception {
+        Log.d(TAG, "FetchYearMali start");
 
         try {
             ResponseWebService responseWebService = mYearMaliWebService.GetYearMali(userId);
             if (responseWebService == null)
                 throw new Exception("empty response");
 
-            //return doOnSuccess(new ResponseWebService(Constant.SUCCESS, responseWebService.getData(), "getYearMali"));
+            //return doOnSuccess(new ResponseWebService(Constant.SUCCESS, responseWebService.getData(), "FetchYearMali"));
             return ResponseToModel.getYearMaliList(responseWebService.getData());
         //} catch (Exception ex) {
-        //    return doOnError(ex.getMessage(), "getYearMali");
+        //    return doOnError(ex.getMessage(), "FetchYearMali");
         } finally {
-            Log.d(TAG, "getYearMali finished");
+            Log.d(TAG, "FetchYearMali finished");
         }
     }
 
@@ -83,10 +84,36 @@ public class YearMaliBLL extends ABusinessLayer {
         YearMaliDataSource yearMaliDataSource = new YearMaliDataSource(mContext);
         try {
             yearMaliDataSource.open();
-            return yearMaliDataSource.getCurrentYearByUserId(userId);
+            YearMaliModel year = yearMaliDataSource.getCurrentYearByUserId(userId);
+
+            if (year.getDoreModel().getStartDore() == null || year.getDoreModel().getStartDore().isEmpty() ||
+                year.getDoreModel().getEndDore() == null || year.getDoreModel().getEndDore().isEmpty())
+                year = null;
+
+            return year;
         } finally {
             yearMaliDataSource.close();
             Log.d(TAG, "getCurrentYearMali end");
+        }
+    }
+
+
+    public void FetchDore() throws Exception {
+        Log.d(TAG, "FetchDore(): start");
+
+        try {
+            ResponseWebService responseWebService = mYearMaliWebService.GetDore(Vars.YEAR.getDataBase());
+            if (responseWebService == null)
+                throw new Exception("empty response");
+
+            //Vars.YEAR.s
+
+            //return doOnSuccess(new ResponseWebService(Constant.SUCCESS, responseWebService.getData(), "FetchYearMali"));
+            //return ResponseToModel.getYearMaliList(responseWebService.getData());
+            //} catch (Exception ex) {
+            //    return doOnError(ex.getMessage(), "FetchYearMali");
+        } finally {
+            Log.d(TAG, "FetchYearMali finished");
         }
     }
 }

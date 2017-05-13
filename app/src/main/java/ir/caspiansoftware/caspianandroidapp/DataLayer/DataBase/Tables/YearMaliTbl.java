@@ -16,6 +16,10 @@ public class YearMaliTbl extends ATableEntity {
     public static final String COLUMN_DATABASE = "database_name";
     public static final String COLUMN_IS_CURRENT = "is_current";
 
+    // upgrade 2
+    public static final String COLUMN_DORE_START = "dore_start";
+    public static final String COLUMN_DORE_END = "dore_end";
+
 
     private static YearMaliTbl sYearMaliTbl = null;
     public static YearMaliTbl get() {
@@ -40,7 +44,9 @@ public class YearMaliTbl extends ATableEntity {
                 COLUMN_YEAR + " integer",
                 COLUMN_COMPANY + " varchar(70)",
                 COLUMN_DATABASE + " varchar(30)",
-                COLUMN_IS_CURRENT + " boolean"
+                COLUMN_IS_CURRENT + " boolean",
+                COLUMN_DORE_START + " varchar(10)",
+                COLUMN_DORE_END + " varchar(10)"
         };
     }
 
@@ -52,7 +58,9 @@ public class YearMaliTbl extends ATableEntity {
                 COLUMN_YEAR,
                 COLUMN_COMPANY,
                 COLUMN_DATABASE,
-                COLUMN_IS_CURRENT
+                COLUMN_IS_CURRENT,
+                COLUMN_DORE_START,
+                COLUMN_DORE_END
         };
     }
 

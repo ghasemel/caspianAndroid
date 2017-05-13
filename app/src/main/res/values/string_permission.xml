@@ -11,4 +11,6 @@
     <string name="permission_force_location">force_location</string>
     <string name="permission_see_location">see_location</string>
     <string name="permission_last_sell_price">last_sell_price</string>
+
+    <string name="permission_daftar_taf_report">daftar_taf_report</string>
 </resources>

@@ -64,7 +64,10 @@ public class KalaDataSource extends ADataSource<KalaModel> {
     public int update(KalaModel kala) {
         ContentValues cv = objectToContentValue(kala);
         cv.remove(KalaTbl.COLUMN_ID);
-        return mDatabase.update(KalaTbl.TABLE_NAME, cv, KalaTbl.COLUMN_CODE + "=" + kala.getCode(), null);
+        return mDatabase.update(KalaTbl.TABLE_NAME,
+                cv,
+                KalaTbl.COLUMN_YEAR_ID_FK + " = " + kala.getYearId_FK() + " AND " +
+                KalaTbl.COLUMN_CODE + "=" + kala.getCode(), null);
     }
 
     @Override
@@ -102,8 +105,9 @@ public class KalaDataSource extends ADataSource<KalaModel> {
         return null;
     }
 
-    public KalaModel getByCode(String code) {
+    public KalaModel getByCode(String code, int yearId) {
         Cursor cursor = mDatabase.query(KalaTbl.TABLE_NAME, getAllColumns(),
+                KalaTbl.COLUMN_YEAR_ID_FK + "=" + yearId + " AND " +
                 KalaTbl.COLUMN_CODE + " = '" + code + "'", null, null, null, null);
 
         KalaModel kala = null;
@@ -114,12 +118,13 @@ public class KalaDataSource extends ADataSource<KalaModel> {
         return kala;
     }
 
-    public boolean isExistByCode(String code) {
+    public boolean isExistByCode(String code, int yearId) {
         Log.d(TAG, "isExistByCode()");
 
         Cursor cursor = null;
         try {
             cursor = mDatabase.query(KalaTbl.TABLE_NAME, getAllColumns(),
+                    KalaTbl.COLUMN_YEAR_ID_FK + " = " + yearId + " AND " +
                     KalaTbl.COLUMN_CODE + " = '" + code + "'", null, null, null, null);
 
             cursor.moveToFirst();

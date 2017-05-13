@@ -77,6 +77,10 @@
         <item name="android:digits">"0123456789/"</item>
     </style>
 
+    <style name="textBoxDateSearch" parent="textBoxDate">
+        <item name="android:enabled">true</item>
+    </style>
+
     <style name="passTextBox" parent="textBoxStandard">
         <item name="android:password">true</item>
         <item name="android:maxLength">20</item>

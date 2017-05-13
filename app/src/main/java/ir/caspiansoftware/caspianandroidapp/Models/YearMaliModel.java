@@ -13,6 +13,8 @@ public class YearMaliModel {
     private String mCompany;
     private String mDataBase;
     private boolean mIsCurrent;
+    private DoreModel mDoreModel;
+
 
     public int getId() {
         return mId;
@@ -68,6 +70,14 @@ public class YearMaliModel {
 
     public void setCurrent(boolean current) {
         mIsCurrent = current;
+    }
+
+    public DoreModel getDoreModel() {
+        return mDoreModel;
+    }
+
+    public void setDoreModel(DoreModel doreModel) {
+        mDoreModel = doreModel;
     }
 
     @Override

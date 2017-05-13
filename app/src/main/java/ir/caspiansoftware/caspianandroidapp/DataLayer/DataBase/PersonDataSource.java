@@ -70,7 +70,10 @@ public class PersonDataSource extends ADataSource<PersonModel> {
     public int update(PersonModel person) {
         ContentValues cv = objectToContentValue(person);
         cv.remove(PersonTbl.COLUMN_ID);
-        return mDatabase.update(PersonTbl.TABLE_NAME, cv, PersonTbl.COLUMN_CODE + "=" + person.getCode(), null);
+        return mDatabase.update(PersonTbl.TABLE_NAME, cv,
+                PersonTbl.COLUMN_YEAR_ID_FK + "=" + person.getYearId_FK() + " AND " +
+                PersonTbl.COLUMN_CODE + "='" + person.getCode() + "'",
+                null);
     }
 
     @Override
@@ -125,8 +128,9 @@ public class PersonDataSource extends ADataSource<PersonModel> {
         return null;
     }
 
-    public PersonModel getByCode(String code) {
+    public PersonModel getByCode(String code, int yearId) {
         Cursor cursor = mDatabase.query(PersonTbl.TABLE_NAME, getAllColumns(),
+                PersonTbl.COLUMN_YEAR_ID_FK + "=" + yearId + " AND " +
                 PersonTbl.COLUMN_CODE + " = '" + code + "'", null, null, null, null);
 
         PersonModel person = null;
@@ -137,10 +141,11 @@ public class PersonDataSource extends ADataSource<PersonModel> {
         return person;
     }
 
-    public boolean isExistByCode(String code) {
+    public boolean isExistByCode(String code, int yearId) {
         Cursor cursor = null;
         try {
             cursor = mDatabase.query(PersonTbl.TABLE_NAME, getAllColumns(),
+                    PersonTbl.COLUMN_YEAR_ID_FK + "=" + yearId + " AND " +
                     PersonTbl.COLUMN_CODE + " = '" + code + "'", null, null, null, null);
 
             cursor.moveToFirst();

@@ -30,6 +30,7 @@ import ir.caspiansoftware.caspianandroidapp.PresentationLayer.Faktor.Confirm.PFa
 import ir.caspiansoftware.caspianandroidapp.PresentationLayer.Faktor.Confirm.PFaktorConfirmListFragment;
 import ir.caspiansoftware.caspianandroidapp.PresentationLayer.Kala.MojoodiList.KalaMojoodiListActivity;
 import ir.caspiansoftware.caspianandroidapp.PresentationLayer.Kala.MojoodiList.KalaMojoodiListFragment;
+import ir.caspiansoftware.caspianandroidapp.PresentationLayer.Person.DaftarTaf.DaftarTafActivity;
 import ir.caspiansoftware.caspianandroidapp.PresentationLayer.Person.MandeList.PersonMandeListActivity;
 import ir.caspiansoftware.caspianandroidapp.PresentationLayer.Person.MandeList.PersonMandeListFragment;
 import ir.caspiansoftware.caspianandroidapp.PresentationLayer.Year.YearListActivity;
@@ -165,9 +166,12 @@ public class MainActivity extends CaspianActivityTwoFragments {
                 showKalaMojoodiListShow();
                 break;
 
-            case Actions.ACTION_CUSTOMER_REPORT:
+            case Actions.ACTION_PERSON_MANDE_LIST:
+                showPersonMandeListShow();
+                break;
 
-                //showPersonMandeListShow();
+            case Actions.ACTION_DAF_TAF:
+                showDafTaf();
                 break;
         }
     }
@@ -203,6 +207,11 @@ public class MainActivity extends CaspianActivityTwoFragments {
 
             pll.start(selectedInvoiceList);
         }
+    }
+
+    private void showDafTaf() {
+        Intent i = new Intent(getApplicationContext(), DaftarTafActivity.class);
+        startActivity(i);
     }
 
     private void showKalaMojoodiListShow() {

@@ -24,6 +24,7 @@ import android.widget.TextView;
 
 import info.elyasi.android.elyasilib.Persian.PersianConvert;
 import info.elyasi.android.elyasilib.R;
+import info.elyasi.android.elyasilib.Thread.ICallBack;
 
 
 /**
@@ -203,6 +204,10 @@ public abstract class ActivityFragmentExt extends FragmentActivity implements Vi
     }
 
     public void showError(String errorMessage) {
+        showError(errorMessage, null);
+    }
+
+    public void showError(String errorMessage, final ICallBack callBack) {
         new AlertDialog.Builder(this)
                 .setTitle(R.string.error_title)
                 //.setMessage(PersianConvert.ConvertNumbersToPersian(errorMessage))
@@ -211,7 +216,7 @@ public abstract class ActivityFragmentExt extends FragmentActivity implements Vi
                 .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-
+                        callBack.callback("OnClick", i, null);
                     }
                 }).create().show();
     }

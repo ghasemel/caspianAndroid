@@ -9,7 +9,7 @@ package ir.caspiansoftware.caspianandroidapp;
 public class Setting {
     public static final String APP_NAME = "caspian";
 
-    public static final int APP_DB_VERSION = 1;
+    public static final int APP_DB_VERSION = 4;
     public static final boolean RECREATE_DATABASE = false;
     public static final String CASPIAN_DB = "caspian_db.sqlite";
 

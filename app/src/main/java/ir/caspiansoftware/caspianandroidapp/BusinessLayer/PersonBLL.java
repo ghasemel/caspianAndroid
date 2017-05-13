@@ -12,6 +12,7 @@ import ir.caspiansoftware.caspianandroidapp.BaseCaspian.CaspianErrors;
 import ir.caspiansoftware.caspianandroidapp.DataLayer.DataBase.PersonDataSource;
 import ir.caspiansoftware.caspianandroidapp.DataLayer.WebService.PersonWebService;
 import ir.caspiansoftware.caspianandroidapp.DataLayer.WebService.ResponseToModel;
+import ir.caspiansoftware.caspianandroidapp.Models.DaftarTafReportModel;
 import ir.caspiansoftware.caspianandroidapp.Models.PersonLastSellInfoModel;
 import ir.caspiansoftware.caspianandroidapp.Models.PersonModel;
 import ir.caspiansoftware.caspianandroidapp.Vars;
@@ -30,12 +31,11 @@ public class PersonBLL extends ABusinessLayer {
     }
 
     // region webService ***************************************************************************
-    public List<PersonModel> FetchPersonList(String dbName) throws Exception
-    {
+    public List<PersonModel> FetchPersonList() throws Exception {
         Log.d(TAG, "FetchPersonList start");
         try {
             ResponseWebService responseWebService =
-                    mPersonWebService.GetPersonList(dbName);
+                    mPersonWebService.GetPersonList(Vars.YEAR.getDataBase());
 
             if (responseWebService == null)
                 throw new Exception("responseWebService is null");
@@ -47,12 +47,11 @@ public class PersonBLL extends ABusinessLayer {
         }
     }
 
-    public Integer FetchPersonListCount(String dbName) throws Exception
-    {
+    public Integer FetchPersonListCount() throws Exception {
         Log.d(TAG, "FetchPersonListCount start");
         try {
             ResponseWebService responseWebService =
-                    mPersonWebService.GetPersonCount(dbName);
+                    mPersonWebService.GetPersonCount(Vars.YEAR.getDataBase());
 
             if (responseWebService == null)
                 throw new Exception("responseWebService is null");
@@ -63,12 +62,11 @@ public class PersonBLL extends ABusinessLayer {
         }
     }
 
-    public double FetchPersonMande(String dbName, String code) throws Exception
-    {
+    public double FetchPersonMande(String code) throws Exception {
         Log.d(TAG, "FetchPersonMande start");
         try {
             ResponseWebService responseWebService =
-                    mPersonWebService.GetPersonMandeByCode(dbName, code);
+                    mPersonWebService.GetPersonMandeByCode(Vars.YEAR.getDataBase(), code);
 
             if (responseWebService == null)
                 throw new Exception("responseWebService is null");
@@ -80,12 +78,11 @@ public class PersonBLL extends ABusinessLayer {
         }
     }
 
-    public PersonModel FetchPersonByCode(String dbName, String code) throws Exception
-    {
+    public PersonModel FetchPersonByCode(String code) throws Exception {
         Log.d(TAG, "FetchPersonByCode start");
         try {
             ResponseWebService responseWebService =
-                    mPersonWebService.GetPersonByCode(dbName, code);
+                    mPersonWebService.GetPersonByCode(Vars.YEAR.getDataBase(), code);
 
             if (responseWebService == null)
                 throw new Exception("responseWebService is null");
@@ -97,8 +94,7 @@ public class PersonBLL extends ABusinessLayer {
         }
     }
 
-    public PersonLastSellInfoModel FetchPersonLastSellInfo(String personCode, String kalaCode) throws Exception
-    {
+    public PersonLastSellInfoModel FetchPersonLastSellInfo(String personCode, String kalaCode) throws Exception {
         Log.d(TAG, "FetchPersonLastSellInfo start");
         try {
             ResponseWebService responseWebService =
@@ -111,6 +107,22 @@ public class PersonBLL extends ABusinessLayer {
 
         } finally {
             Log.d(TAG, "FetchPersonLastSellInfo finished");
+        }
+    }
+
+    public ArrayList<DaftarTafReportModel> FetchPersonDaftarTaf(String personCode, String fromDate, String tillDate) throws Exception {
+        Log.d(TAG, "FetchPersonDaftarTaf start");
+        try {
+            ResponseWebService responseWebService =
+                    mPersonWebService.GetPersonDaftarTaf(Vars.YEAR.getDataBase(), personCode, fromDate, tillDate);
+
+            if (responseWebService == null)
+                throw new Exception("responseWebService is null");
+
+            return ResponseToModel.getDaftarTafReport(responseWebService.getData());
+
+        } finally {
+            Log.d(TAG, "FetchPersonDaftarTaf finished");
         }
     }
     // endregion webService ************************************************************************
@@ -127,14 +139,14 @@ public class PersonBLL extends ABusinessLayer {
                 return;
 
 
-         //ي
+            //ي
             //person.setCode(PersianConvert.ConvertDigitsToPersian(person.getCode()));
             //person.setName(PersianConvert.ConvertDigitsToPersian(person.getName()));
             //person.setAddress(PersianConvert.ConvertDigitsToPersian(person.getAddress()));
             person.setName(person.getName().replace("ي", "ی"));
 
             dataSource.open();
-            if (dataSource.isExistByCode(person.getCode())) {
+            if (dataSource.isExistByCode(person.getCode(), person.getYearId_FK())) {
                 // update
                 Log.d(TAG, "update " + person.getCode());
                 dataSource.update(person);
@@ -182,14 +194,14 @@ public class PersonBLL extends ABusinessLayer {
         }
     }
 
-    public PersonModel getByCode(String code) throws Exception {
+    public PersonModel getByCode(String code, int yearId) throws Exception {
         PersonDataSource personDataSource = new PersonDataSource(mContext);
         try {
             if (code.trim().equals(""))
                 throw new Exception(CaspianErrors.CUSTOMER_INVALID);
 
             personDataSource.open();
-            return personDataSource.getByCode(code);
+            return personDataSource.getByCode(code, yearId);
         } finally {
             personDataSource.close();
         }

@@ -48,8 +48,6 @@ public class PFaktorActivity extends CaspianActivitySingleFragment {
         super.onCreate(savedBundleState);
 
         CaspianActionbar.setActionbarEvents(this);
-
-
     }
 
     @Override
