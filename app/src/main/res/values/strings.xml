@@ -49,6 +49,7 @@
 
 
     <string name="description_label">توضیحات: </string>
+    <string name="column_description_list">توضیحات</string>
 
     <string name="sending_to_server">در حال ارسال اطلاعات به سرور</string>
 
@@ -58,4 +59,11 @@
 
     <string name="successful_operation">با موفقیت انجام شد.</string>
 
+    <string name="no_person_selected">هیچ شخصی انتخاب نشده است</string>
+
+    <string name="column_bed_list_title">بدهکار</string>
+    <string name="column_bes_list_title">بستانکار</string>
+    <string name="column_code_hesab_title">کدحساب</string>
+    <string name="column_mande_title">مانده</string>
+    <string name="column_type_mande_title">نوع</string>
 </resources>

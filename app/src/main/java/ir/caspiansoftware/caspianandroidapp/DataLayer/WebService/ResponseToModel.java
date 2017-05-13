@@ -8,6 +8,8 @@ import org.json.JSONTokener;
 import java.util.ArrayList;
 import java.util.List;
 
+import ir.caspiansoftware.caspianandroidapp.Models.DaftarTafReportModel;
+import ir.caspiansoftware.caspianandroidapp.Models.DoreModel;
 import ir.caspiansoftware.caspianandroidapp.Models.KalaModel;
 import ir.caspiansoftware.caspianandroidapp.Models.PersonLastSellInfoModel;
 import ir.caspiansoftware.caspianandroidapp.Models.PersonModel;
@@ -79,13 +81,23 @@ public class ResponseToModel {
         return list;
     }
 
-    public static YearMaliModel getYearMali(JSONObject yearMali) throws JSONException {
+    private static YearMaliModel getYearMali(JSONObject yearMali) throws JSONException {
         YearMaliModel year = new YearMaliModel();
         year.setYear(yearMali.getInt("Year"));
         year.setDaftar(yearMali.getInt("Daftar"));
         year.setCompany(yearMali.getString("CompanyName"));
         year.setDataBase(yearMali.getString("DataBase"));
+        year.setDoreModel(getDore(yearMali.getJSONObject("Dore")));
         return year;
+    }
+
+    private static DoreModel getDore(JSONObject doreMali) throws JSONException {
+        DoreModel dore = new DoreModel();
+        dore.setYear(doreMali.getInt("Year"));
+        dore.setDaftar(doreMali.getInt("Daftar"));
+        dore.setStartDore(doreMali.getString("DoreStart"));
+        dore.setEndDore(doreMali.getString("DoreEnd"));
+        return dore;
     }
 
     public static List<KalaModel> getKalaList(String kalaListResponse, int yearMaliId) throws JSONException {
@@ -107,7 +119,7 @@ public class ResponseToModel {
         return list;
     }
 
-    public static KalaModel getKala(JSONObject kala) throws JSONException {
+    private static KalaModel getKala(JSONObject kala) throws JSONException {
         KalaModel kalaModel = new KalaModel();
         kalaModel.setCode(kala.getString("code"));
         kalaModel.setName(kala.getString("name"));
@@ -163,6 +175,38 @@ public class ResponseToModel {
             throw new JSONException("personListResponse is not a JSON object");
 
         return personJsonToObject((JSONObject) obj);
+    }
+
+    public static ArrayList<DaftarTafReportModel> getDaftarTafReport(String daftarTafReportList) throws JSONException {
+        Object obj = new JSONTokener(daftarTafReportList).nextValue();
+        if (!(obj instanceof JSONArray))
+            throw new JSONException("daftarTafReportList is not a JSON array");
+
+        JSONArray array = (JSONArray) obj;
+        if (array.length() == 0)
+            return null;
+
+        ArrayList<DaftarTafReportModel> list = new ArrayList<>(array.length());
+        for (int j = 0; j < array.length(); j++) {
+            list.add(
+                    getDaftarTaf(array.getJSONObject(j))
+            );
+        }
+
+        return list;
+    }
+
+    private static DaftarTafReportModel getDaftarTaf(JSONObject daftarTafResponse) throws JSONException {
+        DaftarTafReportModel daftarTaf = new DaftarTafReportModel();
+        daftarTaf.setTarikh(daftarTafResponse.getString("tarikh"));
+        daftarTaf.setCode(daftarTafResponse.getString("code"));
+        daftarTaf.setBed(daftarTafResponse.getLong("bed"));
+        daftarTaf.setBes(daftarTafResponse.getLong("bes"));
+        daftarTaf.setDescription(daftarTafResponse.getString("des"));
+        daftarTaf.setMande(daftarTafResponse.getLong("mande"));
+        daftarTaf.setType(daftarTafResponse.getString("type"));
+
+        return daftarTaf;
     }
 
     private static PersonModel personJsonToObject(JSONObject person) throws JSONException {

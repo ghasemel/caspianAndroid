@@ -17,10 +17,14 @@ public class NumberExt {
     }
 
     public static String DigitSeparator(BigDecimal decimal) {
+        if (decimal.longValue() < 0)
+            return String.format("(%,d)", decimal.longValue() * -1);
         return String.format("%,d", decimal.longValue());
     }
 
     public static String DigitSeparator(long value) {
+        if (value < 0)
+            return String.format("(%,d)", value * -1);
         return String.format("%,d", value);
     }
 

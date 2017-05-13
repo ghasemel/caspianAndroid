@@ -61,7 +61,7 @@ public class FaktorKalaActivity extends CaspianActivitySingleFragment {
         super.onAttachFragment(fragment);
 
         if (fragment instanceof IFragmentCallback) {
-            mFragmentCallback  = (IFragmentCallback) fragment;
+            mFragmentCallback = (IFragmentCallback) fragment;
         }
     }
 

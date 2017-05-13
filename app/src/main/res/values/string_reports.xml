@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="report_from_date">از تاریخ:</string>
+    <string name="report_to_date">تا تاریخ:</string>
+
+    <!-- daf taf report -->
+    <string name="daf_taf_title">گزارش دفتر تقضیلی مشتری</string>
+    <string name="daf_taf_person_code">کد مشتری:</string>
+    <string name="daf_taf_report_title" formatted="false">دفتر تفضیلی %s تا تاریخ %s</string>
+    <string name="fragment_daf_taf_row_tag">fragment_daf_taf_row_tag</string>
+</resources>

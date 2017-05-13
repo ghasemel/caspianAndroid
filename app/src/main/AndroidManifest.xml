@@ -56,6 +56,9 @@
 
         <activity android:name=".PresentationLayer.Person.MandeList.PersonMandeListActivity" android:label="@string/person_list_mande" />
         <activity android:name=".PresentationLayer.Kala.MojoodiList.KalaMojoodiListActivity" android:label="@string/list_kala_mojoodi" />
+
+        <activity android:name=".PresentationLayer.Person.DaftarTaf.DaftarTafActivity" android:label="@string/daf_taf_title" android:theme="@style/PopupTheme" />
+        <activity android:name=".PresentationLayer.Person.DaftarTaf.DaftarTafReportActivity" android:label="@string/daf_taf_title" android:windowSoftInputMode="stateHidden" />
         <!-- android:theme="@android:style/Theme.NoTitleBar.Fullscreen"   android:screenOrientation="landscape" -->
     </application>
 

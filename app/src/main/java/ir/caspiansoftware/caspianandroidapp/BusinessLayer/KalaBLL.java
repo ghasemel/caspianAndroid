@@ -112,7 +112,7 @@ public class KalaBLL extends ABusinessLayer {
 
             dataSource.open();
             Log.d(TAG, "check for insert or update");
-            if (dataSource.isExistByCode(kala.getCode())) {
+            if (dataSource.isExistByCode(kala.getCode(), kala.getYearId_FK())) {
                 // update
                 Log.d(TAG, "update " + kala.getCode());
                 dataSource.update(kala);

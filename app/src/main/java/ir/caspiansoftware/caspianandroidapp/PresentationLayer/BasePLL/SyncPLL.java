@@ -100,10 +100,9 @@ public class SyncPLL {
                 if (mCountPerson > 0) {
                     try {
                         PersonBLL personBLL = new PersonBLL(mContext);
-                        List<PersonModel> personList = personBLL.FetchPersonList(Vars.YEAR.getDataBase());
+                        List<PersonModel> personList = personBLL.FetchPersonList();
 
                         personBLL.DeleteNotExistInList(personList);
-
                         for (int i = 0; i < personList.size(); i++) {
                             if (mCancel) return Constant.CANCEL;
                             personBLL.SyncWithDatabase(personList.get(i));
@@ -187,7 +186,7 @@ public class SyncPLL {
                 int person_count = 0;
                 try {
                     PersonBLL personBLL = new PersonBLL(mContext);
-                    person_count = personBLL.FetchPersonListCount(Vars.YEAR.getDataBase());
+                    person_count = personBLL.FetchPersonListCount();
 
                 } catch (Exception ex) {
                     setException(ex);

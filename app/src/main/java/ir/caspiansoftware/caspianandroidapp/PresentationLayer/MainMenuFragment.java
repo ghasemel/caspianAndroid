@@ -9,6 +9,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import java.util.Map;
+import java.util.Objects;
 
 import info.elyasi.android.elyasilib.UI.FormActionTypes;
 import info.elyasi.android.elyasilib.UI.IActivityCallback;
@@ -33,7 +34,8 @@ public class MainMenuFragment extends CaspianFragment implements IFragmentCallba
 
     private LinearLayout mBtnSetting;
     private LinearLayout mBtnPreInvoice;
-    private LinearLayout mBtnCustomerReport;
+    private LinearLayout mBtnPersonMandeReport;
+    private LinearLayout mBtnDafTafReport;
     private LinearLayout mBtnKalaMojoodi;
     private LinearLayout mBtnSync;
     private TextView mLabelChangeYear;
@@ -124,8 +126,11 @@ public class MainMenuFragment extends CaspianFragment implements IFragmentCallba
         // pre-invoice button
         mBtnPreInvoice = (LinearLayout) v.findViewById(R.id.main_button_pre_invoice);
 
-        // customer report button
-        mBtnCustomerReport = (LinearLayout) v.findViewById(R.id.main_button_customer_report);
+        // person mande report button
+        mBtnPersonMandeReport = (LinearLayout) v.findViewById(R.id.main_button_person_mande_report);
+
+        // daf taf report
+        mBtnDafTafReport = (LinearLayout) v.findViewById(R.id.main_button_daf_taf_report);
 
         // stuff report button
         mBtnKalaMojoodi = (LinearLayout) v.findViewById(R.id.main_button_stuff_report);
@@ -156,7 +161,7 @@ public class MainMenuFragment extends CaspianFragment implements IFragmentCallba
         // check for unselected year mali
         if ((Vars.YEAR == null && !v.equals(mBtnLogout)) || v.equals(mFrameChangeYear)) {
             // check for logout from server side
-            //shouldLogoutPLL.shouldLogout(getActivity().getApplicationContext(), this, mActivityCallback);
+            //ShouldLogoutPLL.shouldLogout(getActivity().getApplicationContext(), this, mActivityCallback);
             mActivityCallback.fragment_callback(Actions.ACTION_YEAR_MALI, null, (Object) null);
 
         } else if (v.equals(mBtnLogout)) {
@@ -178,10 +183,14 @@ public class MainMenuFragment extends CaspianFragment implements IFragmentCallba
             Log.d(TAG, Actions.ACTION_KALA_MOJOODI_LIST + " called");
             mActivityCallback.fragment_callback(Actions.ACTION_KALA_MOJOODI_LIST, null, (Object) null);
 
-        } else if (v.equals(mBtnCustomerReport)) {
+        } else if (v.equals(mBtnPersonMandeReport)) {
             Log.d(TAG, Actions.ACTION_PERSON_MANDE_LIST + " called");
-            //mActivityCallback.fragment_callback(Actions.ACTION_PERSON_MANDE_LIST, null, (Object) null);
-            mActivityCallback.fragment_callback(Actions.ACTION_CUSTOMER_REPORT, null, (Object) null);
+            mActivityCallback.fragment_callback(Actions.ACTION_PERSON_MANDE_LIST, null, (Object) null);
+            //mActivityCallback.fragment_callback(Actions.ACTION_CUSTOMER_REPORT, null, (Object) null);
+
+        } else if (v.equals(mBtnDafTafReport)) {
+            Log.d(TAG, Actions.ACTION_DAF_TAF + " called");
+            mActivityCallback.fragment_callback(Actions.ACTION_DAF_TAF, null, (Object) null);
         }
     }
 

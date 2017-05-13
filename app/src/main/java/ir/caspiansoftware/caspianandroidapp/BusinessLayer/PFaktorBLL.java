@@ -226,7 +226,7 @@ public class PFaktorBLL extends ABusinessLayer {
                 throw new Exception(CaspianErrors.DATE_INVALID);
 
             PersonBLL personBLL = new PersonBLL(mContext);
-            PersonModel personModel = personBLL.getByCode(customer_code);
+            PersonModel personModel = personBLL.getByCode(customer_code, Vars.YEAR.getId());
             if (personModel == null)
                 throw new Exception(CaspianErrors.CUSTOMER_INVALID);
 

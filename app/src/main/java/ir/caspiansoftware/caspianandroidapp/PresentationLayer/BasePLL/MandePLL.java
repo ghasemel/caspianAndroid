@@ -45,7 +45,7 @@ public class MandePLL extends APLL<PersonModel, Double> {
     protected Double doInBackgroundThread(RunAsync runAsync) throws Exception {
         PersonBLL personBLL = new PersonBLL(getContext());
 
-        double mande = personBLL.FetchPersonMande(Vars.YEAR.getDataBase(), getModel().getCode());
+        double mande = personBLL.FetchPersonMande(getModel().getCode());
         runAsync.updateProgressbar(String.valueOf(mande));
 
         return mande;

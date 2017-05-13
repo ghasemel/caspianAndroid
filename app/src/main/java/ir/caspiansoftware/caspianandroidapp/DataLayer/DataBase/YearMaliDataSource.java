@@ -7,6 +7,7 @@ import android.database.Cursor;
 import java.util.List;
 
 import ir.caspiansoftware.caspianandroidapp.DataLayer.DataBase.Tables.YearMaliTbl;
+import ir.caspiansoftware.caspianandroidapp.Models.DoreModel;
 import ir.caspiansoftware.caspianandroidapp.Models.YearMaliModel;
 
 /**
@@ -101,6 +102,8 @@ public class YearMaliDataSource extends ADataSource<YearMaliModel> {
         cv.put(YearMaliTbl.COLUMN_COMPANY, yearMali.getCompany());
         cv.put(YearMaliTbl.COLUMN_DATABASE, yearMali.getDataBase());
         cv.put(YearMaliTbl.COLUMN_IS_CURRENT, yearMali.isCurrent());
+        cv.put(YearMaliTbl.COLUMN_DORE_START, yearMali.getDoreModel().getStartDore());
+        cv.put(YearMaliTbl.COLUMN_DORE_END, yearMali.getDoreModel().getEndDore());
         return cv;
     }
 
@@ -113,6 +116,14 @@ public class YearMaliDataSource extends ADataSource<YearMaliModel> {
         yearMali.setCompany(cursor.getString(4));
         yearMali.setDataBase(cursor.getString(5));
         yearMali.setCurrent(cursor.getInt(6) == 1);
+
+        DoreModel dore = new DoreModel();
+        dore.setYear(yearMali.getYear());
+        dore.setDaftar(yearMali.getDaftar());
+        dore.setStartDore(cursor.getString(7));
+        dore.setEndDore(cursor.getString(8));
+
+        yearMali.setDoreModel(dore);
         return yearMali;
     }
 }

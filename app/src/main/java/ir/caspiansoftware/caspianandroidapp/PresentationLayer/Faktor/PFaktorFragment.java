@@ -494,21 +494,24 @@ public class PFaktorFragment extends CaspianDataGridFragment<SPFaktorModel> impl
         if (checkForSync())
             return;
 
-        DatePickerDialog dialog = new DatePickerDialog();
-        dialog.setDialogCallback(new IDialogCallback<PersianCalendar>() {
+        DatePickerDialog.SelectDate(mEditTextInvoiceDate, getActivity().getFragmentManager(), new IDialogCallback<PersianCalendar>() {
             @Override
             public void dialog_callback(DialogResult dialogResult, PersianCalendar result, int requestCode) {
-                Log.d(TAG, "dialogResult: " + dialogResult);
-
                 if (dialogResult == DialogResult.OK) {
-                    Log.d(TAG, "PersianDate: " + result.getPersianShortDate());
-                    mEditTextInvoiceDate.setText(result.getPersianShortDate());
                     mModified = true;
                 }
             }
         });
+
+        /*DatePickerDialog dialog = new DatePickerDialog();
+        dialog.setDialogCallback(new IDialogCallback<PersianCalendar>() {
+            @Override
+            public void dialog_callback(DialogResult dialogResult, PersianCalendar result, int requestCode) {
+
+            }
+        });
         dialog.setCurrentDate(mEditTextInvoiceDate.getText().toString());
-        dialog.show(getActivity().getFragmentManager(), "DATE");
+        dialog.show(getActivity().getFragmentManager(), "DATE");*/
     }
 
     private void getMande(PersonModel person) {

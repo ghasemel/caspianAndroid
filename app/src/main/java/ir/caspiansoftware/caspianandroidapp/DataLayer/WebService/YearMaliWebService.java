@@ -35,4 +35,24 @@ public class YearMaliWebService extends RESTDotNetWebService {
         Log.d(TAG, "GetYearMali finished");
         return responseWebService;
     }
+
+    public ResponseWebService GetDore(String dbName) throws Exception {
+        Log.d(TAG, "GetDore(): start");
+
+        NameValue[] parameter = {
+            new NameValue<>("dbName", dbName)
+        };
+
+        ResponseWebService responseWebService =
+                sendRequest(
+                        SettingWebService.getAPI_URL(),
+                        "GetDore",
+                        parameter,
+                        true,
+                        RequestType.create(RequestType.RType.GET)
+                );
+
+        Log.d(TAG, "GetDore(): end");
+        return responseWebService;
+    }
 }
