@@ -34,7 +34,7 @@ public class DaftarTafActivity extends CaspianActivitySingleFragment {
     @Override
     public void onCreate(Bundle savedBundleState) {
         Log.d(TAG, "start...");
-        showAsPopup(this, 400, 300);//getResources().getInteger(R.integer.popup_width) / 2);
+        showAsPopup(this, getResources().getInteger(R.integer.popup_daf_taf_height), getResources().getInteger(R.integer.popup_daf_taf_width));
         CaspianActionbar.setActionbarLayout(this, R.layout.actionbar_dialog, R.string.daf_taf_title);
 
         super.onCreate(savedBundleState);

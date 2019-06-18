@@ -23,11 +23,11 @@ public class FileExt {
         return file;
     }
 
-    public static String getSdCardState() {
+    public static String getExternalStorageState() {
         return Environment.getExternalStorageState();
     }
 
-    public static File getSdCard() {
+    public static File getExternalStorage() {
         return Environment.getExternalStorageDirectory();
     }
 

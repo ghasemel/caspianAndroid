@@ -1,6 +1,7 @@
 package info.elyasi.android.elyasilib.Utility;
 
 import android.content.Context;
+import android.os.Environment;
 import android.util.Log;
 
 import java.io.File;
@@ -32,15 +33,18 @@ public class LogExt {
         mContext = context;
 
         try {
-            File parentDir = null;
-            String sdCardState = FileExt.getSdCardState();
-            if (sdCardState.equals("mounted")) {
-                File sdCard = FileExt.getSdCard();
+           File parentDir = null;
+           String sdCardState = FileExt.getExternalStorageState();
+           if (sdCardState.equals("mounted")) {
+                File sdCard = FileExt.getExternalStorage();
                 parentDir = FileExt.createDirectory(sdCard, rootDirName);
 
             } else {
                 parentDir = FileExt.getInternalStorage(mContext);
             }
+
+            //Environment.
+            //FileExt.createDirectory(Environment.getExternalStorageDirectory(), rootDirName);
 
             if (parentDir != null) {
                 mErrorDir = FileExt.createDirectory(parentDir, "error");
@@ -54,7 +58,7 @@ public class LogExt {
     public void WriteLine(String line) {
         try {
             if (mErrorDir != null && mErrorDir.exists()) {
-                File logfile = FileExt.createFile(mErrorDir, DateExt.getDateAsFileName() + ".log");
+                File logfile = FileExt.createFile(mErrorDir, DateExt.getDateAsFileName() + ".html");
 
                 FileOutputStream stream = new FileOutputStream(logfile, true);
                 PrintWriter writer = new PrintWriter(stream);

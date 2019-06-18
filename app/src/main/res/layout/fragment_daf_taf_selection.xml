@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:padding="10dp"
+              android:layoutDirection="rtl">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        style="@style/frame_content"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true">
+
+        <TextView style="@style/label_title" android:text="@string/daf_taf_title" />
+
+
+        <LinearLayout style="@style/row" android:layout_gravity="center_horizontal" android:gravity="center_horizontal">
+            <TextView style="@style/label" android:layout_width="90dp" android:text="@string/report_from_date" android:labelFor="@+id/editText_fromDate" />
+            <EditText style="@style/textBoxDate" android:id="@id/editText_fromDate" />
+            <ImageView style="@style/ImageViewBtnTouch" android:id="@+id/btn_fromDate_select" />
+        </LinearLayout>
+
+        <LinearLayout style="@style/row" android:layout_gravity="center_horizontal" android:gravity="center_horizontal">
+            <TextView style="@style/label" android:layout_width="90dp" android:text="@string/report_to_date" android:labelFor="@+id/editText_toDate" />
+            <EditText style="@style/textBoxDate" android:id="@id/editText_toDate" />
+            <ImageView style="@style/ImageViewBtnTouch" android:id="@+id/btn_toDate_select" />
+        </LinearLayout>
+
+        <LinearLayout style="@style/row" android:layout_gravity="center_horizontal" android:gravity="center_horizontal">
+            <TextView style="@style/label" android:layout_width="90dp" android:text="@string/daf_taf_person_code" android:labelFor="@+id/editText_daf_taf_report_person_code" />
+            <EditText style="@style/textBoxCode" android:id="@id/editText_daf_taf_report_person_code" android:enabled="false" />
+            <ImageView style="@style/ImageViewBtnTouch" android:id="@+id/btn_person_select" />
+        </LinearLayout>
+
+        <LinearLayout style="@style/row" android:layout_gravity="center_horizontal" android:gravity="center_horizontal">
+            <TextView style="@style/label_red" android:layout_width="wrap_content" android:id="@+id/editText_person_name"  />
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout android:layout_alignParentBottom="true" style="@style/row" android:gravity="center_horizontal">
+        <Button style="@style/button"
+            android:id="@+id/btn_OK"
+            android:text="@string/ok_button" />
+    </LinearLayout>
+</RelativeLayout>

@@ -18,7 +18,7 @@ public class PFaktorSearchActivity extends CaspianActivitySingleFragment {
     public void onCreate(Bundle savedBundleState) {
         Log.d(TAG, "onCreate(): starting");
 
-        showAsPopup(this, 650, getResources().getInteger(R.integer.popup_width));
+        showAsPopup(this, getResources().getInteger(R.integer.popup_height), getResources().getInteger(R.integer.popup_width));
         CaspianActionbar.setActionbarLayout(this, R.layout.actionbar_dialog, R.string.pfaktor_search_title);
         super.onCreate(savedBundleState);
         CaspianActionbar.setActionbarEvents(this);
