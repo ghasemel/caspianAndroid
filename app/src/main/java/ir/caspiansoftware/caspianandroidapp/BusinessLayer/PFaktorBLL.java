@@ -1,14 +1,9 @@
 package ir.caspiansoftware.caspianandroidapp.BusinessLayer;
 
 import android.content.Context;
-import android.location.Location;
-import android.location.LocationListener;
-import android.location.LocationManager;
-import android.os.Bundle;
 import android.util.Log;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 import info.elyasi.android.elyasilib.BLL.ABusinessLayer;
@@ -24,7 +19,6 @@ import ir.caspiansoftware.caspianandroidapp.Models.KalaModel;
 import ir.caspiansoftware.caspianandroidapp.Models.MPFaktorModel;
 import ir.caspiansoftware.caspianandroidapp.Models.PersonModel;
 import ir.caspiansoftware.caspianandroidapp.Models.SPFaktorModel;
-import ir.caspiansoftware.caspianandroidapp.Setting;
 import ir.caspiansoftware.caspianandroidapp.Vars;
 
 /**

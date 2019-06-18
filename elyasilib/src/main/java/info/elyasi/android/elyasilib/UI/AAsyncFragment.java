@@ -13,6 +13,8 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -198,7 +200,7 @@ public abstract class AAsyncFragment extends Fragment implements IAsyncForm {
     }
 
     public void messageBoxOK(int title, String message, int icon, final IDialogCallback dialogCallback, boolean isLatin) {
-        messageBoxOK(title, message, icon, false, dialogCallback, false);
+        messageBoxOK(title, message, icon, false, dialogCallback, isLatin);
     }
 
 
@@ -208,19 +210,37 @@ public abstract class AAsyncFragment extends Fragment implements IAsyncForm {
         // Setting Dialog Title
         alertDialog.setTitle(title);
 
+        ScrollView scrollView = new ScrollView(getContext());
+
+        LinearLayout linearLayout = new LinearLayout(getContext());
+        linearLayout.setOrientation(LinearLayout.VERTICAL);
+        linearLayout.setVerticalScrollBarEnabled(true);
+
         TextView textView = new TextView(getContext());
         textView.setPadding(20, 10, 20, 10);
         if (isLatin) {
             textView.setLayoutDirection(View.LAYOUT_DIRECTION_LTR);
             textView.setTypeface(Typeface.SERIF);
+            textView.setTextAlignment(View.TEXT_ALIGNMENT_TEXT_START);
+
+            scrollView.setTextDirection(View.TEXT_DIRECTION_LTR);
+            scrollView.setTextAlignment(View.TEXT_ALIGNMENT_VIEW_START);
+            scrollView.setLayoutDirection(View.LAYOUT_DIRECTION_LTR);
+
         } else if (containsPrice) {
             textView.setTextSize(17);
             textView.setTypeface(Typeface.SANS_SERIF);
             textView.setLayoutDirection(View.LAYOUT_DIRECTION_RTL);
         }
-
+        //textView.setMaxLines(Integer.MAX_VALUE);
+        //textView.setVerticalScrollBarEnabled(true);
         textView.setText(message);
-        alertDialog.setView(textView);
+        linearLayout.addView(textView);
+        scrollView.addView(linearLayout);
+
+
+        alertDialog.setView(scrollView);
+
 
         // Setting Icon to Dialog
         alertDialog.setIcon(icon);

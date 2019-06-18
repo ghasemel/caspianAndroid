@@ -186,11 +186,16 @@ public class ResponseToModel {
         if (array.length() == 0)
             return null;
 
+        long sum_mande = 0;
+
         ArrayList<DaftarTafReportModel> list = new ArrayList<>(array.length());
         for (int j = 0; j < array.length(); j++) {
-            list.add(
-                    getDaftarTaf(array.getJSONObject(j))
-            );
+            DaftarTafReportModel m = getDaftarTaf(array.getJSONObject(j));
+
+            sum_mande += m.getMande();
+            m.setMande(sum_mande);
+
+            list.add(m);
         }
 
         return list;
