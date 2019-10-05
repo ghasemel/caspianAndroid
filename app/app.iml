@@ -124,5 +124,6 @@
     <orderEntry type="library" name="Gradle: android.arch.lifecycle:livedata-core:1.1.1@aar" level="project" />
     <orderEntry type="library" name="Gradle: android.arch.core:runtime:1.1.1@aar" level="project" />
     <orderEntry type="module" module-name="elyasilib" />
+    <orderEntry type="module" module-name="elyasilib" />
   </component>
 </module>
