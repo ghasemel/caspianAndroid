@@ -67,10 +67,20 @@
 
 
 
-    <string name="sync_title">همگام سازی اطلاعات حسابها/کالاها</string>
-    <string name="sync_question" formatted="false">اطلاعات %d کالا و %d مشتری برای بروز رسانی یافت شد. آیا ادامه می دهید؟</string>
-    <string name="sync_success_message" formatted="false">اطلاعات %d کالا و %d مشتری بروز شد.</string>
+    <string name="sync_person_title">همگام سازی اطلاعات حسابها</string>
+    <string name="sync_kala_title">همگام سازی اطلاعات کالاها</string>
+    <string name="sync_kala_photo_title">همگام سازی تصاویر کالاها</string>
+    <string name="sync_kala_question" formatted="false">اطلاعات %d کالا برای بروز رسانی یافت شد. آیا ادامه می دهید؟</string>
+    <string name="sync_person_question" formatted="false">اطلاعات %d مشتری برای بروز رسانی یافت شد. آیا ادامه می دهید؟</string>
+    <string name="sync_kala_photo_question" formatted="false">تعداد %d عکس برای کالاها جهت بروز رسانی یافت شد. آیا ادامه می دهید؟</string>
+    <string name="sync_kala_success_message" formatted="false">اطلاعات %d کالا بروز شد.</string>
+    <string name="sync_person_success_message" formatted="false">اطلاعات %d مشتری بروز شد.</string>
+    <string name="sync_kalaPhoto_success_message" formatted="false">تصاویر %d کالا بروز شد.</string>
     <string name="sync_not_exist_message" formatted="false">موردی برای بروز رسانی یافت نشد.</string>
+    <string name="sync_kala" formatted="false">بروز رسانی کالاها</string>
+    <string name="sync_person" formatted="false">بروز رسانی حسابها</string>
+    <string name="sync_kalaPhoto" formatted="false">بروز رسانی تصاویر کالاها</string>
+    <string name="sync_select_sync_type" formatted="false">انتخاب نوع بروز رسانی</string>
 
 
     <string name="pfaktor_send_list_to_server_title">ارسال پیش فاکتورها به سرور</string>

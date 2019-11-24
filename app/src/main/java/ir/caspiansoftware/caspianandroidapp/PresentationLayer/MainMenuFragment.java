@@ -80,7 +80,7 @@ public class MainMenuFragment extends CaspianFragment implements IFragmentCallba
 
             setYearDaftar();
 
-            setUserPermission(getActivity().getApplicationContext(), parentView);
+            setUserPermission(Objects.requireNonNull(getActivity()).getApplicationContext(), parentView);
         } else {
             //GoToForm.goToLoginPage(getActivity());
             mActivityCallback.fragment_callback(Actions.ACTION_LOGOUT, null, (Object) null);

@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import info.elyasi.android.elyasilib.BLL.ABusinessLayer;
+import info.elyasi.android.elyasilib.Utility.DirectoryUtil;
 import ir.caspiansoftware.caspianandroidapp.DataLayer.DataBase.InitialSettingDataSource;
 import ir.caspiansoftware.caspianandroidapp.Models.InitialSettingModel;
 
@@ -19,15 +20,16 @@ public class InitialSettingBLL extends ABusinessLayer {
 
 
     private static List<InitialSettingModel> sInitialSettingList = null;
-    //private Context mContext;
 
 
-    private static InitialSettingBLL sSettingBLL = null;
+
+    public static InitialSettingBLL INSTANCE = null;
+
     public static InitialSettingBLL create(Context context) {
-        if (sSettingBLL == null) {
-            sSettingBLL = new InitialSettingBLL(context);
+        if (INSTANCE == null) {
+            INSTANCE = new InitialSettingBLL(context);
         }
-        return sSettingBLL;
+        return INSTANCE;
     }
 
 
@@ -35,6 +37,10 @@ public class InitialSettingBLL extends ABusinessLayer {
         super(context);
         //mContext = context;
         //sInitialSettingList = loadAllSetting();
+    }
+
+    public String getAppPath() {
+        return DirectoryUtil.getAppDir(mContext);
     }
 
     public static List<InitialSettingModel> getSetting() {
@@ -55,7 +61,7 @@ public class InitialSettingBLL extends ABusinessLayer {
         InitialSettingDataSource initialSettingDataSource = new InitialSettingDataSource(mContext);
         try {
             initialSettingDataSource.open();
-            for (InitialSettingModel setting: settingList) {
+            for (InitialSettingModel setting : settingList) {
                 //setting.setValue(PersianConvert.ConvertDigitsToLatin(setting.getValue()));
                 Log.d(TAG, "setting '" + setting.getName() + "' : " + setting.getValue());
 
@@ -73,12 +79,12 @@ public class InitialSettingBLL extends ABusinessLayer {
     // region static
     public static void save() {
         if (sInitialSettingList != null) {
-            sSettingBLL.saveAllSetting(sInitialSettingList);
+            INSTANCE.saveAllSetting(sInitialSettingList);
         }
     }
 
     public static List<InitialSettingModel> load() {
-        sInitialSettingList = sSettingBLL.loadAllSetting();
+        sInitialSettingList = INSTANCE.loadAllSetting();
         return sInitialSettingList;
     }
 
@@ -146,12 +152,19 @@ public class InitialSettingBLL extends ABusinessLayer {
     }
 
     public static String getAPI_URL(String subPath) {
-        return "http://" + getIP() + ":" + getPort() + subPath +"/api/";
+        return getBaseURL(subPath) + "api/";
+    }
+
+    public static String getBaseURL(String iisAppName) {
+        if (iisAppName == null || iisAppName.isEmpty())
+            return "http://" + getIP() + ":" + getPort() + "/";
+
+        return "http://" + getIP() + ":" + getPort() + "/" + iisAppName + "/";
     }
 
     public static int getDBVersion() {
         InitialSettingDataSource initialSettingDataSource =
-                new InitialSettingDataSource(sSettingBLL.mContext);
+                new InitialSettingDataSource(INSTANCE.mContext);
 
         try {
             initialSettingDataSource.open();

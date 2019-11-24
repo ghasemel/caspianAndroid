@@ -29,7 +29,6 @@ public class LogExt {
     }
 
     private LogExt(String rootDirName, Context context) {
-        //mRootDirName = rootDirName;
         mContext = context;
 
         try {
@@ -42,9 +41,6 @@ public class LogExt {
             } else {
                 parentDir = FileExt.getInternalStorage(mContext);
             }
-
-            //Environment.
-            //FileExt.createDirectory(Environment.getExternalStorageDirectory(), rootDirName);
 
             if (parentDir != null) {
                 mErrorDir = FileExt.createDirectory(parentDir, "error");
