@@ -23,9 +23,11 @@ import ir.caspiansoftware.caspianandroidapp.BaseCaspian.CaspianFragment;
 import ir.caspiansoftware.caspianandroidapp.BaseCaspian.ErrorExt;
 import ir.caspiansoftware.caspianandroidapp.BaseCaspian.GoToForm;
 import ir.caspiansoftware.caspianandroidapp.BusinessLayer.UserBLL;
+import ir.caspiansoftware.caspianandroidapp.Enum.SyncType;
 import ir.caspiansoftware.caspianandroidapp.Models.MPFaktorModel;
 import ir.caspiansoftware.caspianandroidapp.PresentationLayer.BasePLL.SendPreInvoiceListPLL;
-import ir.caspiansoftware.caspianandroidapp.PresentationLayer.BasePLL.SyncPLL;
+import ir.caspiansoftware.caspianandroidapp.PresentationLayer.BasePLL.Sync.SyncPLL;
+import ir.caspiansoftware.caspianandroidapp.PresentationLayer.BasePLL.Sync.SyncTypeActivity;
 import ir.caspiansoftware.caspianandroidapp.PresentationLayer.Faktor.Confirm.PFaktorConfirmListActivity;
 import ir.caspiansoftware.caspianandroidapp.PresentationLayer.Faktor.Confirm.PFaktorConfirmListFragment;
 import ir.caspiansoftware.caspianandroidapp.PresentationLayer.Kala.MojoodiList.KalaMojoodiListActivity;
@@ -35,6 +37,7 @@ import ir.caspiansoftware.caspianandroidapp.PresentationLayer.Person.MandeList.P
 import ir.caspiansoftware.caspianandroidapp.PresentationLayer.Person.MandeList.PersonMandeListFragment;
 import ir.caspiansoftware.caspianandroidapp.PresentationLayer.Year.YearListActivity;
 import ir.caspiansoftware.caspianandroidapp.R;
+import ir.caspiansoftware.caspianandroidapp.SettingWebService;
 import ir.caspiansoftware.caspianandroidapp.Vars;
 
 
@@ -45,6 +48,7 @@ public class MainActivity extends CaspianActivityTwoFragments {
     private static final String TAG = "MainActivity";
     private static final int REQUEST_CODE_YEAR = 1;
     private static final int REQUEST_CODE_NEW_PFAKTOR = 2;
+    private static final int REQUEST_CODE_SYNC_TYPE = 3;
 
     //private LinearLayout mBtnLogout;
     private LinearLayout mBtnExit;
@@ -86,15 +90,14 @@ public class MainActivity extends CaspianActivityTwoFragments {
         super.onAttachFragment(fragment);
 
         // has a detail fragment
-        if (this.getFragmentDetailContainer() != null &&  this.getFragmentDetailContainer().equals(fragment)) {
+        if (this.getFragmentDetailContainer() != null && this.getFragmentDetailContainer().equals(fragment)) {
             if (findViewById(R.id.fragmentDetailContainer) == null) { //&& getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT
-               //fragment.setRetainInstance(false);
+                //fragment.setRetainInstance(false);
 
                 // on rotate to Patriot when we had two fragments already
                 Log.d(TAG, "FragmentDetailContainer removed!");
                 removeFragmentDetail();
-            }
-            else {
+            } else {
                 setActionbarTitleForFragmentDetail(fragment);
                 mFragmentDetailCallback = (IFragmentCallback) fragment;
             }
@@ -158,7 +161,7 @@ public class MainActivity extends CaspianActivityTwoFragments {
                 break;
 
             case Actions.ACTION_CONFIRM_PFaktor_DONE:
-                Log.d(TAG, "action ="  + Actions.ACTION_CONFIRM_PFaktor_DONE);
+                Log.d(TAG, "action =" + Actions.ACTION_CONFIRM_PFaktor_DONE);
                 updatePFaktorConfirmList();
                 break;
 
@@ -191,6 +194,18 @@ public class MainActivity extends CaspianActivityTwoFragments {
             case REQUEST_CODE_NEW_PFAKTOR:
                 updatePFaktorConfirmList();
                 break;
+
+            case REQUEST_CODE_SYNC_TYPE:
+                if (data != null && data.getExtras() != null) {
+                    SyncPLL syncPLL = new SyncPLL(getApplicationContext(),
+                            (CaspianFragment) getFragmentContainer(),
+                            (SyncType) data.getExtras().get(SyncTypeActivity.EXTRA_SYNC_TYPE),
+                            this,
+                            SettingWebService.getImageURL()
+                    );
+                    syncPLL.start();
+                }
+                break;
         }
     }
 
@@ -200,9 +215,9 @@ public class MainActivity extends CaspianActivityTwoFragments {
             SendPreInvoiceListPLL pll =
                     new SendPreInvoiceListPLL
                             (
-                                getApplicationContext(),
-                                (IAsyncForm) getFragmentContainer(),
-                                this
+                                    getApplicationContext(),
+                                    (IAsyncForm) getFragmentContainer(),
+                                    this
                             );
 
             pll.start(selectedInvoiceList);
@@ -258,8 +273,7 @@ public class MainActivity extends CaspianActivityTwoFragments {
         }
     }
 
-    private void updatePFaktorConfirmList()
-    {
+    private void updatePFaktorConfirmList() {
         if (getFragmentDetailContainer() != null && getFragmentDetailContainer() instanceof IFragmentCallback) {
             ((IFragmentCallback) getFragmentDetailContainer())
                     .activity_callback(PFaktorConfirmListFragment.REFRESH_LIST, null, null);
@@ -297,19 +311,16 @@ public class MainActivity extends CaspianActivityTwoFragments {
     public void startSync() {
         Log.d(TAG, "startSync start");
         if (getFragmentContainer() != null && getFragmentContainer() instanceof CaspianFragment) {
-            SyncPLL syncPLL = new SyncPLL(getApplicationContext(), (CaspianFragment)getFragmentContainer(), this);
-            syncPLL.start();
+            Intent i = new Intent(getApplicationContext(), SyncTypeActivity.class);
+            startActivityForResult(i, REQUEST_CODE_SYNC_TYPE);
         }
     }
-
-
 
     public void showPreInvoiceList() {
 
     }
 
-    public void showYearMaliForm()
-    {
+    public void showYearMaliForm() {
         Intent i = new Intent(this, YearListActivity.class);
         i.putExtra(AListRowFragment.EXTRA_RETURN_NAME, "");
         startActivityForResult(i, REQUEST_CODE_YEAR);
@@ -338,12 +349,11 @@ public class MainActivity extends CaspianActivityTwoFragments {
 
     // region actionbar ****************************************************************************
     private void setActionbarTitleDefault() {
-       String title = Vars.YEAR != null ? Vars.YEAR.getCompany() :
-                    getResources().getString(R.string.app_full_title);
+        String title = Vars.YEAR != null ? Vars.YEAR.getCompany() :
+                getResources().getString(R.string.app_full_title);
 
         setActionbarTitle(title, R.id.actionbar_title);
     }
-
 
 
     private void setActionbarTitleForFragmentDetail(Fragment fragment) {
@@ -353,7 +363,7 @@ public class MainActivity extends CaspianActivityTwoFragments {
     }
     // endregion actionbar
 
-     // for option menu on actionbar
+    // for option menu on actionbar
     /*
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

@@ -11,6 +11,7 @@ import java.util.List;
 import ir.caspiansoftware.caspianandroidapp.Models.DaftarTafReportModel;
 import ir.caspiansoftware.caspianandroidapp.Models.DoreModel;
 import ir.caspiansoftware.caspianandroidapp.Models.KalaModel;
+import ir.caspiansoftware.caspianandroidapp.Models.KalaPhotoModel;
 import ir.caspiansoftware.caspianandroidapp.Models.PersonLastSellInfoModel;
 import ir.caspiansoftware.caspianandroidapp.Models.PersonModel;
 import ir.caspiansoftware.caspianandroidapp.Models.YearMaliModel;
@@ -119,6 +120,25 @@ public class ResponseToModel {
         return list;
     }
 
+    public static List<KalaPhotoModel> getKalaPhotosList(String kalaPhotosListResponse, int yearMaliId) throws JSONException {
+        Object obj = new JSONTokener(kalaPhotosListResponse).nextValue();
+        if (!(obj instanceof JSONArray))
+            throw new JSONException("kalaPhotosListResponse is not a JSON array");
+
+        JSONArray array = (JSONArray) obj;
+        if (array.length() == 0)
+            return null;
+
+        List<KalaPhotoModel> list = new ArrayList<>(array.length());
+        for (int j = 0; j < array.length(); j++) {
+            KalaPhotoModel photoModel = getKalaPhoto(array.getJSONObject(j));
+            photoModel.setYearIdFK(yearMaliId);
+            list.add(photoModel);
+        }
+
+        return list;
+    }
+
     private static KalaModel getKala(JSONObject kala) throws JSONException {
         KalaModel kalaModel = new KalaModel();
         kalaModel.setCode(kala.getString("code"));
@@ -132,6 +152,15 @@ public class ResponseToModel {
         kalaModel.setPriceOmde(kala.getInt("price_omde"));
         kalaModel.setMojoodi(kala.getDouble("mojoodi"));
         return kalaModel;
+    }
+
+    private static KalaPhotoModel getKalaPhoto(JSONObject kalaPhoto) throws JSONException {
+        KalaPhotoModel photoModel = new KalaPhotoModel();
+        photoModel.setServerPhotoId(kalaPhoto.getInt("id"));
+        photoModel.setCode(kalaPhoto.getString("codeKala"));
+        photoModel.setFileName(kalaPhoto.getString("fileName"));
+        photoModel.setTitle(kalaPhoto.getString("title"));
+        return photoModel;
     }
 
     public static PersonLastSellInfoModel getPersonLastSellInfo(String responseData) throws JSONException {

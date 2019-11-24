@@ -69,4 +69,33 @@ public class KalaWebService extends RESTDotNetWebService {
         Log.d(TAG, "GetKalaMojoodiByCode finished");
         return responseWebService;
     }
+
+    public ResponseWebService GetKalaPhotosList(String dbName) throws Exception {
+        Log.d(TAG, "GetKalaPhotosList start");
+
+        NameValue[] parameter = {
+                new NameValue<>("dbName", dbName)
+        };
+
+        ResponseWebService responseWebService = sendRequest(SettingWebService.getAPI_URL(), "GetKalaPhotosList", parameter, true,
+                RequestType.create(RequestType.RType.GET));
+
+        Log.d(TAG, "GetKalaPhotosList finished");
+        return responseWebService;
+    }
+
+    public ResponseWebService GetKalaPhotosCount(String dbName) throws Exception {
+        Log.d(TAG, "GetKalaPhotosCount start");
+
+        NameValue[] parameter = {
+                //new NameValue<>("userId", String.valueOf(userId)),
+                new NameValue<>("dbName", dbName)
+        };
+
+        ResponseWebService responseWebService = sendRequest(SettingWebService.getAPI_URL(), "GetKalaPhotosCount", parameter, false,
+                RequestType.create(RequestType.RType.GET));
+
+        Log.d(TAG, "GetKalaPhotosCount finished");
+        return responseWebService;
+    }
 }

@@ -25,6 +25,9 @@ public abstract class AAsyncTask<Params, Progress, Result> extends AsyncTask<Par
         mException = null;
     }
 
+    public void progress(Progress... values) {
+        publishProgress(values);
+    }
 
     public ProgressBar getBar() {
         return mBar;

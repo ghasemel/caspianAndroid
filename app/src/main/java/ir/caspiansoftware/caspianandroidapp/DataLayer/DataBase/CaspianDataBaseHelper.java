@@ -12,6 +12,7 @@ import java.io.InputStreamReader;
 
 import ir.caspiansoftware.caspianandroidapp.BaseCaspian.CaspianErrors;
 import ir.caspiansoftware.caspianandroidapp.DataLayer.DataBase.Tables.InitialSettingTbl;
+import ir.caspiansoftware.caspianandroidapp.DataLayer.DataBase.Tables.KalaPhotoTbl;
 import ir.caspiansoftware.caspianandroidapp.DataLayer.DataBase.Tables.KalaTbl;
 import ir.caspiansoftware.caspianandroidapp.DataLayer.DataBase.Tables.MPFaktorTbl;
 import ir.caspiansoftware.caspianandroidapp.DataLayer.DataBase.Tables.PersonTbl;
@@ -99,6 +100,10 @@ public class CaspianDataBaseHelper extends SQLiteOpenHelper {
             Log.d(TAG, sql);
             db.execSQL(sql);
 
+            sql = KalaPhotoTbl.get().createTableSql();
+            Log.d(TAG, sql);
+            db.execSQL(sql);
+
         } catch (Exception ex) {
             Log.e(TAG, ex.getMessage());
             throw ex;
@@ -118,6 +123,9 @@ public class CaspianDataBaseHelper extends SQLiteOpenHelper {
             switch (oldVersion) {
                 case 1:
                     execSQLFile(mContext, db, R.raw.dore_mali_sql);
+
+                case 2:
+                    execSQLFile(mContext, db, R.raw.kala_photo_sql);
             }
 
             // commit

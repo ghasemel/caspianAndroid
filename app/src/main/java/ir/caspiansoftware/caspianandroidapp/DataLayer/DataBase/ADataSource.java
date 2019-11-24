@@ -10,7 +10,7 @@ import info.elyasi.android.elyasilib.DataBase.IDataSource;
 /**
  * Created by Canada on 1/18/2016.
  */
-public abstract class ADataSource<T> implements IDataSource<T> {
+public abstract class ADataSource<T> implements IDataSource<T>, AutoCloseable {
 
     protected CaspianDataBaseHelper mDataBaseHelper;
     protected SQLiteDatabase mDatabase;
@@ -28,6 +28,7 @@ public abstract class ADataSource<T> implements IDataSource<T> {
         }
     }
 
+    @Override
     public void close() {
         if (mDatabase != null && mDatabase.isOpen()) {
             mDatabase.close();
