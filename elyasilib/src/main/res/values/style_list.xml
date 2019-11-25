@@ -24,6 +24,18 @@
         <!--<item name="android:borderlessButtonStyle">@drawable/textbox_theme</item>-->
     </style>
 
+    <style name="list_buttonView">
+        <item name="android:layout_width">20dp</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:gravity">center_vertical|start</item>
+        <item name="android:maxWidth">20dp</item>
+        <item name="android:background">@null</item>
+        <!--<item name="android:background">@android:color/transparent</item>-->
+        <!--<item name="android:focusable">false</item>-->
+        <!--<item name="android:background">@drawable/textbox_theme</item>-->
+        <!--<item name="android:borderlessButtonStyle">@drawable/textbox_theme</item>-->
+    </style>
+
     <style name="list_textView_number" parent="list_textView">
         <item name="android:typeface">sans</item>
     </style>

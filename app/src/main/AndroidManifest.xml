@@ -63,6 +63,7 @@
         <activity android:name=".PresentationLayer.Person.DaftarTaf.DaftarTafActivity" android:label="@string/daf_taf_title" android:theme="@style/PopupTheme" />
         <activity android:name=".PresentationLayer.Person.DaftarTaf.DaftarTafReportActivity" android:label="@string/daf_taf_title" android:windowSoftInputMode="stateHidden" />
         <activity android:name=".PresentationLayer.BasePLL.Sync.SyncTypeActivity" android:label="@string/sync_kalaPhoto" android:theme="@style/PopupTheme" />
+        <activity android:name=".PresentationLayer.BasePLL.Gallery.GalleryActivity" android:label="@string/gallery_activity_title" android:theme="@style/PopupTheme" />
         <!-- android:theme="@android:style/Theme.NoTitleBar.Fullscreen"   android:screenOrientation="landscape" -->
     </application>
 
