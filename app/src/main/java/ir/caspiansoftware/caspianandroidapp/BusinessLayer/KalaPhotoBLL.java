@@ -72,7 +72,7 @@ public class KalaPhotoBLL extends ABusinessLayer {
         if (!DirectoryUtil.makeDirInAppFolder(context, photo.getImageDirPath()))
             return false;
 
-        return ImageUtil.saveImage(bmp, photo.getImageFullPath());
+        return ImageUtil.saveImage(bmp, photo.getImageFullPath(), true);
     }
     // endregion webService ************************************************************************
 

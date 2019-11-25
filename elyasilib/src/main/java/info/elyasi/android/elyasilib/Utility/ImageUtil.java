@@ -3,12 +3,19 @@ package info.elyasi.android.elyasilib.Utility;
 import android.graphics.Bitmap;
 import android.util.Log;
 
+import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
 public class ImageUtil {
 
-    public static boolean saveImage(Bitmap image, String path) {
+    public static boolean saveImage(Bitmap image, String path, boolean overwrite) {
+        if (overwrite) {
+            File f = new File(path);
+            if (f.exists())
+                f.delete();
+        }
+
         try (FileOutputStream out = new FileOutputStream(path)) {
             image.compress(Bitmap.CompressFormat.JPEG, 100, out); // bmp is your Bitmap instance
             // PNG is a lossless format, the compression factor (100) is ignored

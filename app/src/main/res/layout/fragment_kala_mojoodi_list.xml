@@ -84,6 +84,13 @@
             android:layout_weight="2"
             android:text="@string/list_kala_mojoodi" />
 
+        <TextView
+            android:id="@+id/column_kala_gallery"
+            style="@style/list_textView"
+            android:background="@android:color/transparent"
+            android:layout_weight="1.1"
+            android:text="@string/list_kala_gallery" />
+
     </LinearLayout>
 
 
