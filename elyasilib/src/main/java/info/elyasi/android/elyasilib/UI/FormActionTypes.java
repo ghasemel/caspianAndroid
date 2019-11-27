@@ -7,6 +7,7 @@ public enum FormActionTypes {
     //Add,
     Edit,
     New,
+    VIEW
     //Select
 //    public static final String Action = "action";
 //    public static final String Add = "add";

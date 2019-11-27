@@ -11,6 +11,7 @@ import info.elyasi.android.elyasilib.UI.FormActionTypes;
 import info.elyasi.android.elyasilib.UI.IFragmentCallback;
 import ir.caspiansoftware.caspianandroidapp.BaseCaspian.CaspianActionbar;
 import ir.caspiansoftware.caspianandroidapp.BaseCaspian.CaspianActivitySingleFragment;
+import ir.caspiansoftware.caspianandroidapp.Models.KalaModel;
 import ir.caspiansoftware.caspianandroidapp.Models.PersonModel;
 import ir.caspiansoftware.caspianandroidapp.PresentationLayer.Person.DaftarTaf.DaftarTafReportActivity;
 import ir.caspiansoftware.caspianandroidapp.PresentationLayer.Person.List.PersonListActivity;
@@ -25,9 +26,7 @@ public class GalleryActivity extends CaspianActivitySingleFragment {
 
 
     public static final int REQUEST_PERSON_LIST = 1;
-    public static final String ACTION_SELECT_PERSON_LIST = "action_select_person_list";
-
-    public static final String ACTION_SHOW_REPORT = "action_show_report";
+    public static final String EXTRA_KALA = "extra_kala";
 
     private IFragmentCallback mFragmentCallback;
 
@@ -35,8 +34,8 @@ public class GalleryActivity extends CaspianActivitySingleFragment {
     @Override
     public void onCreate(Bundle savedBundleState) {
         Log.d(TAG, "start...");
-        showAsPopup(this, getResources().getInteger(R.integer.popup_daf_taf_height), getResources().getInteger(R.integer.popup_daf_taf_width));
-        CaspianActionbar.setActionbarLayout(this, R.layout.actionbar_dialog, R.string.daf_taf_title);
+        //showAsPopup(this, getResources().getInteger(R.integer.popup_daf_taf_height), getResources().getInteger(R.integer.popup_daf_taf_width));
+        CaspianActionbar.setActionbarLayout(this, R.layout.actionbar_dialog, R.string.gallery_activity_title);
 
         super.onCreate(savedBundleState);
 
@@ -45,29 +44,18 @@ public class GalleryActivity extends CaspianActivitySingleFragment {
 
     @Override
     public Fragment createFragment() {
-        return new GalleryFragment();
+        Intent intent = this.getIntent();
+        Object kala = intent.getExtras().get(EXTRA_KALA);
+
+        GalleryFragment fragment = new GalleryFragment();
+        fragment.setKalaModel((KalaModel) kala);
+        return fragment;
     }
 
     @Override
     public void fragment_callback(String actionName, FormActionTypes actionTypes, Object[] parameters) {
         Log.d(TAG, "fragment_callback(): actionName = " + actionName);
 
-        switch (actionName) {
-            case ACTION_SELECT_PERSON_LIST:
-                Intent intent = new Intent(this, PersonListActivity.class);
-                intent.putExtra(AListRowFragment.EXTRA_RETURN_NAME, "");
-                startActivityForResult(intent, REQUEST_PERSON_LIST);
-                break;
-
-            case ACTION_SHOW_REPORT:
-                Intent in = new Intent(this, DaftarTafReportActivity.class);
-                in.putExtra(DaftarTafReportActivity.EXTRA_PERSON_NAME, parameters[0].toString());
-                in.putExtra(DaftarTafReportActivity.EXTRA_PERSON_CODE, parameters[1].toString());
-                in.putExtra(DaftarTafReportActivity.EXTRA_FROM_DATE, parameters[2].toString());
-                in.putExtra(DaftarTafReportActivity.EXTRA_TILL_DATE, parameters[3].toString());
-                startActivityForResult(in, -1);
-                break;
-        }
     }
 
     @Override
@@ -87,7 +75,6 @@ public class GalleryActivity extends CaspianActivitySingleFragment {
             case REQUEST_PERSON_LIST:
                 if (resultCode == Activity.RESULT_OK) {
                     PersonModel person = (PersonModel) data.getSerializableExtra(AListRowFragment.EXTRA_RETURN_NAME);
-                    mFragmentCallback.activity_callback(ACTION_SELECT_PERSON_LIST, person, null);
                 }
                 break;
         }

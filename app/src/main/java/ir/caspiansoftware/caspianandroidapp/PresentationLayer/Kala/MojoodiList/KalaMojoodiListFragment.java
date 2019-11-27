@@ -58,6 +58,8 @@ public class KalaMojoodiListFragment extends CaspianSearchableListFragment<KalaM
         Log.d(TAG, "mapViews(): function end");
     }
 
+
+
     @Override
     protected EditText[] getSearchEditTexts() {
         return new EditText[] {
@@ -87,5 +89,14 @@ public class KalaMojoodiListFragment extends CaspianSearchableListFragment<KalaM
     @Override
     public void activity_callback(String actionName, Object parameter, FormActionTypes formActionTypes) {
 
+    }
+
+    @Override
+    public void OnCellClick(KalaModel kalaModel, int row, int cellId, View cellView) {
+        Log.d(TAG, "OnCellClick()");
+
+        if (cellId == R.id.cell_gallery) {
+            mActivityCallback.fragment_callback(Actions.ACTION_OPEN_KALA_GALLERY, FormActionTypes.VIEW, kalaModel);
+        }
     }
 }

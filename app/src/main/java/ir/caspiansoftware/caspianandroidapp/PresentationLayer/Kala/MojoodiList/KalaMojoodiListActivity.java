@@ -1,5 +1,6 @@
 package ir.caspiansoftware.caspianandroidapp.PresentationLayer.Kala.MojoodiList;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 
@@ -7,6 +8,8 @@ import info.elyasi.android.elyasilib.UI.FormActionTypes;
 import ir.caspiansoftware.caspianandroidapp.Actions;
 import ir.caspiansoftware.caspianandroidapp.BaseCaspian.CaspianActionbar;
 import ir.caspiansoftware.caspianandroidapp.BaseCaspian.CaspianActivitySingleFragment;
+import ir.caspiansoftware.caspianandroidapp.Models.KalaModel;
+import ir.caspiansoftware.caspianandroidapp.PresentationLayer.BasePLL.Gallery.GalleryActivity;
 import ir.caspiansoftware.caspianandroidapp.R;
 
 /**
@@ -14,9 +17,11 @@ import ir.caspiansoftware.caspianandroidapp.R;
  */
 public class KalaMojoodiListActivity extends CaspianActivitySingleFragment {
 
+
+
     @Override
     public void onCreate(Bundle savedBundleState) {
-        //showAsPopup(this, 650, getResources().getInteger(R.integer.popup_width));
+        showAsPopup(this, 650, getResources().getInteger(R.integer.popup_width));
         CaspianActionbar.setActionbarLayout(this, R.layout.actionbar_dialog, R.string.kala_list_mojoodi);
         //forceRTLIfSupported();
 
@@ -40,6 +45,14 @@ public class KalaMojoodiListActivity extends CaspianActivitySingleFragment {
         switch (actionName) {
             case Actions.ACTION_TOOLBAR_EXIT:
                 this.finish();
+                break;
+
+            case Actions.ACTION_OPEN_KALA_GALLERY:
+                if (parameters != null && parameters.length > 0 && parameters[0] instanceof KalaModel) {
+                    Intent i = new Intent(this, GalleryActivity.class);
+                    i.putExtra(GalleryActivity.EXTRA_KALA, (KalaModel)parameters[0]);
+                    startActivity(i);
+                }
                 break;
         }
     }

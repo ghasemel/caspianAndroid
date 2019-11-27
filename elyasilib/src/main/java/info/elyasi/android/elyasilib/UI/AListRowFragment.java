@@ -287,6 +287,15 @@ public abstract class AListRowFragment<TListItem> extends ListFragment { //TResp
 
 
         public abstract int getLayout();
+
+        /**
+         * this method will be call for per rows in dataSet to set the map content of dataSet to views
+         * @param convertView
+         * @param item
+         * @param position
+         * @param isNull
+         * @return list of image views in the row to set click event for them
+         */
         protected abstract List<ImageView> doForEachItem(View convertView, TListItem item, int position, boolean isNull);
 
         public MyAdapter(Activity activity, ArrayList<TListItem> list) {
@@ -343,11 +352,11 @@ public abstract class AListRowFragment<TListItem> extends ListFragment { //TResp
 
                 Log.d(TAG, "getView(): doForEachItem position = " + position);
 
+                // return image views to set click event for them
+                List<ImageView> imageViews = doForEachItem(convertView, getItem(position), position, isNull);
+
                 // configure the view for the item at the 'position'
-                setBtnList(
-                        doForEachItem(convertView, getItem(position), position, isNull),
-                        position
-                );
+                setBtnList(imageViews, position);
             } catch (Exception ex) {
                 showError(ex);
             }

@@ -126,7 +126,18 @@ public class KalaPhotoBLL extends ABusinessLayer {
         }
     }
 
-    public KalaPhotoModel getKalaById(int id) {
+    public List<KalaPhotoModel> getKalaPhotosByYearIdAndKalaCode(int yearId, String code) {
+        Log.d(TAG, "getKalaPhotoListByYearIdAndKalaCode(): function entered");
+
+
+        try (KalaPhotoDataSource dataSource = new KalaPhotoDataSource(mContext)) {
+            return dataSource.findByCodeAndYearId(code, yearId);
+        } finally {
+            Log.d(TAG, "getKalaPhotoListByYearIdAndKalaCode() finished");
+        }
+    }
+
+    public KalaPhotoModel getPhotoById(int id) {
         Log.d(TAG, "getKalaById(): function entered");
 
         try (KalaPhotoDataSource dataSource = new KalaPhotoDataSource(mContext)) {

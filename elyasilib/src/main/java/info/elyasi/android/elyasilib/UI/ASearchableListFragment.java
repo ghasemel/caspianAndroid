@@ -17,7 +17,7 @@ import info.elyasi.android.elyasilib.Utility.JsonExt;
 /**
  * Created by Canada on 7/22/2016.
  */
-public abstract class ASearchableListFragment<TListItem> extends AAsyncFragment implements View.OnKeyListener, TextWatcher, IListDataSetChangeCallBack {
+public abstract class ASearchableListFragment<TListItem> extends AAsyncFragment implements View.OnKeyListener, TextWatcher, IListDataSetChangeCallBack, IListCellClick<TListItem> {
     private static final String TAG = "ASearchableListFragment";
 
     protected abstract int getLayoutId();
@@ -45,6 +45,7 @@ public abstract class ASearchableListFragment<TListItem> extends AAsyncFragment 
         if (fragment instanceof AListRowFragment) {
             mRowFragment = (AListRowFragment<TListItem>) fragment;
             mRowFragment.setOnListDataSetChange(this);
+            mRowFragment.setOnCellClick(this::OnCellClick);
         }
 
         mActionBarDefaultTitle =
@@ -108,5 +109,10 @@ public abstract class ASearchableListFragment<TListItem> extends AAsyncFragment 
                         //" " + PersianConvert.ConvertNumbersToPersian(String.valueOf(rowCount)) + ")",
                         " " + String.valueOf(rowCount) + ")",
                 getActionbarTitleTextViewId());
+    }
+
+    @Override
+    public void OnCellClick(TListItem tListItem, int row, int cellId, View cellView) {
+
     }
 }

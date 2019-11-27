@@ -1,8 +1,11 @@
 package ir.caspiansoftware.caspianandroidapp.PresentationLayer.BasePLL.Gallery;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -10,13 +13,20 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import info.elyasi.android.elyasilib.Dialogs.DatePickerDialog;
 import info.elyasi.android.elyasilib.Persian.PersianDate;
 import info.elyasi.android.elyasilib.UI.FormActionTypes;
 import info.elyasi.android.elyasilib.UI.IActivityCallback;
 import info.elyasi.android.elyasilib.UI.IFragmentCallback;
+import info.elyasi.android.elyasilib.UI.OnSwipeTouchListener;
 import info.elyasi.android.elyasilib.UI.UIUtility;
 import ir.caspiansoftware.caspianandroidapp.BaseCaspian.CaspianFragment;
+import ir.caspiansoftware.caspianandroidapp.BusinessLayer.KalaPhotoBLL;
+import ir.caspiansoftware.caspianandroidapp.Models.KalaModel;
+import ir.caspiansoftware.caspianandroidapp.Models.KalaPhotoModel;
 import ir.caspiansoftware.caspianandroidapp.Models.PersonModel;
 import ir.caspiansoftware.caspianandroidapp.R;
 import ir.caspiansoftware.caspianandroidapp.Vars;
@@ -26,57 +36,137 @@ import ir.caspiansoftware.caspianandroidapp.Vars;
  */
 
 public class GalleryFragment extends CaspianFragment implements IFragmentCallback {
-    private static final String TAG = "DaftarTafFragment";
+    private static final String TAG = "GalleryFragment";
 
     private IActivityCallback mActivityCallback;
 
-    private EditText mEditTextFromDate;
-    private EditText mEditTextToDate;
-    private EditText mEditTextPersonCode;
 
-    private TextView mTextViewPersonName;
+    private KalaModel kalaModel;
+    private List<KalaPhotoModel> photos;
 
-    private ImageView mBtnSelectPerson;
-    private ImageView mBtnSelectFromDate;
-    private ImageView mBtnSelectToDate;
-    private Button mBtnOK;
+    private TextView image_title;
+
+    private List<ImageView> imageViews;
+    private ImageView currentImage;
 
     @Override
     protected int getLayoutId() {
-        return R.layout.fragment_daf_taf_selection;
+        return R.layout.fragment_gallery;
     }
 
     @Override
     protected void mapViews(View parentView) {
         Log.d(TAG, "mapViews(): start...");
 
-        mEditTextFromDate = (EditText) parentView.findViewById(R.id.editText_fromDate);
-        mEditTextToDate = (EditText) parentView.findViewById(R.id.editText_toDate);
-        mEditTextPersonCode = (EditText) parentView.findViewById(R.id.editText_daf_taf_report_person_code);
+        if (kalaModel == null) {
+            showError(R.string.gallery_null_kala, null);
+            return;
+        }
 
-        mTextViewPersonName = (TextView) parentView.findViewById(R.id.editText_person_name);
-
-        mBtnSelectFromDate = (ImageView) parentView.findViewById(R.id.btn_fromDate_select);
-        mBtnSelectToDate = (ImageView) parentView.findViewById(R.id.btn_toDate_select);
-        mBtnSelectPerson = (ImageView) parentView.findViewById(R.id.btn_person_select);
-        mBtnOK = (Button) parentView.findViewById(R.id.btn_OK);
-
-        UIUtility.setButtonEffect(mBtnSelectFromDate, this);
-        UIUtility.setButtonEffect(mBtnSelectToDate, this);
-        UIUtility.setButtonEffect(mBtnSelectPerson, this);
-        UIUtility.setButtonEffect(mBtnOK, this);
+        KalaPhotoBLL bll = new KalaPhotoBLL(getContext());
+        photos = bll.getKalaPhotosByYearIdAndKalaCode(Vars.YEAR.getId(), kalaModel.getCode());
+        if (photos == null || photos.size() == 0) {
+            showToast(String.format(getString(R.string.gallery_no_photos_found_for_kala), kalaModel.getName()));
+            return;
+        }
 
 
+        image_title = parentView.findViewById(R.id.image_title);
 
-        mEditTextFromDate.setText(Vars.YEAR.getDoreModel().getStartDore());
-        mEditTextToDate.setText(PersianDate.getToday());
+        imageViews = new ArrayList<>();
+        imageViews.add(parentView.findViewById(R.id.image1));
+        imageViews.add(parentView.findViewById(R.id.image2));
+        imageViews.add(parentView.findViewById(R.id.image3));
+        imageViews.add(parentView.findViewById(R.id.image4));
+        imageViews.add(parentView.findViewById(R.id.image5));
+        imageViews.add(parentView.findViewById(R.id.image6));
+        imageViews.add(parentView.findViewById(R.id.image7));
+        imageViews.add(parentView.findViewById(R.id.image8));
+        imageViews.add(parentView.findViewById(R.id.image9));
+        imageViews.add(parentView.findViewById(R.id.image10));
+        currentImage = parentView.findViewById(R.id.currentImage);
+
+        for (ImageView img : imageViews) {
+            img.setOnClickListener(this::subImageClick);
+        }
+
+        currentImage.setOnTouchListener(new SwipeListener(getContext()));
+
+        loadPhotos();
+
+        // set first image as current one
+        setCurrentImage(0);
+    }
+
+    class SwipeListener extends OnSwipeTouchListener {
+
+        public SwipeListener(Context context) {
+            super(context);
+        }
+
+        @Override
+        public void onSwipeRight() {
+            Log.d(TAG, "onSwipeRight()");
+            swipeRight();
+        }
+
+        @Override
+        public void onSwipeLeft() {
+            Log.d(TAG, "onSwipeLeft()");
+            swipeLeft();
+        }
+
+        @Override
+        public void onSwipeTop() {
+            Log.d(TAG, "onSwipeTop()");
+        }
+
+        @Override
+        public void onSwipeBottom() {
+            Log.d(TAG, "onSwipeBottom()");
+        }
+    }
+
+    private void loadPhotos() {
+        if (photos == null || photos.size() == 0)
+            return;
+
+        for (int i = 0; i < photos.size(); i++) {
+            Bitmap bmp = photos.get(i).getImage();
+            imageViews.get(i).setImageBitmap(bmp);
+            imageViews.get(i).setTag(i);
+        }
+    }
+
+    private void setCurrentImage(int index) {
+        if (index >= photos.size() || index < 0)
+            return;
+
+        KalaPhotoModel photo = photos.get(index);
+
+        image_title.setText(photo.getTitle());
+
+        currentImage.setImageBitmap(photo.getImage());
+        currentImage.setTag(index);
+    }
+
+    private void swipeLeft() {
+        setCurrentImage((Integer) currentImage.getTag() - 1);
+    }
+
+    private void swipeRight() {
+        setCurrentImage((Integer) currentImage.getTag() + 1);
+    }
+
+
+    private void subImageClick(View img) {
+        Log.d(TAG, "subImageClick()");
+        setCurrentImage((Integer) img.getTag());
     }
 
     @Override
     protected void afterMapViews(View parentView) {
-        Log.d(TAG, "afterMapViews(): start...");
-        Intent intent = getActivity().getIntent();
-
+        Log.d(TAG, "afterMapViews()");
     }
 
     @Override
@@ -86,66 +176,20 @@ public class GalleryFragment extends CaspianFragment implements IFragmentCallbac
 
     @Override
     public void activity_callback(String actionName, Object parameter, FormActionTypes formActionTypes) {
-        switch (actionName) {
-            case GalleryActivity.ACTION_SELECT_PERSON_LIST:
-                Log.d(TAG, "activity_callback(): " + actionName);
-
-                if (!(parameter instanceof PersonModel)) {
-                    showError(R.string.invalid_parameter, null);
-                    return;
-                }
-
-                PersonModel person = (PersonModel) parameter;
-                mEditTextPersonCode.setText(person.getCode());
-                mTextViewPersonName.setText(person.getName());
-                break;
-        }
+        Log.d(TAG, "activity_callback()");
     }
 
+    public KalaModel getKalaModel() {
+        return kalaModel;
+    }
 
+    public void setKalaModel(KalaModel kala) {
+        this.kalaModel = kala;
+    }
 
     @Override
     public void onClick(View view) {
-        Log.d(TAG, "onClick(): start...");
-
-        if (view.equals(mBtnOK)) {
-            btnOK_click();
-        } else if (view.equals(mBtnSelectFromDate)) {
-            DatePickerDialog.SelectDate(mEditTextFromDate, getActivity().getFragmentManager(), null);
-        } else if (view.equals(mBtnSelectPerson)) {
-            selectPerson();
-        } else if (view.equals(mBtnSelectToDate)) {
-            DatePickerDialog.SelectDate(mEditTextToDate, getActivity().getFragmentManager(), null);
-        }
-    }
-
-    private void btnOK_click() {
-        Log.d(TAG, "btnOK_click(): enter");
-
-        if (mEditTextPersonCode.getText().toString().trim().isEmpty()) {
-            showToast(getActivity()
-                    .getApplicationContext()
-                    .getResources()
-                    .getString(R.string.no_person_selected));
-            return;
-        }
-
-        mActivityCallback.fragment_callback(
-                GalleryActivity.ACTION_SHOW_REPORT, null,
-                mTextViewPersonName.getText().toString(),
-                mEditTextPersonCode.getText().toString(),
-                mEditTextFromDate.getText().toString(),
-                mEditTextToDate.getText().toString()
-        );
-        /*Intent intent = new Intent(getActivity().getApplicationContext(), DaftarTafReportActivity.class);
-        intent.putExtra(DaftarTafReportActivity.EXTRA_PERSON_CODE, mEditTextPersonCode.getText().toString());
-        intent.putExtra(DaftarTafReportActivity.EXTRA_FROM_DATE, mEditTextFromDate.getText().toString());
-        intent.putExtra(DaftarTafReportActivity.EXTRA_TILL_DATE, mEditTextToDate.getText().toString());
-        getActivity().getApplicationContext().startActivity(intent);*/
-    }
-
-    private void selectPerson() {
-        mActivityCallback.fragment_callback(GalleryActivity.ACTION_SELECT_PERSON_LIST, null, (Object) null);
+        Log.d(TAG, "onClick()");
     }
 
     @Override
