@@ -24,4 +24,5 @@ public class Actions {
     public static final String ACTION_GET_MANDE = "action_get_mande";
     public static final String ACTION_GET_MOJOODI = "action_get_mande";
     public static final String ACTION_GET_LAST_SELL_PRICE = "action_last_sell_price";
+    public static final String ACTION_OPEN_KALA_GALLERY = "action_open_kala_gallery";
 }

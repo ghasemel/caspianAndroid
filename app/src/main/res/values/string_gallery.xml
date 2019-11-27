@@ -1,4 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="gallery_activity_title">گالری تساویر</string>
+    <string name="gallery_activity_title">گالری تصاویر</string>
+    <string name="gallery_null_kala">هیچ کالایی انتخاب نشده است</string>
+    <string name="gallery_no_photos_found_for_kala">هیچ تصویری برای کالای \'%s\' یافت نشد</string>
 </resources>

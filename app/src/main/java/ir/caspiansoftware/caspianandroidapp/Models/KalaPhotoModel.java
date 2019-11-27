@@ -20,6 +20,8 @@ public class KalaPhotoModel implements Serializable {
     private String fileName;
     private String title;
 
+    private Bitmap image;
+
     public int getId() {
         return id;
     }
@@ -69,13 +71,15 @@ public class KalaPhotoModel implements Serializable {
     }
 
     public Bitmap getImage() {
-        File imgFile = new File(getImageFullPath());
+        if (image != null)
+            return image;
 
+        File imgFile = new File(getImageFullPath());
         if(imgFile.exists()){
-            return BitmapFactory.decodeFile(imgFile.getAbsolutePath());
+            image = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
         }
 
-        return null;
+        return image;
     }
 
     public String getImageDirPath() {

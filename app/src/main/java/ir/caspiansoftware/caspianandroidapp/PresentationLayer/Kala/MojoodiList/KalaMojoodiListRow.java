@@ -91,21 +91,14 @@ public class KalaMojoodiListRow extends AListRowFragment<KalaModel> {
             TextView cell_mojoodi = (TextView) convertView.findViewById(R.id.cell_mojoodi);
             cell_mojoodi.setText(NumberExt.DigitSeparator(kalaModel.getMojoodi()));
 
-            ImageButton cell_gallery = (ImageButton) convertView.findViewById(R.id.cell_gallery);
-            cell_gallery.setTag(kalaModel);
-            cell_gallery.setOnClickListener(this::openGallery);
+            ImageView cell_gallery = convertView.findViewById(R.id.cell_gallery);
+            List<ImageView> imageViews = new ArrayList<>();
+            imageViews.add(cell_gallery);
 
-            return null;
+            return imageViews;
         }
 
-        private void openGallery(View view) {
-            Log.d("KalaMojoodiRowFragment", "openGallery() call");
-            if (!(view instanceof ImageButton) || view.getTag() == null || !(view.getTag() instanceof KalaModel))
-                return;
 
-            KalaModel kalaModel = (KalaModel) view.getTag();
-            // TODO open gallery here
-        }
 
         protected boolean objectIncludeTheFilterConstraints(KalaModel kalaModel, String[] constraints) {
             if (constraints == null || constraints.length != 2)

@@ -24,7 +24,9 @@ import ir.caspiansoftware.caspianandroidapp.BaseCaspian.ErrorExt;
 import ir.caspiansoftware.caspianandroidapp.BaseCaspian.GoToForm;
 import ir.caspiansoftware.caspianandroidapp.BusinessLayer.UserBLL;
 import ir.caspiansoftware.caspianandroidapp.Enum.SyncType;
+import ir.caspiansoftware.caspianandroidapp.Models.KalaModel;
 import ir.caspiansoftware.caspianandroidapp.Models.MPFaktorModel;
+import ir.caspiansoftware.caspianandroidapp.PresentationLayer.BasePLL.Gallery.GalleryActivity;
 import ir.caspiansoftware.caspianandroidapp.PresentationLayer.BasePLL.SendPreInvoiceListPLL;
 import ir.caspiansoftware.caspianandroidapp.PresentationLayer.BasePLL.Sync.SyncPLL;
 import ir.caspiansoftware.caspianandroidapp.PresentationLayer.BasePLL.Sync.SyncTypeActivity;
@@ -176,6 +178,11 @@ public class MainActivity extends CaspianActivityTwoFragments {
             case Actions.ACTION_DAF_TAF:
                 showDafTaf();
                 break;
+
+            case Actions.ACTION_OPEN_KALA_GALLERY:
+                if (parameter != null && parameter.length > 0 && parameter[0] instanceof KalaModel)
+                    showGalleryKala((KalaModel) parameter[0]);
+                break;
         }
     }
 
@@ -249,6 +256,16 @@ public class MainActivity extends CaspianActivityTwoFragments {
             ErrorExt errorExt = ErrorExt.get(ex);
             showError(errorExt.getUserMessage());
         }
+    }
+
+    private void showGalleryKala(KalaModel kala) {
+        Log.d(TAG, "showGalleryKala()");
+
+        // create activity instance
+        Intent i = new Intent(this, GalleryActivity.class);
+        i.putExtra(GalleryActivity.EXTRA_KALA, kala);
+
+        startActivity(i);
     }
 
     private void showPersonMandeListShow() {

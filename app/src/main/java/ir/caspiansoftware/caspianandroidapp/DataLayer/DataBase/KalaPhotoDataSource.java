@@ -110,7 +110,7 @@ public class KalaPhotoDataSource extends ADataSource<KalaPhotoModel> implements 
         return null;
     }
 
-    public List<KalaPhotoModel> getByCode(String code, int yearId) {
+    public List<KalaPhotoModel> findByCodeAndYearId(String code, int yearId) {
         Cursor cursor = mDatabase.query(KalaPhotoTbl.TABLE_NAME, getAllColumns(),
                 KalaPhotoTbl.COLUMN_YEAR_ID_FK + "=" + yearId + " AND " +
                 KalaPhotoTbl.COLUMN_CODE + " = '" + code + "'", null, null, null, null);

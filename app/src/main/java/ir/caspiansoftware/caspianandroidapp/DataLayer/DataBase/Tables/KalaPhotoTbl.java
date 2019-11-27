@@ -35,8 +35,8 @@ public class KalaPhotoTbl extends ATableEntity {
         return new String[] {
                 COLUMN_YEAR_ID_FK,
                 COLUMN_ID,
-                COLUMN_CODE,
                 COLUMN_SOURCE_ID,
+                COLUMN_CODE,
                 COLUMN_FILE_NAME,
                 COLUMN_TITLE
         };
