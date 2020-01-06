@@ -386,7 +386,7 @@ public class PFaktorFragment extends CaspianDataGridFragment<SPFaktorModel> impl
             return;
 
         mSPFaktorEditPosition = position;
-        mActivityCallback.fragment_callback(PFaktorActivity.ACTION_INVOICE_KALA, FormActionTypes.Edit, spFaktorModel, mPerson);
+        mActivityCallback.onMyFragmentCallBack(PFaktorActivity.ACTION_INVOICE_KALA, FormActionTypes.Edit, spFaktorModel, mPerson);
     }
 
     private boolean checkForSync() {
@@ -423,7 +423,7 @@ public class PFaktorFragment extends CaspianDataGridFragment<SPFaktorModel> impl
         if (checkForSave(false))
             return;
 
-        mActivityCallback.fragment_callback(PFaktorActivity.ACTION_INVOICE_SEARCH, null, (Object) null);
+        mActivityCallback.onMyFragmentCallBack(PFaktorActivity.ACTION_INVOICE_SEARCH, null, (Object) null);
     }
 
     private void delete() {
@@ -539,7 +539,7 @@ public class PFaktorFragment extends CaspianDataGridFragment<SPFaktorModel> impl
             Log.d(TAG, "mBtnCustomerSelect");
             if (checkForSync())
                 return;
-            mActivityCallback.fragment_callback(PFaktorActivity.ACTION_SELECT_PERSON_LIST, null, (Object) null);
+            mActivityCallback.onMyFragmentCallBack(PFaktorActivity.ACTION_SELECT_PERSON_LIST, null, (Object) null);
 
 
         } else if (view.equals(mBtnLocationOnMap)) { // mBtnLocationOnMap
@@ -612,7 +612,7 @@ public class PFaktorFragment extends CaspianDataGridFragment<SPFaktorModel> impl
             if (checkForSync())
                 return;
 
-            mActivityCallback.fragment_callback(PFaktorActivity.ACTION_INVOICE_KALA, FormActionTypes.New, mPerson);
+            mActivityCallback.onMyFragmentCallBack(PFaktorActivity.ACTION_INVOICE_KALA, FormActionTypes.New, mPerson);
 
             // getRowFragment().notifyDataSetChanged();
         } else if (view.equals(mToolbarSave)) {
@@ -653,12 +653,12 @@ public class PFaktorFragment extends CaspianDataGridFragment<SPFaktorModel> impl
 
 
     @Override
-    public void activity_callback(String actionName, Object parameter, FormActionTypes formActionTypes) {
+    public void onMyActivityCallback(String actionName, Object parameter, FormActionTypes formActionTypes) {
        // getRowFragment().notifyDataSetChanged();
 
         switch (actionName) {
             case PFaktorActivity.ACTION_SELECT_PERSON_LIST:
-                Log.d(TAG, "activity_callback(): PersonModel");
+                Log.d(TAG, "onMyActivityCallback(): PersonModel");
 
                 if (!(parameter instanceof PersonModel)) {
                     showError(R.string.invalid_parameter, null);
@@ -671,7 +671,7 @@ public class PFaktorFragment extends CaspianDataGridFragment<SPFaktorModel> impl
 
 
             case PFaktorActivity.ACTION_INVOICE_KALA:
-                Log.d(TAG, "activity_callback(): SPFaktorModel");
+                Log.d(TAG, "onMyActivityCallback(): SPFaktorModel");
                 if (!(parameter instanceof SPFaktorModel)) {
                     showError(R.string.invalid_parameter, null);
                     return;
@@ -694,7 +694,7 @@ public class PFaktorFragment extends CaspianDataGridFragment<SPFaktorModel> impl
                 break;
 
             case PFaktorActivity.ACTION_INVOICE_SEARCH:
-                Log.d(TAG, "activity_callback(): Search");
+                Log.d(TAG, "onMyActivityCallback(): Search");
 
                 if (!(parameter instanceof MPFaktorModel)) {
                     showError(R.string.invalid_parameter, null);

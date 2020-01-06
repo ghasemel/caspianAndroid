@@ -91,7 +91,7 @@ public class InputDialog extends ADialogFragment<String> {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         //m_Text = input.getText().toString();
-                        //mCallback.activity_callback(new String[] { mCallerNameExtra, input.getText().toString() });
+                        //mCallback.onMyActivityCallback(new String[] { mCallerNameExtra, input.getText().toString() });
                         getDialogCallback().dialog_callback(DialogResult.OK, input.getText().toString(), getRequestCode());
                     }
                 })

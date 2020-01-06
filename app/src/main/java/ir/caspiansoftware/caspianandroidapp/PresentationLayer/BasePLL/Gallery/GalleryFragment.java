@@ -175,8 +175,8 @@ public class GalleryFragment extends CaspianFragment implements IFragmentCallbac
     }
 
     @Override
-    public void activity_callback(String actionName, Object parameter, FormActionTypes formActionTypes) {
-        Log.d(TAG, "activity_callback()");
+    public void onMyActivityCallback(String actionName, Object parameter, FormActionTypes formActionTypes) {
+        Log.d(TAG, "onMyActivityCallback()");
     }
 
     public KalaModel getKalaModel() {

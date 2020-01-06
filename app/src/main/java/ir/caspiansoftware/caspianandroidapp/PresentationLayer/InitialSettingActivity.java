@@ -65,8 +65,8 @@ public class InitialSettingActivity extends CaspianActivitySingleFragment implem
     }
 
     @Override
-    public void fragment_callback(String actionName, FormActionTypes actionTypes, Object[] parameters) {
-        Log.d(TAG, "fragment_callback() called: actionName = " + actionName);
+    public void onMyFragmentCallBack(String actionName, FormActionTypes actionTypes, Object[] parameters) {
+        Log.d(TAG, "onMyFragmentCallBack() called: actionName = " + actionName);
 
         switch (actionName) {
             case InitialSettingActivity.ACTION_API_GENERATOR:
@@ -84,11 +84,11 @@ public class InitialSettingActivity extends CaspianActivitySingleFragment implem
         if (dialogResult == DialogResult.OK) {
             switch (requestCode) {
                 case InitialSettingActivity.REQUEST_CODE_API_GENERATOR:
-                    mFragmentDetailCallback.activity_callback(ACTION_API_GENERATOR, result, null);
+                    mFragmentDetailCallback.onMyActivityCallback(ACTION_API_GENERATOR, result, null);
                     break;
 
                 case InitialSettingActivity.REQUEST_CODE_DEVICE_ID_GENERATOR:
-                    mFragmentDetailCallback.activity_callback(ACTION_DEVICE_ID_GENERATOR, result, null);
+                    mFragmentDetailCallback.onMyActivityCallback(ACTION_DEVICE_ID_GENERATOR, result, null);
                     break;
             }
         }

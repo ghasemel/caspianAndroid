@@ -131,7 +131,7 @@ public abstract class REST_HMAC {
 
             @Override
             protected void onPostExecute(Integer pVoid) {
-                fragment_callback();
+                onMyFragmentCallBack();
                 Log.d("TAG", mMethod + " Callback");
             }
         }
@@ -195,13 +195,13 @@ public abstract class REST_HMAC {
     //******************************************
 
     /*
-    protected void fragment_callback() throws NullPointerException {
+    protected void onMyFragmentCallBack() throws NullPointerException {
         if (mResponseCallBack != null) {
            // if (getResponseCode() == Constant.ERROR) {
-           //     mResponseCallBack.fragment_callback(mMethod, getResponseCode(), getResponseData());
+           //     mResponseCallBack.onMyFragmentCallBack(mMethod, getResponseCode(), getResponseData());
             //    return;
             //}
-            mResponseCallBack.fragment_callback(mMethod, getResponseCode(), getResponseData());
+            mResponseCallBack.onMyFragmentCallBack(mMethod, getResponseCode(), getResponseData());
         } else {
             throw new NullPointerException("ResponseCallBack is null");
         }

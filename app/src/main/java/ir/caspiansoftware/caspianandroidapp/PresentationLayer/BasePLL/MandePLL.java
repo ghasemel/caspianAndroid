@@ -1,22 +1,13 @@
 package ir.caspiansoftware.caspianandroidapp.PresentationLayer.BasePLL;
 
 import android.content.Context;
-import android.renderscript.Double2;
-import android.util.Log;
-import android.widget.ProgressBar;
 
-import info.elyasi.android.elyasilib.Dialogs.DialogResult;
-import info.elyasi.android.elyasilib.Dialogs.IDialogCallback;
-import info.elyasi.android.elyasilib.Dialogs.ProgressDialog;
-import info.elyasi.android.elyasilib.UI.AAsyncTask;
-import info.elyasi.android.elyasilib.UI.ActivityFragmentExt;
 import info.elyasi.android.elyasilib.UI.IAsyncForm;
 import info.elyasi.android.elyasilib.UI.IFragmentCallback;
 import ir.caspiansoftware.caspianandroidapp.Actions;
 import ir.caspiansoftware.caspianandroidapp.BusinessLayer.PersonBLL;
 import ir.caspiansoftware.caspianandroidapp.Models.PersonModel;
 import ir.caspiansoftware.caspianandroidapp.R;
-import ir.caspiansoftware.caspianandroidapp.Vars;
 
 /**
  * Created by Canada on 8/19/2016.
@@ -38,7 +29,7 @@ public class MandePLL extends APLL<PersonModel, Double> {
 
     @Override
     protected void onCancelClick() {
-        getFragmentCallback().activity_callback(Actions.ACTION_GET_MANDE, getModel().getMande(), null);
+        getFragmentCallback().onMyActivityCallback(Actions.ACTION_GET_MANDE, getModel().getMande(), null);
     }
 
     @Override
@@ -53,7 +44,7 @@ public class MandePLL extends APLL<PersonModel, Double> {
 
     @Override
     protected void onBackgroundComplete(Double mande) {
-        getFragmentCallback().activity_callback(Actions.ACTION_GET_MANDE, mande, null);
+        getFragmentCallback().onMyActivityCallback(Actions.ACTION_GET_MANDE, mande, null);
     }
 
     @Override
@@ -99,7 +90,7 @@ public class MandePLL extends APLL<PersonModel, Double> {
                 if (mAsyncForm.getActivity() instanceof ActivityFragmentExt) {
                     ((ActivityFragmentExt) mAsyncForm.getActivity()).UnLockScreenRotation();
                 }
-                mFragmentCallback.activity_callback(Actions.ACTION_GET_MANDE, mPerson.getMande(), null);
+                mFragmentCallback.onMyActivityCallback(Actions.ACTION_GET_MANDE, mPerson.getMande(), null);
                 return;
             }
 
@@ -143,7 +134,7 @@ public class MandePLL extends APLL<PersonModel, Double> {
 //                        mProgressDialog.Close();
                         mAsyncForm.showError(getException(), null);
                     } else {
-                        mFragmentCallback.activity_callback(Actions.ACTION_GET_MANDE, mande, null);
+                        mFragmentCallback.onMyActivityCallback(Actions.ACTION_GET_MANDE, mande, null);
                     }
 
 

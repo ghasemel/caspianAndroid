@@ -1,30 +1,29 @@
-package ir.caspiansoftware.caspianandroidapp.PresentationLayer.Kala.MojoodiList;
+package ir.caspiansoftware.caspianandroidapp.PresentationLayer.Faktor.Kala;
 
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 import info.elyasi.android.elyasilib.Persian.PersianConvert;
 import info.elyasi.android.elyasilib.UI.AListRowFragment;
 import info.elyasi.android.elyasilib.Utility.NumberExt;
 import ir.caspiansoftware.caspianandroidapp.BusinessLayer.KalaBLL;
 import ir.caspiansoftware.caspianandroidapp.Models.KalaModel;
+import ir.caspiansoftware.caspianandroidapp.PresentationLayer.Kala.MojoodiList.KalaMojoodiListActivity;
 import ir.caspiansoftware.caspianandroidapp.R;
 import ir.caspiansoftware.caspianandroidapp.Vars;
 
 /**
  * Created by Canada on 7/22/2016.
  */
-public class KalaMojoodiListRow extends AListRowFragment<KalaModel> {
+public class FaktorKalaListRow extends AListRowFragment<KalaModel> {
     private static final String TAG = "KalaMojoodiRowFragment";
 
 

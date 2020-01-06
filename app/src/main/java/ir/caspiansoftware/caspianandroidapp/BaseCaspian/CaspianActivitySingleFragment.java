@@ -34,7 +34,7 @@ public abstract class CaspianActivitySingleFragment extends ActivityFragmentExt 
 
 
     @Override
-    public void fragment_callback(String actionName, FormActionTypes actionTypes, Object[] parameters) {
+    public void onMyFragmentCallBack(String actionName, FormActionTypes actionTypes, Object[] parameters) {
 
     }
 }

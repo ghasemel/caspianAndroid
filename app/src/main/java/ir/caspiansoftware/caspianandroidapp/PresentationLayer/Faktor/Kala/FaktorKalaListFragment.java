@@ -1,4 +1,4 @@
-package ir.caspiansoftware.caspianandroidapp.PresentationLayer.Kala.MojoodiList;
+package ir.caspiansoftware.caspianandroidapp.PresentationLayer.Faktor.Kala;
 
 import android.app.Activity;
 import android.util.Log;
@@ -19,8 +19,8 @@ import ir.caspiansoftware.caspianandroidapp.R;
 /**
  * Created by Canada on 7/22/2016.
  */
-public class KalaMojoodiListFragment extends CaspianSearchableListFragment<KalaModel> implements IFragmentCallback {
-    private static final String TAG = "KalaMojoodiListFragment";
+public class FaktorKalaListFragment extends CaspianSearchableListFragment<KalaModel> implements IFragmentCallback {
+    private static final String TAG = "FaktorKalaListFragment";
 
     private EditText mSearchCode;
     private EditText mSearchName;
@@ -70,7 +70,7 @@ public class KalaMojoodiListFragment extends CaspianSearchableListFragment<KalaM
 
     @Override
     protected int getLayoutId() {
-        return R.layout.fragment_kala_mojoodi_list;
+        return R.layout.fragment_kala_cell_list;
     }
 
     @Override
@@ -83,7 +83,7 @@ public class KalaMojoodiListFragment extends CaspianSearchableListFragment<KalaM
 
     @Override
     protected String getFragmentRowTagValue() {
-        return getResources().getString(R.string.fragment_kala_list_mojoodi_row_tag);
+        return getResources().getString(R.string.fragment_pfaktor_kala_list_row_tag);
     }
 
     @Override

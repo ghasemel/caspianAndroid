@@ -102,8 +102,8 @@ public class PFaktorConfirmListFragment extends CaspianDataGridFragment<MPFaktor
     }
 
     @Override
-    public void activity_callback(String actionName, Object parameter, FormActionTypes formActionTypes) {
-        Log.d(TAG, "fragment_callback start");
+    public void onMyActivityCallback(String actionName, Object parameter, FormActionTypes formActionTypes) {
+        Log.d(TAG, "onMyFragmentCallBack start");
 
         switch (actionName) {
             case REFRESH_LIST:
@@ -118,11 +118,11 @@ public class PFaktorConfirmListFragment extends CaspianDataGridFragment<MPFaktor
 
         if (v.equals(mToolbarExit)) {
             //Log.d(TAG, Setting.ACTION_TOOLBAR_EXIT);
-            mActivityCallback.fragment_callback(Actions.ACTION_TOOLBAR_EXIT, null);
+            mActivityCallback.onMyFragmentCallBack(Actions.ACTION_TOOLBAR_EXIT, null);
 
         } else if (v.equals(mToolbarNewInvoice)) {
             Log.d(TAG, Actions.ACTION_PRE_INVOICE);
-            mActivityCallback.fragment_callback(Actions.ACTION_PRE_INVOICE, FormActionTypes.New);
+            mActivityCallback.onMyFragmentCallBack(Actions.ACTION_PRE_INVOICE, FormActionTypes.New);
 
         } else  if (v.equals(mToolbarSyncBtn)) {
             Log.d(TAG, Actions.ACTION_CONFIRM_PFaktor);
@@ -132,7 +132,7 @@ public class PFaktorConfirmListFragment extends CaspianDataGridFragment<MPFaktor
                 return;
             }
 
-            mActivityCallback.fragment_callback(Actions.ACTION_CONFIRM_PFaktor, null, mSelectedRowsList);
+            mActivityCallback.onMyFragmentCallBack(Actions.ACTION_CONFIRM_PFaktor, null, mSelectedRowsList);
         }
     }
 
