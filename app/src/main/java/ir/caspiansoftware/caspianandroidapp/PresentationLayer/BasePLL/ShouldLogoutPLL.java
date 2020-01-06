@@ -7,9 +7,7 @@ import info.elyasi.android.elyasilib.UI.AAsyncTask;
 import info.elyasi.android.elyasilib.UI.IActivityCallback;
 import info.elyasi.android.elyasilib.UI.IAsyncForm;
 import ir.caspiansoftware.caspianandroidapp.Actions;
-import ir.caspiansoftware.caspianandroidapp.BaseCaspian.CaspianFragment;
 import ir.caspiansoftware.caspianandroidapp.BusinessLayer.UserBLL;
-import ir.caspiansoftware.caspianandroidapp.Setting;
 import ir.caspiansoftware.caspianandroidapp.Vars;
 
 /**
@@ -51,7 +49,7 @@ public class ShouldLogoutPLL {
                     fragment.showError(getException(), null);
                 } else {
                     if (response) {
-                        activityCallback.fragment_callback(Actions.ACTION_LOGOUT, null, (Object) null);
+                        activityCallback.onMyFragmentCallBack(Actions.ACTION_LOGOUT, null, (Object) null);
                     }
                 }
                 Log.d(TAG, "shouldLogout - onPostExecute finished");

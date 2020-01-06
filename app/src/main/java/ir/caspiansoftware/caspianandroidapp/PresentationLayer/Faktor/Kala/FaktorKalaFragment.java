@@ -42,6 +42,7 @@ public class FaktorKalaFragment extends CaspianFragment implements IFragmentCall
 
     private static final String TAG = "FaktorKalaFragment";
 
+    public static final String EXTRA_KALA_MODEL = "extra_kala_model";
     public static final String EXTRA_SP_FAKTOR_MODEL = "extra_sp_faktor_id";
     public static final String EXTRA_RESULT_NAME = "extra_result_name";
     public static final String EXTRA_PERSON_MODEL = "extra_person_model";
@@ -72,17 +73,20 @@ public class FaktorKalaFragment extends CaspianFragment implements IFragmentCall
     public void onResume() {
         super.onResume();
 
-        Intent intent  = getActivity().getIntent();
-        if (!intent.hasExtra(EXTRA_RESULT_NAME) || intent.getStringExtra(EXTRA_RESULT_NAME).equals("")) {
-            showError("EXTRA_RESULT_NAME has not been set", new cancel_dialog_callback());
-        } else {
-            mResultExtra = intent.getStringExtra(EXTRA_RESULT_NAME);
-        }
+        Intent intent = getActivity().getIntent();
 
-        if (!intent.hasExtra(EXTRA_PERSON_MODEL) || intent.getSerializableExtra(EXTRA_PERSON_MODEL) == null) {
-            showError("any person not specified by EXTRA_PERSON_MODEL", new cancel_dialog_callback());
-        } else {
-            mPerson = (PersonModel) intent.getSerializableExtra(EXTRA_PERSON_MODEL);
+        if (intent != null && intent.hasExtra(FormActionTypes.Edit.name())) {
+            if (!intent.hasExtra(EXTRA_RESULT_NAME) || intent.getStringExtra(EXTRA_RESULT_NAME).equals("")) {
+                showError("EXTRA_RESULT_NAME has not been set", new cancel_dialog_callback());
+            } else {
+                mResultExtra = intent.getStringExtra(EXTRA_RESULT_NAME);
+            }
+
+            if (!intent.hasExtra(EXTRA_PERSON_MODEL) || intent.getSerializableExtra(EXTRA_PERSON_MODEL) == null) {
+                showError("any person not specified by EXTRA_PERSON_MODEL", new cancel_dialog_callback());
+            } else {
+                mPerson = (PersonModel) intent.getSerializableExtra(EXTRA_PERSON_MODEL);
+            }
         }
     }
 
@@ -94,7 +98,7 @@ public class FaktorKalaFragment extends CaspianFragment implements IFragmentCall
     @Override
     protected void afterMapViews(View parentView) {
         Log.d(TAG, "afterMapViews()");
-        Intent intent  = getActivity().getIntent();
+        Intent intent = getActivity().getIntent();
         if (intent.hasExtra(EXTRA_SP_FAKTOR_MODEL)) {
             mTitleTextView.setText(R.string.invoice_kala_title_edit);
 
@@ -107,9 +111,10 @@ public class FaktorKalaFragment extends CaspianFragment implements IFragmentCall
                 showError(ex, new cancel_dialog_callback());
             }
 
-        } else {
+        } else if (intent.hasExtra(EXTRA_KALA_MODEL)) {
             mTitleTextView.setText(R.string.invoice_kala_title_new);
             mSPFaktorModel = new SPFaktorModel();
+            setKala((KalaModel) intent.getSerializableExtra(EXTRA_KALA_MODEL));
         }
     }
 
@@ -217,7 +222,7 @@ public class FaktorKalaFragment extends CaspianFragment implements IFragmentCall
     @Override
     public void onClick(View view) {
         if (view.equals(mBtnSelectKala)) {
-            mActivityCallback.fragment_callback(FaktorKalaActivity.ACTION_SELECT_KALA_LIST, null, (Object) null);
+            mActivityCallback.onMyFragmentCallBack(FaktorKalaActivity.ACTION_SELECT_KALA_LIST, null, (Object) null);
 
         } else if (view.equals(mBtnOk)) {
             btnOk_click();
@@ -313,7 +318,7 @@ public class FaktorKalaFragment extends CaspianFragment implements IFragmentCall
 
 
     @Override
-    public void activity_callback(String actionName, Object parameter, FormActionTypes formActionTypes) {
+    public void onMyActivityCallback(String actionName, Object parameter, FormActionTypes formActionTypes) {
 
         switch (actionName) {
             case FaktorKalaActivity.ACTION_SELECT_KALA_LIST:
@@ -409,7 +414,6 @@ public class FaktorKalaFragment extends CaspianFragment implements IFragmentCall
 
         }
     }
-
 
 
     @Override

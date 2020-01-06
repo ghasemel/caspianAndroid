@@ -75,7 +75,7 @@ public class MainMenuFragment extends CaspianFragment implements IFragmentCallba
             // check for unselected year mali
             if (Vars.YEAR == null) {
                 //showYearMaliForm();
-                mActivityCallback.fragment_callback(Actions.ACTION_YEAR_MALI, null, (Object) null);
+                mActivityCallback.onMyFragmentCallBack(Actions.ACTION_YEAR_MALI, null, (Object) null);
             }
 
             setYearDaftar();
@@ -83,7 +83,7 @@ public class MainMenuFragment extends CaspianFragment implements IFragmentCallba
             setUserPermission(Objects.requireNonNull(getActivity()).getApplicationContext(), parentView);
         } else {
             //GoToForm.goToLoginPage(getActivity());
-            mActivityCallback.fragment_callback(Actions.ACTION_LOGOUT, null, (Object) null);
+            mActivityCallback.onMyFragmentCallBack(Actions.ACTION_LOGOUT, null, (Object) null);
         }
     }
 
@@ -100,7 +100,7 @@ public class MainMenuFragment extends CaspianFragment implements IFragmentCallba
     }
 
     @Override
-    public void activity_callback(String actionName, Object parameter, FormActionTypes formActionTypes) {
+    public void onMyActivityCallback(String actionName, Object parameter, FormActionTypes formActionTypes) {
         switch (actionName) {
             case Actions.ACTION_YEAR_MALI:
                 setYearDaftar();
@@ -162,35 +162,35 @@ public class MainMenuFragment extends CaspianFragment implements IFragmentCallba
         if ((Vars.YEAR == null && !v.equals(mBtnLogout)) || v.equals(mFrameChangeYear)) {
             // check for logout from server side
             //ShouldLogoutPLL.shouldLogout(getActivity().getApplicationContext(), this, mActivityCallback);
-            mActivityCallback.fragment_callback(Actions.ACTION_YEAR_MALI, null, (Object) null);
+            mActivityCallback.onMyFragmentCallBack(Actions.ACTION_YEAR_MALI, null, (Object) null);
 
         } else if (v.equals(mBtnLogout)) {
-            mActivityCallback.fragment_callback(Actions.ACTION_LOGOUT, null, (Object) null);
+            mActivityCallback.onMyFragmentCallBack(Actions.ACTION_LOGOUT, null, (Object) null);
 
         } else if (v.equals(mBtnPreInvoice)) {
             Log.d(TAG, Actions.ACTION_PRE_INVOICE + " called");
-            mActivityCallback.fragment_callback(Actions.ACTION_PRE_INVOICE, null, (Object) null);
+            mActivityCallback.onMyFragmentCallBack(Actions.ACTION_PRE_INVOICE, null, (Object) null);
 
         } else if (v.equals(mBtnSync)) {
             Log.d(TAG, Actions.ACTION_SYNC + " called");
-            mActivityCallback.fragment_callback(Actions.ACTION_SYNC, null, (Object) null);
+            mActivityCallback.onMyFragmentCallBack(Actions.ACTION_SYNC, null, (Object) null);
 
         } else if (v.equals(mBtnConfirmList)) {
             Log.d(TAG, Actions.ACTION_CONFIRM_LIST + " called");
-            mActivityCallback.fragment_callback(Actions.ACTION_CONFIRM_LIST, null, (Object) null);
+            mActivityCallback.onMyFragmentCallBack(Actions.ACTION_CONFIRM_LIST, null, (Object) null);
 
         } else if (v.equals(mBtnKalaMojoodi)) {
             Log.d(TAG, Actions.ACTION_KALA_MOJOODI_LIST + " called");
-            mActivityCallback.fragment_callback(Actions.ACTION_KALA_MOJOODI_LIST, null, (Object) null);
+            mActivityCallback.onMyFragmentCallBack(Actions.ACTION_KALA_MOJOODI_LIST, null, (Object) null);
 
         } else if (v.equals(mBtnPersonMandeReport)) {
             Log.d(TAG, Actions.ACTION_PERSON_MANDE_LIST + " called");
-            mActivityCallback.fragment_callback(Actions.ACTION_PERSON_MANDE_LIST, null, (Object) null);
-            //mActivityCallback.fragment_callback(Actions.ACTION_CUSTOMER_REPORT, null, (Object) null);
+            mActivityCallback.onMyFragmentCallBack(Actions.ACTION_PERSON_MANDE_LIST, null, (Object) null);
+            //mActivityCallback.onMyFragmentCallBack(Actions.ACTION_CUSTOMER_REPORT, null, (Object) null);
 
         } else if (v.equals(mBtnDafTafReport)) {
             Log.d(TAG, Actions.ACTION_DAF_TAF + " called");
-            mActivityCallback.fragment_callback(Actions.ACTION_DAF_TAF, null, (Object) null);
+            mActivityCallback.onMyFragmentCallBack(Actions.ACTION_DAF_TAF, null, (Object) null);
         }
     }
 

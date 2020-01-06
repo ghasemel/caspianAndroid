@@ -1,4 +1,4 @@
-package ir.caspiansoftware.caspianandroidapp.PresentationLayer.Kala.MojoodiList;
+package ir.caspiansoftware.caspianandroidapp.PresentationLayer.Faktor.Kala;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -10,19 +10,20 @@ import ir.caspiansoftware.caspianandroidapp.BaseCaspian.CaspianActionbar;
 import ir.caspiansoftware.caspianandroidapp.BaseCaspian.CaspianActivitySingleFragment;
 import ir.caspiansoftware.caspianandroidapp.Models.KalaModel;
 import ir.caspiansoftware.caspianandroidapp.PresentationLayer.BasePLL.Gallery.GalleryActivity;
+import ir.caspiansoftware.caspianandroidapp.PresentationLayer.Kala.MojoodiList.KalaMojoodiListFragment;
 import ir.caspiansoftware.caspianandroidapp.R;
 
 /**
  * Created by Canada on 7/22/2016.
  */
-public class KalaMojoodiListActivity extends CaspianActivitySingleFragment {
+public class FaktorKalaListActivity extends CaspianActivitySingleFragment {
 
 
 
     @Override
     public void onCreate(Bundle savedBundleState) {
         //showAsPopup(this, 650, getResources().getInteger(R.integer.popup_width));
-        CaspianActionbar.setActionbarLayout(this, R.layout.actionbar_dialog, R.string.kala_list_mojoodi);
+        CaspianActionbar.setActionbarLayout(this, R.layout.actionbar_dialog, R.string.kala_list);
         //forceRTLIfSupported();
 
         super.onCreate(savedBundleState);
@@ -32,7 +33,7 @@ public class KalaMojoodiListActivity extends CaspianActivitySingleFragment {
 
     @Override
     public Fragment createFragment() {
-        return new KalaMojoodiListFragment();
+        return new FaktorKalaListFragment();
     }
 
     @Override

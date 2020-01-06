@@ -1,28 +1,20 @@
 package ir.caspiansoftware.caspianandroidapp.PresentationLayer.BasePLL.Sync;
 
 import android.app.Activity;
-import android.content.Intent;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CompoundButton;
-import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.RadioButton;
-import android.widget.TextView;
 
-import info.elyasi.android.elyasilib.Dialogs.DatePickerDialog;
-import info.elyasi.android.elyasilib.Persian.PersianDate;
 import info.elyasi.android.elyasilib.UI.FormActionTypes;
 import info.elyasi.android.elyasilib.UI.IActivityCallback;
 import info.elyasi.android.elyasilib.UI.IFragmentCallback;
 import info.elyasi.android.elyasilib.UI.UIUtility;
 import ir.caspiansoftware.caspianandroidapp.BaseCaspian.CaspianFragment;
 import ir.caspiansoftware.caspianandroidapp.Enum.SyncType;
-import ir.caspiansoftware.caspianandroidapp.Models.PersonModel;
 import ir.caspiansoftware.caspianandroidapp.R;
-import ir.caspiansoftware.caspianandroidapp.Vars;
 
 /**
  * Created by Ghasem on 4/22/2017.
@@ -104,7 +96,7 @@ public class SyncTypeFragment extends CaspianFragment implements IFragmentCallba
     }
 
     @Override
-    public void activity_callback(String actionName, Object parameter, FormActionTypes formActionTypes) {
+    public void onMyActivityCallback(String actionName, Object parameter, FormActionTypes formActionTypes) {
 
     }
 
@@ -117,7 +109,7 @@ public class SyncTypeFragment extends CaspianFragment implements IFragmentCallba
         else if (rdKalaPhoto.isChecked())
             syncType = SyncType.KALA_PHOTO;
 
-        mActivityCallback.fragment_callback(SyncTypeActivity.ACTION_START_SYNC, null, syncType);
+        mActivityCallback.onMyFragmentCallBack(SyncTypeActivity.ACTION_START_SYNC, null, syncType);
     }
 
     @Override

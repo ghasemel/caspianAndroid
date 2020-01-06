@@ -3,12 +3,7 @@ package ir.caspiansoftware.caspianandroidapp.PresentationLayer.BasePLL;
 import android.app.Activity;
 import android.content.Context;
 import android.util.Log;
-import android.widget.ProgressBar;
 
-import info.elyasi.android.elyasilib.Dialogs.DialogResult;
-import info.elyasi.android.elyasilib.Dialogs.IDialogCallback;
-import info.elyasi.android.elyasilib.UI.AAsyncTask;
-import info.elyasi.android.elyasilib.UI.ActivityFragmentExt;
 import info.elyasi.android.elyasilib.UI.IAsyncForm;
 import info.elyasi.android.elyasilib.UI.IFragmentCallback;
 import ir.caspiansoftware.caspianandroidapp.Actions;
@@ -17,7 +12,6 @@ import ir.caspiansoftware.caspianandroidapp.Models.KalaModel;
 import ir.caspiansoftware.caspianandroidapp.Models.PersonLastSellInfoModel;
 import ir.caspiansoftware.caspianandroidapp.Models.PersonModel;
 import ir.caspiansoftware.caspianandroidapp.R;
-import ir.caspiansoftware.caspianandroidapp.Vars;
 
 /**
  * Created by Canada on 9/10/2016.
@@ -52,7 +46,7 @@ public class LastSellPricePLL extends APLL_TWO_MODEL<PersonModel, KalaModel, Per
 
     @Override
     protected void onCancelClick() {
-        getFragmentCallback().activity_callback(Actions.ACTION_GET_LAST_SELL_PRICE, Activity.RESULT_CANCELED, null);
+        getFragmentCallback().onMyActivityCallback(Actions.ACTION_GET_LAST_SELL_PRICE, Activity.RESULT_CANCELED, null);
     }
 
     @Override
@@ -73,7 +67,7 @@ public class LastSellPricePLL extends APLL_TWO_MODEL<PersonModel, KalaModel, Per
     @Override
     protected void onBackgroundComplete(PersonLastSellInfoModel lastSellInfo) {
         Log.d(TAG, "onBackgroundComplete(): entered the function");
-        getFragmentCallback().activity_callback(Actions.ACTION_GET_LAST_SELL_PRICE, lastSellInfo, null);
+        getFragmentCallback().onMyActivityCallback(Actions.ACTION_GET_LAST_SELL_PRICE, lastSellInfo, null);
     }
 
 
@@ -112,7 +106,7 @@ public class LastSellPricePLL extends APLL_TWO_MODEL<PersonModel, KalaModel, Per
                 if (mAsyncForm.getActivity() instanceof ActivityFragmentExt) {
                     ((ActivityFragmentExt) mAsyncForm.getActivity()).UnLockScreenRotation();
                 }
-                mFragmentCallback.activity_callback(Actions.ACTION_GET_LAST_SELL_PRICE, Activity.RESULT_CANCELED, null);
+                mFragmentCallback.onMyActivityCallback(Actions.ACTION_GET_LAST_SELL_PRICE, Activity.RESULT_CANCELED, null);
                 return;
             }
 
@@ -165,7 +159,7 @@ public class LastSellPricePLL extends APLL_TWO_MODEL<PersonModel, KalaModel, Per
 //                        mProgressDialog.Close();
                         mAsyncForm.showError(getException(), null);
                     } else if (lastSellInfo != null) {
-                        mFragmentCallback.activity_callback(Actions.ACTION_GET_LAST_SELL_PRICE, lastSellInfo, null);
+                        mFragmentCallback.onMyActivityCallback(Actions.ACTION_GET_LAST_SELL_PRICE, lastSellInfo, null);
                     }
 
 

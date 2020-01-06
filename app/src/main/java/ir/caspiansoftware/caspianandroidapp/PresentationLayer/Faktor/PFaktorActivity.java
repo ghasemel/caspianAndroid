@@ -11,12 +11,15 @@ import info.elyasi.android.elyasilib.UI.FormActionTypes;
 import info.elyasi.android.elyasilib.UI.IFragmentCallback;
 import ir.caspiansoftware.caspianandroidapp.BaseCaspian.CaspianActionbar;
 import ir.caspiansoftware.caspianandroidapp.BaseCaspian.CaspianActivitySingleFragment;
+import ir.caspiansoftware.caspianandroidapp.Models.KalaModel;
 import ir.caspiansoftware.caspianandroidapp.Models.MPFaktorModel;
 import ir.caspiansoftware.caspianandroidapp.Models.PersonModel;
 import ir.caspiansoftware.caspianandroidapp.Models.SPFaktorModel;
 import ir.caspiansoftware.caspianandroidapp.PresentationLayer.Faktor.Kala.FaktorKalaActivity;
 import ir.caspiansoftware.caspianandroidapp.PresentationLayer.Faktor.Kala.FaktorKalaFragment;
+import ir.caspiansoftware.caspianandroidapp.PresentationLayer.Faktor.Kala.FaktorKalaListActivity;
 import ir.caspiansoftware.caspianandroidapp.PresentationLayer.Faktor.Search.PFaktorSearchActivity;
+import ir.caspiansoftware.caspianandroidapp.PresentationLayer.Kala.MojoodiList.KalaMojoodiListActivity;
 import ir.caspiansoftware.caspianandroidapp.PresentationLayer.Person.List.PersonListActivity;
 import ir.caspiansoftware.caspianandroidapp.R;
 
@@ -29,6 +32,8 @@ public class PFaktorActivity extends CaspianActivitySingleFragment {
     private static final int REQUEST_PERSON_LIST = 1;
     public static final String ACTION_SELECT_PERSON_LIST = "action_select_person_list";
 
+
+    public static final int REQUEST_SEARCH_KALA_LIST = 5;
     private static final int REQUEST_INVOICE_ADD_KALA = 2;
     private static final int REQUEST_INVOICE_EDIT_KALA = 3;
     public static final String ACTION_INVOICE_KALA = "action_invoice_kala";
@@ -59,13 +64,13 @@ public class PFaktorActivity extends CaspianActivitySingleFragment {
     public void onAttachFragment(Fragment fragment) {
         super.onAttachFragment(fragment);
 
-        if (fragment instanceof  IFragmentCallback)
+        if (fragment instanceof IFragmentCallback)
             mFragmentCallback = (IFragmentCallback) fragment;
     }
 
     @Override
-    public void fragment_callback(String actionName, FormActionTypes actionTypes, Object... parameter) {
-        Log.d(TAG, "fragment_callback(): actionName= " + actionName);
+    public void onMyFragmentCallBack(String actionName, FormActionTypes actionTypes, Object... parameter) {
+        Log.d(TAG, "onMyFragmentCallBack(): actionName= " + actionName);
 
         //String actionName = ActionName.toString();
         switch (actionName) {
@@ -76,24 +81,15 @@ public class PFaktorActivity extends CaspianActivitySingleFragment {
                 break;
 
             case ACTION_INVOICE_KALA:
-                Intent intent_invoice_kala = new Intent(this, FaktorKalaActivity.class);
-                intent_invoice_kala.putExtra(actionTypes.name(), actionTypes);
-                intent_invoice_kala.putExtra(FaktorKalaFragment.EXTRA_RESULT_NAME, ACTION_INVOICE_KALA);
-
                 switch (actionTypes) {
                     case Edit:
-                        if (parameter != null && parameter[0] instanceof SPFaktorModel && parameter[1] instanceof PersonModel) {
-                            intent_invoice_kala.putExtra(FaktorKalaFragment.EXTRA_SP_FAKTOR_MODEL, (SPFaktorModel) parameter[0]);
-                            intent_invoice_kala.putExtra(FaktorKalaFragment.EXTRA_PERSON_MODEL, (PersonModel) parameter[1]);
-                            startActivityForResult(intent_invoice_kala, REQUEST_INVOICE_EDIT_KALA);
-                        }
+                        editKala(actionTypes, parameter);
                         break;
 
                     case New:
-                        if (parameter != null && parameter[0] instanceof PersonModel) {
-                            intent_invoice_kala.putExtra(FaktorKalaFragment.EXTRA_PERSON_MODEL, (PersonModel) parameter[0]);
-                            startActivityForResult(intent_invoice_kala, REQUEST_INVOICE_ADD_KALA);
-                        }
+                        Intent mojoodi_intent = new Intent(this, FaktorKalaListActivity.class);
+                        mojoodi_intent.putExtra(AListRowFragment.EXTRA_RETURN_NAME, "");
+                        startActivityForResult(mojoodi_intent, REQUEST_SEARCH_KALA_LIST);
                         break;
                 }
                 break;
@@ -107,6 +103,26 @@ public class PFaktorActivity extends CaspianActivitySingleFragment {
         }
     }
 
+    private void editKala(FormActionTypes actionTypes, Object... parameter) {
+
+        if (parameter != null && parameter[0] instanceof SPFaktorModel && parameter[1] instanceof PersonModel) {
+            Intent intent_invoice_kala = new Intent(this, FaktorKalaActivity.class);
+            intent_invoice_kala.putExtra(actionTypes.name(), actionTypes);
+            intent_invoice_kala.putExtra(FaktorKalaFragment.EXTRA_RESULT_NAME, ACTION_INVOICE_KALA);
+            intent_invoice_kala.putExtra(FaktorKalaFragment.EXTRA_SP_FAKTOR_MODEL, (SPFaktorModel) parameter[0]);
+            intent_invoice_kala.putExtra(FaktorKalaFragment.EXTRA_PERSON_MODEL, (PersonModel) parameter[1]);
+            startActivityForResult(intent_invoice_kala, REQUEST_INVOICE_EDIT_KALA);
+        }
+    }
+
+    private void addKala(KalaModel kalaModel) {
+        //if (parameter != null && parameter[0] instanceof SPFaktorModel && parameter[1] instanceof PersonModel) {
+            Intent intent_invoice_kala = new Intent(this, FaktorKalaActivity.class);
+            intent_invoice_kala.putExtra(FormActionTypes.New.name(), FormActionTypes.New);
+            intent_invoice_kala.putExtra(FaktorKalaFragment.EXTRA_KALA_MODEL, kalaModel);
+            startActivityForResult(intent_invoice_kala, REQUEST_INVOICE_ADD_KALA);
+        //}
+    }
 
 
     @Override
@@ -118,10 +134,21 @@ public class PFaktorActivity extends CaspianActivitySingleFragment {
             case REQUEST_PERSON_LIST:
                 if (resultCode == Activity.RESULT_OK) {
                     PersonModel personModel = (PersonModel) data.getSerializableExtra(AListRowFragment.EXTRA_RETURN_NAME);
-                    mFragmentCallback.activity_callback(ACTION_SELECT_PERSON_LIST, personModel, null);
+                    mFragmentCallback.onMyActivityCallback(ACTION_SELECT_PERSON_LIST, personModel, null);
                 }
                 break;
 
+
+            case REQUEST_SEARCH_KALA_LIST:
+                if (resultCode == Activity.RESULT_OK) {
+                    Log.d(TAG, ACTION_INVOICE_KALA);
+                    if (data != null && data.hasExtra(AListRowFragment.EXTRA_RETURN_NAME)) {
+                        if (data.getSerializableExtra(AListRowFragment.EXTRA_RETURN_NAME) instanceof KalaModel) {
+                            addKala((KalaModel) data.getSerializableExtra(AListRowFragment.EXTRA_RETURN_NAME));
+                        }
+                    }
+                }
+                break;
 
             case REQUEST_INVOICE_ADD_KALA:
             case REQUEST_INVOICE_EDIT_KALA:
@@ -130,10 +157,13 @@ public class PFaktorActivity extends CaspianActivitySingleFragment {
 
                     if (data != null && data.hasExtra(ACTION_INVOICE_KALA)) {
                         if (data.getSerializableExtra(ACTION_INVOICE_KALA) instanceof SPFaktorModel) {
-                            if (requestCode == REQUEST_INVOICE_ADD_KALA)
-                                mFragmentCallback.activity_callback(ACTION_INVOICE_KALA, data.getSerializableExtra(ACTION_INVOICE_KALA), FormActionTypes.New);
-                            else
-                                mFragmentCallback.activity_callback(ACTION_INVOICE_KALA, data.getSerializableExtra(ACTION_INVOICE_KALA), FormActionTypes.Edit);
+                            mFragmentCallback.onMyActivityCallback(
+                                    ACTION_INVOICE_KALA,
+                                    data.getSerializableExtra(ACTION_INVOICE_KALA),
+                                    requestCode == REQUEST_INVOICE_EDIT_KALA ?
+                                            FormActionTypes.Edit :
+                                            FormActionTypes.New
+                            );
                         }
                     }
                 }
@@ -143,7 +173,7 @@ public class PFaktorActivity extends CaspianActivitySingleFragment {
             case REQUEST_INVOICE_SEARCH:
                 if (resultCode == Activity.RESULT_OK) {
                     MPFaktorModel mpFaktorModel = (MPFaktorModel) data.getSerializableExtra(AListRowFragment.EXTRA_RETURN_NAME);
-                    mFragmentCallback.activity_callback(ACTION_INVOICE_SEARCH, mpFaktorModel, null);
+                    mFragmentCallback.onMyActivityCallback(ACTION_INVOICE_SEARCH, mpFaktorModel, null);
                 }
                 break;
         }

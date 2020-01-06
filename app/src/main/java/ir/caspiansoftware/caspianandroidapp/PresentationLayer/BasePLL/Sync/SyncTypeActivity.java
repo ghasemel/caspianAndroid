@@ -49,8 +49,8 @@ public class SyncTypeActivity extends CaspianActivitySingleFragment {
     }
 
     @Override
-    public void fragment_callback(String actionName, FormActionTypes actionTypes, Object[] parameters) {
-        Log.d(TAG, "fragment_callback(): actionName = " + actionName);
+    public void onMyFragmentCallBack(String actionName, FormActionTypes actionTypes, Object[] parameters) {
+        Log.d(TAG, "onMyFragmentCallBack(): actionName = " + actionName);
 
         if (ACTION_START_SYNC.equals(actionName)) {
             syncType = (SyncType) parameters[0];

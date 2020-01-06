@@ -1,14 +1,7 @@
 package ir.caspiansoftware.caspianandroidapp.PresentationLayer.BasePLL;
 
 import android.content.Context;
-import android.renderscript.Double2;
-import android.util.Log;
-import android.widget.ProgressBar;
 
-import info.elyasi.android.elyasilib.Dialogs.DialogResult;
-import info.elyasi.android.elyasilib.Dialogs.IDialogCallback;
-import info.elyasi.android.elyasilib.UI.AAsyncTask;
-import info.elyasi.android.elyasilib.UI.ActivityFragmentExt;
 import info.elyasi.android.elyasilib.UI.IAsyncForm;
 import info.elyasi.android.elyasilib.UI.IFragmentCallback;
 import ir.caspiansoftware.caspianandroidapp.Actions;
@@ -48,7 +41,7 @@ public class MojoodiPLL extends APLL<KalaModel, Double> {
 
     @Override
     protected void onCancelClick() {
-        getFragmentCallback().activity_callback(Actions.ACTION_GET_MOJOODI, getModel().getMojoodi(), null);
+        getFragmentCallback().onMyActivityCallback(Actions.ACTION_GET_MOJOODI, getModel().getMojoodi(), null);
     }
 
     @Override
@@ -63,7 +56,7 @@ public class MojoodiPLL extends APLL<KalaModel, Double> {
 
     @Override
     protected void onBackgroundComplete(Double mojoodi) {
-        getFragmentCallback().activity_callback(Actions.ACTION_GET_MOJOODI, mojoodi, null);
+        getFragmentCallback().onMyActivityCallback(Actions.ACTION_GET_MOJOODI, mojoodi, null);
     }
 
     /* public void start(KalaModel kala) {
@@ -98,7 +91,7 @@ public class MojoodiPLL extends APLL<KalaModel, Double> {
                 if (mAsyncForm.getActivity() instanceof ActivityFragmentExt) {
                     ((ActivityFragmentExt) mAsyncForm.getActivity()).UnLockScreenRotation();
                 }
-                mFragmentCallback.activity_callback(Actions.ACTION_GET_MOJOODI, mKala.getMojoodi(), null);
+                mFragmentCallback.onMyActivityCallback(Actions.ACTION_GET_MOJOODI, mKala.getMojoodi(), null);
                 return;
             }
 
@@ -150,7 +143,7 @@ public class MojoodiPLL extends APLL<KalaModel, Double> {
 //                        mProgressDialog.Close();
                         mAsyncForm.showError(getException(), null);
                     } else {
-                        mFragmentCallback.activity_callback(Actions.ACTION_GET_MOJOODI, mande, null);
+                        mFragmentCallback.onMyActivityCallback(Actions.ACTION_GET_MOJOODI, mande, null);
                     }
 
 
