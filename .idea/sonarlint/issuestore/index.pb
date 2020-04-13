@@ -1,0 +1,23 @@
+
+”
+dapp/src/main/java/ir/caspiansoftware/caspianandroidapp/PresentationLayer/Faktor/PFaktorFragment.java,1\b\1b9ef4d4aaec53f83b8c00130f555c7ac84b5ed7
+›
+kapp/src/main/java/ir/caspiansoftware/caspianandroidapp/PresentationLayer/Faktor/Kala/FaktorKalaListRow.java,2\1\21413cea93f5b4bb10725d2a365325b1ad5525a2
+ 
+papp/src/main/java/ir/caspiansoftware/caspianandroidapp/PresentationLayer/Faktor/Kala/FaktorKalaListActivity.java,2\b\2b5f1be75467bc2f0d0aa4ce19d051c2db9dc666
+ 
+papp/src/main/java/ir/caspiansoftware/caspianandroidapp/PresentationLayer/Faktor/Kala/FaktorKalaListFragment.java,f\4\f4049205924c333b11340ae4c9053193de633ff5
+œ
+lapp/src/main/java/ir/caspiansoftware/caspianandroidapp/PresentationLayer/Faktor/Kala/FaktorKalaFragment.java,6\6\669e919182808d65eccbc905eb26cae9b0a6bfb4
+
+Oelyasilib/src/main/java/info/elyasi/android/elyasilib/UI/IActivityCallback.java,5\f\5fc2538b4dfbdef5b742d385e8fdb9fac22027a9
+•
+eapp/src/main/java/ir/caspiansoftware/caspianandroidapp/BaseCaspian/CaspianSearchableListFragment.java,5\c\5c21d1a288e951167842b5825188ae990db7ce05
+€
+Papp/src/main/java/ir/caspiansoftware/caspianandroidapp/Models/SPFaktorModel.java,c\d\cd1be88b76c7022a474900241eddb7abb27bd0c5
+”
+dapp/src/main/java/ir/caspiansoftware/caspianandroidapp/PresentationLayer/Faktor/PFaktorActivity.java,b\4\b4c17a631c6bff41de0dea09be611350f5cd4121
+}
+Mapp/src/main/java/ir/caspiansoftware/caspianandroidapp/SettingWebService.java,1\9\19b9da7fd0ba9fd93c6b27717597d788844a065d
+~
+Nelyasilib/src/main/java/info/elyasi/android/elyasilib/UI/AListRowFragment.java,d\b\db150732ad117bb40afa606e0afe0058e8f08cb7

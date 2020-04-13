@@ -17,7 +17,7 @@ public class UserWebService extends RESTDotNetWebService {
 
 
     public UserWebService()  {
-        super(SettingWebService.getApiKey(), SettingWebService.getDeviceId(), SettingWebService.AuthenticationScheme, SettingWebService.TIME_OUT);
+        super(SettingWebService.getApiKey(), SettingWebService.getDeviceId(), SettingWebService.AUTHENTICATION_SCHEME, SettingWebService.TIME_OUT);
         //setResponseCallBack();
     }
 

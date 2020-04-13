@@ -2,9 +2,9 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/CaspianAndroidApp.iml" filepath="$PROJECT_DIR$/CaspianAndroidApp.iml" />
-      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
-      <module fileurl="file://$PROJECT_DIR$/elyasilib/elyasilib.iml" filepath="$PROJECT_DIR$/elyasilib/elyasilib.iml" />
+      <module fileurl="file://$PROJECT_DIR$/CaspianAndroidApp.iml" filepath="$PROJECT_DIR$/CaspianAndroidApp.iml" group="CaspianAndroidApp" />
+      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" group="CaspianAndroidApp/app" />
+      <module fileurl="file://$PROJECT_DIR$/elyasilib/elyasilib.iml" filepath="$PROJECT_DIR$/elyasilib/elyasilib.iml" group="CaspianAndroidApp/elyasilib" />
     </modules>
   </component>
 </project>
