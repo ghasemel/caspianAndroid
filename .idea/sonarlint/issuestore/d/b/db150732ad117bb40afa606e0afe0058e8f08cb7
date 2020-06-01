@@ -1,33 +1,0 @@
-
-csquid:CommentedOutCodeLine¿"<This block of commented-out lines of code should be removed.(©×Ò
-dsquid:S00112ˆ"FDefine and throw a dedicated exception instead of using a generic one.(Šã­Üúÿÿÿÿ
-£%squid:RedundantThrowsDeclarationCheckˆ"lRemove the declaration of thrown exception 'java.lang.Exception', as it cannot be thrown from method's body.(Šã­Üúÿÿÿÿ
-bsquid:CommentedOutCodeLine*"<This block of commented-out lines of code should be removed.(ˆº¢ÿ
-fsquid:S00119"IRename this generic name to match the regular expression '^[A-Z][0-9]?$'.(êÛ¨àøÿÿÿÿ
-asquid:CommentedOutCodeLine6"<This block of commented-out lines of code should be removed.(ƒÓÄg
-Csquid:S1168Õ"+Return an empty collection instead of null.(¥¹ï
-hsquid:CommentedOutCodeLine¾"<This block of commented-out lines of code should be removed.(õ¥þúúÿÿÿÿ
-Bsquid:S1168M"+Return an empty collection instead of null.(¥¹ï
-jsquid:S3776ò"RRefactor this method to reduce its Cognitive Complexity from 17 to the 15 allowed.(½þ­è
-csquid:S00112#"FDefine and throw a dedicated exception instead of using a generic one.(²Í§úÿÿÿÿ
-rsquid:S00120"ZRename this package name to match the regular expression '^[a-z_]+(\.[a-z_][a-z0-9_]*)*$'.(„¦•ö
-csquid:CommentedOutCodeLine›"<This block of commented-out lines of code should be removed.(Õ‚Î¿
-esquid:S00100B"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(¨»ýa
-hsquid:CommentedOutCodeLine‰"<This block of commented-out lines of code should be removed.(òÐ¶“þÿÿÿÿ
-gsquid:CommentedOutCodeLineW"<This block of commented-out lines of code should be removed.(Ö¡¡³ùÿÿÿÿ
-csquid:CommentedOutCodeLine›"<This block of commented-out lines of code should be removed.(¾Ò›Ý
-squid:S1319Ð"pThe return type of this method should be an interface such as "List" rather than the implementation "ArrayList".(Œÿ©‡üÿÿÿÿ
-csquid:S00112!"FDefine and throw a dedicated exception instead of using a generic one.(êÃšëûÿÿÿÿ
-hsquid:CommentedOutCodeLine˜"<This block of commented-out lines of code should be removed.(ë÷„Ûýÿÿÿÿ
-?squid:S11852"(Remove this method to simply inherit it.(í¹§
-bsquid:CommentedOutCodeLine,"<This block of commented-out lines of code should be removed.(çëçÆ
-hsquid:CommentedOutCodeLine"<This block of commented-out lines of code should be removed.(Þý¿Ûûÿÿÿÿ
-Csquid:S1168Þ"+Return an empty collection instead of null.(¥¹ï
-csquid:CommentedOutCodeLineò"<This block of commented-out lines of code should be removed.(Ï×Õ‹
-hsquid:CommentedOutCodeLine"<This block of commented-out lines of code should be removed.(€“ªµýÿÿÿÿ
-bsquid:CommentedOutCodeLine"<This block of commented-out lines of code should be removed.(£¼äõ
-‡squid:S1319â"oThe type of the "list" object should be an interface such as "List" rather than the implementation "ArrayList".(Ôáž”
-csquid:CommentedOutCodeLine½"<This block of commented-out lines of code should be removed.(§«Ï‹
-csquid:S00112""FDefine and throw a dedicated exception instead of using a generic one.(Ê½²Èüÿÿÿÿ
-hsquid:CommentedOutCodeLine—"<This block of commented-out lines of code should be removed.(ãâŠ§úÿÿÿÿ
-squid:S1319Ù"pThe return type of this method should be an interface such as "List" rather than the implementation "ArrayList".(ðžÁÓúÿÿÿÿ
