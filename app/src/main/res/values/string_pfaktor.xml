@@ -122,4 +122,5 @@
     <string name="pfaktor_mojoodi">موجودی کالا:</string>
     <string name="pfaktor_last_sell_price">آخرین قیمت فروش:</string>
     <string name="not_already_sold">کالای مورد نظر برای این مشتری فاکتور نشده است.</string>
+
 </resources>

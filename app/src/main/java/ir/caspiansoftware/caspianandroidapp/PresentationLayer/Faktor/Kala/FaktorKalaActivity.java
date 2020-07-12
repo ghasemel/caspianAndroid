@@ -44,8 +44,8 @@ public class FaktorKalaActivity extends CaspianActivitySingleFragment {
     }
 
     @Override
-    public void fragment_callback(String actionName, FormActionTypes actionTypes, Object[] parameters) {
-        Log.d(TAG, "fragment_callback(): actionName = " + actionName);
+    public void onMyFragmentCallBack(String actionName, FormActionTypes actionTypes, Object[] parameters) {
+        Log.d(TAG, "onMyFragmentCallBack(): actionName = " + actionName);
 
         switch (actionName) {
             case ACTION_SELECT_KALA_LIST:
@@ -73,7 +73,7 @@ public class FaktorKalaActivity extends CaspianActivitySingleFragment {
             case REQUEST_CODE_KALA_LIST:
                 if (resultCode == Activity.RESULT_OK) {
                     KalaModel kalaModel = (KalaModel) data.getSerializableExtra(AListRowFragment.EXTRA_RETURN_NAME);
-                    mFragmentCallback.activity_callback(ACTION_SELECT_KALA_LIST, kalaModel, null);
+                    mFragmentCallback.onMyActivityCallback(ACTION_SELECT_KALA_LIST, kalaModel, null);
                 }
                 break;
         }

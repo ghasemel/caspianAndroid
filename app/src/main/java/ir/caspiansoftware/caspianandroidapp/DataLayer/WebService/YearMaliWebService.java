@@ -15,7 +15,7 @@ public class YearMaliWebService extends RESTDotNetWebService {
     private static final String TAG = "YearMaliWebService";
 
     public YearMaliWebService() {
-        super(SettingWebService.getApiKey(), SettingWebService.getDeviceId(), SettingWebService.AuthenticationScheme, SettingWebService.TIME_OUT);
+        super(SettingWebService.getApiKey(), SettingWebService.getDeviceId(), SettingWebService.AUTHENTICATION_SCHEME, SettingWebService.TIME_OUT);
     }
 
     protected String getControllerName() {

@@ -7,8 +7,8 @@ import org.json.JSONObject;
  */
 public interface ICallBack {
     void callback(String caller, int pResponseCode, String pResponseData);
-    //void fragment_callback(String caller, int pResponseCode, int pResponseData);
-    //void fragment_callback(String caller, int pResponseCode, JSONObject pResponseData);
+    //void onMyFragmentCallBack(String caller, int pResponseCode, int pResponseData);
+    //void onMyFragmentCallBack(String caller, int pResponseCode, JSONObject pResponseData);
 
     void onError(String caller, int pErrorCode, String pErrorMessage);
     void onSuccess(String caller, int pResponseCode, String pResponseData);

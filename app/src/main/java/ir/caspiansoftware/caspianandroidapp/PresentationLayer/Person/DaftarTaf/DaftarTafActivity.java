@@ -61,8 +61,8 @@ public class DaftarTafActivity extends CaspianActivitySingleFragment {
     }
 
     @Override
-    public void fragment_callback(String actionName, FormActionTypes actionTypes, Object[] parameters) {
-        Log.d(TAG, "fragment_callback(): actionName = " + actionName);
+    public void onMyFragmentCallBack(String actionName, FormActionTypes actionTypes, Object[] parameters) {
+        Log.d(TAG, "onMyFragmentCallBack(): actionName = " + actionName);
 
         switch (actionName) {
             case ACTION_SELECT_PERSON_LIST:
@@ -99,7 +99,7 @@ public class DaftarTafActivity extends CaspianActivitySingleFragment {
             case REQUEST_PERSON_LIST:
                 if (resultCode == Activity.RESULT_OK) {
                     PersonModel person = (PersonModel) data.getSerializableExtra(AListRowFragment.EXTRA_RETURN_NAME);
-                    mFragmentCallback.activity_callback(ACTION_SELECT_PERSON_LIST, person, null);
+                    mFragmentCallback.onMyActivityCallback(ACTION_SELECT_PERSON_LIST, person, null);
                 }
                 break;
         }

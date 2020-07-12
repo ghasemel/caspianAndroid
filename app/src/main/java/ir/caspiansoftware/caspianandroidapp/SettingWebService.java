@@ -7,28 +7,18 @@ import ir.caspiansoftware.caspianandroidapp.BusinessLayer.InitialSettingBLL;
  */
 public class SettingWebService {
 
-    public static final int TIME_OUT = 15000; // in millisecond
-    public static final String AuthenticationScheme = "CaspianAPI";
+    public static final int TIME_OUT = 5 * 60 * 1000; // in millisecond
+    public static final String AUTHENTICATION_SCHEME = "CaspianAPI";
     private static final String IIS_APP_NAME = "CaspianService";
     private static final char DEVICE_USER_DELIMITER = '>';
-    //public static final String API_IP = "192.168.2.50"; //"192.168.2.50"; //"192.168.130.17";
-    //public static final String API_KEY = "A93reRTUJHsCuQSHR+L3GxqOJyDmQpCgps102ciuabc=";
-    //public static final String DEVICE_ID = "231asdasd23reda23rwe234";
-    //public static final String API_PORT = "5412";
 
-    //public static final String API_URL = "http://" + API_IP + ":" + API_PORT +"/api/";\
-
-
+    private SettingWebService() { }
 
     public static String getIP() {
-        //return "192.168.130.17";
-        //return "192.168.2.50";
-        //return "84.241.28.43";
         return InitialSettingBLL.getIP();
     }
 
     public static String getApiKey() {
-        //return "mN79bucN+x3qQWzs3zkfWA==";
         return InitialSettingBLL.getApiKey();
     }
 
@@ -37,13 +27,11 @@ public class SettingWebService {
         if (Vars.USER != null)
             userId = "" + DEVICE_USER_DELIMITER + Vars.USER.getUserId();
 
-        //return "vi38OpzQBuKPjuJJ8W+JSw==" + userId;
         String deviceId = InitialSettingBLL.getDeviceId();
         return deviceId == null ? "" : deviceId + userId;
     }
 
-    public static int getPort() {
-        //return 5412;
+    private static int getPort() {
         return InitialSettingBLL.getPort();
     }
 
@@ -54,12 +42,10 @@ public class SettingWebService {
     }
 
     public static String getAPI_URL() {
-        //return "http://" + getIP() + ":" + getPort() +"/api/";
         return InitialSettingBLL.getAPI_URL(IIS_APP_NAME);
     }
 
     public static String getImageURL() {
-        //return "http://" + getIP() + ":" + getPort() +"/api/";
         return InitialSettingBLL.getBaseURL(IIS_APP_NAME) + "images/";
     }
 }

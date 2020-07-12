@@ -53,8 +53,8 @@ public class GalleryActivity extends CaspianActivitySingleFragment {
     }
 
     @Override
-    public void fragment_callback(String actionName, FormActionTypes actionTypes, Object[] parameters) {
-        Log.d(TAG, "fragment_callback(): actionName = " + actionName);
+    public void onMyFragmentCallBack(String actionName, FormActionTypes actionTypes, Object[] parameters) {
+        Log.d(TAG, "onMyFragmentCallBack(): actionName = " + actionName);
 
     }
 

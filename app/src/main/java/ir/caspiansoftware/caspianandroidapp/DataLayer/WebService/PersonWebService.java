@@ -16,7 +16,7 @@ public class PersonWebService extends RESTDotNetWebService {
 
 
     public PersonWebService() {
-        super(SettingWebService.getApiKey(), SettingWebService.getDeviceId(), SettingWebService.AuthenticationScheme, SettingWebService.TIME_OUT);
+        super(SettingWebService.getApiKey(), SettingWebService.getDeviceId(), SettingWebService.AUTHENTICATION_SCHEME, SettingWebService.TIME_OUT);
     }
 
     @Override

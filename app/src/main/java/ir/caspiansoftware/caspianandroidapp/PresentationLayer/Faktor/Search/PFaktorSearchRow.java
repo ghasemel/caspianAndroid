@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import info.elyasi.android.elyasilib.Persian.PersianConvert;
 import info.elyasi.android.elyasilib.UI.AListRowFragment;
@@ -41,7 +42,7 @@ public class PFaktorSearchRow extends AListRowFragment<MPFaktorModel> {
         Log.d(TAG, "onListItemClicked(): function entered");
         Intent intent = new Intent();
         intent.putExtra(resultExtraName, mpFaktorModel);
-        getActivity().setResult(Activity.RESULT_OK, intent);
+        Objects.requireNonNull(getActivity()).setResult(Activity.RESULT_OK, intent);
     }
 
     @Override

@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="150dp"
+              android:layout_height="150dp"
+              android:orientation="horizontal"
+              android:padding="5dp"
+              android:paddingStart="10dp"
+              android:paddingEnd="10dp"
+              android:id="@+id/rowId"
+              android:layoutDirection="rtl">
+
+    <TextView
+        android:id="@+id/cell_radif"
+        style="@style/list_textView"
+         />
+
+    <TextView
+        android:id="@+id/cell_kala_code"
+        style="@style/list_textView"
+        />
+
+    <TextView
+        android:id="@+id/cell_kala_name"
+        style="@style/list_textView"
+        />
+
+    <TextView
+        android:id="@+id/cell_mojoodi"
+        style="@style/list_textView"
+        />
+
+    <ImageView
+        android:id="@+id/cell_gallery"
+        style="@style/list_buttonView"
+        android:contentDescription="@string/list_kala_gallery"
+        android:src="@drawable/ic_photo_album" />
+
+</RelativeLayout>
