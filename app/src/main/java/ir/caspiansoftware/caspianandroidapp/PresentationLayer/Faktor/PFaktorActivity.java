@@ -81,15 +81,24 @@ public class PFaktorActivity extends CaspianActivitySingleFragment {
                 break;
 
             case ACTION_INVOICE_KALA:
+                Intent intent_invoice_kala = new Intent(this, FaktorKalaActivity.class);
+                intent_invoice_kala.putExtra(actionTypes.name(), actionTypes);
+                intent_invoice_kala.putExtra(FaktorKalaFragment.EXTRA_RESULT_NAME, ACTION_INVOICE_KALA);
+
                 switch (actionTypes) {
                     case Edit:
-                        editKala(actionTypes, parameter);
+                        if (parameter != null && parameter[0] instanceof SPFaktorModel && parameter[1] instanceof PersonModel) {
+                            intent_invoice_kala.putExtra(FaktorKalaFragment.EXTRA_SP_FAKTOR_MODEL, (SPFaktorModel) parameter[0]);
+                            intent_invoice_kala.putExtra(FaktorKalaFragment.EXTRA_PERSON_MODEL, (PersonModel) parameter[1]);
+                            startActivityForResult(intent_invoice_kala, REQUEST_INVOICE_EDIT_KALA);
+                        }
                         break;
 
                     case New:
-                        Intent mojoodi_intent = new Intent(this, FaktorKalaListActivity.class);
-                        mojoodi_intent.putExtra(AListRowFragment.EXTRA_RETURN_NAME, "");
-                        startActivityForResult(mojoodi_intent, REQUEST_SEARCH_KALA_LIST);
+                        if (parameter != null && parameter[0] instanceof PersonModel) {
+                            intent_invoice_kala.putExtra(FaktorKalaFragment.EXTRA_PERSON_MODEL, (PersonModel) parameter[0]);
+                            startActivityForResult(intent_invoice_kala, REQUEST_INVOICE_ADD_KALA);
+                        }
                         break;
                 }
                 break;
