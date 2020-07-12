@@ -1,16 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <item name="activity_master_detail" type="layout">@layout/single_fragment_activity</item>
-    <item name="popup_width" type="integer" format="integer">500</item>
-    <item name="popup_height" type="integer" format="integer">450</item>
+    <item name="popup_width" type="integer" format="integer">400</item>
+    <item name="popup_height" type="integer" format="integer">250</item>
 
-
-    <item name="popup_daf_taf_width" type="integer" format="integer">400</item>
+    <item name="popup_daf_taf_width" type="integer" format="integer">450</item>
     <item name="popup_daf_taf_height" type="integer" format="integer">250</item>
 
-
-
-    <item name="popup_faktor_kala_width" type="integer" format="integer">400</item>
+    <item name="popup_faktor_kala_width" type="integer" format="integer">450</item>
     <item name="popup_faktor_kala_height" type="integer" format="integer">250</item>
 
 </resources>

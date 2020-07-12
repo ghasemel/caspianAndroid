@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.DisplayMetrics;
 import android.util.Log;
 
 import info.elyasi.android.elyasilib.UI.AListRowFragment;
@@ -36,6 +37,18 @@ public class DaftarTafActivity extends CaspianActivitySingleFragment {
         Log.d(TAG, "start...");
         showAsPopup(this, getResources().getInteger(R.integer.popup_daf_taf_height), getResources().getInteger(R.integer.popup_daf_taf_width));
         CaspianActionbar.setActionbarLayout(this, R.layout.actionbar_dialog, R.string.daf_taf_title);
+
+        Log.d(TAG, String.valueOf(getResources().getInteger(R.integer.popup_daf_taf_height)));
+        Log.d(TAG, String.valueOf(getResources().getInteger(R.integer.popup_daf_taf_width)));
+
+        DisplayMetrics displayMetrics = new DisplayMetrics();
+        getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
+        int height = displayMetrics.heightPixels;
+        int width = displayMetrics.widthPixels;
+
+        int densityDpi = (int)(displayMetrics.density * 160f);
+
+        float density = getResources().getDisplayMetrics().density;
 
         super.onCreate(savedBundleState);
 

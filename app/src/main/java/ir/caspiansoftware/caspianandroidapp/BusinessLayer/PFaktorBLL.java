@@ -1,5 +1,6 @@
 package ir.caspiansoftware.caspianandroidapp.BusinessLayer;
 
+import android.app.Activity;
 import android.content.Context;
 import android.util.Log;
 
@@ -209,7 +210,7 @@ public class PFaktorBLL extends ABusinessLayer {
         }
     }
 
-    public MPFaktorModel Save(int id, int num, String date, String customer_code, String description, List<SPFaktorModel> spFaktorModelList) throws Exception {
+    public MPFaktorModel Save(int id, int num, String date, String customer_code, String description, List<SPFaktorModel> spFaktorModelList, Activity activity) throws Exception {
         MPFaktorDataSource mpFaktorDataSource = new MPFaktorDataSource(mContext);
 
         try {
@@ -236,7 +237,7 @@ public class PFaktorBLL extends ABusinessLayer {
             // insert
             if (id <= 0) {
                 // get location
-                GPSTracker gps = new GPSTracker(mContext);
+                GPSTracker gps = new GPSTracker(activity);
 
                 // gps is ON
                 if (gps.canGetLocation()) {
@@ -259,7 +260,7 @@ public class PFaktorBLL extends ABusinessLayer {
             } else { // update
                 if (mpFaktorModel.getLon() == 0 || mpFaktorModel.getLat() == 0) {
                     // get location
-                    GPSTracker gps = new GPSTracker(mContext);
+                    GPSTracker gps = new GPSTracker(activity);
 
                     // gps is ON
                     if (gps.canGetLocation()) {
