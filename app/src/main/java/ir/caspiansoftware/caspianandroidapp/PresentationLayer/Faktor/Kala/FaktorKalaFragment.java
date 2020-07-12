@@ -75,7 +75,7 @@ public class FaktorKalaFragment extends CaspianFragment implements IFragmentCall
 
         Intent intent = getActivity().getIntent();
 
-        if (intent != null && intent.hasExtra(FormActionTypes.Edit.name())) {
+        //if (intent != null && intent.hasExtra(FormActionTypes.Edit.name())) {
             if (!intent.hasExtra(EXTRA_RESULT_NAME) || intent.getStringExtra(EXTRA_RESULT_NAME).equals("")) {
                 showError("EXTRA_RESULT_NAME has not been set", new cancel_dialog_callback());
             } else {
@@ -87,7 +87,7 @@ public class FaktorKalaFragment extends CaspianFragment implements IFragmentCall
             } else {
                 mPerson = (PersonModel) intent.getSerializableExtra(EXTRA_PERSON_MODEL);
             }
-        }
+        //}
     }
 
     @Override
@@ -111,10 +111,10 @@ public class FaktorKalaFragment extends CaspianFragment implements IFragmentCall
                 showError(ex, new cancel_dialog_callback());
             }
 
-        } else if (intent.hasExtra(EXTRA_KALA_MODEL)) {
+        } {//else if (intent.hasExtra(EXTRA_KALA_MODEL)) {
             mTitleTextView.setText(R.string.invoice_kala_title_new);
             mSPFaktorModel = new SPFaktorModel();
-            setKala((KalaModel) intent.getSerializableExtra(EXTRA_KALA_MODEL));
+            //setKala((KalaModel) intent.getSerializableExtra(EXTRA_KALA_MODEL));
         }
     }
 
