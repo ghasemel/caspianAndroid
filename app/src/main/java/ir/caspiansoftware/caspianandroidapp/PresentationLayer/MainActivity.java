@@ -124,8 +124,8 @@ public class MainActivity extends CaspianActivityTwoFragments {
 
     @SuppressWarnings("unchecked")
     @Override
-    public void fragment_callback(String actionName, FormActionTypes actionTypes, Object... parameter) {
-        Log.d(TAG, "fragment_callback() called: actionName = " + actionName);
+    public void onMyFragmentCallBack(String actionName, FormActionTypes actionTypes, Object... parameter) {
+        Log.d(TAG, "onMyFragmentCallBack() called: actionName = " + actionName);
 
         switch (actionName) {
             case Actions.ACTION_LOGOUT:
@@ -194,7 +194,7 @@ public class MainActivity extends CaspianActivityTwoFragments {
             case REQUEST_CODE_YEAR:
                 if (resultCode != Activity.RESULT_CANCELED) {
                     setActionbarTitleDefault();
-                    mFragmentCallback.activity_callback(Actions.ACTION_YEAR_MALI, null, null);
+                    mFragmentCallback.onMyActivityCallback(Actions.ACTION_YEAR_MALI, null, null);
                 }
                 break;
 
@@ -293,7 +293,7 @@ public class MainActivity extends CaspianActivityTwoFragments {
     private void updatePFaktorConfirmList() {
         if (getFragmentDetailContainer() != null && getFragmentDetailContainer() instanceof IFragmentCallback) {
             ((IFragmentCallback) getFragmentDetailContainer())
-                    .activity_callback(PFaktorConfirmListFragment.REFRESH_LIST, null, null);
+                    .onMyActivityCallback(PFaktorConfirmListFragment.REFRESH_LIST, null, null);
         }
     }
 

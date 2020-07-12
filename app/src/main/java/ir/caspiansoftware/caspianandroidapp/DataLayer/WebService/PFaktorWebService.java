@@ -21,7 +21,7 @@ public class PFaktorWebService extends RESTDotNetWebService {
 
 
     public PFaktorWebService() {
-        super(SettingWebService.getApiKey(), SettingWebService.getDeviceId(), SettingWebService.AuthenticationScheme, SettingWebService.TIME_OUT);
+        super(SettingWebService.getApiKey(), SettingWebService.getDeviceId(), SettingWebService.AUTHENTICATION_SCHEME, SettingWebService.TIME_OUT);
     }
 
 

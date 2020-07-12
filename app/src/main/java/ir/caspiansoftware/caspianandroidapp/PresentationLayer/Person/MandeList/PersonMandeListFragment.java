@@ -12,7 +12,6 @@ import info.elyasi.android.elyasilib.UI.IFragmentCallback;
 import info.elyasi.android.elyasilib.UI.UIUtility;
 import ir.caspiansoftware.caspianandroidapp.Actions;
 import ir.caspiansoftware.caspianandroidapp.BaseCaspian.CaspianSearchableListFragment;
-import ir.caspiansoftware.caspianandroidapp.Models.KalaModel;
 import ir.caspiansoftware.caspianandroidapp.Models.PersonModel;
 import ir.caspiansoftware.caspianandroidapp.R;
 
@@ -31,7 +30,7 @@ public class PersonMandeListFragment extends CaspianSearchableListFragment<Perso
     @Override
     public void onClick(View view) {
         if (view.equals(mBtnExit)) {
-            mActivityCallback.fragment_callback(Actions.ACTION_TOOLBAR_EXIT, null);
+            mActivityCallback.onMyFragmentCallBack(Actions.ACTION_TOOLBAR_EXIT, null);
         }
     }
 
@@ -86,7 +85,7 @@ public class PersonMandeListFragment extends CaspianSearchableListFragment<Perso
     }
 
     @Override
-    public void activity_callback(String actionName, Object parameter, FormActionTypes formActionTypes) {
+    public void onMyActivityCallback(String actionName, Object parameter, FormActionTypes formActionTypes) {
 
     }
 }

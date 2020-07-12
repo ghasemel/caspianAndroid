@@ -48,9 +48,9 @@ public class PFaktorConfirmListActivity extends CaspianActivitySingleFragment {
 
     @SuppressWarnings("unchecked")
     @Override
-    public void fragment_callback(String actionName, FormActionTypes actionTypes, Object... parameter) {
+    public void onMyFragmentCallBack(String actionName, FormActionTypes actionTypes, Object... parameter) {
         // do nothing !
-        Log.d(TAG, "fragment_callback(): actionName = " + actionName);
+        Log.d(TAG, "onMyFragmentCallBack(): actionName = " + actionName);
 
         switch (actionName) {
             case Actions.ACTION_TOOLBAR_EXIT:
@@ -89,7 +89,7 @@ public class PFaktorConfirmListActivity extends CaspianActivitySingleFragment {
     {
         if (getFragmentContainer() != null && getFragmentContainer() instanceof IFragmentCallback) {
             ((IFragmentCallback) getFragmentContainer())
-                    .activity_callback(PFaktorConfirmListFragment.REFRESH_LIST, null, null);
+                    .onMyActivityCallback(PFaktorConfirmListFragment.REFRESH_LIST, null, null);
         }
     }
 

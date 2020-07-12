@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layoutDirection="rtl"
+    android:orientation="vertical"
+    android:padding="5dp">
+
+    <LinearLayout style="@style/list_search_row">
+
+        <TextView
+            android:id="@+id/search_radif"
+            style="@style/label"
+            android:layout_width="0dp"
+            android:layout_weight="1" />
+
+        <info.elyasi.android.elyasilib.Controls.ClearableEditText.ClearableEditText
+            android:id="@+id/search_kala_code"
+            style="@style/textBoxCode"
+            android:layout_width="0dp"
+            android:layout_weight="1.5"
+            android:gravity="start" />
+
+        <info.elyasi.android.elyasilib.Controls.ClearableEditText.ClearableEditText
+            android:id="@+id/search_kala_name"
+            style="@style/textBoxStandard"
+            android:layout_width="0dp"
+            android:layout_weight="5"
+            android:gravity="start" />
+
+        <!--<TextView-->
+        <!--style="@style/label"-->
+        <!--android:gravity="start"-->
+        <!--android:layout_width="0dp"-->
+        <!--android:layout_weight="2"/>-->
+
+        <LinearLayout
+            android:id="@+id/toolbar_exit"
+            style="@style/toolbar_button_close"
+            android:layout_width="0dp"
+            android:layout_weight="2"
+            android:gravity="end">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:src="@drawable/toolbar_close" />
+
+            <TextView
+                style="@style/toolbar_label"
+                android:text="@string/main_exit" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal">
+
+        <fragment
+            android:id="@+id/fragment_kala_list_cell_row"
+            class="ir.caspiansoftware.caspianandroidapp.PresentationLayer.Faktor.Kala.FaktorKalaListRow"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="start"
+            android:orientation="horizontal"
+            android:tag="@string/fragment_pfaktor_kala_list_row_tag"
+            tools:layout="@layout/fragment_kala_cell_list_row" />
+
+    </LinearLayout>
+</LinearLayout>

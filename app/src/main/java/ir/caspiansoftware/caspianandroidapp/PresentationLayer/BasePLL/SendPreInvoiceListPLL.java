@@ -16,12 +16,10 @@ import info.elyasi.android.elyasilib.UI.ActivityFragmentExt;
 import info.elyasi.android.elyasilib.UI.IActivityCallback;
 import info.elyasi.android.elyasilib.UI.IAsyncForm;
 import ir.caspiansoftware.caspianandroidapp.Actions;
-import ir.caspiansoftware.caspianandroidapp.BaseCaspian.CaspianFragment;
 import ir.caspiansoftware.caspianandroidapp.BusinessLayer.PFaktorBLL;
 import ir.caspiansoftware.caspianandroidapp.Models.MPFaktorModel;
 import ir.caspiansoftware.caspianandroidapp.Models.SPFaktorModel;
 import ir.caspiansoftware.caspianandroidapp.R;
-import ir.caspiansoftware.caspianandroidapp.Setting;
 import ir.caspiansoftware.caspianandroidapp.Vars;
 
 /**
@@ -145,7 +143,7 @@ public class SendPreInvoiceListPLL {
                         mAsyncForm.showError(getException(), null);
                     } else {
                         if (result.equals(Constant.SUCCESS)) {
-                            mActivityCallback.fragment_callback(Actions.ACTION_CONFIRM_PFaktor_DONE, null, (Object) null);
+                            mActivityCallback.onMyFragmentCallBack(Actions.ACTION_CONFIRM_PFaktor_DONE, null, (Object) null);
                         } else if (result.equals(Constant.FAILED)) {
                             mAsyncForm.showError(mContext.getString(R.string.pfaktor_is_empty), null);
                         }

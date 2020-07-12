@@ -36,7 +36,7 @@ public class PersonMandeListActivity extends CaspianActivitySingleFragment {
     }
 
     @Override
-    public void fragment_callback(String actionName, FormActionTypes actionTypes, Object[] parameters) {
+    public void onMyFragmentCallBack(String actionName, FormActionTypes actionTypes, Object[] parameters) {
         switch (actionName) {
             case Actions.ACTION_TOOLBAR_EXIT:
                 this.finish();

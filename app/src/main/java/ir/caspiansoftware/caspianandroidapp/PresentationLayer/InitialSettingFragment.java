@@ -100,9 +100,9 @@ public class InitialSettingFragment extends CaspianFragment implements IFragment
         } else if (view.equals(mSaveButton)) {
             save();
         } else if (view.equals(mBtnApiKeyGenerator)) {
-            mActivityCallback.fragment_callback(InitialSettingActivity.ACTION_API_GENERATOR, null, (Object) null);
+            mActivityCallback.onMyFragmentCallBack(InitialSettingActivity.ACTION_API_GENERATOR, null, (Object) null);
         } else if (view.equals(mBtnAppIdGenerator)) {
-            mActivityCallback.fragment_callback(InitialSettingActivity.ACTION_DEVICE_ID_GENERATOR, null, (Object) null);
+            mActivityCallback.onMyFragmentCallBack(InitialSettingActivity.ACTION_DEVICE_ID_GENERATOR, null, (Object) null);
         } else if (view.equals(mCaspianLogo)) {
             caspianLogoCounterIncrement();
         }
@@ -144,7 +144,7 @@ public class InitialSettingFragment extends CaspianFragment implements IFragment
     }
 
     @Override
-    public void activity_callback(String actionName, Object parameter, FormActionTypes formActionTypes) {
+    public void onMyActivityCallback(String actionName, Object parameter, FormActionTypes formActionTypes) {
         Log.d(TAG, parameter.toString());
 
         try {

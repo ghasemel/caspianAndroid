@@ -85,10 +85,10 @@ public class DaftarTafFragment extends CaspianFragment implements IFragmentCallb
     }
 
     @Override
-    public void activity_callback(String actionName, Object parameter, FormActionTypes formActionTypes) {
+    public void onMyActivityCallback(String actionName, Object parameter, FormActionTypes formActionTypes) {
         switch (actionName) {
             case DaftarTafActivity.ACTION_SELECT_PERSON_LIST:
-                Log.d(TAG, "activity_callback(): " + actionName);
+                Log.d(TAG, "onMyActivityCallback(): " + actionName);
 
                 if (!(parameter instanceof PersonModel)) {
                     showError(R.string.invalid_parameter, null);
@@ -130,7 +130,7 @@ public class DaftarTafFragment extends CaspianFragment implements IFragmentCallb
             return;
         }
 
-        mActivityCallback.fragment_callback(
+        mActivityCallback.onMyFragmentCallBack(
                 DaftarTafActivity.ACTION_SHOW_REPORT, null,
                 mTextViewPersonName.getText().toString(),
                 mEditTextPersonCode.getText().toString(),
@@ -145,7 +145,7 @@ public class DaftarTafFragment extends CaspianFragment implements IFragmentCallb
     }
 
     private void selectPerson() {
-        mActivityCallback.fragment_callback(DaftarTafActivity.ACTION_SELECT_PERSON_LIST, null, (Object) null);
+        mActivityCallback.onMyFragmentCallBack(DaftarTafActivity.ACTION_SELECT_PERSON_LIST, null, (Object) null);
     }
 
     @Override

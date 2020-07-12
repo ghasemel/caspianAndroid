@@ -16,7 +16,7 @@ public class KalaWebService extends RESTDotNetWebService {
 
 
     public KalaWebService() {
-        super(SettingWebService.getApiKey(), SettingWebService.getDeviceId(), SettingWebService.AuthenticationScheme, SettingWebService.TIME_OUT);
+        super(SettingWebService.getApiKey(), SettingWebService.getDeviceId(), SettingWebService.AUTHENTICATION_SCHEME, SettingWebService.TIME_OUT);
     }
 
     @Override
