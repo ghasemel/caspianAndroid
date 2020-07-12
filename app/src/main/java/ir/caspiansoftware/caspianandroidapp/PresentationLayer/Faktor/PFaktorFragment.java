@@ -35,6 +35,7 @@ import ir.caspiansoftware.caspianandroidapp.BaseCaspian.CaspianDataGridFragment;
 import ir.caspiansoftware.caspianandroidapp.BaseCaspian.CaspianToolbar;
 import ir.caspiansoftware.caspianandroidapp.BusinessLayer.PFaktorBLL;
 import ir.caspiansoftware.caspianandroidapp.BusinessLayer.PermissionBLL;
+import ir.caspiansoftware.caspianandroidapp.GPSTracker;
 import ir.caspiansoftware.caspianandroidapp.Models.MPFaktorModel;
 import ir.caspiansoftware.caspianandroidapp.Models.PersonModel;
 import ir.caspiansoftware.caspianandroidapp.Models.SPFaktorModel;
@@ -331,6 +332,7 @@ public class PFaktorFragment extends CaspianDataGridFragment<SPFaktorModel> impl
 
         mSummeryTotalPrice = (TextView) parentView.findViewById(R.id.summery_total_price);
 
+        GPSTracker.requestForGps(getActivity());
     }
 
     private void mapToolbar(View parentView) {
@@ -478,7 +480,8 @@ public class PFaktorFragment extends CaspianDataGridFragment<SPFaktorModel> impl
                     mEditTextInvoiceDate.getText().toString(),
                     mEditTextCustomerCode.getText().toString(),
                     mEditTextDescription.getText().toString(),
-                    mSPFaktorList
+                    mSPFaktorList,
+                    getActivity()
             );
 
             setMPFaktorModel(mpFaktorModel, true);

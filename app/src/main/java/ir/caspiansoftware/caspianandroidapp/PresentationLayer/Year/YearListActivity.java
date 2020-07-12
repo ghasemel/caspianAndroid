@@ -2,6 +2,7 @@ package ir.caspiansoftware.caspianandroidapp.PresentationLayer.Year;
 
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
+import android.util.Log;
 
 import ir.caspiansoftware.caspianandroidapp.BaseCaspian.CaspianActionbar;
 import ir.caspiansoftware.caspianandroidapp.BaseCaspian.CaspianActivitySingleFragment;
@@ -12,11 +13,15 @@ import ir.caspiansoftware.caspianandroidapp.R;
  */
 public class YearListActivity extends CaspianActivitySingleFragment {
 
+    private static final String TAG = "YearListActivity";
+
     @Override
     public void onCreate(Bundle savedBundleState) {
         showAsPopup(this, getResources().getInteger(R.integer.popup_height), getResources().getInteger(R.integer.popup_width));
         CaspianActionbar.setActionbarLayout(this, R.layout.actionbar_dialog, R.string.year_title);
         //forceRTLIfSupported();
+        Log.d(TAG, String.valueOf(getResources().getInteger(R.integer.popup_height)));
+        Log.d(TAG, String.valueOf(getResources().getInteger(R.integer.popup_width)));
 
         super.onCreate(savedBundleState);
 
