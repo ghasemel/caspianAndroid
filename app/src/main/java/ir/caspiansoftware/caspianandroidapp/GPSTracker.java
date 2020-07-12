@@ -1,23 +1,31 @@
 package ir.caspiansoftware.caspianandroidapp;
 
+import android.Manifest;
+import android.app.Activity;
 import android.app.AlertDialog;
-import android.app.Service;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
+import android.os.Build;
 import android.os.Bundle;
-import android.os.IBinder;
 import android.provider.Settings;
+import android.support.v4.app.ActivityCompat;
 import android.util.Log;
+import android.view.View;
 import android.widget.Toast;
+
+import ir.caspiansoftware.caspianandroidapp.BaseCaspian.ErrorExt;
 
 public class GPSTracker implements LocationListener { //Service
     private static final String TAG = "GPSTracker";
 
-    private final Context mContext;
+    private final Activity mActivity;
+
+    public static final int REQUEST_GPS_ACCESS = 56574;
 
     // flag for GPS status
     boolean isGPSEnabled = false;
@@ -41,19 +49,41 @@ public class GPSTracker implements LocationListener { //Service
     // Declaring a Location Manager
     protected LocationManager locationManager;
 
-    public GPSTracker(Context context) {
-        this.mContext = context;
+    public GPSTracker(Activity activity) {
+        this.mActivity = activity;
         getLocation();
+    }
+
+    public static void requestForGps(Activity activity) {
+        LocationManager locationManager = (LocationManager) activity.getSystemService(Context.LOCATION_SERVICE);
+
+        // getting GPS status
+        boolean isGPSEnabled = locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
+
+        if(!isGPSEnabled || Build.VERSION.SDK_INT < Build.VERSION_CODES.M){
+            return;
+        }
+
+        int checkSelfPermissionFINE = ActivityCompat.checkSelfPermission(activity, Manifest.permission.ACCESS_FINE_LOCATION);
+        int checkSelfPermissionCOARSE = ActivityCompat.checkSelfPermission(activity, Manifest.permission.ACCESS_COARSE_LOCATION);
+
+        if (checkSelfPermissionFINE == PackageManager.PERMISSION_DENIED || checkSelfPermissionCOARSE == PackageManager.PERMISSION_DENIED) {
+            ActivityCompat.requestPermissions(
+                    activity,
+                    new String[]{
+                            Manifest.permission.ACCESS_FINE_LOCATION,
+                            Manifest.permission.ACCESS_COARSE_LOCATION
+                    }, REQUEST_GPS_ACCESS
+            );
+        }
     }
 
     public Location getLocation() {
         try {
-            locationManager = (LocationManager) mContext
-                    .getSystemService(Context.LOCATION_SERVICE);
+            locationManager = (LocationManager) mActivity.getSystemService(Context.LOCATION_SERVICE);
 
             // getting GPS status
-            isGPSEnabled = locationManager
-                    .isProviderEnabled(LocationManager.GPS_PROVIDER);
+            isGPSEnabled = locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
 
             // getting network status
             isNetworkEnabled = locationManager
@@ -105,7 +135,8 @@ public class GPSTracker implements LocationListener { //Service
                     Log.d(TAG, "lat: " + latitude + ", lon: " + longitude);
 
                 } catch (SecurityException ex) {
-                    Toast.makeText(mContext, "security_exception", Toast.LENGTH_LONG).show();
+                    Toast.makeText(mActivity, "security_exception", Toast.LENGTH_LONG).show();
+                    ErrorExt.get().extractExceptionDetail(ex);
                 }
             }
 
@@ -125,7 +156,7 @@ public class GPSTracker implements LocationListener { //Service
             try {
                 locationManager.removeUpdates(GPSTracker.this);
             } catch (SecurityException ex) {
-                Toast.makeText(mContext, "security_exception", Toast.LENGTH_LONG).show();
+                Toast.makeText(mActivity, "security_exception", Toast.LENGTH_LONG).show();
             }
         }
     }
@@ -167,7 +198,7 @@ public class GPSTracker implements LocationListener { //Service
      * On pressing Settings button will lauch Settings Options
      * */
     public void showSettingsAlert(){
-        AlertDialog.Builder alertDialog = new AlertDialog.Builder(mContext);
+        AlertDialog.Builder alertDialog = new AlertDialog.Builder(mActivity);
 
         // Setting Dialog Title
         alertDialog.setTitle("GPS is settings");
@@ -179,7 +210,7 @@ public class GPSTracker implements LocationListener { //Service
         alertDialog.setPositiveButton("Settings", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog,int which) {
                 Intent intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
-                mContext.startActivity(intent);
+                mActivity.startActivity(intent);
             }
         });
 

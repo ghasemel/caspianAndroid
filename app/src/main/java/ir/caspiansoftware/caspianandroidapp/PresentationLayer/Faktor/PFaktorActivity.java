@@ -11,6 +11,7 @@ import info.elyasi.android.elyasilib.UI.FormActionTypes;
 import info.elyasi.android.elyasilib.UI.IFragmentCallback;
 import ir.caspiansoftware.caspianandroidapp.BaseCaspian.CaspianActionbar;
 import ir.caspiansoftware.caspianandroidapp.BaseCaspian.CaspianActivitySingleFragment;
+import ir.caspiansoftware.caspianandroidapp.GPSTracker;
 import ir.caspiansoftware.caspianandroidapp.Models.MPFaktorModel;
 import ir.caspiansoftware.caspianandroidapp.Models.PersonModel;
 import ir.caspiansoftware.caspianandroidapp.Models.SPFaktorModel;
@@ -37,6 +38,7 @@ public class PFaktorActivity extends CaspianActivitySingleFragment {
     public static final String ACTION_INVOICE_SEARCH = "action_invoice_search";
 
     private static final int REQUEST_MANDE = 4;
+
 
     private IFragmentCallback mFragmentCallback;
 
@@ -107,7 +109,15 @@ public class PFaktorActivity extends CaspianActivitySingleFragment {
         }
     }
 
+   /* @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
 
+        switch(requestCode) {
+            case GPSTracker.REQUEST_GPS_ACCESS:
+
+                break;
+        }
+    }*/
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
