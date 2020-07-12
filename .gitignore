@@ -2,6 +2,6 @@
 .DS_Store
 build/
 app/
-.idea
+/.idea/
 .idea/
 local.properties
