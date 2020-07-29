@@ -1,7 +1,10 @@
 package ir.caspiansoftware.caspianandroidapp;
 
 
+import android.app.Activity;
+import android.util.DisplayMetrics;
 
+import info.elyasi.android.elyasilib.UI.ActivityFragmentExt;
 
 /**
  * Created by Canada on 12/18/2015.
@@ -21,4 +24,18 @@ public class Setting {
 
     //public static final long LOCATION_REFRESH_TIME = 5, LOCATION_REFRESH_DISTANCE
 
+    static DisplayMetrics displayMetrics = new DisplayMetrics();
+    //static int height = 0;
+    //static int width = 0;
+
+
+    public static void setHeightWidth(ActivityFragmentExt activity) {
+        //if (height <= 0 || width < 0) {
+        activity.getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
+        int height = displayMetrics.heightPixels;
+        int width = displayMetrics.widthPixels;
+        //}
+
+        ActivityFragmentExt.showAsPopup(activity, height - 100, width - 200);
+    }
 }

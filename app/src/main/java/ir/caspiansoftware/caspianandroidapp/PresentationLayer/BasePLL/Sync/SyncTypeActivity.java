@@ -17,6 +17,7 @@ import ir.caspiansoftware.caspianandroidapp.Models.PersonModel;
 import ir.caspiansoftware.caspianandroidapp.PresentationLayer.Person.DaftarTaf.DaftarTafReportActivity;
 import ir.caspiansoftware.caspianandroidapp.PresentationLayer.Person.List.PersonListActivity;
 import ir.caspiansoftware.caspianandroidapp.R;
+import ir.caspiansoftware.caspianandroidapp.Setting;
 
 /**
  * Created by Ghasem on 4/22/2017.
@@ -35,7 +36,8 @@ public class SyncTypeActivity extends CaspianActivitySingleFragment {
     @Override
     public void onCreate(Bundle savedBundleState) {
         Log.d(TAG, "start...");
-        showAsPopup(this, getResources().getInteger(R.integer.popup_daf_taf_height), getResources().getInteger(R.integer.popup_daf_taf_width));
+        Setting.setHeightWidth(this);
+        //showAsPopup(this, getResources().getInteger(R.integer.popup_daf_taf_height), getResources().getInteger(R.integer.popup_daf_taf_width));
         CaspianActionbar.setActionbarLayout(this, R.layout.actionbar_dialog, R.string.sync_select_sync_type);
 
         super.onCreate(savedBundleState);

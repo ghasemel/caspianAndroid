@@ -8,6 +8,7 @@ import android.util.Log;
 import ir.caspiansoftware.caspianandroidapp.BaseCaspian.CaspianActionbar;
 import ir.caspiansoftware.caspianandroidapp.BaseCaspian.CaspianActivitySingleFragment;
 import ir.caspiansoftware.caspianandroidapp.R;
+import ir.caspiansoftware.caspianandroidapp.Setting;
 
 /**
  * Created by Canada on 2/23/2016.
@@ -18,13 +19,14 @@ public class YearListActivity extends CaspianActivitySingleFragment {
 
     @Override
     public void onCreate(Bundle savedBundleState) {
-        showAsPopup(this, getResources().getInteger(R.integer.popup_height), getResources().getInteger(R.integer.popup_width));
+        //showAsPopup(this, getResources().getInteger(R.integer.popup_height), getResources().getInteger(R.integer.popup_width));
+        Setting.setHeightWidth(this);
         CaspianActionbar.setActionbarLayout(this, R.layout.actionbar_dialog, R.string.year_title);
         //forceRTLIfSupported();
-        Log.d(TAG, String.valueOf(getResources().getInteger(R.integer.popup_height)));
-        Log.d(TAG, String.valueOf(getResources().getInteger(R.integer.popup_width)));
+        //Log.d(TAG, String.valueOf(getResources().getInteger(R.integer.popup_height)));
+        //Log.d(TAG, String.valueOf(getResources().getInteger(R.integer.popup_width)));
 
-        DisplayMetrics displayMetrics = new DisplayMetrics();
+        /*DisplayMetrics displayMetrics = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
         int height = displayMetrics.heightPixels;
         int width = displayMetrics.widthPixels;
@@ -32,7 +34,7 @@ public class YearListActivity extends CaspianActivitySingleFragment {
         Log.d(TAG, String.valueOf(width));
 
         float density = getResources().getDisplayMetrics().density;
-        Log.d(TAG, String.valueOf(density));
+        Log.d(TAG, String.valueOf(density));*/
         // (dpi / 160) = 0.75 if it's LDPI
         // (dpi / 160) = 1.0 if it's MDPI
         // (dpi / 160) = 1.5 if it's HDPI
