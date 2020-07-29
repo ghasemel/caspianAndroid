@@ -7,6 +7,7 @@ import android.util.Log;
 import ir.caspiansoftware.caspianandroidapp.BaseCaspian.CaspianActionbar;
 import ir.caspiansoftware.caspianandroidapp.BaseCaspian.CaspianActivitySingleFragment;
 import ir.caspiansoftware.caspianandroidapp.R;
+import ir.caspiansoftware.caspianandroidapp.Setting;
 
 /**
  * Created by Canada on 7/18/2016.
@@ -16,12 +17,13 @@ public class PersonListActivity extends CaspianActivitySingleFragment {
 
     @Override
     public void onCreate(Bundle savedBundleState) {
-        showAsPopup(this, getResources().getInteger(R.integer.popup_height), getResources().getInteger(R.integer.popup_width));
+        //showAsPopup(this, getResources().getInteger(R.integer.popup_height), getResources().getInteger(R.integer.popup_width));
+        Setting.setHeightWidth(this);
         CaspianActionbar.setActionbarLayout(this, R.layout.actionbar_dialog, R.string.person_list);
         //forceRTLIfSupported();
 
-        Log.d(TAG, "height: " + String.valueOf(getResources().getInteger(R.integer.popup_height)));
-        Log.d(TAG, "width: " + String.valueOf(getResources().getInteger(R.integer.popup_width)));
+        //Log.d(TAG, "height: " + String.valueOf(getResources().getInteger(R.integer.popup_height)));
+        //Log.d(TAG, "width: " + String.valueOf(getResources().getInteger(R.integer.popup_width)));
 
         super.onCreate(savedBundleState);
 

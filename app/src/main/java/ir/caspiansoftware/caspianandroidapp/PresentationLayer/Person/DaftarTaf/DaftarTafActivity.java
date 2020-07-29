@@ -15,6 +15,7 @@ import ir.caspiansoftware.caspianandroidapp.BaseCaspian.CaspianActivitySingleFra
 import ir.caspiansoftware.caspianandroidapp.Models.PersonModel;
 import ir.caspiansoftware.caspianandroidapp.PresentationLayer.Person.List.PersonListActivity;
 import ir.caspiansoftware.caspianandroidapp.R;
+import ir.caspiansoftware.caspianandroidapp.Setting;
 
 /**
  * Created by Ghasem on 4/22/2017.
@@ -35,11 +36,12 @@ public class DaftarTafActivity extends CaspianActivitySingleFragment {
     @Override
     public void onCreate(Bundle savedBundleState) {
         Log.d(TAG, "start...");
-        showAsPopup(this, getResources().getInteger(R.integer.popup_daf_taf_height), getResources().getInteger(R.integer.popup_daf_taf_width));
+        Setting.setHeightWidth(this);
+        //showAsPopup(this, getResources().getInteger(R.integer.popup_daf_taf_height), getResources().getInteger(R.integer.popup_daf_taf_width));
         CaspianActionbar.setActionbarLayout(this, R.layout.actionbar_dialog, R.string.daf_taf_title);
 
-        Log.d(TAG, String.valueOf(getResources().getInteger(R.integer.popup_daf_taf_height)));
-        Log.d(TAG, String.valueOf(getResources().getInteger(R.integer.popup_daf_taf_width)));
+        //Log.d(TAG, String.valueOf(getResources().getInteger(R.integer.popup_daf_taf_height)));
+        //Log.d(TAG, String.valueOf(getResources().getInteger(R.integer.popup_daf_taf_width)));
 
         DisplayMetrics displayMetrics = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
