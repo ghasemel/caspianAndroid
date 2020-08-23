@@ -21,6 +21,7 @@ public class MPFaktorTbl extends ATableEntity {
     public static final String COLUMN_ATF_NUM = "atf_num";
     public static final String COLUMN_LAT = "lat";
     public static final String COLUMN_LON = "lon";
+    public static final String COLUMN_CREATE_TIMESTAMP = "create_date";
 
 
     private static MPFaktorTbl sMPFaktorTbl = null;
@@ -54,7 +55,8 @@ public class MPFaktorTbl extends ATableEntity {
                 COLUMN_SYNC_DATE,
                 COLUMN_ATF_NUM,
                 COLUMN_LAT,
-                COLUMN_LON
+                COLUMN_LON,
+                COLUMN_CREATE_TIMESTAMP
         };
     }
 
@@ -83,7 +85,8 @@ public class MPFaktorTbl extends ATableEntity {
                 COLUMN_SYNC_DATE + " varchar(10)",
                 COLUMN_ATF_NUM + " integer",
                 COLUMN_LAT + " double",
-                COLUMN_LON + " double"
+                COLUMN_LON + " double",
+                COLUMN_CREATE_TIMESTAMP + " DATETIME DEFAULT CURRENT_TIMESTAMP"
         };
     }
 }
