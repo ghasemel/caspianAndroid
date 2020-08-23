@@ -35,7 +35,6 @@
                     <EditText style="@style/textBoxDate" android:id="@id/editText_invoiceDate" />
                     <ImageView style="@style/ImageViewBtnTouch" android:id="@+id/btn_date_select" />
 
-
                     <CheckBox
                         android:id="@+id/checkbox_synced"
                         android:enabled="false"
@@ -190,6 +189,8 @@
             <TextView
                 style="@style/toolbar_label_beside_icon"
                 android:text="@string/add_kala" />
+
+            <TextView style="@style/label_red" android:id="@+id/labelFaktorId" android:layout_width="wrap_content" />
         </LinearLayout>
 
         <LinearLayout style="@style/pfaktor_summery_button_frame" android:layout_alignParentEnd="true">

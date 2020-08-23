@@ -2,6 +2,8 @@ package ir.caspiansoftware.caspianandroidapp;
 
 import android.content.Context;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.LinkedHashMap;
 import java.util.List;
 
@@ -22,5 +24,6 @@ public class Vars {
     //public static List<InitialSettingModel> SETTING_LIST = null;
     //public static Dictionary<String, String> USER_PERMISSION = null;
 
+    public static DateFormat iso8601Format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
 }

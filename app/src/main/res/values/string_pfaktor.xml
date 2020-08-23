@@ -8,6 +8,7 @@
     <string name="code_kh_label">کد خریدار:</string>
     <string name="name_kh_label">نام خریدار:</string>
 
+    <string name="faktor_id"> | شماره عطف: %d</string>
     <string name="faktor_num_label">شماره فاکتور:</string>
     <string name="faktor_num_list">فاکتور</string>
     <string name="add_kala">درج کالا</string>
@@ -49,7 +50,7 @@
     <string name="pfaktor_delete_title">حذف پیش فاکتور</string>
     <string name="pfaktor_delete_confirm">آیا میخواهید این پیش فاکتور را حذف کنید؟</string>
     <string name="ask_to_save">آیا فاکتور فعلی ذخیره شود؟</string>
-    <string name="pfaktor_readonly_for_sync_question">این فاکتور با سرور همگام سازی شده است و حذف آن موجب حذف از روی سرور نخواهد شد. آیا ادامه می دهید؟</string>
+    <string name="pfaktor_readonly_for_sync_question">این فاکتور با سرور همگام سازی شده است و امکان حذف آن وجود ندارد.</string>
     <string name="pfaktor_readonly_for_sync">این فاکتور با سرور همگام سازی شده است و امکان ویرایش آن وجود ندارد.</string>
 
     <string name="pfaktor_search_title">جستجوی پیش فاکتورها</string>

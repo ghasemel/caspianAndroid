@@ -55,8 +55,7 @@ public class PFaktorBLL extends ABusinessLayer {
                 if (listAtfNums != null) {
 
                     // create MPFaktorDataSource object
-                    MPFaktorDataSource mpFaktorDataSource =
-                            new MPFaktorDataSource(mContext);
+                    MPFaktorDataSource mpFaktorDataSource = new MPFaktorDataSource(mContext);
 
                     try {
                         // open connection

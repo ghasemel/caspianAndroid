@@ -3,7 +3,11 @@ package ir.caspiansoftware.caspianandroidapp.DataLayer.DataBase;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
+import android.util.Log;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,11 +16,14 @@ import info.elyasi.android.elyasilib.Utility.DateExt;
 import ir.caspiansoftware.caspianandroidapp.DataLayer.DataBase.Tables.MPFaktorTbl;
 import ir.caspiansoftware.caspianandroidapp.DataLayer.DataBase.Views.MPFaktorView;
 import ir.caspiansoftware.caspianandroidapp.Models.MPFaktorModel;
+import ir.caspiansoftware.caspianandroidapp.Vars;
 
 /**
  * Created by Canada on 7/22/2016.
  */
 public class MPFaktorDataSource extends ADataSource<MPFaktorModel> {
+    private static final String TAG = "MPFaktorDataSource";
+
 
     public MPFaktorDataSource(Context context) {
         super(context);
@@ -49,6 +56,11 @@ public class MPFaktorDataSource extends ADataSource<MPFaktorModel> {
     @Override
     public int update(MPFaktorModel mpFaktorModel) throws Exception {
         ContentValues cv = objectToContentValue(mpFaktorModel);
+
+        // to not modify lat/lang
+        cv.remove(MPFaktorTbl.COLUMN_LAT);
+        cv.remove(MPFaktorTbl.COLUMN_LON);
+
         return mDatabase.update(MPFaktorTbl.TABLE_NAME, cv, MPFaktorTbl.COLUMN_ID + "=" + mpFaktorModel.getId(), null);
     }
 
@@ -224,8 +236,17 @@ public class MPFaktorDataSource extends ADataSource<MPFaktorModel> {
         model.setLat(cursor.getDouble(11));
         model.setLon(cursor.getDouble(12));
 
+        try {
+            if (cursor.getString(13) != null)
+                model.setCreateDate(Vars.iso8601Format.parse(cursor.getString(13)));
+        } catch (ParseException e) {
+            Log.e(TAG, "error on converting create_date column", e);
+            throw new RuntimeException("error on converting create_date column");
+        }
+
         if (cursor.getColumnIndex(MPFaktorView.COLUMN_TOTAL_PRICE) != -1)
-            model.setPriceTotal(cursor.getLong(13));
+            model.setPriceTotal(cursor.getLong(14));
+
         return model;
     }
 

@@ -93,6 +93,8 @@ public class PFaktorFragment extends CaspianDataGridFragment<SPFaktorModel> impl
     private MPFaktorModel mMPFaktorModel;
     private PFaktorBLL mPFaktorBLL;
 
+    private TextView mLabelFaktorId;
+
     private boolean mModified = false;
 
     @Override
@@ -214,6 +216,10 @@ public class PFaktorFragment extends CaspianDataGridFragment<SPFaktorModel> impl
         mMPFaktorModel = mpFaktorModel;
         if (mMPFaktorModel != null) {
             Log.d(TAG, "setMPFaktorModel(): mMPFaktorModel not null");
+            mLabelFaktorId.setText(String.format(
+                    getContext().getString(R.string.faktor_id),
+                    mpFaktorModel.getId())
+            );
 
             if (!justUpdate) {
                 mEditTextNum.setText(String.valueOf(mMPFaktorModel.getNum()));
@@ -246,6 +252,7 @@ public class PFaktorFragment extends CaspianDataGridFragment<SPFaktorModel> impl
             mEditTextInvoiceDate.setText(PersianDate.getToday());
             mTextViewCustomerName.setText("");
             mEditTextDescription.setText("");
+            mLabelFaktorId.setText("");
             setSPFaktorList(new ArrayList<SPFaktorModel>());
         }
     }
@@ -331,6 +338,8 @@ public class PFaktorFragment extends CaspianDataGridFragment<SPFaktorModel> impl
         mProgressBar = (ProgressBar) parentView.findViewById(R.id.progressBar);
 
         mSummeryTotalPrice = (TextView) parentView.findViewById(R.id.summery_total_price);
+
+        mLabelFaktorId = parentView.findViewById(R.id.labelFaktorId);
 
         GPSTracker.requestForGps(getActivity());
     }
@@ -448,14 +457,7 @@ public class PFaktorFragment extends CaspianDataGridFragment<SPFaktorModel> impl
             return;
 
         if (mMPFaktorModel.isSynced()) {
-            messageBoxYesNo(R.string.pfaktor_delete_title, R.string.pfaktor_readonly_for_sync_question, new IDialogCallback() {
-                @Override
-                public void dialog_callback(DialogResult dialogResult, Object result, int requestCode) {
-                    if (dialogResult == DialogResult.Yes) {
-                        delete();
-                    }
-                }
-            });
+            messageBoxOK(R.string.pfaktor_delete_title, R.string.pfaktor_readonly_for_sync_question, null);
             return;
         }
 

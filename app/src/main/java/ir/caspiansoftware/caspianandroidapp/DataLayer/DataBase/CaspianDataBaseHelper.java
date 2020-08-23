@@ -126,6 +126,9 @@ public class CaspianDataBaseHelper extends SQLiteOpenHelper {
 
                 case 2:
                     execSQLFile(mContext, db, R.raw.kala_photo_sql);
+
+                case 3:
+                    execSQLFile(mContext, db, R.raw.mpfaktor_create_date_sql);
             }
 
             // commit

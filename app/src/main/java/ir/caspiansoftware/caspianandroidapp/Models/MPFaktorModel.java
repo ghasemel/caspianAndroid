@@ -8,10 +8,12 @@ import org.json.JSONObject;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Date;
 
 import info.elyasi.android.elyasilib.Utility.IJson;
 import info.elyasi.android.elyasilib.Utility.NumberExt;
 import ir.caspiansoftware.caspianandroidapp.BaseCaspian.CaspianErrors;
+import ir.caspiansoftware.caspianandroidapp.Vars;
 
 /**
  * Created by Canada on 7/22/2016.
@@ -36,7 +38,7 @@ public class MPFaktorModel implements Serializable, Comparable<MPFaktorModel>, I
 
     // related to view MPFaktorView
     private long mPriceTotal;
-
+    private Date mCreateDate;
 
 
     public int getId() {
@@ -175,6 +177,14 @@ public class MPFaktorModel implements Serializable, Comparable<MPFaktorModel>, I
         this.mLon = lon;
     }
 
+    public Date getCreateDate() {
+        return mCreateDate;
+    }
+
+    public void setCreateDate(Date mCreateDate) {
+        this.mCreateDate = mCreateDate;
+    }
+
     @Override
     public int compareTo(@NonNull MPFaktorModel mpFaktorModel) {
         return 0;
@@ -194,6 +204,8 @@ public class MPFaktorModel implements Serializable, Comparable<MPFaktorModel>, I
         json.put("avance", getAvancePrice());
         json.put("lat", getLat());
         json.put("lon", getLon());
+        json.put("create_date", Vars.iso8601Format.format(getCreateDate()));
+
 
         JSONArray spfaktors = toJSON_SFaktor();
         if (spfaktors != null)
