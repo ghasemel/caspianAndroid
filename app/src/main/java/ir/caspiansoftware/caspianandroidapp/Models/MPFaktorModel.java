@@ -7,6 +7,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.Serializable;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -204,6 +205,9 @@ public class MPFaktorModel implements Serializable, Comparable<MPFaktorModel>, I
         json.put("avance", getAvancePrice());
         json.put("lat", getLat());
         json.put("lon", getLon());
+
+        if (getCreateDate() == null)
+            setCreateDate(new Date(System.currentTimeMillis()));
         json.put("create_date", Vars.iso8601Format.format(getCreateDate()));
 
 
