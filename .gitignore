@@ -5,3 +5,4 @@ app/
 /.idea/
 .idea/
 local.properties
+release/
