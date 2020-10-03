@@ -1,8 +1,5 @@
 .gradle
 .DS_Store
 build/
-app/
-/.idea/
 .idea/
-local.properties
 release/

@@ -6,6 +6,7 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.TimeZone;
 
 import ir.caspiansoftware.caspianandroidapp.Models.UserModel;
 import ir.caspiansoftware.caspianandroidapp.Models.UserPermissionModel;
@@ -26,4 +27,7 @@ public class Vars {
 
     public static DateFormat iso8601Format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
+    static {
+        iso8601Format.setTimeZone(TimeZone.getTimeZone("UTC"));
+    }
 }

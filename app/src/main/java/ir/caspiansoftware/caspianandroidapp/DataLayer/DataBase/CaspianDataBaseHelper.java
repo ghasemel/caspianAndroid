@@ -131,6 +131,9 @@ public class CaspianDataBaseHelper extends SQLiteOpenHelper {
                     execSQLFile(mContext, db, R.raw.mpfaktor_create_date_sql);
                     //db.execSQL("ALTER TABLE " + MPFaktorTbl.TABLE_NAME +
                     //" ADD " + MPFaktorTbl.COLUMN_CREATE_TIMESTAMP + " DATETIME DEFAULT CURRENT_TIMESTAMP;");
+
+                case 4:
+                    execSQLFile(mContext, db, R.raw.unset_default_value_for_create_date_col_pfaktor);
             }
 
             // commit

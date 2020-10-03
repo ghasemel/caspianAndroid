@@ -86,7 +86,7 @@ public class MPFaktorTbl extends ATableEntity {
                 COLUMN_ATF_NUM + " integer",
                 COLUMN_LAT + " double",
                 COLUMN_LON + " double",
-                COLUMN_CREATE_TIMESTAMP + " DATETIME DEFAULT CURRENT_TIMESTAMP"
+                COLUMN_CREATE_TIMESTAMP + " DATETIME"
         };
     }
 }

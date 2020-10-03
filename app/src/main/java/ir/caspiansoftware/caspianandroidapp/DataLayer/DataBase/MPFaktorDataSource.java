@@ -266,6 +266,9 @@ public class MPFaktorDataSource extends ADataSource<MPFaktorModel> {
         cv.put(MPFaktorTbl.COLUMN_ATF_NUM, mpFaktorModel.getAtfNum());
         cv.put(MPFaktorTbl.COLUMN_LAT, mpFaktorModel.getLat());
         cv.put(MPFaktorTbl.COLUMN_LON, mpFaktorModel.getLon());
+
+        if (mpFaktorModel.getCreateDate() != null)
+            cv.put(MPFaktorTbl.COLUMN_CREATE_TIMESTAMP, mpFaktorModel.getCreateDateInIsoFormat());
         return cv;
     }
 }
