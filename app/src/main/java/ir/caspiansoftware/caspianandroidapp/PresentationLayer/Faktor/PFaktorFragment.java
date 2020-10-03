@@ -5,7 +5,10 @@ import android.content.Context;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
+import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.RequiresApi;
 import android.util.Log;
 import android.view.View;
 import android.widget.CheckBox;
@@ -16,7 +19,10 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import java.math.BigDecimal;
+import java.time.Instant;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Date;
 
 import info.elyasi.android.elyasilib.GPS.MapUtility;
 import info.elyasi.android.elyasilib.Persian.PersianDate;
@@ -35,6 +41,7 @@ import ir.caspiansoftware.caspianandroidapp.BaseCaspian.CaspianDataGridFragment;
 import ir.caspiansoftware.caspianandroidapp.BaseCaspian.CaspianToolbar;
 import ir.caspiansoftware.caspianandroidapp.BusinessLayer.PFaktorBLL;
 import ir.caspiansoftware.caspianandroidapp.BusinessLayer.PermissionBLL;
+import ir.caspiansoftware.caspianandroidapp.DataLayer.WebService.TimeWebService;
 import ir.caspiansoftware.caspianandroidapp.GPSTracker;
 import ir.caspiansoftware.caspianandroidapp.Models.MPFaktorModel;
 import ir.caspiansoftware.caspianandroidapp.Models.PersonModel;
@@ -124,7 +131,7 @@ public class PFaktorFragment extends CaspianDataGridFragment<SPFaktorModel> impl
                 @Override
                 public void dialog_callback(DialogResult dialogResult, Object result, int requestCode) {
                     if (dialogResult == DialogResult.Yes) {
-                        save();
+                        saveAsync();
                     } else {
                         setModified(false);
                         if (onExit)
@@ -471,7 +478,37 @@ public class PFaktorFragment extends CaspianDataGridFragment<SPFaktorModel> impl
         });
     }
 
-    private void save() {
+    private void saveAsync() {
+        class AsyncRequest extends AsyncTask<Void, Void, Date> {
+
+            @Override
+            protected Date doInBackground(Void... params) {
+                Date dateTime = null;
+                TimeWebService timeWebService = new TimeWebService();
+                try {
+                    dateTime = timeWebService.getCurrentDateTime();
+                } catch (Exception e) {
+                    Log.d(TAG, e.toString());
+                }
+                return dateTime;
+            }
+
+
+            @Override
+            protected void onPostExecute(Date dateTime) {
+                if (dateTime == null) {
+                    showError(R.string.internet_dateTime_not_reachable, null);
+                    return;
+                }
+                save(dateTime);
+            }
+        }
+
+        AsyncRequest asyncRequest = new AsyncRequest();
+        asyncRequest.execute();
+    }
+
+    private void save(Date dateTime) {
         if (checkForSync())
             return;
 
@@ -483,7 +520,8 @@ public class PFaktorFragment extends CaspianDataGridFragment<SPFaktorModel> impl
                     mEditTextCustomerCode.getText().toString(),
                     mEditTextDescription.getText().toString(),
                     mSPFaktorList,
-                    getActivity()
+                    getActivity(),
+                    dateTime
             );
 
             setMPFaktorModel(mpFaktorModel, true);
@@ -622,7 +660,7 @@ public class PFaktorFragment extends CaspianDataGridFragment<SPFaktorModel> impl
             // getRowFragment().notifyDataSetChanged();
         } else if (view.equals(mToolbarSave)) {
             Log.d(TAG, "mToolbarSave clicked");
-            save();
+            saveAsync();
 
         } else if (view.equals(mToolbarDelete)) {
             Log.d(TAG, "mToolbarDelete clicked");

@@ -66,4 +66,7 @@
     <string name="column_code_hesab_title">کدحساب</string>
     <string name="column_mande_title">مانده</string>
     <string name="column_type_mande_title">نوع</string>
+
+
+    <string name="internet_dateTime_not_reachable">عدم دسترسی به سرور تاریخ/زمان. لطفا به اینترنت متصل شده و دوباره تلاش کنید</string>
 </resources>

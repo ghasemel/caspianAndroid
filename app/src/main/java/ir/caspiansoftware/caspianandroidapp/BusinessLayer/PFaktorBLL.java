@@ -5,6 +5,7 @@ import android.content.Context;
 import android.util.Log;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import info.elyasi.android.elyasilib.BLL.ABusinessLayer;
@@ -15,6 +16,7 @@ import ir.caspiansoftware.caspianandroidapp.BaseCaspian.CaspianErrors;
 import ir.caspiansoftware.caspianandroidapp.DataLayer.DataBase.MPFaktorDataSource;
 import ir.caspiansoftware.caspianandroidapp.DataLayer.DataBase.SPFaktorDataSource;
 import ir.caspiansoftware.caspianandroidapp.DataLayer.WebService.PFaktorWebService;
+import ir.caspiansoftware.caspianandroidapp.DataLayer.WebService.TimeWebService;
 import ir.caspiansoftware.caspianandroidapp.GPSTracker;
 import ir.caspiansoftware.caspianandroidapp.Models.KalaModel;
 import ir.caspiansoftware.caspianandroidapp.Models.MPFaktorModel;
@@ -29,6 +31,7 @@ public class PFaktorBLL extends ABusinessLayer {
     private static final String TAG = "PFaktorBLL";
 
     private PFaktorWebService mPFaktorWebService;
+
 
     public PFaktorBLL(Context context) {
         super(context);
@@ -209,7 +212,7 @@ public class PFaktorBLL extends ABusinessLayer {
         }
     }
 
-    public MPFaktorModel Save(int id, int num, String date, String customer_code, String description, List<SPFaktorModel> spFaktorModelList, Activity activity) throws Exception {
+    public MPFaktorModel Save(int id, int num, String date, String customer_code, String description, List<SPFaktorModel> spFaktorModelList, Activity activity, Date insertDate) throws Exception {
         MPFaktorDataSource mpFaktorDataSource = new MPFaktorDataSource(mContext);
 
         try {
@@ -233,6 +236,8 @@ public class PFaktorBLL extends ABusinessLayer {
 
             mpFaktorDataSource.open();
 
+
+
             // insert
             if (id <= 0) {
                 // get location
@@ -251,6 +256,7 @@ public class PFaktorBLL extends ABusinessLayer {
                         throw new RuntimeException(CaspianErrors.gps_is_off);
                 }
 
+                mpFaktorModel.setCreateDate(insertDate);
                 id = mpFaktorDataSource.insert(mpFaktorModel);
                 if (id <= 0)
                     throw new Exception(CaspianErrors.SAVING_ERROR);

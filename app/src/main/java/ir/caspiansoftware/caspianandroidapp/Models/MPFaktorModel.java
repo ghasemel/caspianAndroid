@@ -182,6 +182,10 @@ public class MPFaktorModel implements Serializable, Comparable<MPFaktorModel>, I
         return mCreateDate;
     }
 
+    public String getCreateDateInIsoFormat() {
+        return Vars.iso8601Format.format(getCreateDate());
+    }
+
     public void setCreateDate(Date mCreateDate) {
         this.mCreateDate = mCreateDate;
     }
@@ -208,7 +212,7 @@ public class MPFaktorModel implements Serializable, Comparable<MPFaktorModel>, I
 
         if (getCreateDate() == null)
             setCreateDate(new Date(System.currentTimeMillis()));
-        json.put("create_date", Vars.iso8601Format.format(getCreateDate()));
+        json.put("create_date", getCreateDateInIsoFormat());
 
 
         JSONArray spfaktors = toJSON_SFaktor();
