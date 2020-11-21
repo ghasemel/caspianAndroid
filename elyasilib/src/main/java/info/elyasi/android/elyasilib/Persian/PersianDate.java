@@ -245,11 +245,13 @@ public class PersianDate {
         }
 
     public static String getToday() {
-        Locale loc = new Locale("en_US");
         PersianDate persianDate = new PersianDate();
         SolarCalendar sc = persianDate.new SolarCalendar();
-        return String.valueOf(sc.year) + "/" + String.format(loc, "%02d",
-                sc.month) + "/" + String.format(loc, "%02d", sc.date);
+
+        Locale loc = new Locale("en_US");
+        return sc.year + "/" +
+                String.format(loc, "%02d", sc.month) + "/" +
+                String.format(loc, "%02d", sc.date);
     }
 
     public static String getTodayWithNames() {
