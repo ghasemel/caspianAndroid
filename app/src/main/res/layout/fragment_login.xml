@@ -4,7 +4,18 @@
               android:layout_height="match_parent"
               android:layoutDirection="rtl">
 
-    <include layout="@layout/image_logo" android:id="@+id/initial_setting_hidden" />
+    <include
+        android:id="@+id/initial_setting_hidden"
+        layout="@layout/image_logo" />
+
+    <TextView
+        android:id="@+id/app_version"
+        style="@style/label"
+        android:layout_alignParentEnd="false"
+        android:layout_alignParentBottom="true"
+        android:text="@string/login_app_version"
+        android:textSize="10sp"
+        />
 
     <LinearLayout style="@style/frame">
         <TextView

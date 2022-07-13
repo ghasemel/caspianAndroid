@@ -6,6 +6,6 @@
     <string name="login_title">** ورود کاربر **</string>
     <string name="login_emptyUserName">نام کاربری نمیتواند خالی باشد</string>
     <string name="login_emptyPassword">رمز ورود نمیتواند خالی باشد</string>
-
+    <string name="login_app_version">version: 14010422</string>
 
 </resources>
