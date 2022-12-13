@@ -31,7 +31,8 @@
         android:usesCleartextTraffic="true">
 
 
-        <activity android:name=".FirstActivity" android:label="@string/app_name" android:theme="@style/PopupTheme" android:screenOrientation="sensorLandscape">
+        <activity android:name=".FirstActivity" android:label="@string/app_name" android:theme="@style/PopupTheme" android:screenOrientation="sensorLandscape"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER"/>
