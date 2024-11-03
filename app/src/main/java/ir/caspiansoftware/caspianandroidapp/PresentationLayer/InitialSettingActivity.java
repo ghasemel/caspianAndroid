@@ -2,7 +2,7 @@ package ir.caspiansoftware.caspianandroidapp.PresentationLayer;
 
 
 import android.graphics.Typeface;
-import android.support.v4.app.Fragment;
+import androidx.fragment.app.Fragment;
 import android.os.Bundle;
 import android.text.InputType;
 import android.util.Log;

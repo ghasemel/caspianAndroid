@@ -2,7 +2,7 @@ package ir.caspiansoftware.caspianandroidapp.PresentationLayer.Person.DaftarTaf;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
+import androidx.fragment.app.Fragment;
 import android.util.Log;
 
 import info.elyasi.android.elyasilib.Thread.ICallBack;
