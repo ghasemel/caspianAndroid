@@ -1,7 +1,7 @@
 package ir.caspiansoftware.caspianandroidapp.PresentationLayer.Person.MandeList;
 
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
+import androidx.fragment.app.Fragment;
 
 import info.elyasi.android.elyasilib.UI.FormActionTypes;
 import ir.caspiansoftware.caspianandroidapp.Actions;

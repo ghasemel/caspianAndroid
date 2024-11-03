@@ -2,7 +2,7 @@ package info.elyasi.android.elyasilib.Utility;
 
 import android.content.Context;
 import android.graphics.drawable.Drawable;
-import android.support.v4.content.ContextCompat;
+import androidx.core.content.ContextCompat;
 
 /**
  * Created by Canada on 7/30/2016.
