@@ -32,7 +32,7 @@ public class FirstActivity extends CaspianActivitySingleFragment {
         this.removeTitle();
 
         // fullscreen
-        showAsPopup(this, 200, 260);
+        showAsPopup(this, 260, 260);
 
         super.onCreate(savedBundleState);
 

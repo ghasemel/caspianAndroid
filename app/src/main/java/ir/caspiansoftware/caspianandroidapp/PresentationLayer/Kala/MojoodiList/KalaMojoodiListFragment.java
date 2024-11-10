@@ -4,10 +4,12 @@ import android.app.Activity;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.HorizontalScrollView;
 import android.widget.LinearLayout;
 
 import info.elyasi.android.elyasilib.UI.FormActionTypes;
 import info.elyasi.android.elyasilib.UI.IActivityCallback;
+import info.elyasi.android.elyasilib.UI.IAfterViewMappingCallBack;
 import info.elyasi.android.elyasilib.UI.IFragmentCallback;
 import info.elyasi.android.elyasilib.UI.UIUtility;
 import ir.caspiansoftware.caspianandroidapp.Actions;
@@ -19,12 +21,15 @@ import ir.caspiansoftware.caspianandroidapp.R;
 /**
  * Created by Canada on 7/22/2016.
  */
-public class KalaMojoodiListFragment extends CaspianSearchableListFragment<KalaModel> implements IFragmentCallback {
+public class KalaMojoodiListFragment extends CaspianSearchableListFragment<KalaModel> implements IFragmentCallback, IAfterViewMappingCallBack {
     private static final String TAG = "KalaMojoodiListFragment";
 
     private EditText mSearchCode;
     private EditText mSearchName;
     private LinearLayout mBtnExit;
+
+    private HorizontalScrollView horizontalScrollView;
+
     private IActivityCallback mActivityCallback;
 
     @Override
@@ -55,10 +60,21 @@ public class KalaMojoodiListFragment extends CaspianSearchableListFragment<KalaM
         UIUtility.setButtonEffect(mBtnExit);
         mBtnExit.setOnClickListener(this);
 
+        horizontalScrollView = parentView.findViewById(R.id.horizontal_scroll);
+        horizontalScrollView.post(this::setScrollBarToZero);
+
         Log.d(TAG, "mapViews(): function end");
     }
 
+    @Override
+    protected void onAfterMapViews() {
+        mSearchCode.requestFocus();
+    }
 
+    @Override
+    public HorizontalScrollView getHorizontalScrollView() {
+        return horizontalScrollView;
+    }
 
     @Override
     protected EditText[] getSearchEditTexts() {

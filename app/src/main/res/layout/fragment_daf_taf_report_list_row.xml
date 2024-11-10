@@ -1,23 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent"
-              android:orientation="horizontal"
-              android:padding="5dp"
-              android:paddingStart="10dp"
-              android:paddingEnd="10dp"
-              android:id="@+id/rowId"
-              android:layoutDirection="rtl">
+    android:id="@+id/rowId"
+    android:layout_width="wrap_content"
+    android:layout_height="match_parent"
+    android:layoutDirection="rtl"
+    android:orientation="horizontal">
 
     <TextView
         android:id="@+id/cell_radif"
         style="@style/list_textView"
-        android:layout_weight="1" />
+        android:layout_width="60dp" />
 
     <TextView
         android:id="@+id/cell_tarikh"
         style="@style/list_textView"
-        android:layout_weight="1.5" />
+        android:layout_width="100dp" />
 
     <!--<TextView
         android:id="@+id/cell_code"
@@ -27,25 +24,25 @@
     <TextView
         android:id="@+id/cell_des"
         style="@style/list_textView"
-        android:layout_weight="5" />
+        android:layout_width="300dp" />
 
     <TextView
         android:id="@+id/cell_bed"
         style="@style/list_textView"
-        android:layout_weight="2" />
+        android:layout_width="150dp" />
 
     <TextView
         android:id="@+id/cell_bes"
         style="@style/list_textView"
-        android:layout_weight="2" />
+        android:layout_width="150dp" />
 
     <TextView
         android:id="@+id/cell_mande"
         style="@style/list_textView"
-        android:layout_weight="2" />
+        android:layout_width="150dp" />
 
     <TextView
         android:id="@+id/cell_mande_type"
         style="@style/list_textView"
-        android:layout_weight="0.5" />
+        android:layout_width="50dp" />
 </LinearLayout>

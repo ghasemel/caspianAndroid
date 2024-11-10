@@ -1,6 +1,10 @@
 package info.elyasi.android.elyasilib.UI;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+
+import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -10,7 +14,6 @@ import android.widget.EditText;
 import android.widget.Filter;
 import android.widget.ProgressBar;
 
-import info.elyasi.android.elyasilib.Persian.PersianConvert;
 import info.elyasi.android.elyasilib.R;
 import info.elyasi.android.elyasilib.Utility.JsonExt;
 
@@ -26,6 +29,7 @@ public abstract class ASearchableListFragment<TListItem> extends AAsyncFragment 
     protected abstract String[] getSearchedTextValueOnTextChange();
     protected abstract EditText[] getSearchEditTexts();
 
+    protected void onAfterMapViews() {}
 
     private AListRowFragment<TListItem> mRowFragment;
     private String mActionBarDefaultTitle;
@@ -50,9 +54,10 @@ public abstract class ASearchableListFragment<TListItem> extends AAsyncFragment 
 
         mActionBarDefaultTitle =
                 ActionbarExt.getActionbarTitle((ActivityFragmentExt) getActivity(), getActionbarTitleTextViewId());
+
+        onAfterMapViews();
         Log.d(TAG, "afterMapViews(): function end");
     }
-
 
     @Override
     public ProgressBar getProgressBar() {

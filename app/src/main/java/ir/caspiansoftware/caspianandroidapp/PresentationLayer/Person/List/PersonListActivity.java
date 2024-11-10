@@ -18,7 +18,7 @@ public class PersonListActivity extends CaspianActivitySingleFragment {
     @Override
     public void onCreate(Bundle savedBundleState) {
         //showAsPopup(this, getResources().getInteger(R.integer.popup_height), getResources().getInteger(R.integer.popup_width));
-        Setting.setHeightWidth(this);
+        //Setting.setHeightWidth(this);
         CaspianActionbar.setActionbarLayout(this, R.layout.actionbar_dialog, R.string.person_list);
         //forceRTLIfSupported();
 

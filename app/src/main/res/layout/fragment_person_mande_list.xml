@@ -1,100 +1,106 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              xmlns:tools="http://schemas.android.com/tools"
-              android:orientation="vertical"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent"
-              android:layoutDirection="rtl"
-              android:padding="5dp">
 
-    <LinearLayout style="@style/list_search_row">
-        <TextView
-            android:id="@+id/search_radif"
-            style="@style/label"
-            android:layout_width="0dp"
-            android:layout_weight="1"/>
-
-        <info.elyasi.android.elyasilib.Controls.ClearableEditText.ClearableEditText
-            android:id="@+id/search_person_code"
-            style="@style/textBoxCode"
-            android:gravity="start"
-            android:layout_width="0dp"
-            android:layout_weight="1.5"/>
-
-        <info.elyasi.android.elyasilib.Controls.ClearableEditText.ClearableEditText
-            android:id="@+id/search_person_name"
-            style="@style/textBoxStandard"
-            android:layout_width="0dp"
-            android:layout_weight="5"
-            android:gravity="start" />
-
-        <!--<TextView-->
-        <!--style="@style/label"-->
-        <!--android:gravity="start"-->
-        <!--android:layout_width="0dp"-->
-        <!--android:layout_weight="2"/>-->
-
-        <LinearLayout
-            android:id="@+id/toolbar_exit"
-            style="@style/toolbar_button_close"
-            android:gravity="end"
-            android:layout_width="0dp"
-            android:layout_weight="2">
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:src="@drawable/toolbar_close"/>
-
-            <TextView
-                style="@style/toolbar_label"
-                android:text="@string/main_exit" />
-        </LinearLayout>
-    </LinearLayout>
-
+<HorizontalScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/horizontal_scroll"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true"
+    android:layoutDirection="rtl"
+    android:padding="5dp">
 
     <LinearLayout
-        style="@style/list_header_row">
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
-        <TextView
-            style="@style/list_textView"
-            android:background="@android:color/transparent"
-            android:layout_weight="1"
-            android:text="@string/radif"/>
+        <LinearLayout style="@style/list_search_row">
 
-        <TextView
-            android:id="@+id/column_person_code"
-            style="@style/list_textView"
-            android:background="@android:color/transparent"
-            android:layout_weight="1.5"
-            android:text="@string/list_code_hesab"/>
+            <TextView
+                android:visibility="gone"
+                android:id="@+id/search_radif"
+                style="@style/label"
+                android:layout_width="60dp"/>
+
+            <info.elyasi.android.elyasilib.Controls.ClearableEditText.ClearableEditText
+                android:id="@+id/search_person_code"
+                style="@style/textBoxCode"
+                android:layout_width="100dp"
+                android:gravity="start" />
+
+            <info.elyasi.android.elyasilib.Controls.ClearableEditText.ClearableEditText
+                android:id="@+id/search_person_name"
+                style="@style/textBoxStandard"
+                android:layout_width="300dp"
+                android:gravity="start" />
+
+            <!--<TextView-->
+            <!--style="@style/label"-->
+            <!--android:gravity="start"-->
+            <!--android:layout_width="0dp"-->
+            <!--android:layout_weight="2"/>-->
+
+            <LinearLayout
+                android:id="@+id/toolbar_exit"
+                style="@style/toolbar_button_close"
+                android:layout_width="0dp"
+                android:layout_weight="2"
+                android:visibility="invisible"
+                android:gravity="end">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:src="@drawable/toolbar_close" />
+
+                <TextView
+                    style="@style/toolbar_label"
+                    android:text="@string/main_exit" />
+            </LinearLayout>
+        </LinearLayout>
 
 
-        <TextView
-            android:id="@+id/column_person_name"
-            style="@style/list_textView"
-            android:background="@android:color/transparent"
-            android:layout_weight="5"
-            android:text="@string/list_name_heasb" />
+        <LinearLayout style="@style/list_header_row">
 
-        <TextView
-            android:id="@+id/column_person_mande"
-            style="@style/list_textView"
-            android:background="@android:color/transparent"
-            android:layout_weight="2"
-            android:text="@string/list_mande_heasb" />
+            <TextView
+                style="@style/list_textView"
+                android:layout_width="60dp"
+                android:background="@android:color/transparent"
+                android:text="@string/radif" />
+
+            <TextView
+                android:id="@+id/column_person_code"
+                style="@style/list_textView"
+                android:layout_width="100dp"
+                android:background="@android:color/transparent"
+                android:text="@string/list_code_hesab" />
+
+
+            <TextView
+                android:id="@+id/column_person_name"
+                style="@style/list_textView"
+                android:layout_width="300dp"
+                android:background="@android:color/transparent"
+                android:text="@string/list_name_heasb" />
+
+            <TextView
+                android:id="@+id/column_person_mande"
+                style="@style/list_textView"
+                android:layout_width="120dp"
+                android:background="@android:color/transparent"
+                android:text="@string/list_mande_heasb" />
+
+        </LinearLayout>
+
+
+        <fragment
+            android:id="@+id/fragment_person_mande_list_row"
+            class="ir.caspiansoftware.caspianandroidapp.PresentationLayer.Person.MandeList.PersonMandeListRow"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:tag="@string/fragment_person_mande_list_row_tag"
+            tools:layout="@layout/fragment_person_mande_list_row" />
+
 
     </LinearLayout>
-
-
-    <fragment
-        android:tag="@string/fragment_person_mande_list_row_tag"
-        android:id="@+id/fragment_person_mande_list_row"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        tools:layout="@layout/fragment_person_mande_list_row"
-        class="ir.caspiansoftware.caspianandroidapp.PresentationLayer.Person.MandeList.PersonMandeListRow"/>
-
-
-
-</LinearLayout>
+</HorizontalScrollView>

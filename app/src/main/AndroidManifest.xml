@@ -30,7 +30,7 @@
         android:usesCleartextTraffic="true">
 
 
-        <activity android:name=".FirstActivity" android:label="@string/app_name" android:theme="@style/PopupTheme" android:screenOrientation="sensorLandscape" android:exported="true">
+        <activity android:name=".FirstActivity" android:label="@string/app_name" android:theme="@style/PopupTheme" android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER"/>
@@ -51,7 +51,7 @@
                   android:theme="@style/fullscreenTheme"
                   />
 
-        <activity android:name=".PresentationLayer.Person.List.PersonListActivity" android:label="@string/person_list" android:theme="@style/PopupTheme" />
+        <activity android:name=".PresentationLayer.Person.List.PersonListActivity" android:label="@string/person_list"  />
         <activity android:name=".PresentationLayer.Kala.List.KalaListActivity" android:label="@string/kala_list" android:theme="@style/PopupTheme" />
         <activity android:name=".PresentationLayer.Faktor.Kala.FaktorKalaActivity" android:label="@string/invoice_kala_activity_title" android:theme="@style/PopupTheme" />
         <activity android:name=".PresentationLayer.Faktor.Search.PFaktorSearchActivity" android:label="@string/pfaktor_search_title" android:theme="@style/PopupTheme" />
@@ -60,7 +60,7 @@
         <activity android:name=".PresentationLayer.Kala.MojoodiList.KalaMojoodiListActivity" android:label="@string/list_kala_mojoodi" />
         <activity android:name=".PresentationLayer.Faktor.Kala.FaktorKalaListActivity" android:label="@string/kala_list" />
 
-        <activity android:name=".PresentationLayer.Person.DaftarTaf.DaftarTafActivity" android:label="@string/daf_taf_title" android:theme="@style/PopupTheme" />
+        <activity android:name=".PresentationLayer.Person.DaftarTaf.DaftarTafActivity" android:label="@string/daf_taf_title"/>
         <activity android:name=".PresentationLayer.Person.DaftarTaf.DaftarTafReportActivity" android:label="@string/daf_taf_title" android:windowSoftInputMode="stateHidden" />
         <activity android:name=".PresentationLayer.BasePLL.Sync.SyncTypeActivity" android:label="@string/sync_kalaPhoto" android:theme="@style/PopupTheme" />
         <activity android:name=".PresentationLayer.BasePLL.Gallery.GalleryActivity" android:label="@string/gallery_activity_title" android:windowSoftInputMode="adjustResize|stateHidden" />

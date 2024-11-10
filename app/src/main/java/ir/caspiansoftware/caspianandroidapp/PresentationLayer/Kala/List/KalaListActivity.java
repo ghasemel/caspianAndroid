@@ -15,7 +15,7 @@ public class KalaListActivity extends CaspianActivitySingleFragment {
 
     @Override
     public void onCreate(Bundle savedBundleState) {
-        Setting.setHeightWidth(this);
+        //Setting.setHeightWidth(this);
         //showAsPopup(this, getResources().getInteger(R.integer.popup_height), getResources().getInteger(R.integer.popup_width));
         CaspianActionbar.setActionbarLayout(this, R.layout.actionbar_dialog, R.string.kala_list);
         //forceRTLIfSupported();

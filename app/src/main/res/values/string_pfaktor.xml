@@ -9,7 +9,7 @@
     <string name="name_kh_label">نام خریدار:</string>
 
     <string name="faktor_id"> | شماره عطف: %d</string>
-    <string name="faktor_num_label">شماره فاکتور:</string>
+    <string name="faktor_num_label">ش.ف:</string>
     <string name="faktor_num_list">فاکتور</string>
     <string name="add_kala">درج کالا</string>
     <string name="faktor_total_price">جمع کل:</string>

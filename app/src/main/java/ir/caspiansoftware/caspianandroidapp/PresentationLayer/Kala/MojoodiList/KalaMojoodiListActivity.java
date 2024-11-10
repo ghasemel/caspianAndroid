@@ -35,10 +35,6 @@ public class KalaMojoodiListActivity extends CaspianActivitySingleFragment {
         return new KalaMojoodiListFragment();
     }
 
-    @Override
-    public int getLayoutId() {
-        return R.layout.single_fragment_activity;
-    }
 
     @Override
     public void onMyFragmentCallBack(String actionName, FormActionTypes actionTypes, Object[] parameters) {

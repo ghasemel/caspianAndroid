@@ -59,6 +59,11 @@ public class PersonMandeListFragment extends CaspianSearchableListFragment<Perso
     }
 
     @Override
+    protected void onAfterMapViews() {
+        mSearchCode.requestFocus();
+    }
+
+    @Override
     protected EditText[] getSearchEditTexts() {
         return new EditText[] {
                 mSearchCode,

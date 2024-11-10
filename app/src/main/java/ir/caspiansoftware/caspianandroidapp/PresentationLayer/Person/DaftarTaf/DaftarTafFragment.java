@@ -73,6 +73,11 @@ public class DaftarTafFragment extends CaspianFragment implements IFragmentCallb
     }
 
     @Override
+    protected void afterOnCreate() {
+        setRetainInstance(true);
+    }
+
+    @Override
     protected void afterMapViews(View parentView) {
         Log.d(TAG, "afterMapViews(): start...");
         Intent intent = getActivity().getIntent();

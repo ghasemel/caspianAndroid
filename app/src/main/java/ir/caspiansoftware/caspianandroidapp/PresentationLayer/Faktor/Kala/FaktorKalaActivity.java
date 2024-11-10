@@ -31,7 +31,7 @@ public class FaktorKalaActivity extends CaspianActivitySingleFragment {
     @Override
     public void onCreate(Bundle savedBundleState) {
         Log.d(TAG, "starting");
-        Setting.setHeightWidth(this);
+        //Setting.setHeightWidth(this);
         //showAsPopup(this, getResources().getInteger(R.integer.popup_faktor_kala_height), getResources().getInteger(R.integer.popup_faktor_kala_width));
         CaspianActionbar.setActionbarLayout(this, R.layout.actionbar_dialog, R.string.invoice_kala_activity_title);
 

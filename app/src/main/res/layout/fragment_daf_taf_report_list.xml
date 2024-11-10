@@ -1,129 +1,134 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              xmlns:tools="http://schemas.android.com/tools"
-              android:orientation="vertical"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent"
-              android:layoutDirection="rtl"
-              android:padding="5dp">
-
-    <LinearLayout style="@style/list_search_row">
-        <TextView
-            style="@style/label"
-            android:layout_width="0dp"
-            android:text="@string/date_label"
-            android:textAlignment="viewEnd"
-            android:layout_weight="0.3"/>
-
-        <info.elyasi.android.elyasilib.Controls.ClearableEditText.ClearableEditText
-            android:id="@+id/search_tarikh"
-            style="@style/textBoxDateSearch"
-            android:gravity="start"
-            android:layout_width="0dp"
-            android:layout_weight="1.5"/>
 
 
-        <TextView
-            style="@style/label"
-            android:layout_width="0dp"
-            android:text="@string/description_label"
-            android:textAlignment="viewEnd"
-            android:layout_weight="0.5"/>
+<HorizontalScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true"
+    android:layoutDirection="rtl"
+    android:padding="5dp">
 
-        <info.elyasi.android.elyasilib.Controls.ClearableEditText.ClearableEditText
-            android:id="@+id/search_description"
-            style="@style/textBoxStandard"
-            android:layout_width="0dp"
-            android:layout_weight="4"
-            android:gravity="start" />
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
-        <!--<TextView-->
+        <LinearLayout style="@style/list_search_row">
+
+            <TextView
+                style="@style/label"
+                android:layout_width="40dp"
+                android:text="@string/date_label"
+                android:textAlignment="viewEnd" />
+
+            <info.elyasi.android.elyasilib.Controls.ClearableEditText.ClearableEditText
+                android:id="@+id/search_tarikh"
+                style="@style/textBoxDateSearch"
+                android:layout_width="80dp"
+                android:gravity="start" />
+
+
+            <TextView
+                style="@style/label"
+                android:layout_width="70dp"
+
+                android:text="@string/description_label"
+                android:textAlignment="viewEnd" />
+
+            <info.elyasi.android.elyasilib.Controls.ClearableEditText.ClearableEditText
+                android:id="@+id/search_description"
+                style="@style/textBoxStandard"
+                android:layout_width="200dp"
+                android:gravity="start" />
+
+            <!--<TextView-->
             <!--style="@style/label"-->
             <!--android:gravity="start"-->
             <!--android:layout_width="0dp"-->
             <!--android:layout_weight="2"/>-->
 
-       <!-- <LinearLayout
-            android:id="@+id/toolbar_exit"
-            style="@style/toolbar_button_close"
-            android:gravity="end"
-            android:layout_width="0dp"
-            android:layout_weight="2">
+            <!-- <LinearLayout
+                 android:id="@+id/toolbar_exit"
+                 style="@style/toolbar_button_close"
+                 android:gravity="end"
+                 android:layout_width="0dp"
+                 android:layout_weight="2">
 
-        </LinearLayout>-->
+             </LinearLayout>-->
+        </LinearLayout>
+
+        <LinearLayout
+            style="@style/list_header_row"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                style="@style/list_textView"
+                android:layout_width="60dp"
+                android:background="@android:color/transparent"
+                android:text="@string/radif" />
+
+            <TextView
+                android:id="@+id/column_tarikh"
+                style="@style/list_textView"
+                android:layout_width="100dp"
+                android:background="@android:color/transparent"
+                android:text="@string/date_list" />
+
+            <!--<TextView
+                android:id="@+id/column_hesab_code"
+                style="@style/list_textView"
+                android:background="@android:color/transparent"
+                android:layout_weight="2"
+                android:text="@string/column_code_hesab_title" />-->
+
+            <TextView
+                android:id="@+id/column_des"
+                style="@style/list_textView"
+                android:layout_width="300dp"
+                android:background="@android:color/transparent"
+                android:text="@string/column_description_list" />
+
+            <TextView
+                android:id="@+id/column_bed"
+                style="@style/list_textView"
+                android:layout_width="150dp"
+                android:background="@android:color/transparent"
+                android:text="@string/column_bed_list_title" />
+
+            <TextView
+                android:id="@+id/column_bes"
+                style="@style/list_textView"
+                android:layout_width="150dp"
+                android:background="@android:color/transparent"
+                android:text="@string/column_bes_list_title" />
+
+
+            <TextView
+                android:id="@+id/column_mande"
+                style="@style/list_textView"
+                android:layout_width="150dp"
+                android:background="@android:color/transparent"
+                android:text="@string/column_mande_title" />
+
+
+            <TextView
+                android:id="@+id/column_mande_type"
+                style="@style/list_textView"
+                android:layout_width="50dp"
+                android:background="@android:color/transparent"
+                android:text="@string/column_type_mande_title" />
+        </LinearLayout>
+
+        <fragment
+            android:id="@+id/fragment_daf_taf_report_row"
+            class="ir.caspiansoftware.caspianandroidapp.PresentationLayer.Person.DaftarTaf.DaftarTafReportListRowFragment"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:tag="@string/fragment_daf_taf_row_tag"
+            tools:layout="@layout/fragment_daf_taf_report_list_row" />
     </LinearLayout>
+</HorizontalScrollView>
 
-
-    <LinearLayout
-        style="@style/list_header_row">
-
-        <TextView
-            style="@style/list_textView"
-            android:background="@android:color/transparent"
-            android:layout_weight="1"
-            android:text="@string/radif"/>
-
-        <TextView
-            android:id="@+id/column_tarikh"
-            style="@style/list_textView"
-            android:layout_weight="1.5"
-            android:background="@android:color/transparent"
-            android:text="@string/date_list" />
-
-        <!--<TextView
-            android:id="@+id/column_hesab_code"
-            style="@style/list_textView"
-            android:background="@android:color/transparent"
-            android:layout_weight="2"
-            android:text="@string/column_code_hesab_title" />-->
-
-        <TextView
-            android:id="@+id/column_des"
-            style="@style/list_textView"
-            android:layout_weight="5"
-            android:background="@android:color/transparent"
-            android:text="@string/column_description_list" />
-
-        <TextView
-            android:id="@+id/column_bed"
-            style="@style/list_textView"
-            android:background="@android:color/transparent"
-            android:layout_weight="2"
-            android:text="@string/column_bed_list_title" />
-
-        <TextView
-            android:id="@+id/column_bes"
-            style="@style/list_textView"
-            android:background="@android:color/transparent"
-            android:layout_weight="2"
-            android:text="@string/column_bes_list_title" />
-
-
-        <TextView
-            android:id="@+id/column_mande"
-            style="@style/list_textView"
-            android:background="@android:color/transparent"
-            android:layout_weight="2"
-            android:text="@string/column_mande_title" />
-
-
-        <TextView
-            android:id="@+id/column_mande_type"
-            style="@style/list_textView"
-            android:background="@android:color/transparent"
-            android:layout_weight="0.5"
-            android:text="@string/column_type_mande_title" />
-    </LinearLayout>
-
-
-    <fragment
-        android:tag="@string/fragment_daf_taf_row_tag"
-        android:id="@+id/fragment_daf_taf_report_row"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        tools:layout="@layout/fragment_daf_taf_report_list_row"
-        class="ir.caspiansoftware.caspianandroidapp.PresentationLayer.Person.DaftarTaf.DaftarTafReportListRowFragment"/>
-
-
-
-</LinearLayout>
