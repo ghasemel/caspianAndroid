@@ -8,6 +8,10 @@
         <item name="android:padding">3dp</item>
     </style>
 
+    <style name="toolbar_style_vertical" parent="toolbar_style">
+        <item name="android:layout_height">80dp</item>
+    </style>
+
     <style name="toolbar_button_frame">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">match_parent</item>
@@ -19,7 +23,7 @@
     </style>
     <style name="toolbar_btn_image_view">
         <item name="android:layout_width">40dp</item>
-        <item name="android:layout_height">match_parent</item>
+        <item name="android:layout_height">35dp</item>
     </style>
 
     <style name="toolbar_btn_image_view_margin_end" parent="toolbar_btn_image_view">

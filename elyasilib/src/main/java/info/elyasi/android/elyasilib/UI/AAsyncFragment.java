@@ -21,7 +21,6 @@ import android.widget.Toast;
 
 import info.elyasi.android.elyasilib.Dialogs.DialogResult;
 import info.elyasi.android.elyasilib.Dialogs.IDialogCallback;
-import info.elyasi.android.elyasilib.Persian.PersianConvert;
 import info.elyasi.android.elyasilib.R;
 import info.elyasi.android.elyasilib.Utility.AErrorHandler;
 
@@ -47,8 +46,8 @@ public abstract class AAsyncFragment extends Fragment implements IAsyncForm {
     @Override
     public final void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        afterOnCreate();
         //setRetainInstance(true);
+        afterOnCreate();
     }
 
 

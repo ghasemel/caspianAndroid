@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/toolbar_frame"
-    style="@style/toolbar_style">
+    style="@style/toolbar_style_vertical"
+    android:orientation="vertical">
 
     <!--<LinearLayout-->
     <!--android:id="@+id/toolbar_exit"-->
@@ -20,72 +20,83 @@
     <!--</LinearLayout>-->
 
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:id="@+id/last_object"
+            style="@style/toolbar_btn_image_view_margin_end"
+            android:src="@drawable/toolbar_last" />
+
+        <ImageView
+            android:id="@+id/next_object"
+            style="@style/toolbar_btn_image_view_margin_end"
+            android:layout_toEndOf="@id/last_object"
+            android:layout_toRightOf="@id/last_object"
+            android:src="@drawable/toolbar_next" />
+
+        <ImageView
+            android:id="@+id/previous_object"
+            style="@style/toolbar_btn_image_view_margin_end"
+            android:layout_toEndOf="@id/next_object"
+            android:layout_toRightOf="@id/next_object"
+            android:src="@drawable/toolbar_prev" />
+
+        <ImageView
+            android:id="@+id/first_object"
+            style="@style/toolbar_btn_image_view_margin_end"
+            android:layout_marginEnd="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_toEndOf="@id/previous_object"
+            android:layout_toRightOf="@id/previous_object"
+            android:src="@drawable/toolbar_first"
+            tools:ignore="RtlHardcoded" />
 
 
-    <ImageView
-        android:id="@+id/last_object"
-        style="@style/toolbar_btn_image_view_margin_end"
-        android:src="@drawable/toolbar_last"/>
 
-    <ImageView
-        android:id="@+id/next_object"
-        style="@style/toolbar_btn_image_view_margin_end"
-        android:src="@drawable/toolbar_next"
-        android:layout_toEndOf="@id/last_object"
-        android:layout_toRightOf="@id/last_object"/>
+    </LinearLayout>
 
-    <ImageView
-        android:id="@+id/previous_object"
-        style="@style/toolbar_btn_image_view_margin_end"
-        android:src="@drawable/toolbar_prev"
-        android:layout_toEndOf="@id/next_object"
-        android:layout_toRightOf="@id/next_object"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
 
-    <ImageView
-        android:id="@+id/first_object"
-        style="@style/toolbar_btn_image_view_margin_end"
-        android:src="@drawable/toolbar_first"
-        android:layout_toEndOf="@id/previous_object"
-        android:layout_toRightOf="@id/previous_object"
-        android:layout_marginEnd="20dp"
-        android:layout_marginRight="20dp"
-        tools:ignore="RtlHardcoded"/>
+        <ImageView
+            android:id="@+id/new_object"
+            style="@style/toolbar_btn_image_view_margin_end"
+            android:layout_toEndOf="@id/first_object"
+            android:layout_toRightOf="@id/first_object"
+            android:src="@drawable/toolbar_add" />
 
+        <ImageView
+            android:id="@+id/search_object"
+            style="@style/toolbar_btn_image_view_margin_end"
+            android:layout_toEndOf="@id/new_object"
+            android:layout_toRightOf="@id/new_object"
+            android:src="@drawable/toolbar_search" />
 
+        <ImageView
+            android:id="@+id/delete_object"
+            style="@style/toolbar_btn_image_view_margin_end"
+            android:layout_toEndOf="@id/search_object"
+            android:layout_toRightOf="@id/search_object"
+            android:src="@drawable/toolbar_delete" />
 
-    <ImageView
-        android:id="@+id/new_object"
-        style="@style/toolbar_btn_image_view_margin_end"
-        android:src="@drawable/toolbar_add"
-        android:layout_toEndOf="@id/first_object"
-        android:layout_toRightOf="@id/first_object"/>
-
-    <ImageView
-        android:id="@+id/search_object"
-        style="@style/toolbar_btn_image_view_margin_end"
-        android:src="@drawable/toolbar_search"
-        android:layout_toEndOf="@id/new_object"
-        android:layout_toRightOf="@id/new_object"/>
-
-    <ImageView
-        android:id="@+id/delete_object"
-        style="@style/toolbar_btn_image_view_margin_end"
-        android:src="@drawable/toolbar_delete"
-        android:layout_toEndOf="@id/search_object"
-        android:layout_toRightOf="@id/search_object"/>
-
-    <ImageView
-        android:id="@+id/save_object"
-        style="@style/toolbar_btn_image_view_margin_end"
-        android:src="@drawable/toolbar_save"
-        android:layout_toEndOf="@id/delete_object"
-        android:layout_toRightOf="@id/delete_object"/>
+        <ImageView
+            android:id="@+id/save_object"
+            style="@style/toolbar_btn_image_view_margin_end"
+            android:layout_toEndOf="@id/delete_object"
+            android:layout_toRightOf="@id/delete_object"
+            android:src="@drawable/toolbar_save" />
 
 
-    <ImageView
-        android:id="@+id/home_toolbar"
-        style="@style/toolbar_btn_image_view_margin_end"
-        android:src="@drawable/toolbar_home"
-        android:layout_toEndOf="@id/save_object"
-        android:layout_toRightOf="@id/save_object"/>
-</RelativeLayout>
+        <ImageView
+            android:id="@+id/home_toolbar"
+            style="@style/toolbar_btn_image_view_margin_end"
+            android:layout_toEndOf="@id/save_object"
+            android:layout_toRightOf="@id/save_object"
+            android:src="@drawable/toolbar_home" />
+    </LinearLayout>
+</LinearLayout>

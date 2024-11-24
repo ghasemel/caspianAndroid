@@ -10,7 +10,7 @@
         <item name="colorAccent">@color/colorAccent</item>
         <item name="android:typeface">monospace</item>
     </style>
-    
+
     <style name="fullscreenTheme" parent="AppTheme">
         <!--android:Theme.Holo.Light.NoActionBar.Fullscreen-->
         <!-- Customize your theme here. -->
@@ -34,47 +34,46 @@
    -->
 
 
-       <style name="pageTitle">
-           <item name="android:layout_width">match_parent</item>
-           <item name="android:layout_height">50dp</item>
-           <item name="android:textSize">25sp</item>
-           <item name="android:textStyle">bold</item>
-           <item name="android:textColor">@color/bluePageTitle</item>
-           <item name="android:gravity">center</item>
-       </style>
+    <style name="pageTitle">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">50dp</item>
+        <item name="android:textSize">25sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@color/bluePageTitle</item>
+        <item name="android:gravity">center</item>
+    </style>
 
     <style name="pageTitleLatin" parent="pageTitle">
         <item name="android:textDirection">ltr</item>
         <!--<item name="android:typeface">serif</item>-->
     </style>
 
-        <style name="frame">
-            <item name="android:layout_width">match_parent</item>
-            <item name="android:layout_height">wrap_content</item>
-            <!--<item name="android:layout_centerVertical">true</item> -->
-            <item name="android:layout_centerHorizontal">true</item>
-            <item name="android:orientation">vertical</item>
-        </style>
+    <style name="frame">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <!--<item name="android:layout_centerVertical">true</item> -->
+        <item name="android:layout_centerHorizontal">true</item>
+        <item name="android:orientation">vertical</item>
+    </style>
 
-       <style name="frame_content">
-           <item name="android:layout_width">wrap_content</item>
-           <item name="android:layout_height">wrap_content</item>
-           <item name="android:background">@drawable/frame_border</item>
-           <item name="android:padding">5dp</item>
-           <item name="android:paddingBottom">0dp</item>
-           <item name="android:orientation">vertical</item>
-           <item name="android:layout_gravity">center</item>
-       </style>
+    <style name="frame_content">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:background">@drawable/frame_border</item>
+        <item name="android:padding">5dp</item>
+        <item name="android:paddingBottom">0dp</item>
+        <item name="android:orientation">vertical</item>
+        <item name="android:layout_gravity">center</item>
+    </style>
 
 
-
-   <style name="row">
-       <item name="android:layout_width">match_parent</item>
-       <item name="android:layout_height">wrap_content</item>
-       <!--<item name="android:paddingBottom">5dp</item>-->
-       <item name="android:layout_marginBottom">5dp</item>
-       <item name="android:orientation">horizontal</item>
-   </style>
+    <style name="row">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <!--<item name="android:paddingBottom">5dp</item>-->
+        <item name="android:layout_marginBottom">5dp</item>
+        <item name="android:orientation">horizontal</item>
+    </style>
 
     <style name="linear_row">
         <item name="android:layout_width">match_parent</item>
@@ -84,13 +83,13 @@
         <item name="android:layout_weight">1</item>
     </style>
 
-   <style name="button">
-       <item name="android:layout_width">100dp</item>
-       <item name="android:layout_height">40dp</item>
-       <item name="android:textSize">15sp</item>
-       <item name="android:textStyle">bold</item>
-       <item name="android:background">@drawable/button_theme</item>
-   </style>
+    <style name="button">
+        <item name="android:layout_width">100dp</item>
+        <item name="android:layout_height">40dp</item>
+        <item name="android:textSize">15sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:background">@drawable/button_theme</item>
+    </style>
 
     <style name="errorLabel" parent="label">
         <item name="android:layout_width">wrap_content</item>
@@ -118,7 +117,6 @@
 
         <!--<item name="android:background">@drawable/progressbar</item>-->
     </style>
-
 
 
     <style name="main_cell">
@@ -199,7 +197,6 @@
     </style>
 
 
-
     <style name="image_view">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
@@ -226,14 +223,14 @@
         <item name="android:background">@android:color/transparent</item>
         <item name="android:layout_marginEnd">100dp</item>
     </style>
-    
+
     <style name="actionbar_back" parent="image_view">
         <item name="android:layout_width">40dp</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:layout_alignParentEnd">true</item>
+        <item name="android:layout_alignParentEnd">false</item>
         <item name="android:layout_marginTop">5dp</item>
-        <item name="android:background">@android:color/transparent</item>
-        <item name="android:src">@drawable/back</item>
+        <item name="android:color">@android:color/holo_red_dark</item>
+        <item name="android:src">@drawable/back_toolbar_button</item>
         <item name="android:adjustViewBounds">false</item>
     </style>
 
@@ -249,9 +246,6 @@
         <item name="android:adjustViewBounds">true</item>
         <item name="android:layout_marginEnd">5dp</item>
     </style>
-
-
-
 
 
     <style name="ImageViewBtn">

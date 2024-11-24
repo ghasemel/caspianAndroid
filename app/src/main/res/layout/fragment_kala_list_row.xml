@@ -9,7 +9,7 @@
     <TextView
         android:id="@+id/cell_kala_code"
         style="@style/list_textView"
-        android:layout_weight="1"/>
+        android:layout_weight="1.5"/>
 
 
 

@@ -2,6 +2,7 @@ package ir.caspiansoftware.caspianandroidapp.PresentationLayer.Faktor.Kala;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -12,6 +13,8 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+
+import androidx.annotation.Nullable;
 
 import java.math.BigDecimal;
 
@@ -68,6 +71,7 @@ public class FaktorKalaFragment extends CaspianFragment implements IFragmentCall
     private String mResultExtra;
     private ImageView mBtnMojoodi;
     private ImageView mBtnLastSellPrice;
+
 
     @Override
     public void onResume() {
@@ -295,6 +299,8 @@ public class FaktorKalaFragment extends CaspianFragment implements IFragmentCall
 
             mSPFaktorModel.setPrice(Long.parseLong(mPriceEditText.getText().toString()));
             mSPFaktorModel.setKalaModel(mKala);
+
+            UIUtility.HideKeyboard(getActivity());
 
             Intent intent = new Intent();
             intent.putExtra(mResultExtra, mSPFaktorModel);

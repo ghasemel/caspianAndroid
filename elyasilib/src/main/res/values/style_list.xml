@@ -10,9 +10,19 @@
         <item name="android:paddingEnd">2dp</item>
     </style>
 
+<!--    <style name="list_header_row_vertical" parent="list_header_row">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">37dp</item>
+        <item name="android:orientation">horizontal</item>
+        <item name="android:background">@color/listHeaderRowBackColor</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:paddingStart">5dp</item>
+        <item name="android:paddingEnd">2dp</item>
+    </style>-->
+
     <style name="list_textView">
         <item name="android:layout_width">0dp</item>
-        <item name="android:layout_height">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
         <item name="android:textSize">15sp</item>
         <item name="android:textStyle">bold</item>
         <item name="android:gravity">center_vertical|start</item>
@@ -22,6 +32,11 @@
         <!--<item name="android:focusable">false</item>-->
         <!--<item name="android:background">@drawable/textbox_theme</item>-->
         <!--<item name="android:borderlessButtonStyle">@drawable/textbox_theme</item>-->
+    </style>
+
+    <style name="list_textView_vertical" parent="list_textView">
+        <item name="android:layout_width">10dp</item>
+       <!-- <item name="android:rotation">90</item>-->
     </style>
 
     <style name="list_buttonView">

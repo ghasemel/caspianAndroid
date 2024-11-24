@@ -1,0 +1,215 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:tools="http://schemas.android.com/tools"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                android:layoutDirection="rtl">
+
+    <include android:id="@+id/toolbar" layout="@layout/object_form_toolbar" />
+
+    <include layout="@layout/image_logo"
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             android:layout_below="@id/toolbar"
+             android:layout_alignParentTop="true"
+             android:layout_alignParentEnd="true"/>
+
+
+
+        <!--<LinearLayout android:layout_width="match_parent"-->
+                      <!--android:layout_height="wrap_content"-->
+                        <!--android:orientation="vertical">-->
+
+    <ScrollView android:layout_width="match_parent" android:id="@+id/top_frame_invoice"
+                android:layout_height="wrap_content" android:layout_below="@id/toolbar">
+
+            <LinearLayout style="@style/frame_content" android:layout_width="match_parent" android:id="@+id/linearLayout_faktorTop">
+
+
+                <LinearLayout style="@style/row">
+                    <TextView style="@style/label" android:layout_width="70dp" android:text="@string/code_kh_label" android:labelFor="@+id/editText_invoiceCustomerCode" />
+                    <EditText style="@style/textBoxCode" android:id="@id/editText_invoiceCustomerCode" android:enabled="false"/>
+                    <ImageView style="@style/ImageViewBtnTouch" android:id="@+id/btn_customer_select"/>
+
+                    <!--<TextView android:labelFor="@+id/editText_CustomerName" style="@style/label" />-->
+                    <TextView android:id="@+id/editText_CustomerName" android:layout_width="200dp" style="@style/label_red" />
+
+                    <TextView style="@style/label" android:layout_width="40dp" android:text="@string/date_label" android:labelFor="@+id/editText_invoiceDate" />
+                    <EditText style="@style/textBoxDate" android:id="@id/editText_invoiceDate" />
+
+                    <ImageView style="@style/ImageViewBtnTouch" android:id="@+id/btn_date_select" />
+
+
+                </LinearLayout>
+
+
+
+
+                <LinearLayout style="@style/row">
+                    <TextView style="@style/label" android:layout_width="70dp" android:text="@string/description_label" android:labelFor="@+id/editText_invoiceDescription" />
+                    <info.elyasi.android.elyasilib.Controls.ClearableEditText.ClearableEditText style="@style/textBoxStandard" android:layout_width="350dp" android:id="@id/editText_invoiceDescription"/>
+
+                    <TextView style="@style/label"
+                              android:id="@+id/label_location"
+                              android:layout_height="match_parent"
+                              android:text="@string/pfaktor_save_location"
+                              android:labelFor="@+id/btn_mapLocation"
+                              android:layout_marginStart="100dp" />
+
+                    <ImageView
+                        android:id="@id/btn_mapLocation"
+                        android:layout_width="50dp"
+                        android:layout_height="match_parent"
+                        android:src="@drawable/map" />
+
+                </LinearLayout>
+
+                <LinearLayout style="@style/row">
+                    <TextView style="@style/label" android:layout_width="70dp" android:text="@string/faktor_num_label" android:labelFor="@+id/editText_invoiceNum" />
+                    <EditText style="@style/textBoxCode" android:enabled="false" android:id="@id/editText_invoiceNum" android:layout_marginEnd="30dp" android:layout_width="60dp" />
+
+                    <CheckBox
+                        android:id="@+id/checkbox_synced"
+                        android:enabled="false"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="0dp"
+                        android:text="@string/synced_pfaktor" />
+
+                    <TextView style="@style/label" android:minWidth="50dp" android:id="@+id/label_synced_date" android:layout_marginStart="10dp" />
+
+                    <TextView style="@style/label" android:layout_height="match_parent"
+                        android:id="@+id/label_mande"
+                        android:text="@string/pfaktor_mande"
+                        android:labelFor="@+id/btn_mande" android:layout_marginStart="0dp" />
+
+                    <ImageView
+                        android:id="@id/btn_mande"
+                        android:layout_width="50dp"
+                        android:layout_height="match_parent"
+                        android:src="@drawable/customer_report" />
+                </LinearLayout>
+            </LinearLayout>
+    </ScrollView>
+
+
+    <LinearLayout style="@style/frame"
+                          android:id="@+id/dataGrid_frame"
+                          android:orientation="vertical"
+                          android:paddingBottom="35dp"
+                          android:layout_below="@id/top_frame_invoice">
+
+                <LinearLayout
+                    style="@style/list_header_row">
+
+                    <TextView
+                        android:id="@+id/column_radif"
+                        style="@style/list_textView"
+                        android:layout_weight="1"
+                        android:text="@string/radif"/>
+
+
+                    <!--<TextView-->
+                        <!--android:id="@+id/column_kala_code"-->
+                        <!--style="@style/list_textView"-->
+                        <!--android:layout_weight="2"-->
+                        <!--android:gravity="start"-->
+                        <!--android:text="@string/pre_invoice_column_kala_code"/>-->
+
+
+                    <TextView
+                        android:id="@+id/column_kala_name"
+                        style="@style/list_textView"
+                        android:layout_weight="7"
+                        android:text="@string/pre_invoice_column_kala_name"/>
+
+
+
+                    <TextView
+                        android:id="@+id/column_mcount"
+                        style="@style/list_textView"
+                        android:layout_weight="2"
+                        android:text="@string/pre_invoice_column_mcount"/>
+
+
+                    <TextView
+                        android:id="@+id/column_scount"
+                        style="@style/list_textView"
+                        android:layout_weight="2"
+                        android:text="@string/pre_invoice_column_scount"/>
+
+
+
+                    <TextView
+                        android:id="@+id/column_price"
+                        style="@style/list_textView"
+                        android:layout_weight="2"
+                        android:text="@string/pre_invoice_column_price"/>
+
+
+                    <TextView
+                        android:id="@+id/column_price_total"
+                        style="@style/list_textView"
+                        android:layout_weight="2"
+                        android:text="@string/pre_invoice_column_price_total"/>
+
+
+                    <TextView
+                        android:id="@+id/column_delete"
+                        style="@style/list_textView"
+                        android:layout_weight="1"
+                        android:text="@string/delete"/>
+                </LinearLayout>
+
+
+                <fragment android:layout_width="match_parent"
+                          android:layout_height="wrap_content"
+                          android:tag="@string/pre_invoice_data_grid_fragment_dag"
+                          android:id="@+id/pre_invoice_data_grid"
+                          tools:layout="@layout/fragment_pfaktor_data_grid_row"
+                          class="ir.caspiansoftware.caspianandroidapp.PresentationLayer.Faktor.PFaktorDataGridRow" />
+
+
+            </LinearLayout>
+
+
+    <RelativeLayout android:id="@+id/dataGrid_summery"
+                    android:layout_height="34dp"
+                    android:padding="2dp"
+                    style="@style/toolbar_style"
+                    android:orientation="horizontal"
+                    android:layout_alignParentBottom="true"> <!--android:layout_below="@id/dataGrid_frame"-->
+
+        <LinearLayout android:id="@+id/btn_add_kala"
+                      style="@style/pfaktor_summery_button_frame"
+                      android:layout_alignParentStart="true">
+
+            <ImageView
+                style="@style/image_view"
+                android:src="@drawable/add_btn"/>
+
+            <TextView
+                style="@style/toolbar_label_beside_icon"
+                android:text="@string/add_kala" />
+
+            <TextView style="@style/label_red" android:id="@+id/labelFaktorId" android:layout_width="wrap_content" />
+        </LinearLayout>
+
+        <LinearLayout style="@style/pfaktor_summery_button_frame" android:layout_alignParentEnd="true">
+            <TextView
+                style="@style/summery_value_label"
+                android:text="@string/faktor_total_price" />
+                <!--android:layout_toStartOf="@+id/summery_total_price"/>-->
+
+            <TextView
+                android:id="@+id/summery_total_price"
+                style="@style/summery_value_label" />
+        </LinearLayout>
+    </RelativeLayout>
+
+
+    <ProgressBar
+        style="@style/progressBarCircle"
+        android:id="@+id/progressBar" />
+</RelativeLayout>

@@ -47,14 +47,13 @@
         <activity android:name=".PresentationLayer.Faktor.PFaktorActivity"
                   android:label="@string/preInvoice_title"
                   android:windowSoftInputMode="adjustResize|stateHidden"
-                  android:screenOrientation="sensorLandscape"
                   android:theme="@style/fullscreenTheme"
                   />
 
         <activity android:name=".PresentationLayer.Person.List.PersonListActivity" android:label="@string/person_list"  />
         <activity android:name=".PresentationLayer.Kala.List.KalaListActivity" android:label="@string/kala_list" android:theme="@style/PopupTheme" />
-        <activity android:name=".PresentationLayer.Faktor.Kala.FaktorKalaActivity" android:label="@string/invoice_kala_activity_title" android:theme="@style/PopupTheme" />
-        <activity android:name=".PresentationLayer.Faktor.Search.PFaktorSearchActivity" android:label="@string/pfaktor_search_title" android:theme="@style/PopupTheme" />
+        <activity android:name=".PresentationLayer.Faktor.Kala.FaktorKalaActivity" android:label="@string/invoice_kala_activity_title"  />
+        <activity android:name=".PresentationLayer.Faktor.Search.PFaktorSearchActivity" android:label="@string/pfaktor_search_title"  />
 
         <activity android:name=".PresentationLayer.Person.MandeList.PersonMandeListActivity" android:label="@string/person_list_mande" />
         <activity android:name=".PresentationLayer.Kala.MojoodiList.KalaMojoodiListActivity" android:label="@string/list_kala_mojoodi" />

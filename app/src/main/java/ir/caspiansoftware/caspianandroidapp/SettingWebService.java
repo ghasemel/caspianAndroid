@@ -9,7 +9,7 @@ public class SettingWebService {
 
     public static final int TIME_OUT = 5 * 60 * 1000; // in millisecond
     public static final String AUTHENTICATION_SCHEME = "CaspianAPI";
-    private static final String IIS_APP_NAME = "";
+    private static final String IIS_APP_NAME = "CaspianService";
     private static final char DEVICE_USER_DELIMITER = '>';
 
     private SettingWebService() { }

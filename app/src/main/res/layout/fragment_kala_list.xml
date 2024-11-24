@@ -11,9 +11,9 @@
         <info.elyasi.android.elyasilib.Controls.ClearableEditText.ClearableEditText
             android:id="@+id/search_kala_code"
             style="@style/textBoxCode"
-            android:layout_width="50dp"
+            android:layout_width="60dp"
             android:gravity="start"
-            android:layout_weight="1"/>
+            android:layout_weight="1.5"/>
 
         <info.elyasi.android.elyasilib.Controls.ClearableEditText.ClearableEditText
             android:id="@+id/search_kala_name"
@@ -30,7 +30,7 @@
             android:id="@+id/column_kala_code"
             style="@style/list_textView"
             android:background="@android:color/transparent"
-            android:layout_weight="1"
+            android:layout_weight="1.5"
             android:text="@string/list_kala_code"/>
 
 
