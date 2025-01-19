@@ -10,7 +10,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 
-import ir.caspiansoftware.caspianandroidapp.BaseCaspian.CaspianErrors;
 import ir.caspiansoftware.caspianandroidapp.DataLayer.DataBase.Tables.InitialSettingTbl;
 import ir.caspiansoftware.caspianandroidapp.DataLayer.DataBase.Tables.KalaPhotoTbl;
 import ir.caspiansoftware.caspianandroidapp.DataLayer.DataBase.Tables.KalaTbl;
@@ -122,18 +121,22 @@ public class CaspianDataBaseHelper extends SQLiteOpenHelper {
             // select right upgrade way
             switch (oldVersion) {
                 case 1:
-                    execSQLFile(mContext, db, R.raw.dore_mali_sql);
+                    execSQLFile(mContext, db, R.raw.version_01_dore_mali_sql);
 
                 case 2:
-                    execSQLFile(mContext, db, R.raw.kala_photo_sql);
+                    execSQLFile(mContext, db, R.raw.version_02_kala_photo_sql);
 
                 case 3:
-                    execSQLFile(mContext, db, R.raw.mpfaktor_create_date_sql);
+                    execSQLFile(mContext, db, R.raw.version_03_mpfaktor_create_date_sql);
+                    //db.execSQL("ALTER TABLE " + MPFaktorTbl.TABLE_NAME +
                     //db.execSQL("ALTER TABLE " + MPFaktorTbl.TABLE_NAME +
                     //" ADD " + MPFaktorTbl.COLUMN_CREATE_TIMESTAMP + " DATETIME DEFAULT CURRENT_TIMESTAMP;");
 
                 case 4:
-                    execSQLFile(mContext, db, R.raw.unset_default_value_for_create_date_col_pfaktor);
+                    execSQLFile(mContext, db, R.raw.version_04_unset_default_value_for_create_date_col_pfaktor);
+
+                case 6:
+                    execSQLFile(mContext, db, R.raw.version_05_faktor_print_view);
             }
 
             // commit
@@ -147,6 +150,7 @@ public class CaspianDataBaseHelper extends SQLiteOpenHelper {
             // commit or rollback
             db.endTransaction();
         }
+
 
 
 
@@ -168,14 +172,24 @@ public class CaspianDataBaseHelper extends SQLiteOpenHelper {
         BufferedReader insertReader = new BufferedReader(new InputStreamReader(insertsStream));
 
         // Iterate through lines (assuming each insert has its own line and theres no other stuff)
-        String sql = "";
+        StringBuilder sql = new StringBuilder();
+        boolean executeFlag = false;
         while (insertReader.ready()) {
-            sql += insertReader.readLine();
-            if (!sql.trim().isEmpty() && !sql.startsWith("--") && sql.contains(";")) {
-                db.execSQL(sql);
+            String line = insertReader.readLine();
+            sql.append(line);
+            sql.append(" ");
+            if (!line.trim().isEmpty() && !line.startsWith("--") && line.contains(";")) {
+                db.execSQL(sql.toString());
                 result++;
-                sql = "";
+                sql = new StringBuilder();
+                executeFlag = true;
             }
+        }
+
+        if (!executeFlag) {
+            throw new RuntimeException(
+                    String.format("SQL file with resourceId %s did not get executed, each group of commands need to end with ';'. SQL command trying: %s", resourceId, sql)
+            );
         }
 
         insertReader.close();

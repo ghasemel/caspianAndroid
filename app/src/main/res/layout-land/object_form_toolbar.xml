@@ -81,11 +81,18 @@
         android:layout_toEndOf="@id/delete_object"
         android:layout_toRightOf="@id/delete_object"/>
 
+    <ImageView
+        android:id="@+id/print_object"
+        style="@style/toolbar_btn_image_view_margin_end"
+        android:src="@drawable/toolbar_print"
+        android:layout_toEndOf="@id/save_object"
+        android:layout_toRightOf="@id/save_object"/>
+
 
     <ImageView
         android:id="@+id/home_toolbar"
         style="@style/toolbar_btn_image_view_margin_end"
         android:src="@drawable/toolbar_home"
-        android:layout_toEndOf="@id/save_object"
-        android:layout_toRightOf="@id/save_object"/>
+        android:layout_toEndOf="@id/print_object"
+        android:layout_toRightOf="@id/print_object"/>
 </RelativeLayout>

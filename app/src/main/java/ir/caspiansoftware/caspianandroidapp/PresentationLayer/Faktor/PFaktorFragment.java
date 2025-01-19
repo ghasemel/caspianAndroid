@@ -6,9 +6,7 @@ import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.AsyncTask;
-import android.os.Build;
 import android.os.Bundle;
-import androidx.annotation.RequiresApi;
 import android.util.Log;
 import android.view.View;
 import android.widget.CheckBox;
@@ -19,8 +17,6 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import java.math.BigDecimal;
-import java.time.Instant;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -48,6 +44,7 @@ import ir.caspiansoftware.caspianandroidapp.Models.PersonModel;
 import ir.caspiansoftware.caspianandroidapp.Models.SPFaktorModel;
 import ir.caspiansoftware.caspianandroidapp.PresentationLayer.BasePLL.MandePLL;
 import ir.caspiansoftware.caspianandroidapp.R;
+import ir.caspiansoftware.caspianandroidapp.Report.ReportHelper;
 
 /**
  * Created by Canada on 7/14/2016.
@@ -70,6 +67,7 @@ public class PFaktorFragment extends CaspianDataGridFragment<SPFaktorModel> impl
     private ImageView mToolbarNext;
     private ImageView mToolbarPrevious;
     private ImageView mToolbarSearch;
+    private ImageView mToolbarPrint;
     // endregion toolbar
 
     private ProgressBar mProgressBar;
@@ -383,6 +381,9 @@ public class PFaktorFragment extends CaspianDataGridFragment<SPFaktorModel> impl
 
         mToolbarSearch = (ImageView) parentView.findViewById(R.id.search_object);
         mToolbarSearch.setOnClickListener(this);
+
+        mToolbarPrint = parentView.findViewById(R.id.print_object);
+        mToolbarPrint.setOnClickListener(this);
     }
 
     @Override
@@ -690,6 +691,15 @@ public class PFaktorFragment extends CaspianDataGridFragment<SPFaktorModel> impl
             Log.d(TAG, "mToolbarSearch clicked");
             search();
 
+        } else if (view.equals(mToolbarPrint)) {
+            Log.d(TAG, "mToolbarPrint clicked");
+            if (mMPFaktorModel == null)
+                return;
+
+            if (ReportHelper.alreadyGenerated(mMPFaktorModel.getNum(), getContext()))
+                ReportHelper.shareOrHandlePDF(mMPFaktorModel.getNum(), getContext());
+            else
+                ReportHelper.generatePDFWithTable(mMPFaktorModel.getNum(), getContext());
         }
     }
 

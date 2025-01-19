@@ -17,8 +17,8 @@ public final class FontsOverride {
 
     }
 
-    protected static void replaceFont(String staticTypefaceFieldName,
-                                      final Typeface newTypeface) {
+    private static void replaceFont(String staticTypefaceFieldName,
+                                    final Typeface newTypeface) {
         try {
             final Field staticField = Typeface.class
                     .getDeclaredField(staticTypefaceFieldName);

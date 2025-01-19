@@ -37,4 +37,7 @@ dependencies {
 
     // https://mvnrepository.com/artifact/commons-net/commons-net
     implementation group: 'commons-net', name: 'commons-net', version: '3.7'
+
+    implementation 'com.itextpdf:itext7-core:7.2.6'
+
 }

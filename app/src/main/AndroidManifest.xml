@@ -64,6 +64,16 @@
         <activity android:name=".PresentationLayer.BasePLL.Sync.SyncTypeActivity" android:label="@string/sync_kalaPhoto" android:theme="@style/PopupTheme" />
         <activity android:name=".PresentationLayer.BasePLL.Gallery.GalleryActivity" android:label="@string/gallery_activity_title" android:windowSoftInputMode="adjustResize|stateHidden" />
         <!-- android:theme="@android:style/Theme.NoTitleBar.Fullscreen"   android:screenOrientation="landscape" -->
+
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="${applicationId}.provider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_paths" />
+        </provider>
     </application>
 
 </manifest>
