@@ -5,7 +5,7 @@ android {
     compileSdkVersion 34
     defaultConfig {
         applicationId "ir.caspiansoftware.caspianandroidapp"
-        minSdkVersion 19
+        minSdkVersion 21
         targetSdkVersion 34
         versionCode 2
         versionName '2.3'
@@ -22,9 +22,13 @@ android {
         sourceCompatibility JavaVersion.VERSION_11
         targetCompatibility JavaVersion.VERSION_11
     }
+
 }
 
+
+
 dependencies {
+
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.5'
     androidTestImplementation 'androidx.test:core:1.5.0'
@@ -38,6 +42,25 @@ dependencies {
     // https://mvnrepository.com/artifact/commons-net/commons-net
     implementation group: 'commons-net', name: 'commons-net', version: '3.7'
 
-    implementation 'com.itextpdf:itext7-core:7.2.6'
+    // https://mvnrepository.com/artifact/com.itextpdf.android/itext-core-android
+    /*implementation 'com.itextpdf.android:itext-core-android:8.0.5'
+    // https://mvnrepository.com/artifact/com.itextpdf.android/layout-android
+    implementation 'com.itextpdf.android:layout-android:8.0.5'
+    // https://mvnrepository.com/artifact/com.itextpdf.android/kernel-android
+    implementation 'com.itextpdf.android:kernel-android:8.0.5'
+    implementation 'com.itextpdf:typography:4.0.2'*/
+
+    // https://mvnrepository.com/artifact/org.apache.pdfbox/pdfbox
+    //implementation 'org.apache.pdfbox:pdfbox:2.0.33'
+
+    // https://mvnrepository.com/artifact/com.ibm.icu/icu4j
+    //implementation 'com.ibm.icu:icu4j:76.1'
+
+
+    //implementation files('./typography-4.0.2.jar')
+    //
+    //implementation 'com.ibm.icu:icu4j:71.1'
+
+
 
 }

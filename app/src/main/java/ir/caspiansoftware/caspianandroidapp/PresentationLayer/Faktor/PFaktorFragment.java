@@ -2,6 +2,7 @@ package ir.caspiansoftware.caspianandroidapp.PresentationLayer.Faktor;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
@@ -44,6 +45,7 @@ import ir.caspiansoftware.caspianandroidapp.Models.PersonModel;
 import ir.caspiansoftware.caspianandroidapp.Models.SPFaktorModel;
 import ir.caspiansoftware.caspianandroidapp.PresentationLayer.BasePLL.MandePLL;
 import ir.caspiansoftware.caspianandroidapp.R;
+import ir.caspiansoftware.caspianandroidapp.Report.ReportActivity;
 import ir.caspiansoftware.caspianandroidapp.Report.ReportHelper;
 
 /**
@@ -696,10 +698,16 @@ public class PFaktorFragment extends CaspianDataGridFragment<SPFaktorModel> impl
             if (mMPFaktorModel == null)
                 return;
 
-            if (ReportHelper.alreadyGenerated(mMPFaktorModel.getNum(), getContext()))
+            String reportFile = ReportHelper.generatePDF(mMPFaktorModel.getNum(), getContext());
+            Intent intent = ReportActivity.newIntent(getContext(), reportFile);
+            startActivity(intent);
+            /*if (ReportHelper.alreadyGenerated(mMPFaktorModel.getNum(), getContext()))
                 ReportHelper.shareOrHandlePDF(mMPFaktorModel.getNum(), getContext());
-            else
-                ReportHelper.generatePDFWithTable(mMPFaktorModel.getNum(), getContext());
+            else {
+                ReportHelper.generatePDF(mMPFaktorModel.getNum(), getContext());
+                ReportHelper.shareOrHandlePDF(mMPFaktorModel.getNum(), getContext());
+            }*/
+
         }
     }
 

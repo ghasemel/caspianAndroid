@@ -8,4 +8,6 @@
     <string name="daf_taf_person_code">کد مشتری:</string>
     <string name="daf_taf_report_title" formatted="false">دفتر تفضیلی %s تا تاریخ %s</string>
     <string name="fragment_daf_taf_row_tag">fragment_daf_taf_row_tag</string>
+
+    <string name="report_view_title">پرینت گزارش</string>
 </resources>

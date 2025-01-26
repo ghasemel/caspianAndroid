@@ -64,6 +64,12 @@
         <activity android:name=".PresentationLayer.BasePLL.Sync.SyncTypeActivity" android:label="@string/sync_kalaPhoto" android:theme="@style/PopupTheme" />
         <activity android:name=".PresentationLayer.BasePLL.Gallery.GalleryActivity" android:label="@string/gallery_activity_title" android:windowSoftInputMode="adjustResize|stateHidden" />
         <!-- android:theme="@android:style/Theme.NoTitleBar.Fullscreen"   android:screenOrientation="landscape" -->
+        <activity android:name=".Report.ReportActivity" android:label="@string/report_view_title" android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
 
         <provider
             android:name="androidx.core.content.FileProvider"

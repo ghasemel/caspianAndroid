@@ -1,6 +1,7 @@
 package ir.caspiansoftware.caspianandroidapp.PresentationLayer.Faktor.Kala;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
@@ -14,6 +15,7 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import java.math.BigDecimal;
@@ -211,10 +213,14 @@ public class FaktorKalaFragment extends CaspianFragment implements IFragmentCall
     }
 
     @Override
-    public void onAttach(Activity activity) {
-        super.onAttach(activity);
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
 
-        mActivityCallback = (IActivityCallback) activity;
+        if (context instanceof IActivityCallback) {
+            mActivityCallback = (IActivityCallback) context;
+        } else {
+            throw new ClassCastException(context.toString() + " must implement IActivityCallback");
+        }
     }
 
     @Override
