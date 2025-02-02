@@ -119,8 +119,8 @@ public class ReportFragment extends CaspianFragment implements IFragmentCallback
         // Create a print adapter from the WebView
         String jobName = context.getString(R.string.app_name) + " Document";
         PrintAttributes attributes = new PrintAttributes.Builder()
-                .setMediaSize(PrintAttributes.MediaSize.UNKNOWN_PORTRAIT)
-                //.setResolution(new PrintAttributes.Resolution("default", "default", 203, 203))
+                .setMediaSize(PrintAttributes.MediaSize.ISO_A4)
+                .setResolution(new PrintAttributes.Resolution("default", "default", 203, 203))
                 .setColorMode(PrintAttributes.COLOR_MODE_MONOCHROME)
                 .build();
 

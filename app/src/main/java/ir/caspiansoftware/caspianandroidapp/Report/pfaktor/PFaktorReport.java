@@ -4,7 +4,6 @@ import android.content.Context;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 import info.elyasi.android.elyasilib.Utility.NumberExt;
@@ -39,7 +38,7 @@ public class PFaktorReport extends AReportBase {
         return new ArrayList<>(List.of(
                 "نام کالا",
                 "مقدار",
-                "قبمت واحد",
+                "قیمت واحد",
                 "قیمت کل"
         ));
     }
