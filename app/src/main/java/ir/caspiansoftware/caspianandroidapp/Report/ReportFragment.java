@@ -79,6 +79,11 @@ public class ReportFragment extends CaspianFragment implements IFragmentCallback
         // Load the file into the WebView
         mWebView.getSettings().setAllowFileAccess(true);
         mWebView.getSettings().setAllowFileAccessFromFileURLs(true);
+        mWebView.getSettings().setBuiltInZoomControls(true); // Enable pinch-to-zoom
+        mWebView.getSettings().setDisplayZoomControls(true); // Hide zoom controls
+        mWebView.getSettings().setUseWideViewPort(true); // Load full-size webpage
+        mWebView.getSettings().setLoadWithOverviewMode(false); // Prevent shrinking
+        mWebView.setScrollBarStyle(View.SCROLLBARS_INSIDE_OVERLAY); // Show scrollbars
         mWebView.loadUrl(htmlUri.toString());
 
         printWebView(mWebView, getContext());
@@ -114,9 +119,9 @@ public class ReportFragment extends CaspianFragment implements IFragmentCallback
         // Create a print adapter from the WebView
         String jobName = context.getString(R.string.app_name) + " Document";
         PrintAttributes attributes = new PrintAttributes.Builder()
-                .setMediaSize(PrintAttributes.MediaSize.ISO_A4)
-                .setResolution(new PrintAttributes.Resolution("default", "default", 600, 600))
-                .setColorMode(PrintAttributes.COLOR_MODE_COLOR)
+                .setMediaSize(PrintAttributes.MediaSize.UNKNOWN_PORTRAIT)
+                //.setResolution(new PrintAttributes.Resolution("default", "default", 203, 203))
+                .setColorMode(PrintAttributes.COLOR_MODE_MONOCHROME)
                 .build();
 
         printManager.print(

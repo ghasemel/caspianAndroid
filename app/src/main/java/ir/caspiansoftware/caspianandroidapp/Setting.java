@@ -16,7 +16,7 @@ public class Setting {
     public static final boolean RECREATE_DATABASE = false;
     public static final String CASPIAN_DB = "caspian_db.sqlite";
 
-    public static final long FirstActivityDelay = 2; // in seconds
+    public static final long FirstActivityDelay = 1; // in seconds
 
 
     public static final int DEVICE_ID_LENGTH = 7;

@@ -143,8 +143,7 @@ public class PFaktorBLL extends ABusinessLayer {
     }
 
     public ArrayList<SPFaktorModel> getSPfaktorListByMPFaktorId(int mpFaktorId) {
-        SPFaktorDataSource spFaktorDataSource = new SPFaktorDataSource(mContext);
-        try {
+        try (SPFaktorDataSource spFaktorDataSource = new SPFaktorDataSource(mContext)) {
             spFaktorDataSource.open();
             ArrayList<SPFaktorModel> spFaktorList = spFaktorDataSource.getByMPFaktorId(mpFaktorId);
             if (spFaktorList != null) {
@@ -156,14 +155,28 @@ public class PFaktorBLL extends ABusinessLayer {
                 }
             }
             return spFaktorList;
-        } finally {
-            spFaktorDataSource.close();
         }
     }
 
+    public MPFaktorModel getMPfaktorById(int id) {
+        try (MPFaktorDataSource mpFaktorDataSource = new MPFaktorDataSource(mContext)) {
+            mpFaktorDataSource.open();
+            MPFaktorModel mpfaktor = mpFaktorDataSource.getById(id);
+            if (mpfaktor != null) {
+                PersonBLL personBLL = new PersonBLL(mContext);
+                PersonModel personModel = personBLL.getById(mpfaktor.getPersonId_FK());
+                if (personModel == null)
+                    throw new RuntimeException(CaspianErrors.CUSTOMER_INVALID);
+                mpfaktor.setPersonModel(personModel);
+                return mpfaktor;
+            }
+        }
+
+        return null;
+    }
+
     public SPFaktorModel getSPfaktorById(int id) throws Exception {
-        SPFaktorDataSource spFaktorDataSource = new SPFaktorDataSource(mContext);
-        try {
+        try (SPFaktorDataSource spFaktorDataSource = new SPFaktorDataSource(mContext)) {
             spFaktorDataSource.open();
             SPFaktorModel spFaktorModel = spFaktorDataSource.getById(id);
             if (spFaktorModel != null) {
@@ -172,15 +185,12 @@ public class PFaktorBLL extends ABusinessLayer {
                 spFaktorModel.setKalaModel(kalaModel);
             }
             return spFaktorModel;
-        } finally {
-            spFaktorDataSource.close();
         }
     }
 
     public void saveSPFaktorList(int mpFaktorId, List<SPFaktorModel> spFaktorModelList) throws Exception {
         if (spFaktorModelList != null) {
-            SPFaktorDataSource spFaktorDataSource = new SPFaktorDataSource(mContext);
-            try {
+            try (SPFaktorDataSource spFaktorDataSource = new SPFaktorDataSource(mContext)) {
                 if (mpFaktorId <= 0)
                     throw new Exception(CaspianErrors.invoice_id_invalid);
 
@@ -206,8 +216,6 @@ public class PFaktorBLL extends ABusinessLayer {
                 // delete removed rows from database
                 int del = spFaktorDataSource.deleteOther(spFaktorModelList);
                 Log.d(TAG, "removed count: " + del);
-            } finally {
-                spFaktorDataSource.close();
             }
         }
     }

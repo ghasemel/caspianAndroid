@@ -25,9 +25,9 @@ public class ReportActivity extends CaspianActivitySingleFragment {
 
     @Override
     public void onCreate(Bundle savedBundleState) {
-        CaspianActionbar.setActionbarLayout(this, R.layout.actionbar_report, R.string.report_view_title);
+        //CaspianActionbar.setActionbarLayout(this, R.layout.actionbar_report, R.string.report_view_title);
         super.onCreate(savedBundleState);
-        CaspianActionbar.setActionbarEvents(this);
+        //CaspianActionbar.setActionbarEvents(this);
     }
 
     @Override

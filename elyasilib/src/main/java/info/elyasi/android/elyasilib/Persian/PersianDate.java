@@ -1,5 +1,6 @@
 package info.elyasi.android.elyasilib.Persian;
 
+import java.time.Instant;
 import java.util.Date;
 import java.util.Locale;
 
@@ -277,5 +278,9 @@ public class PersianDate {
         return String.valueOf(sc.year) + "/" + String.format(loc, "%02d",
                 sc.month) + "/" + String.format(loc, "%02d", sc.date) + " " +
                 pDate.getHours() + ":" + pDate.getMinutes() + ":" + pDate.getSeconds();
+    }
+
+    public static String getFullNow() {
+        return getFullDate(new Date());
     }
 }

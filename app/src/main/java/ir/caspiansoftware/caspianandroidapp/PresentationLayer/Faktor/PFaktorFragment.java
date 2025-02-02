@@ -46,7 +46,7 @@ import ir.caspiansoftware.caspianandroidapp.Models.SPFaktorModel;
 import ir.caspiansoftware.caspianandroidapp.PresentationLayer.BasePLL.MandePLL;
 import ir.caspiansoftware.caspianandroidapp.R;
 import ir.caspiansoftware.caspianandroidapp.Report.ReportActivity;
-import ir.caspiansoftware.caspianandroidapp.Report.ReportHelper;
+import ir.caspiansoftware.caspianandroidapp.Report.pfaktor.PFaktorReport;
 
 /**
  * Created by Canada on 7/14/2016.
@@ -698,7 +698,8 @@ public class PFaktorFragment extends CaspianDataGridFragment<SPFaktorModel> impl
             if (mMPFaktorModel == null)
                 return;
 
-            String reportFile = ReportHelper.generatePDF(mMPFaktorModel.getNum(), getContext());
+            PFaktorReport pFaktorReport = new PFaktorReport(getContext());
+            String reportFile = pFaktorReport.generateReport(mMPFaktorModel.getId());
             Intent intent = ReportActivity.newIntent(getContext(), reportFile);
             startActivity(intent);
             /*if (ReportHelper.alreadyGenerated(mMPFaktorModel.getNum(), getContext()))
