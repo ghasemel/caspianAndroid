@@ -34,6 +34,7 @@ import ir.caspiansoftware.caspianandroidapp.PresentationLayer.Faktor.Confirm.PFa
 import ir.caspiansoftware.caspianandroidapp.PresentationLayer.Faktor.Confirm.PFaktorConfirmListFragment;
 import ir.caspiansoftware.caspianandroidapp.PresentationLayer.Kala.MojoodiList.KalaMojoodiListActivity;
 import ir.caspiansoftware.caspianandroidapp.PresentationLayer.Kala.MojoodiList.KalaMojoodiListFragment;
+import ir.caspiansoftware.caspianandroidapp.PresentationLayer.Mali.MaliActivity;
 import ir.caspiansoftware.caspianandroidapp.PresentationLayer.Person.DaftarTaf.DaftarTafActivity;
 import ir.caspiansoftware.caspianandroidapp.PresentationLayer.Person.MandeList.PersonMandeListActivity;
 import ir.caspiansoftware.caspianandroidapp.PresentationLayer.Person.MandeList.PersonMandeListFragment;
@@ -51,6 +52,7 @@ public class MainActivity extends CaspianActivityTwoFragments {
     private static final int REQUEST_CODE_YEAR = 1;
     private static final int REQUEST_CODE_NEW_PFAKTOR = 2;
     private static final int REQUEST_CODE_SYNC_TYPE = 3;
+    private static final int REQUEST_CODE_NEW_MALI = 4;
 
     //private LinearLayout mBtnLogout;
     private LinearLayout mBtnExit;
@@ -138,6 +140,10 @@ public class MainActivity extends CaspianActivityTwoFragments {
 
             case Actions.ACTION_PRE_INVOICE:
                 PFaktorConfirmListActivity.showNewInvoiceForResult(this, REQUEST_CODE_NEW_PFAKTOR);
+                break;
+
+            case Actions.ACTION_MALI:
+                MaliActivity.showNewMaliForResult(this, REQUEST_CODE_NEW_MALI);
                 break;
 
             case Actions.ACTION_TOOLBAR_EXIT:

@@ -34,6 +34,7 @@ public class MainMenuFragment extends CaspianFragment implements IFragmentCallba
 
     private LinearLayout mBtnSetting;
     private LinearLayout mBtnPreInvoice;
+    private LinearLayout mBtnMali;
     private LinearLayout mBtnPersonMandeReport;
     private LinearLayout mBtnDafTafReport;
     private LinearLayout mBtnKalaMojoodi;
@@ -126,6 +127,9 @@ public class MainMenuFragment extends CaspianFragment implements IFragmentCallba
         // pre-invoice button
         mBtnPreInvoice = (LinearLayout) v.findViewById(R.id.main_button_pre_invoice);
 
+        // mali button
+        mBtnMali = v.findViewById(R.id.main_button_mali);
+
         // person mande report button
         mBtnPersonMandeReport = (LinearLayout) v.findViewById(R.id.main_button_person_mande_report);
 
@@ -170,6 +174,10 @@ public class MainMenuFragment extends CaspianFragment implements IFragmentCallba
         } else if (v.equals(mBtnPreInvoice)) {
             Log.d(TAG, Actions.ACTION_PRE_INVOICE + " called");
             mActivityCallback.onMyFragmentCallBack(Actions.ACTION_PRE_INVOICE, null, (Object) null);
+
+        } else if (v.equals(mBtnMali)) {
+            Log.d(TAG, Actions.ACTION_MALI + " called");
+            mActivityCallback.onMyFragmentCallBack(Actions.ACTION_MALI, null, (Object) null);
 
         } else if (v.equals(mBtnSync)) {
             Log.d(TAG, Actions.ACTION_SYNC + " called");

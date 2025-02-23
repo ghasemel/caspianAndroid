@@ -2,6 +2,7 @@
 <resources>
     <string name="preInvoice_list_title">لیست پیش فاکتورها</string>onCreate
     <string name="preInvoice_title">پیش فاکتور</string>onCreate
+    <string name="mali_title">امور مالی</string>onCreate
     <string name="upload_selection">ارسال به سرور</string>
     <string name="select_all">انتخاب همه</string>
     <string name="new_object">جدید</string>
@@ -29,6 +30,7 @@
     <string name="invoice_label_mcount">تعداد کل:</string>
     <string name="invoice_label_price">قیمت جزء:</string>
     <string name="invoice_label_price_total">قیمت کل:</string>
+    <string name="price_amount">مبلغ:</string>
     <string name="list_price_total">مبلغ کل</string>
     <string name="list_synced">ارسال شده</string>
     <string name="list_synchronization">همگام\n سازی</string>
@@ -41,6 +43,16 @@
     <string name="invoice_kala_scount_mcount_not_entered">وارد کردن تعداد/مقدار فروش الزامی است</string>
     <string name="invoice_kala_price_not_entered">هیچ قیمتی وارد نشده است</string>
 
+    <string name="code_bed_label">بدهکار:</string>
+    <string name="code_bes_label">بستانکار:</string>
+    <string name="sandoogh">صندوق</string>
+    <string name="pay">دریافت/پرداخت</string>
+    <string name="vcheck">چک دریافتی</string>
+    <string name="vcheck_spec">مشخصات چک</string>
+    <string name="bank_name_label">بانک:</string>
+    <string name="serial_label">سریال:</string>
+    <string name="check_date_label">سررسید:</string>
+    <string name="mali_radif">ردیف:</string>
 
 
     <string name="delete_invoice_kala_title">حذف کالا از فاکتور</string>

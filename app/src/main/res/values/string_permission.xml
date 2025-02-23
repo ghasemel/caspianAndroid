@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="permission_pfroosh">pfroosh</string>
+    <string name="permission_mali">mali</string>
     <string name="permission_syncData">syncData</string>
     <string name="permission_chyear">chyear</string>
     <string name="permission_p_faktor_confirm_list">pfroosh_confirm</string>

@@ -50,6 +50,12 @@
                   android:theme="@style/fullscreenTheme"
                   />
 
+        <activity android:name=".PresentationLayer.Mali.MaliActivity"
+            android:label="@string/mali_title"
+            android:windowSoftInputMode="adjustResize|stateHidden"
+            android:theme="@style/fullscreenTheme"
+            />
+
         <activity android:name=".PresentationLayer.Person.List.PersonListActivity" android:label="@string/person_list"  />
         <activity android:name=".PresentationLayer.Kala.List.KalaListActivity" android:label="@string/kala_list" android:theme="@style/PopupTheme" />
         <activity android:name=".PresentationLayer.Faktor.Kala.FaktorKalaActivity" android:label="@string/invoice_kala_activity_title"  />

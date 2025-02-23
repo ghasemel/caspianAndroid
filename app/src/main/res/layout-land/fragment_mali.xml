@@ -1,0 +1,317 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layoutDirection="rtl">
+
+    <include
+        android:id="@+id/toolbar"
+        layout="@layout/object_form_toolbar" />
+
+    <include
+        layout="@layout/image_logo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/toolbar"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true" />
+
+    <!--<LinearLayout android:layout_width="match_parent"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:orientation="vertical">-->
+    <ScrollView
+        android:id="@+id/top_frame_invoice"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/toolbar">
+
+        <LinearLayout
+            android:id="@+id/linearLayout_mali"
+            style="@style/frame_content"
+            android:layout_width="match_parent">
+
+            <!-- RadioGroup -->
+            <LinearLayout
+                style="@style/row"
+                android:gravity="center">
+
+                <RadioGroup
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <RadioButton
+                        android:id="@+id/rdSandoogh"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/sandoogh" />
+
+                    <RadioButton
+                        android:id="@+id/rdPay"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/pay" />
+
+                    <RadioButton
+                        android:id="@+id/rdVcheck"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/vcheck" />
+                </RadioGroup>
+            </LinearLayout>
+
+            <LinearLayout style="@style/row">
+                <TextView
+                    style="@style/label"
+                    android:layout_width="60dp"
+                    android:labelFor="@+id/editText_num"
+                    android:text="@string/mali_radif" />
+
+                <EditText
+                    android:id="@id/editText_num"
+                    style="@style/textBoxCode"
+                    android:layout_width="60dp"
+                    android:layout_marginEnd="30dp"
+                    android:enabled="false" />
+            </LinearLayout>
+
+            <!-- Bed -->
+            <LinearLayout
+                android:id="@+id/linearLayout_bed"
+                style="@style/row">
+
+                <TextView
+                    style="@style/label"
+                    android:layout_width="60dp"
+                    android:labelFor="@+id/editText_bedCode"
+                    android:text="@string/code_bed_label" />
+
+                <EditText
+                    android:id="@id/editText_bedCode"
+                    style="@style/textBoxCode"
+                    android:enabled="false" />
+
+                <ImageView
+                    android:id="@+id/btn_bedSelect"
+                    style="@style/ImageViewBtnTouch" />
+
+                <!--<TextView android:labelFor="@+id/editText_CustomerName" style="@style/label" />-->
+                <TextView
+                    android:id="@+id/textView_bedName"
+                    style="@style/label_red"
+                    android:layout_width="200dp" />
+
+
+            </LinearLayout>
+
+            <!-- Bes -->
+            <LinearLayout
+                android:id="@+id/linearLayout_bes"
+                style="@style/row">
+
+                <TextView
+                    style="@style/label"
+                    android:layout_width="60dp"
+                    android:labelFor="@+id/editText_invoiceCustomerCode"
+                    android:text="@string/code_bes_label" />
+
+                <EditText
+                    android:id="@+id/editText_besCode"
+                    style="@style/textBoxCode"
+                    android:enabled="false" />
+
+                <ImageView
+                    android:id="@+id/btn_besSelect"
+                    style="@style/ImageViewBtnTouch" />
+
+                <!--<TextView android:labelFor="@+id/editText_CustomerName" style="@style/label" />-->
+                <TextView
+                    android:id="@+id/textView_besName"
+                    style="@style/label_red"
+                    android:layout_width="200dp" />
+            </LinearLayout>
+
+            <!-- Date -->
+            <LinearLayout style="@style/row">
+
+                <TextView
+                    style="@style/label"
+                    android:layout_width="60dp"
+                    android:labelFor="@+id/editText_maliDate"
+                    android:text="@string/date_label" />
+
+                <EditText
+                    android:id="@id/editText_maliDate"
+                    style="@style/textBoxDate" />
+
+                <ImageView
+                    android:id="@+id/btn_date_select"
+                    style="@style/ImageViewBtnTouch" />
+
+                <!-- Description -->
+                <TextView
+                    style="@style/label"
+                    android:layout_width="60dp"
+                    android:labelFor="@+id/editText_description"
+                    android:text="@string/description_label" />
+
+                <info.elyasi.android.elyasilib.Controls.ClearableEditText.ClearableEditText
+                    android:id="@id/editText_description"
+                    style="@style/textBoxStandard"
+                    android:layout_width="match_parent"
+                    android:layout_marginEnd="30dp" />
+            </LinearLayout>
+
+            <!-- VCheck -->
+            <LinearLayout
+                android:id="@+id/linearLayout_vcheck"
+                style="@style/frame_content"
+                android:layout_width="match_parent"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp">
+                <!-- Title -->
+                <LinearLayout
+                    style="@style/row"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="3dp"
+                        android:background="@android:color/black" />
+
+                    <TextView
+                        style="@style/label"
+                        android:layout_width="wrap_content"
+                        android:text="@string/vcheck_spec" />
+                </LinearLayout>
+
+                <LinearLayout style="@style/row">
+                    <TextView
+                        style="@style/label"
+                        android:layout_width="60dp"
+                        android:labelFor="@+id/editText_vcheckBank"
+                        android:text="@string/bank_name_label" />
+
+                    <info.elyasi.android.elyasilib.Controls.ClearableEditText.ClearableEditText
+                        android:id="@id/editText_vcheckBank"
+                        style="@style/textBoxStandard"
+                        android:layout_width="100dp"
+                        android:layout_marginEnd="20dp" />
+
+                    <TextView
+                        style="@style/label"
+                        android:layout_width="60dp"
+                        android:labelFor="@+id/editText_vcheckDate"
+                        android:text="@string/check_date_label" />
+
+                    <EditText
+                        android:id="@id/editText_vcheckDate"
+                        style="@style/textBoxDate" />
+
+                    <ImageView
+                        android:id="@+id/btn_vcheckDate"
+                        style="@style/ImageViewBtnTouch" />
+                </LinearLayout>
+
+                <!-- Serial -->
+                <LinearLayout style="@style/row">
+
+                    <TextView
+                        style="@style/label"
+                        android:layout_width="60dp"
+                        android:labelFor="@+id/editText_vcheckSerial"
+                        android:text="@string/serial_label" />
+
+                    <info.elyasi.android.elyasilib.Controls.ClearableEditText.ClearableEditText
+                        android:id="@id/editText_vcheckSerial"
+                        style="@style/textBoxStandard"
+                        android:layout_width="300dp"
+                        android:layout_marginEnd="20dp" />
+                </LinearLayout>
+
+
+                <LinearLayout
+                    style="@style/row"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="3dp"
+                        android:background="@android:color/black" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <!-- Amount Price -->
+            <LinearLayout style="@style/row">
+
+                <TextView
+                    style="@style/label"
+                    android:layout_width="60dp"
+                    android:labelFor="@+id/editText_amountPrice"
+                    android:text="@string/price_amount" />
+
+                <info.elyasi.android.elyasilib.Controls.ClearableEditText.ClearableEditText
+                    android:id="@id/editText_amountPrice"
+                    style="@style/textBoxPrice"
+                    android:layout_marginEnd="40dp" />
+
+                <!-- Map -->
+                <TextView
+                    android:id="@+id/label_location"
+                    style="@style/label"
+                    android:layout_height="40dp"
+                    android:labelFor="@+id/btn_mapLocation"
+                    android:text="@string/pfaktor_save_location" />
+
+                <ImageView
+                    android:id="@id/btn_mapLocation"
+                    android:layout_width="40dp"
+                    android:layout_height="match_parent"
+                    android:src="@drawable/map" />
+
+
+                <TextView
+                    android:id="@+id/label_mande"
+                    style="@style/label"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="40dp"
+                    android:labelFor="@+id/btn_mande"
+                    android:text="@string/pfaktor_mande" />
+
+                <ImageView
+                    android:id="@id/btn_mande"
+                    android:layout_width="40dp"
+                    android:layout_height="match_parent"
+                    android:src="@drawable/customer_report"
+                    android:layout_marginEnd="20dp"/>
+
+                <!-- Send Status -->
+                <CheckBox
+                    android:id="@+id/checkbox_synced"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="0dp"
+                    android:enabled="false"
+                    android:text="@string/synced_pfaktor" />
+
+                <TextView
+                    android:id="@+id/label_synced_date"
+                    style="@style/label"
+                    android:layout_marginStart="10dp"
+                    android:minWidth="50dp" />
+            </LinearLayout>
+
+
+
+
+        </LinearLayout>
+    </ScrollView>
+
+    <ProgressBar
+        android:id="@+id/progressBar"
+        style="@style/progressBarCircle" />
+</RelativeLayout>
