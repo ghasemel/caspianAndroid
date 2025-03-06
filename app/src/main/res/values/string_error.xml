@@ -54,4 +54,8 @@
 
 
     <string name="you_can_just_see_bed">شما تنها قادر به دیدن اطلاعات حساب بدهکارهان هستید </string>
+
+
+    <string name="mali_bed_is_null" formatted="false">بدهکار مشخص نشده است.</string>
+    <string name="mali_bes_is_null" formatted="false">بستانکار مشخص نشده است.</string>
 </resources>

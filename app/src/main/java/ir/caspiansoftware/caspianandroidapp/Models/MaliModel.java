@@ -11,158 +11,70 @@ import java.util.Date;
 import info.elyasi.android.elyasilib.Utility.IJson;
 import info.elyasi.android.elyasilib.Utility.NumberExt;
 import ir.caspiansoftware.caspianandroidapp.BaseCaspian.CaspianErrors;
+import ir.caspiansoftware.caspianandroidapp.Enum.MaliType;
 import ir.caspiansoftware.caspianandroidapp.Vars;
+import lombok.Getter;
+import lombok.Setter;
 
 /**
  * Created by Canada on 7/22/2016.
  */
+@Getter
+@Setter
 public class MaliModel implements Serializable, Comparable<MaliModel>, IJson {
-    private int mId;
-    private int mYearId_FK;
-    private int mNum;
-    private int mPersonId_FK;
-    private PersonModel mPersonModel;
-    private String mDate;
-    private String mDescription;
+    private int id;
+    private int yearId_FK;
+    private int num;
+    private MaliType maliType;
+    private int personBedId_FK;
+    private PersonModel personBedModel;
 
-    private double mLat;
-    private double mLon;
+    private Integer personBesId_FK;
+    private PersonModel personBesModel;
 
-    private boolean mSynced;
-    private String mSyncDate;
-    private int mAtfNum;
+    private String maliDate;
+    private String description;
 
-    // related to view MPFaktorView
-    private long mPriceTotal;
-    private Date mCreateDate;
+    private String vcheckSarresidDate;
+    private String vcheckBank;
+    private String vcheckSerial;
 
+    private long amount;
 
-    public int getId() {
-        return mId;
-    }
+    private double lat;
+    private double lon;
 
-    public void setId(int id) {
-        mId = id;
-    }
+    private boolean synced;
+    private String syncDate;
+    private int atfNum;
 
-    public int getYearId_FK() {
-        return mYearId_FK;
-    }
+    private Date createDate;
 
-    public void setYearId_FK(int yearId_FK) {
-        mYearId_FK = yearId_FK;
-    }
-
-    public int getNum() {
-        return mNum;
-    }
-
-    public void setNum(int num) {
-        mNum = num;
-    }
-
-    public PersonModel getPersonModel() {
-        return mPersonModel;
-    }
-
-    public void setPersonModel(PersonModel personModel) {
-        mPersonModel = personModel;
-        if (mPersonModel != null) {
-            setPersonId_FK(mPersonModel.getId());
+    public void setPersonBedModel(PersonModel personModel) {
+        personBedModel = personModel;
+        if (personBedModel != null) {
+            personBedId_FK = personBedModel.getId();
         }
     }
 
-    public String getDate() {
-        return mDate;
+    public void setPersonBesModel(PersonModel personModel) {
+        personBesModel = personModel;
+        if (personBesModel != null) {
+            personBesId_FK = personBesModel.getId();
+        }
     }
 
-    public void setDate(String date) {
-        mDate = date;
-    }
-
-    public String getDescription() {
-        return mDescription;
-    }
-
-    public int getPersonId_FK() {
-        return mPersonId_FK;
-    }
-
-    public void setPersonId_FK(int personId_FK) {
-        mPersonId_FK = personId_FK;
-    }
-
-    public void setDescription(String description) {
-        mDescription = description;
-    }
-
-    public boolean isSynced() {
-        return mSynced;
-    }
-
-    public void setSynced(boolean synced) {
-        mSynced = synced;
-    }
-
-    public String getSyncDate() {
-        return mSyncDate;
-    }
-
-    public void setSyncDate(String syncDate) {
-        mSyncDate = syncDate;
-    }
-
-    public int getAtfNum() {
-        return mAtfNum;
-    }
-
-    public void setAtfNum(int atfNum) {
-        mAtfNum = atfNum;
-    }
-
-
-    public long getPriceTotal() {
-        return mPriceTotal;
-    }
-
-    public String getPriceTotalString() {
-        return NumberExt.DigitSeparator(getPriceTotal());
-    }
-
-    public void setPriceTotal(long priceTotal) {
-        mPriceTotal = priceTotal;
-    }
-
-    public double getLat() {
-        return mLat;
-    }
-
-    public void setLat(double lat) {
-        this.mLat = lat;
-    }
-
-    public double getLon() {
-        return mLon;
-    }
-
-    public void setLon(double lon) {
-        this.mLon = lon;
-    }
-
-    public Date getCreateDate() {
-        return mCreateDate;
+    public String getAmountString() {
+        return NumberExt.DigitSeparator(amount);
     }
 
     public String getCreateDateInIsoFormat() {
         return Vars.iso8601Format.format(getCreateDate());
     }
 
-    public void setCreateDate(Date mCreateDate) {
-        this.mCreateDate = mCreateDate;
-    }
-
+    
     @Override
-    public int compareTo(@NonNull MaliModel mpFaktorModel) {
+    public int compareTo(@NonNull MaliModel maliModel) {
         return 0;
     }
 
@@ -170,13 +82,19 @@ public class MaliModel implements Serializable, Comparable<MaliModel>, IJson {
     public JSONObject toJSON() throws JSONException {
         JSONObject json = new JSONObject();
 
-        if (getPersonModel() == null)
-            throw new RuntimeException(CaspianErrors.pfaktor_person_null);
+        if (getPersonBedModel() == null)
+            throw new RuntimeException(CaspianErrors.mali_bed_null);
 
-        json.put("faktor_id", getId());
-        json.put("person_code", getPersonModel().getCode());
-        json.put("date", getDate());
-        json.put("des", getDescription());
+        json.put("mali_id", id);
+        json.put("type", maliType.getValue());
+        json.put("bed_code", personBedModel.getCode());
+        json.put("bes_code", personBesModel != null ? personBesModel.getCode() : "");
+        json.put("mali_date", maliDate);
+        json.put("des", description);
+        json.put("vcheck_sarresid", vcheckSarresidDate);
+        json.put("vcheck_bank", vcheckBank);
+        json.put("vcheck_serial", vcheckSerial);
+        json.put("amount", amount);
         json.put("lat", getLat());
         json.put("lon", getLon());
 

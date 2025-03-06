@@ -30,6 +30,9 @@ public class CaspianErrors {
 
     public static final String pfaktor_person_null = "pfaktor_person_null";
     public static final String pfaktor_kala_null = "pfaktor_kala_null";
+
+    public static final String mali_bed_null = "mali_bed_null";
+    public static final String mali_bes_null = "mali_bes_null";
     public static final String gps_is_off = "gps_is_off";
     public static final String location_not_available = "location_not_available";
 

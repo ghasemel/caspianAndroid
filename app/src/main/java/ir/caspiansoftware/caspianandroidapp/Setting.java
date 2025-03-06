@@ -12,7 +12,7 @@ import info.elyasi.android.elyasilib.UI.ActivityFragmentExt;
 public class Setting {
     public static final String APP_NAME = "caspian";
 
-    public static final int APP_DB_VERSION = 7;
+    public static final int APP_DB_VERSION = 8;
     public static final boolean RECREATE_DATABASE = false;
     public static final String CASPIAN_DB = "caspian_db.sqlite";
 

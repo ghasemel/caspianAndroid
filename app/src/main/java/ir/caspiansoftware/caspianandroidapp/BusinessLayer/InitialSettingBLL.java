@@ -48,19 +48,13 @@ public class InitialSettingBLL extends ABusinessLayer {
     }
 
     private List<InitialSettingModel> loadAllSetting() {
-        InitialSettingDataSource initialSettingDataSource = new InitialSettingDataSource(mContext);
-        try {
-            initialSettingDataSource.open();
+        try (InitialSettingDataSource initialSettingDataSource = new InitialSettingDataSource(mContext)) {
             return initialSettingDataSource.getAll();
-        } finally {
-            initialSettingDataSource.close();
         }
     }
 
     private void saveAllSetting(List<InitialSettingModel> settingList) {
-        InitialSettingDataSource initialSettingDataSource = new InitialSettingDataSource(mContext);
-        try {
-            initialSettingDataSource.open();
+        try (InitialSettingDataSource initialSettingDataSource = new InitialSettingDataSource(mContext)) {
             for (InitialSettingModel setting : settingList) {
                 //setting.setValue(PersianConvert.ConvertDigitsToLatin(setting.getValue()));
                 Log.d(TAG, "setting '" + setting.getName() + "' : " + setting.getValue());
@@ -71,8 +65,6 @@ public class InitialSettingBLL extends ABusinessLayer {
                     initialSettingDataSource.update(setting);
             }
             loadAllSetting();
-        } finally {
-            initialSettingDataSource.close();
         }
     }
 
@@ -163,14 +155,9 @@ public class InitialSettingBLL extends ABusinessLayer {
     }
 
     public static int getDBVersion() {
-        InitialSettingDataSource initialSettingDataSource =
-                new InitialSettingDataSource(INSTANCE.mContext);
 
-        try {
-            initialSettingDataSource.open();
+        try (InitialSettingDataSource initialSettingDataSource = new InitialSettingDataSource(INSTANCE.mContext)) {
             return initialSettingDataSource.getDbVersion();
-        } finally {
-            initialSettingDataSource.close();
         }
     }
 

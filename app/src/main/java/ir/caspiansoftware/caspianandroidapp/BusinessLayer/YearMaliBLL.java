@@ -48,12 +48,10 @@ public class YearMaliBLL extends ABusinessLayer {
     }
 
 
-    public long saveYearMali(YearMaliModel yearMali) throws Exception {
+    public long saveYearMali(YearMaliModel yearMali) {
         Log.d(TAG, "saveYearMali start");
 
-        YearMaliDataSource yearMaliDataSource = new YearMaliDataSource(mContext);
-        try {
-            yearMaliDataSource.open();
+        try (YearMaliDataSource yearMaliDataSource = new YearMaliDataSource(mContext)) {
             if (yearMali.isCurrent()) {
                 yearMaliDataSource.updateAllUnCurrent();
             }
@@ -73,7 +71,6 @@ public class YearMaliBLL extends ABusinessLayer {
             Log.d(TAG, ex.getMessage());
             throw ex;
         } finally {
-            yearMaliDataSource.close();
             Log.d(TAG, "saveYearMali end");
         }
     }
@@ -81,22 +78,19 @@ public class YearMaliBLL extends ABusinessLayer {
     public YearMaliModel getCurrentYearMali(int userId) {
         Log.d(TAG, "getCurrentYearMali start");
 
-        YearMaliDataSource yearMaliDataSource = new YearMaliDataSource(mContext);
-        try {
-            yearMaliDataSource.open();
+        try (YearMaliDataSource yearMaliDataSource = new YearMaliDataSource(mContext)) {
             YearMaliModel year = yearMaliDataSource.getCurrentYearByUserId(userId);
 
             if (year != null &&
                     (
-                        year.getDoreModel().getStartDore() == null || year.getDoreModel().getStartDore().isEmpty() ||
-                        year.getDoreModel().getEndDore() == null || year.getDoreModel().getEndDore().isEmpty()
+                            year.getDoreModel().getStartDore() == null || year.getDoreModel().getStartDore().isEmpty() ||
+                                    year.getDoreModel().getEndDore() == null || year.getDoreModel().getEndDore().isEmpty()
                     )
-                )
+            )
                 year = null;
 
             return year;
         } finally {
-            yearMaliDataSource.close();
             Log.d(TAG, "getCurrentYearMali end");
         }
     }

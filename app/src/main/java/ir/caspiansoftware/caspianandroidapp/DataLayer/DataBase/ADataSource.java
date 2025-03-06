@@ -19,7 +19,7 @@ public abstract class ADataSource<T> implements IDataSource<T>, AutoCloseable {
         mDataBaseHelper = new CaspianDataBaseHelper(context);
     }
 
-    public void open() {
+    protected void open() {
         mDatabase = mDataBaseHelper.getWritableDatabase();
 
         if (!mDatabase.isReadOnly()) {

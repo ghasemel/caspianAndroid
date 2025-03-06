@@ -58,11 +58,8 @@ public class PFaktorBLL extends ABusinessLayer {
                 if (listAtfNums != null) {
 
                     // create MPFaktorDataSource object
-                    MPFaktorDataSource mpFaktorDataSource = new MPFaktorDataSource(mContext);
 
-                    try {
-                        // open connection
-                        mpFaktorDataSource.open();
+                    try (MPFaktorDataSource mpFaktorDataSource = new MPFaktorDataSource(mContext)) {
 
                         // index for faktor number list items
                         int index = 0;
@@ -73,10 +70,8 @@ public class PFaktorBLL extends ABusinessLayer {
                             mpFaktorDataSource.updateSync(mp.getId(), listAtfNums.get(index++));
                         }
 
-                    } finally {
-                        // close connection
-                        mpFaktorDataSource.close();
                     }
+                    // close connection
                 }
             }
 
@@ -88,28 +83,15 @@ public class PFaktorBLL extends ABusinessLayer {
 
     // region database
     public MPFaktorModel getByMove(MoveDirection moveDirection, int currentId) throws Exception {
-        MPFaktorDataSource mpFaktorDataSource = new MPFaktorDataSource(mContext);
-        try {
-            mpFaktorDataSource.open();
+        try (MPFaktorDataSource mpFaktorDataSource = new MPFaktorDataSource(mContext)) {
 
-            MPFaktorModel mpFaktorModel = null;
-            switch (moveDirection) {
-                case First:
-                    mpFaktorModel = mpFaktorDataSource.getFirstOrLast(true, Vars.YEAR.getId());
-                    break;
-
-                case Previous:
-                    mpFaktorModel = mpFaktorDataSource.getPrevOrNext(currentId, true, Vars.YEAR.getId());
-                    break;
-
-                case Next:
-                    mpFaktorModel = mpFaktorDataSource.getPrevOrNext(currentId, false, Vars.YEAR.getId());
-                    break;
-
-                case Last:
-                    mpFaktorModel = mpFaktorDataSource.getFirstOrLast(false, Vars.YEAR.getId());
-                    break;
-            }
+            MPFaktorModel mpFaktorModel = switch (moveDirection) {
+                case First -> mpFaktorDataSource.getFirstOrLast(true, Vars.YEAR.getId());
+                case Previous ->
+                        mpFaktorDataSource.getPrevOrNext(currentId, true, Vars.YEAR.getId());
+                case Next -> mpFaktorDataSource.getPrevOrNext(currentId, false, Vars.YEAR.getId());
+                case Last -> mpFaktorDataSource.getFirstOrLast(false, Vars.YEAR.getId());
+            };
 
             if (mpFaktorModel != null) {
                 Log.d(TAG, "getByMove(): MPFaktorModel id = " + mpFaktorModel.getId());
@@ -126,25 +108,18 @@ public class PFaktorBLL extends ABusinessLayer {
 
                 return mpFaktorModel;
             }
-        } finally {
-            mpFaktorDataSource.close();
         }
         return null;
     }
 
     public int getNewNum() {
-        MPFaktorDataSource mpFaktorDataSource = new MPFaktorDataSource(mContext);
-        try {
-            mpFaktorDataSource.open();
+        try (MPFaktorDataSource mpFaktorDataSource = new MPFaktorDataSource(mContext)) {
             return mpFaktorDataSource.getMaxNum(Vars.YEAR.getId()) + 1;
-        } finally {
-            mpFaktorDataSource.close();
         }
     }
 
     public ArrayList<SPFaktorModel> getSPfaktorListByMPFaktorId(int mpFaktorId) {
         try (SPFaktorDataSource spFaktorDataSource = new SPFaktorDataSource(mContext)) {
-            spFaktorDataSource.open();
             ArrayList<SPFaktorModel> spFaktorList = spFaktorDataSource.getByMPFaktorId(mpFaktorId);
             if (spFaktorList != null) {
                 KalaBLL kalaBLL = new KalaBLL(mContext);
@@ -160,7 +135,6 @@ public class PFaktorBLL extends ABusinessLayer {
 
     public MPFaktorModel getMPfaktorById(int id) {
         try (MPFaktorDataSource mpFaktorDataSource = new MPFaktorDataSource(mContext)) {
-            mpFaktorDataSource.open();
             MPFaktorModel mpfaktor = mpFaktorDataSource.getById(id);
             if (mpfaktor != null) {
                 PersonBLL personBLL = new PersonBLL(mContext);
@@ -177,7 +151,6 @@ public class PFaktorBLL extends ABusinessLayer {
 
     public SPFaktorModel getSPfaktorById(int id) throws Exception {
         try (SPFaktorDataSource spFaktorDataSource = new SPFaktorDataSource(mContext)) {
-            spFaktorDataSource.open();
             SPFaktorModel spFaktorModel = spFaktorDataSource.getById(id);
             if (spFaktorModel != null) {
                 KalaBLL kalaBLL = new KalaBLL(mContext);
@@ -194,7 +167,6 @@ public class PFaktorBLL extends ABusinessLayer {
                 if (mpFaktorId <= 0)
                     throw new Exception(CaspianErrors.invoice_id_invalid);
 
-                spFaktorDataSource.open();
                 for (SPFaktorModel spFaktor : spFaktorModelList) {
                     if (spFaktorDataSource.isExistById(spFaktor.getId())) {
                         // update
@@ -221,9 +193,8 @@ public class PFaktorBLL extends ABusinessLayer {
     }
 
     public MPFaktorModel Save(int id, int num, String date, String customer_code, String description, List<SPFaktorModel> spFaktorModelList, Activity activity, Date insertDate) throws Exception {
-        MPFaktorDataSource mpFaktorDataSource = new MPFaktorDataSource(mContext);
 
-        try {
+        try (MPFaktorDataSource mpFaktorDataSource = new MPFaktorDataSource(mContext)) {
             if (num <= 0)
                 throw new Exception(CaspianErrors.INVOICE_NUM_INVALID);
 
@@ -241,9 +212,6 @@ public class PFaktorBLL extends ABusinessLayer {
             mpFaktorModel.setDate(date);
             mpFaktorModel.setPersonModel(personModel);
             mpFaktorModel.setDescription(description);
-
-            mpFaktorDataSource.open();
-
 
 
             // insert
@@ -296,37 +264,27 @@ public class PFaktorBLL extends ABusinessLayer {
             saveSPFaktorList(id, spFaktorModelList);
 
             return mpFaktorModel;
-        } finally {
-            mpFaktorDataSource.close();
         }
     }
 
     public int deleteSPFaktorByMPFaktorId(int mpFaktorId) {
-        SPFaktorDataSource spFaktorDataSource = new SPFaktorDataSource(mContext);
 
-        try {
-            spFaktorDataSource.open();
+        try (SPFaktorDataSource spFaktorDataSource = new SPFaktorDataSource(mContext)) {
             if (mpFaktorId > 0) {
                 return spFaktorDataSource.deleteByMPFaktorId(mpFaktorId);
             }
             return -1;
-        } finally {
-            spFaktorDataSource.close();
         }
     }
 
     public int delete(MPFaktorModel mpFaktorModel) throws Exception {
-        MPFaktorDataSource mpFaktorDataSource = new MPFaktorDataSource(mContext);
 
-        try {
-            mpFaktorDataSource.open();
+        try (MPFaktorDataSource mpFaktorDataSource = new MPFaktorDataSource(mContext)) {
             if (mpFaktorModel != null && mpFaktorModel.getId() > 0) {
                 deleteSPFaktorByMPFaktorId(mpFaktorModel.getId());
                 return mpFaktorDataSource.delete(mpFaktorModel);
             }
             return -1;
-        } finally {
-            mpFaktorDataSource.close();
         }
     }
 
@@ -348,46 +306,34 @@ public class PFaktorBLL extends ABusinessLayer {
     }
 
     public ArrayList<MPFaktorModel> getMPFaktors() {
-        MPFaktorDataSource mpFaktorDataSource = new MPFaktorDataSource(mContext);
 
-        try {
-            mpFaktorDataSource.open();
+        try (MPFaktorDataSource mpFaktorDataSource = new MPFaktorDataSource(mContext)) {
             if (Vars.YEAR.getId() > 0) {
                 ArrayList<MPFaktorModel> list = mpFaktorDataSource.getAllByYearId(Vars.YEAR.getId(), false);
                 list = fillMPFaktorList(list);
                 return list;
             }
             return null;
-        } finally {
-            mpFaktorDataSource.close();
         }
     }
 
     public ArrayList<MPFaktorModel> getMPFaktorsByLast() throws Exception {
-        MPFaktorDataSource mpFaktorDataSource = new MPFaktorDataSource(mContext);
 
-        try {
-            mpFaktorDataSource.open();
+        try (MPFaktorDataSource mpFaktorDataSource = new MPFaktorDataSource(mContext)) {
             if (Vars.YEAR.getId() > 0) {
                 ArrayList<MPFaktorModel> list = mpFaktorDataSource.getAllByYearId(Vars.YEAR.getId(), true);
                 list = fillMPFaktorList(list);
                 return list;
             }
             return null;
-        } finally {
-            mpFaktorDataSource.close();
         }
     }
 
     public void updateSyncInfo(int mpFaktorId, int atfNum) {
-        MPFaktorDataSource mpFaktorDataSource = new MPFaktorDataSource(mContext);
 
-        try {
-            mpFaktorDataSource.open();
+        try (MPFaktorDataSource mpFaktorDataSource = new MPFaktorDataSource(mContext)) {
             mpFaktorDataSource.updateSync(mpFaktorId, atfNum);
 
-        } finally {
-            mpFaktorDataSource.close();
         }
     }
     // endregion database

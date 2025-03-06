@@ -35,8 +35,10 @@ import ir.caspiansoftware.caspianandroidapp.Actions;
 import ir.caspiansoftware.caspianandroidapp.BaseCaspian.CaspianFragment;
 import ir.caspiansoftware.caspianandroidapp.BaseCaspian.CaspianToolbar;
 import ir.caspiansoftware.caspianandroidapp.BusinessLayer.MaliBLL;
+import ir.caspiansoftware.caspianandroidapp.BusinessLayer.PFaktorBLL;
 import ir.caspiansoftware.caspianandroidapp.BusinessLayer.PermissionBLL;
 import ir.caspiansoftware.caspianandroidapp.DataLayer.WebService.TimeWebService;
+import ir.caspiansoftware.caspianandroidapp.Enum.MaliType;
 import ir.caspiansoftware.caspianandroidapp.GPSTracker;
 import ir.caspiansoftware.caspianandroidapp.Models.MaliModel;
 import ir.caspiansoftware.caspianandroidapp.Models.PersonModel;
@@ -232,14 +234,14 @@ public class MaliFragment extends CaspianFragment implements IFragmentCallback {
 
             if (!justUpdate) {
                 mEditTextNum.setText(String.valueOf(mMaliModel.getNum()));
-                mEditTextDate.setText(mMaliModel.getDate());
+                mEditTextDate.setText(mMaliModel.getMaliDate());
                 mEditTextDescription.setText(mMaliModel.getDescription());
-                setPerson(mMaliModel.getPersonModel(), FormActionType.SELECT_BED);
-                setPerson(mMaliModel.getPersonModel(), FormActionType.SELECT_BES);
+                setPerson(mMaliModel.getPersonBedModel(), FormActionType.SELECT_BED);
+                setPerson(mMaliModel.getPersonBedModel(), FormActionType.SELECT_BES);
                 //mMPFaktorModel.setSynced(true);
             } else {
                 mMaliModel.setId(maliModel.getId());
-                mMaliModel.setPersonModel(maliModel.getPersonModel());
+                mMaliModel.setPersonBedModel(maliModel.getPersonBedModel());
             }
 
             if (maliModel.isSynced()) {
@@ -335,6 +337,8 @@ public class MaliFragment extends CaspianFragment implements IFragmentCallback {
         mVCheckRadio = parentView.findViewById(R.id.radio_vcheck);
 
         GPSTracker.requestForGps(getActivity());
+
+        newMaliEntry();
     }
 
     private void mapToolbar(View parentView) {
@@ -367,6 +371,11 @@ public class MaliFragment extends CaspianFragment implements IFragmentCallback {
 
         mToolbarPrint = parentView.findViewById(R.id.print_object);
         mToolbarPrint.setOnClickListener(this);
+    }
+
+    @Override
+    protected void afterOnCreate() {
+        mMaliBLL = new MaliBLL(getContext());
     }
 
     @Override
@@ -461,6 +470,16 @@ public class MaliFragment extends CaspianFragment implements IFragmentCallback {
         asyncRequest.execute();
     }
 
+    private MaliType getMaliType() {
+        if (mVCheckRadio.isChecked())
+            return MaliType.VCHECK;
+
+        if (mPayRadio.isChecked())
+            return MaliType.PAY;
+
+        return MaliType.SANDOGH;
+    }
+
     private void save(Date dateTime) {
         if (checkForSync())
             return;
@@ -469,9 +488,12 @@ public class MaliFragment extends CaspianFragment implements IFragmentCallback {
             MaliModel maliModel = mMaliBLL.Save(
                     mMaliModel != null ? mMaliModel.getId() : -1,
                     Integer.parseInt(mEditTextNum.getText().toString()),
-                    mEditTextDate.getText().toString(),
+                    getMaliType(),
                     mEditTextBedCode.getText().toString(),
+                    mEditTextBesCode.getText().toString(),
+                    mEditTextDate.getText().toString(),
                     mEditTextDescription.getText().toString(),
+                    // TODO Add missing attributes 3 related vcheck and amount
                     getActivity(),
                     dateTime
             );
