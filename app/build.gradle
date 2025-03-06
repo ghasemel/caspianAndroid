@@ -42,6 +42,10 @@ dependencies {
     // https://mvnrepository.com/artifact/commons-net/commons-net
     implementation group: 'commons-net', name: 'commons-net', version: '3.7'
 
+    // Lombok dependency
+    compileOnly 'org.projectlombok:lombok:1.18.30'
+    annotationProcessor 'org.projectlombok:lombok:1.18.30'
+
     // https://mvnrepository.com/artifact/com.itextpdf.android/itext-core-android
     /*implementation 'com.itextpdf.android:itext-core-android:8.0.5'
     // https://mvnrepository.com/artifact/com.itextpdf.android/layout-android
