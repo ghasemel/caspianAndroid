@@ -6,7 +6,7 @@ A project made for the companies who already have Sitecomputer financial applica
 Built with:
 - Android
 - RESTful
-- HAMC
+- HMAC
 - C#.NET
 - SQL Server
 - SQLite
