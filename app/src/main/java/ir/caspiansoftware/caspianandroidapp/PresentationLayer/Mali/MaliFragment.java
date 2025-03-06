@@ -13,8 +13,8 @@ import android.view.View;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+import android.widget.RadioButton;
 import android.widget.TextView;
 
 import java.util.Date;
@@ -74,18 +74,30 @@ public class MaliFragment extends CaspianFragment implements IFragmentCallback {
     private ProgressBar mProgressBar;
 
     private EditText mEditTextNum;
-    private EditText mEditTextDate;
+
+    // bed
     private EditText mEditTextBedCode;
     private TextView mTextViewBedName;
+    private ImageView mBtnBedSelect;
+
+    // bes
+    private EditText mEditTextBesCode;
+    private TextView mTextViewBesName;
+    private ImageView mBtnBesSelect;
+
+    // date
+    private ImageView mBtnDateSelect;
+    private EditText mEditTextDate;
+
+
     private EditText mEditTextDescription;
 
     private TextView mTextViewSyncDate;
     private CheckBox mCheckBoxSynced;
     private ImageView mBtnLocationOnMap;
 
-    private ImageView mBtnBedSelect;
-    private ImageView mBtnDateSelect;
-    private LinearLayout mBtnAddKala;
+
+
 
     private ImageView mBtnMande;
 
@@ -98,14 +110,17 @@ public class MaliFragment extends CaspianFragment implements IFragmentCallback {
 
     private boolean mModified = false;
 
-    private EditText mEditTextBesCode;
-    private TextView mTextViewBesName;
-    private ImageView mBtnBesSelect;
+
+
     private EditText mEditTextBank;
     private EditText mEditTextSarresidDate;
     private ImageView mBtnSarresidDateSelect;
     private EditText mEditTextSerial;
     private ClearableEditText mPriceEditText;
+
+    private RadioButton mSandoghRadio;
+    private RadioButton mPayRadio;
+    private RadioButton mVCheckRadio;
 
     @Override
     protected int getLayoutId() {
@@ -114,9 +129,9 @@ public class MaliFragment extends CaspianFragment implements IFragmentCallback {
 
 
     private boolean checkForSave(final boolean onExit) {
-        if (mModified || mMaliModel == null) {
+        if (mModified) {
             Log.d(TAG, "checkForSave(): need save");
-            messageBoxYesNo(R.string.pfaktor_save_title, R.string.ask_to_save, new IDialogCallback() {
+            messageBoxYesNo(R.string.mali_save_title, R.string.ask_to_save_mali, new IDialogCallback() {
                 @Override
                 public void dialog_callback(DialogResult dialogResult, Object result, int requestCode) {
                     if (dialogResult == DialogResult.Yes) {
@@ -192,14 +207,14 @@ public class MaliFragment extends CaspianFragment implements IFragmentCallback {
         }
     }
 
-    private void newFaktor() {
+    private void newMaliEntry() {
         if (!checkForSave(false)) {
             setMaliModel(null, false);
         }
     }
 
     public void setMaliModel(MaliModel maliModel, boolean justUpdate) {
-        Log.d(TAG, "setMPFaktorModel()");
+        Log.d(TAG, "setMaliModel()");
 
         mModified = false;
 
@@ -207,11 +222,10 @@ public class MaliFragment extends CaspianFragment implements IFragmentCallback {
 //        mLinearLayoutDataGrid.setEnabled(true);
         mTextViewSyncDate.setText("");
         mCheckBoxSynced.setChecked(false);
-        mBtnAddKala.setEnabled(true);
 
         mMaliModel = maliModel;
         if (mMaliModel != null) {
-            Log.d(TAG, "setMPFaktorModel(): mMPFaktorModel not null");
+            Log.d(TAG, "setMaliModel(): mMPFaktorModel not null");
             mLabelFaktorId.setText(String.format(
                     getContext().getString(R.string.faktor_id),
                     maliModel.getId())
@@ -233,15 +247,19 @@ public class MaliFragment extends CaspianFragment implements IFragmentCallback {
                 mCheckBoxSynced.setChecked(true);
 //                mLinearLayoutTop.setEnabled(false);
 //                mLinearLayoutDataGrid.setEnabled(false);
-                mBtnAddKala.setEnabled(false);
             }
         } else {
             mEditTextNum.setText(String.valueOf(mMaliBLL.getNewNum()));
             mEditTextBedCode.setText("");
-            mEditTextDate.setText(PersianDate.getToday());
             mTextViewBedName.setText("");
+
+            mEditTextBesCode.setText("");
+            mTextViewBesName.setText("");
+
+            mEditTextDate.setText(PersianDate.getToday());
             mEditTextDescription.setText("");
             mLabelFaktorId.setText("");
+            mSandoghRadio.setChecked(true);
         }
     }
 
@@ -250,6 +268,8 @@ public class MaliFragment extends CaspianFragment implements IFragmentCallback {
     protected void mapViews(View parentView) {
         View toolbar = parentView.findViewById(R.id.toolbar);
         CaspianToolbar.setToolbar(this, toolbar);
+
+        mapToolbar(parentView);
 
         mEditTextNum = (EditText) parentView.findViewById(R.id.editText_num);
 
@@ -310,17 +330,16 @@ public class MaliFragment extends CaspianFragment implements IFragmentCallback {
 
         mLabelFaktorId = parentView.findViewById(R.id.labelFaktorId);
 
+        mSandoghRadio = parentView.findViewById(R.id.radio_sandoogh);
+        mPayRadio = parentView.findViewById(R.id.radio_pay);
+        mVCheckRadio = parentView.findViewById(R.id.radio_vcheck);
+
         GPSTracker.requestForGps(getActivity());
     }
 
     private void mapToolbar(View parentView) {
         mToolbarHome = (ImageView) parentView.findViewById(R.id.home_toolbar);
         mToolbarHome.setOnClickListener(this);
-
-        //mToolbarNewInvoice = (RelativeLayout) parentView.findViewById(R.id.toolbar_new_invoice);
-
-        mBtnAddKala = (LinearLayout) parentView.findViewById(R.id.btn_add_kala);
-        mBtnAddKala.setOnClickListener(this);
 
         mToolbarSave = (ImageView) parentView.findViewById(R.id.save_object);
         mToolbarSave.setOnClickListener(this);
@@ -512,7 +531,13 @@ public class MaliFragment extends CaspianFragment implements IFragmentCallback {
 
 
         } else if (view.equals(mBtnBedSelect)) { // mBtnCustomerSelect
-            Log.d(TAG, "mBtnCustomerSelect");
+            Log.d(TAG, "mBtnBedSelect");
+            if (checkForSync())
+                return;
+            mActivityCallback.onMyFragmentCallBack(MaliActivity.ACTION_SELECT_PERSON_LIST, null, (Object) null);
+
+        } else if (view.equals(mBtnBesSelect)) { // mBtnCustomerSelect
+            Log.d(TAG, "mBtnBesSelect");
             if (checkForSync())
                 return;
             mActivityCallback.onMyFragmentCallBack(MaliActivity.ACTION_SELECT_PERSON_LIST, null, (Object) null);
@@ -582,15 +607,6 @@ public class MaliFragment extends CaspianFragment implements IFragmentCallback {
             Log.d(TAG, "mToolbarHome clicked");
             getActivity().finish();
 
-        } else if (view.equals(mBtnAddKala)) {
-            Log.d(TAG, "mBtnAddKala clicked");
-
-            if (checkForSync())
-                return;
-
-            mActivityCallback.onMyFragmentCallBack(MaliActivity.ACTION_INVOICE_KALA, FormActionTypes.New, mPerson);
-
-            // getRowFragment().notifyDataSetChanged();
         } else if (view.equals(mToolbarSave)) {
             Log.d(TAG, "mToolbarSave clicked");
             saveAsync();
@@ -601,7 +617,7 @@ public class MaliFragment extends CaspianFragment implements IFragmentCallback {
 
         } else if (view.equals(mToolbarNew)) {
             Log.d(TAG, "mToolbarNew clicked");
-            newFaktor();
+            newMaliEntry();
 
         } else if (view.equals(mToolbarLast)) {
             Log.d(TAG, "mToolbarLast clicked");

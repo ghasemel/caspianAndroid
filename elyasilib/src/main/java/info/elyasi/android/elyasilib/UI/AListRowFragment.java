@@ -27,7 +27,7 @@ import info.elyasi.android.elyasilib.Utility.JsonExt;
 public abstract class AListRowFragment<TListItem> extends ListFragment { //TResponse
     private static final String TAG = "AListRowFragment";
 
-    public static final String EXTRA_RETURN_NAME = "list_selected_object";
+    public static final String EXTRA_SELECTED_OBJECT = "list_selected_object";
     //private String mExtraReturnSelectedObjct;
 
     protected abstract ArrayList<TListItem> inBackground(Object... params) throws Exception;
@@ -267,7 +267,7 @@ public abstract class AListRowFragment<TListItem> extends ListFragment { //TResp
 //                    "Its value type should be String and the value is not important!. " +
 //                    "It's just for your information to be inform that " +
 //                    "the selected row object is available in EXTRA_RETURN_NAME");
-        return EXTRA_RETURN_NAME;
+        return EXTRA_SELECTED_OBJECT;
     }
 
     // *******************************************************************

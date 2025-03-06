@@ -17,9 +17,7 @@ import ir.caspiansoftware.caspianandroidapp.Models.PersonModel;
 import ir.caspiansoftware.caspianandroidapp.Models.SPFaktorModel;
 import ir.caspiansoftware.caspianandroidapp.PresentationLayer.Faktor.Kala.FaktorKalaActivity;
 import ir.caspiansoftware.caspianandroidapp.PresentationLayer.Faktor.Kala.FaktorKalaFragment;
-import ir.caspiansoftware.caspianandroidapp.PresentationLayer.Faktor.Kala.FaktorKalaListActivity;
 import ir.caspiansoftware.caspianandroidapp.PresentationLayer.Faktor.Search.PFaktorSearchActivity;
-import ir.caspiansoftware.caspianandroidapp.PresentationLayer.Kala.MojoodiList.KalaMojoodiListActivity;
 import ir.caspiansoftware.caspianandroidapp.PresentationLayer.Person.List.PersonListActivity;
 import ir.caspiansoftware.caspianandroidapp.R;
 
@@ -76,7 +74,7 @@ public class PFaktorActivity extends CaspianActivitySingleFragment {
         switch (actionName) {
             case ACTION_SELECT_PERSON_LIST:
                 Intent intent = new Intent(this, PersonListActivity.class);
-                intent.putExtra(AListRowFragment.EXTRA_RETURN_NAME, "");
+                intent.putExtra(AListRowFragment.EXTRA_SELECTED_OBJECT, "");
                 startActivityForResult(intent, REQUEST_PERSON_LIST);
                 break;
 
@@ -105,7 +103,7 @@ public class PFaktorActivity extends CaspianActivitySingleFragment {
 
             case ACTION_INVOICE_SEARCH:
                 Intent intent_search = new Intent(this, PFaktorSearchActivity.class);
-                intent_search.putExtra(AListRowFragment.EXTRA_RETURN_NAME, "");
+                intent_search.putExtra(AListRowFragment.EXTRA_SELECTED_OBJECT, "");
                 startActivityForResult(intent_search, REQUEST_INVOICE_SEARCH);
                 break;
 
@@ -142,7 +140,7 @@ public class PFaktorActivity extends CaspianActivitySingleFragment {
         switch (requestCode) {
             case REQUEST_PERSON_LIST:
                 if (resultCode == Activity.RESULT_OK) {
-                    PersonModel personModel = (PersonModel) data.getSerializableExtra(AListRowFragment.EXTRA_RETURN_NAME);
+                    PersonModel personModel = (PersonModel) data.getSerializableExtra(AListRowFragment.EXTRA_SELECTED_OBJECT);
                     mFragmentCallback.onMyActivityCallback(ACTION_SELECT_PERSON_LIST, personModel, null);
                 }
                 break;
@@ -151,9 +149,9 @@ public class PFaktorActivity extends CaspianActivitySingleFragment {
             case REQUEST_SEARCH_KALA_LIST:
                 if (resultCode == Activity.RESULT_OK) {
                     Log.d(TAG, ACTION_INVOICE_KALA);
-                    if (data != null && data.hasExtra(AListRowFragment.EXTRA_RETURN_NAME)) {
-                        if (data.getSerializableExtra(AListRowFragment.EXTRA_RETURN_NAME) instanceof KalaModel) {
-                            addKala((KalaModel) data.getSerializableExtra(AListRowFragment.EXTRA_RETURN_NAME));
+                    if (data != null && data.hasExtra(AListRowFragment.EXTRA_SELECTED_OBJECT)) {
+                        if (data.getSerializableExtra(AListRowFragment.EXTRA_SELECTED_OBJECT) instanceof KalaModel) {
+                            addKala((KalaModel) data.getSerializableExtra(AListRowFragment.EXTRA_SELECTED_OBJECT));
                         }
                     }
                 }
@@ -181,7 +179,7 @@ public class PFaktorActivity extends CaspianActivitySingleFragment {
 
             case REQUEST_INVOICE_SEARCH:
                 if (resultCode == Activity.RESULT_OK) {
-                    MPFaktorModel mpFaktorModel = (MPFaktorModel) data.getSerializableExtra(AListRowFragment.EXTRA_RETURN_NAME);
+                    MPFaktorModel mpFaktorModel = (MPFaktorModel) data.getSerializableExtra(AListRowFragment.EXTRA_SELECTED_OBJECT);
                     mFragmentCallback.onMyActivityCallback(ACTION_INVOICE_SEARCH, mpFaktorModel, null);
                 }
                 break;

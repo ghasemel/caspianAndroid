@@ -69,7 +69,7 @@ public class DaftarTafActivity extends CaspianActivitySingleFragment {
         switch (actionName) {
             case ACTION_SELECT_PERSON_LIST:
                 Intent intent = new Intent(this, PersonListActivity.class);
-                intent.putExtra(AListRowFragment.EXTRA_RETURN_NAME, "");
+                intent.putExtra(AListRowFragment.EXTRA_SELECTED_OBJECT, "");
                 startActivityForResult(intent, REQUEST_PERSON_LIST);
                 break;
 
@@ -100,7 +100,7 @@ public class DaftarTafActivity extends CaspianActivitySingleFragment {
         switch (requestCode) {
             case REQUEST_PERSON_LIST:
                 if (resultCode == Activity.RESULT_OK) {
-                    PersonModel person = (PersonModel) data.getSerializableExtra(AListRowFragment.EXTRA_RETURN_NAME);
+                    PersonModel person = (PersonModel) data.getSerializableExtra(AListRowFragment.EXTRA_SELECTED_OBJECT);
                     mFragmentCallback.onMyActivityCallback(ACTION_SELECT_PERSON_LIST, person, null);
                 }
                 break;

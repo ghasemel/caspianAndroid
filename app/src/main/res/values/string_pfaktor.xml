@@ -53,6 +53,8 @@
     <string name="serial_label">سریال:</string>
     <string name="check_date_label">سررسید:</string>
     <string name="mali_radif">ردیف:</string>
+    <string name="mali_save_title">ذخیره اطلاعات</string>
+    <string name="ask_to_save_mali">آیا ردیف فعلی ذخیره شود؟</string>
 
 
     <string name="delete_invoice_kala_title">حذف کالا از فاکتور</string>

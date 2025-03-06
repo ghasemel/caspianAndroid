@@ -14,7 +14,6 @@ import ir.caspiansoftware.caspianandroidapp.BaseCaspian.CaspianActivitySingleFra
 import ir.caspiansoftware.caspianandroidapp.Models.KalaModel;
 import ir.caspiansoftware.caspianandroidapp.PresentationLayer.Kala.List.KalaListActivity;
 import ir.caspiansoftware.caspianandroidapp.R;
-import ir.caspiansoftware.caspianandroidapp.Setting;
 
 /**
  * Created by Canada on 7/24/2016.
@@ -52,7 +51,7 @@ public class FaktorKalaActivity extends CaspianActivitySingleFragment {
         switch (actionName) {
             case ACTION_SELECT_KALA_LIST:
                 Intent intent1 = new Intent(this, KalaListActivity.class);
-                intent1.putExtra(AListRowFragment.EXTRA_RETURN_NAME, "");
+                intent1.putExtra(AListRowFragment.EXTRA_SELECTED_OBJECT, "");
                 startActivityForResult(intent1, REQUEST_CODE_KALA_LIST);
                 break;
         }
@@ -74,7 +73,7 @@ public class FaktorKalaActivity extends CaspianActivitySingleFragment {
         switch (requestCode) {
             case REQUEST_CODE_KALA_LIST:
                 if (resultCode == Activity.RESULT_OK) {
-                    KalaModel kalaModel = (KalaModel) data.getSerializableExtra(AListRowFragment.EXTRA_RETURN_NAME);
+                    KalaModel kalaModel = (KalaModel) data.getSerializableExtra(AListRowFragment.EXTRA_SELECTED_OBJECT);
                     mFragmentCallback.onMyActivityCallback(ACTION_SELECT_KALA_LIST, kalaModel, null);
                 }
                 break;

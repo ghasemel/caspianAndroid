@@ -43,19 +43,19 @@
                     android:orientation="horizontal">
 
                     <RadioButton
-                        android:id="@+id/rdSandoogh"
+                        android:id="@+id/radio_sandoogh"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/sandoogh" />
 
                     <RadioButton
-                        android:id="@+id/rdPay"
+                        android:id="@+id/radio_pay"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/pay" />
 
                     <RadioButton
-                        android:id="@+id/rdVcheck"
+                        android:id="@+id/radio_vcheck"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/vcheck" />

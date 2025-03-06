@@ -13,8 +13,6 @@ import ir.caspiansoftware.caspianandroidapp.BaseCaspian.CaspianActionbar;
 import ir.caspiansoftware.caspianandroidapp.BaseCaspian.CaspianActivitySingleFragment;
 import ir.caspiansoftware.caspianandroidapp.Models.KalaModel;
 import ir.caspiansoftware.caspianandroidapp.Models.PersonModel;
-import ir.caspiansoftware.caspianandroidapp.PresentationLayer.Person.DaftarTaf.DaftarTafReportActivity;
-import ir.caspiansoftware.caspianandroidapp.PresentationLayer.Person.List.PersonListActivity;
 import ir.caspiansoftware.caspianandroidapp.R;
 
 /**
@@ -74,7 +72,7 @@ public class GalleryActivity extends CaspianActivitySingleFragment {
         switch (requestCode) {
             case REQUEST_PERSON_LIST:
                 if (resultCode == Activity.RESULT_OK) {
-                    PersonModel person = (PersonModel) data.getSerializableExtra(AListRowFragment.EXTRA_RETURN_NAME);
+                    PersonModel person = (PersonModel) data.getSerializableExtra(AListRowFragment.EXTRA_SELECTED_OBJECT);
                 }
                 break;
         }

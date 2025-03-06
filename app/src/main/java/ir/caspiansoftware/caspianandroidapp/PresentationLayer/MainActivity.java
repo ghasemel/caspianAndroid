@@ -345,7 +345,7 @@ public class MainActivity extends CaspianActivityTwoFragments {
 
     public void showYearMaliForm() {
         Intent i = new Intent(this, YearListActivity.class);
-        i.putExtra(AListRowFragment.EXTRA_RETURN_NAME, "");
+        i.putExtra(AListRowFragment.EXTRA_SELECTED_OBJECT, "");
         startActivityForResult(i, REQUEST_CODE_YEAR);
     }
 
