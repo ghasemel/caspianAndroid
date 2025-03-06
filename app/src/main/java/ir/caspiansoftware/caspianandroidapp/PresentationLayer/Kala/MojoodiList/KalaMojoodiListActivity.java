@@ -4,7 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import androidx.fragment.app.Fragment;
 
-import info.elyasi.android.elyasilib.UI.FormActionTypes;
+import info.elyasi.android.elyasilib.UI.FormActionType;
 import ir.caspiansoftware.caspianandroidapp.Actions;
 import ir.caspiansoftware.caspianandroidapp.BaseCaspian.CaspianActionbar;
 import ir.caspiansoftware.caspianandroidapp.BaseCaspian.CaspianActivitySingleFragment;
@@ -37,7 +37,7 @@ public class KalaMojoodiListActivity extends CaspianActivitySingleFragment {
 
 
     @Override
-    public void onMyFragmentCallBack(String actionName, FormActionTypes actionTypes, Object[] parameters) {
+    public void onMyFragmentCallBack(String actionName, FormActionType actionType, Object[] parameters) {
         switch (actionName) {
             case Actions.ACTION_TOOLBAR_EXIT:
                 this.finish();

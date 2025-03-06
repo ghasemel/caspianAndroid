@@ -9,7 +9,7 @@ import android.util.Log;
 
 import java.util.List;
 
-import info.elyasi.android.elyasilib.UI.FormActionTypes;
+import info.elyasi.android.elyasilib.UI.FormActionType;
 import info.elyasi.android.elyasilib.UI.IAsyncForm;
 import info.elyasi.android.elyasilib.UI.IFragmentCallback;
 import ir.caspiansoftware.caspianandroidapp.Actions;
@@ -48,7 +48,7 @@ public class PFaktorConfirmListActivity extends CaspianActivitySingleFragment {
 
     @SuppressWarnings("unchecked")
     @Override
-    public void onMyFragmentCallBack(String actionName, FormActionTypes actionTypes, Object... parameter) {
+    public void onMyFragmentCallBack(String actionName, FormActionType actionType, Object... parameter) {
         // do nothing !
         Log.d(TAG, "onMyFragmentCallBack(): actionName = " + actionName);
 

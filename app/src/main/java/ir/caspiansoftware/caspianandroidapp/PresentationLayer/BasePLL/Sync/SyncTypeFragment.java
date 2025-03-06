@@ -8,7 +8,7 @@ import android.widget.CompoundButton;
 import android.widget.ProgressBar;
 import android.widget.RadioButton;
 
-import info.elyasi.android.elyasilib.UI.FormActionTypes;
+import info.elyasi.android.elyasilib.UI.FormActionType;
 import info.elyasi.android.elyasilib.UI.IActivityCallback;
 import info.elyasi.android.elyasilib.UI.IFragmentCallback;
 import info.elyasi.android.elyasilib.UI.UIUtility;
@@ -41,15 +41,15 @@ public class SyncTypeFragment extends CaspianFragment implements IFragmentCallba
     protected void mapViews(View parentView) {
         Log.d(TAG, "mapViews(): start...");
 
-        rdKala = (RadioButton) parentView.findViewById(R.id.rdSyncKala);
-        rdPerson = (RadioButton) parentView.findViewById(R.id.rdSyncPerson);
-        rdKalaPhoto = (RadioButton) parentView.findViewById(R.id.rdSyncKalaPhoto);
+        rdKala = parentView.findViewById(R.id.rdSyncKala);
+        rdPerson = parentView.findViewById(R.id.rdSyncPerson);
+        rdKalaPhoto = parentView.findViewById(R.id.rdSyncKalaPhoto);
 
         rdKala.setOnCheckedChangeListener(this::checkKalaChange);
         rdPerson.setOnCheckedChangeListener(this::checkPersonChange);
         rdKalaPhoto.setOnCheckedChangeListener(this::checkKalaPhotoChange);
 
-        mBtnOK = (Button) parentView.findViewById(R.id.btn_OK);
+        mBtnOK = parentView.findViewById(R.id.btn_OK);
 
         UIUtility.setButtonEffect(mBtnOK, this);
     }
@@ -96,7 +96,7 @@ public class SyncTypeFragment extends CaspianFragment implements IFragmentCallba
     }
 
     @Override
-    public void onMyActivityCallback(String actionName, Object parameter, FormActionTypes formActionTypes) {
+    public void onMyActivityCallback(String actionName, Object parameter, FormActionType formActionType) {
 
     }
 

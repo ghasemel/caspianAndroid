@@ -20,13 +20,12 @@ import android.widget.TextView;
 import java.util.Date;
 
 import info.elyasi.android.elyasilib.Controls.ClearableEditText.ClearableEditText;
-import info.elyasi.android.elyasilib.Controls.datepicker.util.PersianCalendar;
 import info.elyasi.android.elyasilib.Dialogs.DatePickerDialog;
 import info.elyasi.android.elyasilib.Dialogs.DialogResult;
 import info.elyasi.android.elyasilib.Dialogs.IDialogCallback;
 import info.elyasi.android.elyasilib.GPS.MapUtility;
 import info.elyasi.android.elyasilib.Persian.PersianDate;
-import info.elyasi.android.elyasilib.UI.FormActionTypes;
+import info.elyasi.android.elyasilib.UI.FormActionType;
 import info.elyasi.android.elyasilib.UI.IActivityCallback;
 import info.elyasi.android.elyasilib.UI.IFragmentCallback;
 import info.elyasi.android.elyasilib.UI.MoveDirection;
@@ -235,7 +234,8 @@ public class MaliFragment extends CaspianFragment implements IFragmentCallback {
                 mEditTextNum.setText(String.valueOf(mMaliModel.getNum()));
                 mEditTextDate.setText(mMaliModel.getDate());
                 mEditTextDescription.setText(mMaliModel.getDescription());
-                setPerson(mMaliModel.getPersonModel());
+                setPerson(mMaliModel.getPersonModel(), FormActionType.SELECT_BED);
+                setPerson(mMaliModel.getPersonModel(), FormActionType.SELECT_BES);
                 //mMPFaktorModel.setSynced(true);
             } else {
                 mMaliModel.setId(maliModel.getId());
@@ -338,31 +338,31 @@ public class MaliFragment extends CaspianFragment implements IFragmentCallback {
     }
 
     private void mapToolbar(View parentView) {
-        mToolbarHome = (ImageView) parentView.findViewById(R.id.home_toolbar);
+        mToolbarHome = parentView.findViewById(R.id.home_toolbar);
         mToolbarHome.setOnClickListener(this);
 
-        mToolbarSave = (ImageView) parentView.findViewById(R.id.save_object);
+        mToolbarSave = parentView.findViewById(R.id.save_object);
         mToolbarSave.setOnClickListener(this);
 
-        mToolbarDelete = (ImageView) parentView.findViewById(R.id.delete_object);
+        mToolbarDelete = parentView.findViewById(R.id.delete_object);
         mToolbarDelete.setOnClickListener(this);
 
-        mToolbarNew = (ImageView) parentView.findViewById(R.id.new_object);
+        mToolbarNew = parentView.findViewById(R.id.new_object);
         mToolbarNew.setOnClickListener(this);
 
-        mToolbarLast = (ImageView) parentView.findViewById(R.id.last_object);
+        mToolbarLast = parentView.findViewById(R.id.last_object);
         mToolbarLast.setOnClickListener(this);
 
-        mToolbarFirst = (ImageView) parentView.findViewById(R.id.first_object);
+        mToolbarFirst = parentView.findViewById(R.id.first_object);
         mToolbarFirst.setOnClickListener(this);
 
-        mToolbarNext = (ImageView) parentView.findViewById(R.id.next_object);
+        mToolbarNext = parentView.findViewById(R.id.next_object);
         mToolbarNext.setOnClickListener(this);
 
-        mToolbarPrevious = (ImageView) parentView.findViewById(R.id.previous_object);
+        mToolbarPrevious = parentView.findViewById(R.id.previous_object);
         mToolbarPrevious.setOnClickListener(this);
 
-        mToolbarSearch = (ImageView) parentView.findViewById(R.id.search_object);
+        mToolbarSearch = parentView.findViewById(R.id.search_object);
         mToolbarSearch.setOnClickListener(this);
 
         mToolbarPrint = parentView.findViewById(R.id.print_object);
@@ -485,28 +485,15 @@ public class MaliFragment extends CaspianFragment implements IFragmentCallback {
         }
     }
 
-    private void selectDate() {
+    private void selectDate(EditText editText) {
         if (checkForSync())
             return;
 
-        DatePickerDialog.SelectDate(mEditTextDate, getActivity().getFragmentManager(), new IDialogCallback<PersianCalendar>() {
-            @Override
-            public void dialog_callback(DialogResult dialogResult, PersianCalendar result, int requestCode) {
-                if (dialogResult == DialogResult.OK) {
-                    mModified = true;
-                }
+        DatePickerDialog.SelectDate(editText, getActivity().getFragmentManager(), (dialogResult, result, requestCode) -> {
+            if (dialogResult == DialogResult.OK) {
+                mModified = true;
             }
         });
-
-        /*DatePickerDialog dialog = new DatePickerDialog();
-        dialog.setDialogCallback(new IDialogCallback<PersianCalendar>() {
-            @Override
-            public void dialog_callback(DialogResult dialogResult, PersianCalendar result, int requestCode) {
-
-            }
-        });
-        dialog.setCurrentDate(mEditTextInvoiceDate.getText().toString());
-        dialog.show(getActivity().getFragmentManager(), "DATE");*/
     }
 
     private void getMande(PersonModel person) {
@@ -524,23 +511,25 @@ public class MaliFragment extends CaspianFragment implements IFragmentCallback {
     public void onClick(View view) {
         Log.d(TAG, "onClick(): function entered");
 
-
         if (view.equals(mBtnDateSelect)) { // mBtnDateSelect
             Log.d(TAG, "mBtnDateSelect");
-            selectDate();
+            selectDate(mEditTextDate);
 
+        } else if (view.equals(mBtnSarresidDateSelect)) { // mBtnSarresidDateSelect
+            Log.d(TAG, "mBtnSarresidDateSelect");
+            selectDate(mEditTextSarresidDate);
 
         } else if (view.equals(mBtnBedSelect)) { // mBtnCustomerSelect
             Log.d(TAG, "mBtnBedSelect");
             if (checkForSync())
                 return;
-            mActivityCallback.onMyFragmentCallBack(MaliActivity.ACTION_SELECT_PERSON_LIST, null, (Object) null);
+            mActivityCallback.onMyFragmentCallBack(MaliActivity.ACTION_SELECT_PERSON_LIST, FormActionType.SELECT_BED, (Object) null);
 
         } else if (view.equals(mBtnBesSelect)) { // mBtnCustomerSelect
             Log.d(TAG, "mBtnBesSelect");
             if (checkForSync())
                 return;
-            mActivityCallback.onMyFragmentCallBack(MaliActivity.ACTION_SELECT_PERSON_LIST, null, (Object) null);
+            mActivityCallback.onMyFragmentCallBack(MaliActivity.ACTION_SELECT_PERSON_LIST, FormActionType.SELECT_BES, (Object) null);
 
 
         } else if (view.equals(mBtnLocationOnMap)) { // mBtnLocationOnMap
@@ -661,7 +650,7 @@ public class MaliFragment extends CaspianFragment implements IFragmentCallback {
 
 
     @Override
-    public void onMyActivityCallback(String actionName, Object parameter, FormActionTypes formActionTypes) {
+    public void onMyActivityCallback(String actionName, Object parameter, FormActionType formActionType) {
        // getRowFragment().notifyDataSetChanged();
 
         switch (actionName) {
@@ -674,7 +663,7 @@ public class MaliFragment extends CaspianFragment implements IFragmentCallback {
                 }
 
                 mModified = true;
-                setPerson((PersonModel) parameter);
+                setPerson((PersonModel) parameter, formActionType);
                 break;
 
 
@@ -743,11 +732,20 @@ public class MaliFragment extends CaspianFragment implements IFragmentCallback {
         super.stopProgress();
     }
 
-    public void setPerson(PersonModel personModel) {
+    public void setPerson(PersonModel personModel, FormActionType formActionType) {
         if (personModel != null) {
             mPerson = personModel;
-            mEditTextBedCode.setText(personModel.getCode());
-            mTextViewBedName.setText(personModel.getName());
+            switch (formActionType) {
+                case SELECT_BED:
+                    mEditTextBedCode.setText(personModel.getCode());
+                    mTextViewBedName.setText(personModel.getName());
+                    break;
+
+                case SELECT_BES:
+                    mEditTextBesCode.setText(personModel.getCode());
+                    mTextViewBesName.setText(personModel.getName());
+                    break;
+            }
             UIUtility.HideKeyboard(getActivity());
         }
     }

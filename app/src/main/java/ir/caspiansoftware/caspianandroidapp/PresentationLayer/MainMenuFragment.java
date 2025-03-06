@@ -11,7 +11,7 @@ import android.widget.TextView;
 import java.util.Map;
 import java.util.Objects;
 
-import info.elyasi.android.elyasilib.UI.FormActionTypes;
+import info.elyasi.android.elyasilib.UI.FormActionType;
 import info.elyasi.android.elyasilib.UI.IActivityCallback;
 import info.elyasi.android.elyasilib.UI.IFragmentCallback;
 import ir.caspiansoftware.caspianandroidapp.Actions;
@@ -101,7 +101,7 @@ public class MainMenuFragment extends CaspianFragment implements IFragmentCallba
     }
 
     @Override
-    public void onMyActivityCallback(String actionName, Object parameter, FormActionTypes formActionTypes) {
+    public void onMyActivityCallback(String actionName, Object parameter, FormActionType formActionType) {
         switch (actionName) {
             case Actions.ACTION_YEAR_MALI:
                 setYearDaftar();

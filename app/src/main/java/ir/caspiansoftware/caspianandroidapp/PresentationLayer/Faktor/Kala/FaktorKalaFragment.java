@@ -3,7 +3,6 @@ package ir.caspiansoftware.caspianandroidapp.PresentationLayer.Faktor.Kala;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -16,14 +15,13 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 
 import java.math.BigDecimal;
 
 import info.elyasi.android.elyasilib.Controls.ClearableEditText.ClearableEditText;
 import info.elyasi.android.elyasilib.Dialogs.DialogResult;
 import info.elyasi.android.elyasilib.Dialogs.IDialogCallback;
-import info.elyasi.android.elyasilib.UI.FormActionTypes;
+import info.elyasi.android.elyasilib.UI.FormActionType;
 import info.elyasi.android.elyasilib.UI.IActivityCallback;
 import info.elyasi.android.elyasilib.UI.IFragmentCallback;
 import info.elyasi.android.elyasilib.UI.UIUtility;
@@ -330,7 +328,7 @@ public class FaktorKalaFragment extends CaspianFragment implements IFragmentCall
 
 
     @Override
-    public void onMyActivityCallback(String actionName, Object parameter, FormActionTypes formActionTypes) {
+    public void onMyActivityCallback(String actionName, Object parameter, FormActionType formActionType) {
 
         switch (actionName) {
             case FaktorKalaActivity.ACTION_SELECT_KALA_LIST:

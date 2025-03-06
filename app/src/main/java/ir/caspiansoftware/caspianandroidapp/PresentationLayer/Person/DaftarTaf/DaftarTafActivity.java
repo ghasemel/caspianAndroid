@@ -8,7 +8,7 @@ import android.util.DisplayMetrics;
 import android.util.Log;
 
 import info.elyasi.android.elyasilib.UI.AListRowFragment;
-import info.elyasi.android.elyasilib.UI.FormActionTypes;
+import info.elyasi.android.elyasilib.UI.FormActionType;
 import info.elyasi.android.elyasilib.UI.IFragmentCallback;
 import ir.caspiansoftware.caspianandroidapp.BaseCaspian.CaspianActionbar;
 import ir.caspiansoftware.caspianandroidapp.BaseCaspian.CaspianActivitySingleFragment;
@@ -63,7 +63,7 @@ public class DaftarTafActivity extends CaspianActivitySingleFragment {
     }
 
     @Override
-    public void onMyFragmentCallBack(String actionName, FormActionTypes actionTypes, Object[] parameters) {
+    public void onMyFragmentCallBack(String actionName, FormActionType actionType, Object[] parameters) {
         Log.d(TAG, "onMyFragmentCallBack(): actionName = " + actionName);
 
         switch (actionName) {

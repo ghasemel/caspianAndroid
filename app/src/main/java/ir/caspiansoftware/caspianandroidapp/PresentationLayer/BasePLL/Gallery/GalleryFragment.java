@@ -2,13 +2,9 @@ package ir.caspiansoftware.caspianandroidapp.PresentationLayer.BasePLL.Gallery;
 
 import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
 import android.graphics.Bitmap;
 import android.util.Log;
-import android.view.MotionEvent;
 import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -16,18 +12,14 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.List;
 
-import info.elyasi.android.elyasilib.Dialogs.DatePickerDialog;
-import info.elyasi.android.elyasilib.Persian.PersianDate;
-import info.elyasi.android.elyasilib.UI.FormActionTypes;
+import info.elyasi.android.elyasilib.UI.FormActionType;
 import info.elyasi.android.elyasilib.UI.IActivityCallback;
 import info.elyasi.android.elyasilib.UI.IFragmentCallback;
 import info.elyasi.android.elyasilib.UI.OnSwipeTouchListener;
-import info.elyasi.android.elyasilib.UI.UIUtility;
 import ir.caspiansoftware.caspianandroidapp.BaseCaspian.CaspianFragment;
 import ir.caspiansoftware.caspianandroidapp.BusinessLayer.KalaPhotoBLL;
 import ir.caspiansoftware.caspianandroidapp.Models.KalaModel;
 import ir.caspiansoftware.caspianandroidapp.Models.KalaPhotoModel;
-import ir.caspiansoftware.caspianandroidapp.Models.PersonModel;
 import ir.caspiansoftware.caspianandroidapp.R;
 import ir.caspiansoftware.caspianandroidapp.Vars;
 
@@ -175,7 +167,7 @@ public class GalleryFragment extends CaspianFragment implements IFragmentCallbac
     }
 
     @Override
-    public void onMyActivityCallback(String actionName, Object parameter, FormActionTypes formActionTypes) {
+    public void onMyActivityCallback(String actionName, Object parameter, FormActionType formActionType) {
         Log.d(TAG, "onMyActivityCallback()");
     }
 

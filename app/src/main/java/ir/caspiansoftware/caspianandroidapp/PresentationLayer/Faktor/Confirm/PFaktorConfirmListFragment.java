@@ -11,7 +11,7 @@ import android.widget.RelativeLayout;
 import java.util.ArrayList;
 import java.util.List;
 
-import info.elyasi.android.elyasilib.UI.FormActionTypes;
+import info.elyasi.android.elyasilib.UI.FormActionType;
 import info.elyasi.android.elyasilib.UI.IActivityCallback;
 import info.elyasi.android.elyasilib.UI.IFragmentCallback;
 import info.elyasi.android.elyasilib.Utility.DrawableExt;
@@ -102,7 +102,7 @@ public class PFaktorConfirmListFragment extends CaspianDataGridFragment<MPFaktor
     }
 
     @Override
-    public void onMyActivityCallback(String actionName, Object parameter, FormActionTypes formActionTypes) {
+    public void onMyActivityCallback(String actionName, Object parameter, FormActionType formActionType) {
         Log.d(TAG, "onMyFragmentCallBack start");
 
         switch (actionName) {
@@ -122,7 +122,7 @@ public class PFaktorConfirmListFragment extends CaspianDataGridFragment<MPFaktor
 
         } else if (v.equals(mToolbarNewInvoice)) {
             Log.d(TAG, Actions.ACTION_PRE_INVOICE);
-            mActivityCallback.onMyFragmentCallBack(Actions.ACTION_PRE_INVOICE, FormActionTypes.New);
+            mActivityCallback.onMyFragmentCallBack(Actions.ACTION_PRE_INVOICE, FormActionType.New);
 
         } else  if (v.equals(mToolbarSyncBtn)) {
             Log.d(TAG, Actions.ACTION_CONFIRM_PFaktor);

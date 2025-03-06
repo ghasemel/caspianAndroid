@@ -10,7 +10,7 @@ import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.fragment.app.Fragment;
 
 import info.elyasi.android.elyasilib.UI.AListRowFragment;
-import info.elyasi.android.elyasilib.UI.FormActionTypes;
+import info.elyasi.android.elyasilib.UI.FormActionType;
 import info.elyasi.android.elyasilib.UI.IFragmentCallback;
 import ir.caspiansoftware.caspianandroidapp.BaseCaspian.CaspianActionbar;
 import ir.caspiansoftware.caspianandroidapp.BaseCaspian.CaspianActivitySingleFragment;
@@ -71,7 +71,8 @@ public class MaliActivity extends CaspianActivitySingleFragment {
                 result -> {
                     if (result.getResultCode() == Activity.RESULT_OK && result.getData() != null) {
                         PersonModel personModel = (PersonModel) result.getData().getSerializableExtra(AListRowFragment.EXTRA_SELECTED_OBJECT);
-                        myFragment.onMyActivityCallback(ACTION_SELECT_PERSON_LIST, personModel, null);
+                        FormActionType actionType = (FormActionType) result.getData().getSerializableExtra(FormActionType.EXTRA_ACTION_TYPE);
+                        myFragment.onMyActivityCallback(ACTION_SELECT_PERSON_LIST, personModel, actionType);
                     }
                 });
 
@@ -86,12 +87,13 @@ public class MaliActivity extends CaspianActivitySingleFragment {
     }
 
     @Override
-    public void onMyFragmentCallBack(String actionName, FormActionTypes actionTypes, Object... parameter) {
+    public void onMyFragmentCallBack(String actionName, FormActionType actionType, Object... parameter) {
         Log.d(TAG, "onMyFragmentCallBack(): actionName= " + actionName);
 
         switch (actionName) {
             case ACTION_SELECT_PERSON_LIST:
                 Intent intent = new Intent(this, PersonListActivity.class);
+                intent.putExtra(FormActionType.EXTRA_ACTION_TYPE, actionType);
                 personListLauncher.launch(intent);
                 break;
 

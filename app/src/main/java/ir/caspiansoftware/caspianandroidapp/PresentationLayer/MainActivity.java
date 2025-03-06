@@ -13,7 +13,7 @@ import android.widget.LinearLayout;
 import java.util.List;
 
 import info.elyasi.android.elyasilib.UI.AListRowFragment;
-import info.elyasi.android.elyasilib.UI.FormActionTypes;
+import info.elyasi.android.elyasilib.UI.FormActionType;
 import info.elyasi.android.elyasilib.UI.IAsyncForm;
 import info.elyasi.android.elyasilib.UI.IFragmentCallback;
 import ir.caspiansoftware.caspianandroidapp.Actions;
@@ -126,7 +126,7 @@ public class MainActivity extends CaspianActivityTwoFragments {
 
     @SuppressWarnings("unchecked")
     @Override
-    public void onMyFragmentCallBack(String actionName, FormActionTypes actionTypes, Object... parameter) {
+    public void onMyFragmentCallBack(String actionName, FormActionType actionType, Object... parameter) {
         Log.d(TAG, "onMyFragmentCallBack() called: actionName = " + actionName);
 
         switch (actionName) {

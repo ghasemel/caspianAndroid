@@ -14,7 +14,7 @@ import android.widget.Toast;
 import info.elyasi.android.elyasilib.Dialogs.DialogResult;
 import info.elyasi.android.elyasilib.Dialogs.IDialogCallback;
 import info.elyasi.android.elyasilib.Security.Cryptography;
-import info.elyasi.android.elyasilib.UI.FormActionTypes;
+import info.elyasi.android.elyasilib.UI.FormActionType;
 import info.elyasi.android.elyasilib.UI.IActivityCallback;
 import info.elyasi.android.elyasilib.UI.IFragmentCallback;
 import info.elyasi.android.elyasilib.UI.UIFilter;
@@ -144,7 +144,7 @@ public class InitialSettingFragment extends CaspianFragment implements IFragment
     }
 
     @Override
-    public void onMyActivityCallback(String actionName, Object parameter, FormActionTypes formActionTypes) {
+    public void onMyActivityCallback(String actionName, Object parameter, FormActionType formActionType) {
         Log.d(TAG, parameter.toString());
 
         try {

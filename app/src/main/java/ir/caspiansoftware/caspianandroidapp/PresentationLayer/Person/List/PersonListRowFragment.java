@@ -13,10 +13,10 @@ import java.util.List;
 
 import info.elyasi.android.elyasilib.Persian.PersianConvert;
 import info.elyasi.android.elyasilib.UI.AListRowFragment;
+import info.elyasi.android.elyasilib.UI.FormActionType;
 import ir.caspiansoftware.caspianandroidapp.BusinessLayer.PersonBLL;
 import ir.caspiansoftware.caspianandroidapp.Models.PersonModel;
 import ir.caspiansoftware.caspianandroidapp.R;
-import ir.caspiansoftware.caspianandroidapp.Setting;
 import ir.caspiansoftware.caspianandroidapp.Vars;
 
 /**
@@ -59,6 +59,13 @@ public class PersonListRowFragment extends AListRowFragment<PersonModel> {
     protected void onListItemClicked(PersonModel personModel, String resultExtraName) throws Exception {
         Intent intent = new Intent();
         intent.putExtra(getExtraReturnName(), personModel);
+
+        // Retrieve actionType from fragment arguments
+        if (getActivity() != null && getActivity().getIntent() != null) {
+            FormActionType actionType = (FormActionType) getActivity().getIntent().getSerializableExtra(FormActionType.EXTRA_ACTION_TYPE);
+            intent.putExtra(FormActionType.EXTRA_ACTION_TYPE, actionType);
+        }
+
         getActivity().setResult(Activity.RESULT_OK, intent);
     }
 

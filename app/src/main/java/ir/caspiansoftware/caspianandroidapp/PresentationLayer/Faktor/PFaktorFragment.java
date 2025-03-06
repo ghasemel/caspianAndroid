@@ -27,7 +27,7 @@ import info.elyasi.android.elyasilib.Controls.datepicker.util.PersianCalendar;
 import info.elyasi.android.elyasilib.Dialogs.DatePickerDialog;
 import info.elyasi.android.elyasilib.Dialogs.DialogResult;
 import info.elyasi.android.elyasilib.Dialogs.IDialogCallback;
-import info.elyasi.android.elyasilib.UI.FormActionTypes;
+import info.elyasi.android.elyasilib.UI.FormActionType;
 import info.elyasi.android.elyasilib.UI.IActivityCallback;
 import info.elyasi.android.elyasilib.UI.IFragmentCallback;
 import info.elyasi.android.elyasilib.UI.MoveDirection;
@@ -357,31 +357,31 @@ public class PFaktorFragment extends CaspianDataGridFragment<SPFaktorModel> impl
 
         //mToolbarNewInvoice = (RelativeLayout) parentView.findViewById(R.id.toolbar_new_invoice);
 
-        mBtnAddKala = (LinearLayout) parentView.findViewById(R.id.btn_add_kala);
+        mBtnAddKala = parentView.findViewById(R.id.btn_add_kala);
         mBtnAddKala.setOnClickListener(this);
 
-        mToolbarSave = (ImageView) parentView.findViewById(R.id.save_object);
+        mToolbarSave = parentView.findViewById(R.id.save_object);
         mToolbarSave.setOnClickListener(this);
 
-        mToolbarDelete = (ImageView) parentView.findViewById(R.id.delete_object);
+        mToolbarDelete = parentView.findViewById(R.id.delete_object);
         mToolbarDelete.setOnClickListener(this);
 
-        mToolbarNew = (ImageView) parentView.findViewById(R.id.new_object);
+        mToolbarNew = parentView.findViewById(R.id.new_object);
         mToolbarNew.setOnClickListener(this);
 
-        mToolbarLast = (ImageView) parentView.findViewById(R.id.last_object);
+        mToolbarLast = parentView.findViewById(R.id.last_object);
         mToolbarLast.setOnClickListener(this);
 
-        mToolbarFirst = (ImageView) parentView.findViewById(R.id.first_object);
+        mToolbarFirst = parentView.findViewById(R.id.first_object);
         mToolbarFirst.setOnClickListener(this);
 
-        mToolbarNext = (ImageView) parentView.findViewById(R.id.next_object);
+        mToolbarNext = parentView.findViewById(R.id.next_object);
         mToolbarNext.setOnClickListener(this);
 
-        mToolbarPrevious = (ImageView) parentView.findViewById(R.id.previous_object);
+        mToolbarPrevious = parentView.findViewById(R.id.previous_object);
         mToolbarPrevious.setOnClickListener(this);
 
-        mToolbarSearch = (ImageView) parentView.findViewById(R.id.search_object);
+        mToolbarSearch = parentView.findViewById(R.id.search_object);
         mToolbarSearch.setOnClickListener(this);
 
         mToolbarPrint = parentView.findViewById(R.id.print_object);
@@ -407,7 +407,7 @@ public class PFaktorFragment extends CaspianDataGridFragment<SPFaktorModel> impl
             return;
 
         mSPFaktorEditPosition = position;
-        mActivityCallback.onMyFragmentCallBack(PFaktorActivity.ACTION_INVOICE_KALA, FormActionTypes.Edit, spFaktorModel, mPerson);
+        mActivityCallback.onMyFragmentCallBack(PFaktorActivity.ACTION_INVOICE_KALA, FormActionType.Edit, spFaktorModel, mPerson);
     }
 
     private boolean checkForSync() {
@@ -658,7 +658,7 @@ public class PFaktorFragment extends CaspianDataGridFragment<SPFaktorModel> impl
             if (checkForSync())
                 return;
 
-            mActivityCallback.onMyFragmentCallBack(PFaktorActivity.ACTION_INVOICE_KALA, FormActionTypes.New, mPerson);
+            mActivityCallback.onMyFragmentCallBack(PFaktorActivity.ACTION_INVOICE_KALA, FormActionType.New, mPerson);
 
             // getRowFragment().notifyDataSetChanged();
         } else if (view.equals(mToolbarSave)) {
@@ -715,7 +715,7 @@ public class PFaktorFragment extends CaspianDataGridFragment<SPFaktorModel> impl
 
 
     @Override
-    public void onMyActivityCallback(String actionName, Object parameter, FormActionTypes formActionTypes) {
+    public void onMyActivityCallback(String actionName, Object parameter, FormActionType formActionType) {
        // getRowFragment().notifyDataSetChanged();
 
         switch (actionName) {
@@ -740,7 +740,7 @@ public class PFaktorFragment extends CaspianDataGridFragment<SPFaktorModel> impl
                 }
 
                 mModified = true;
-                switch (formActionTypes) {
+                switch (formActionType) {
                     case New:
                         addKala((SPFaktorModel) parameter);
                         break;

@@ -7,7 +7,7 @@ import androidx.fragment.app.Fragment;
 import android.util.Log;
 
 import info.elyasi.android.elyasilib.UI.AListRowFragment;
-import info.elyasi.android.elyasilib.UI.FormActionTypes;
+import info.elyasi.android.elyasilib.UI.FormActionType;
 import info.elyasi.android.elyasilib.UI.IFragmentCallback;
 import ir.caspiansoftware.caspianandroidapp.BaseCaspian.CaspianActionbar;
 import ir.caspiansoftware.caspianandroidapp.BaseCaspian.CaspianActivitySingleFragment;
@@ -67,7 +67,7 @@ public class PFaktorActivity extends CaspianActivitySingleFragment {
     }
 
     @Override
-    public void onMyFragmentCallBack(String actionName, FormActionTypes actionTypes, Object... parameter) {
+    public void onMyFragmentCallBack(String actionName, FormActionType actionType, Object... parameter) {
         Log.d(TAG, "onMyFragmentCallBack(): actionName= " + actionName);
 
         //String actionName = ActionName.toString();
@@ -80,10 +80,10 @@ public class PFaktorActivity extends CaspianActivitySingleFragment {
 
             case ACTION_INVOICE_KALA:
                 Intent intent_invoice_kala = new Intent(this, FaktorKalaActivity.class);
-                intent_invoice_kala.putExtra(actionTypes.name(), actionTypes);
+                intent_invoice_kala.putExtra(actionType.name(), actionType);
                 intent_invoice_kala.putExtra(FaktorKalaFragment.EXTRA_RESULT_NAME, ACTION_INVOICE_KALA);
 
-                switch (actionTypes) {
+                switch (actionType) {
                     case Edit:
                         if (parameter != null && parameter[0] instanceof SPFaktorModel && parameter[1] instanceof PersonModel) {
                             intent_invoice_kala.putExtra(FaktorKalaFragment.EXTRA_SP_FAKTOR_MODEL, (SPFaktorModel) parameter[0]);
@@ -110,7 +110,7 @@ public class PFaktorActivity extends CaspianActivitySingleFragment {
         }
     }
 
-    private void editKala(FormActionTypes actionTypes, Object... parameter) {
+    private void editKala(FormActionType actionTypes, Object... parameter) {
 
         if (parameter != null && parameter[0] instanceof SPFaktorModel && parameter[1] instanceof PersonModel) {
             Intent intent_invoice_kala = new Intent(this, FaktorKalaActivity.class);
@@ -125,7 +125,7 @@ public class PFaktorActivity extends CaspianActivitySingleFragment {
     private void addKala(KalaModel kalaModel) {
         //if (parameter != null && parameter[0] instanceof SPFaktorModel && parameter[1] instanceof PersonModel) {
             Intent intent_invoice_kala = new Intent(this, FaktorKalaActivity.class);
-            intent_invoice_kala.putExtra(FormActionTypes.New.name(), FormActionTypes.New);
+            intent_invoice_kala.putExtra(FormActionType.New.name(), FormActionType.New);
             intent_invoice_kala.putExtra(FaktorKalaFragment.EXTRA_KALA_MODEL, kalaModel);
             startActivityForResult(intent_invoice_kala, REQUEST_INVOICE_ADD_KALA);
         //}
@@ -168,8 +168,8 @@ public class PFaktorActivity extends CaspianActivitySingleFragment {
                                     ACTION_INVOICE_KALA,
                                     data.getSerializableExtra(ACTION_INVOICE_KALA),
                                     requestCode == REQUEST_INVOICE_EDIT_KALA ?
-                                            FormActionTypes.Edit :
-                                            FormActionTypes.New
+                                            FormActionType.Edit :
+                                            FormActionType.New
                             );
                         }
                     }

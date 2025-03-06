@@ -16,7 +16,7 @@ import androidx.core.content.FileProvider;
 
 import java.io.File;
 
-import info.elyasi.android.elyasilib.UI.FormActionTypes;
+import info.elyasi.android.elyasilib.UI.FormActionType;
 import info.elyasi.android.elyasilib.UI.IFragmentCallback;
 import ir.caspiansoftware.caspianandroidapp.BaseCaspian.CaspianFragment;
 import ir.caspiansoftware.caspianandroidapp.R;
@@ -106,7 +106,7 @@ public class ReportFragment extends CaspianFragment implements IFragmentCallback
     }
 
     @Override
-    public void onMyActivityCallback(String actionName, Object parameter, FormActionTypes formActionTypes) {
+    public void onMyActivityCallback(String actionName, Object parameter, FormActionType formActionType) {
         Log.d(TAG, "onMyActivityCallback(): start...");
     }
 

@@ -3,7 +3,7 @@ package ir.caspiansoftware.caspianandroidapp.BaseCaspian;
 import android.os.Bundle;
 
 import info.elyasi.android.elyasilib.UI.ActivityFragmentExt;
-import info.elyasi.android.elyasilib.UI.FormActionTypes;
+import info.elyasi.android.elyasilib.UI.FormActionType;
 import ir.caspiansoftware.caspianandroidapp.R;
 
 /**
@@ -34,7 +34,7 @@ public abstract class CaspianActivitySingleFragment extends ActivityFragmentExt 
 
 
     @Override
-    public void onMyFragmentCallBack(String actionName, FormActionTypes actionTypes, Object[] parameters) {
+    public void onMyFragmentCallBack(String actionName, FormActionType actionType, Object[] parameters) {
 
     }
 }

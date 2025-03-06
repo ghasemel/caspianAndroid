@@ -12,7 +12,7 @@ import android.widget.EditText;
 import info.elyasi.android.elyasilib.Dialogs.DialogResult;
 import info.elyasi.android.elyasilib.Dialogs.IDialogCallback;
 import info.elyasi.android.elyasilib.Dialogs.IInputDialogProperty;
-import info.elyasi.android.elyasilib.UI.FormActionTypes;
+import info.elyasi.android.elyasilib.UI.FormActionType;
 import info.elyasi.android.elyasilib.UI.IFragmentCallback;
 import info.elyasi.android.elyasilib.Dialogs.InputDialog;
 import info.elyasi.android.elyasilib.Utility.NumberExt;
@@ -65,7 +65,7 @@ public class InitialSettingActivity extends CaspianActivitySingleFragment implem
     }
 
     @Override
-    public void onMyFragmentCallBack(String actionName, FormActionTypes actionTypes, Object[] parameters) {
+    public void onMyFragmentCallBack(String actionName, FormActionType actionType, Object[] parameters) {
         Log.d(TAG, "onMyFragmentCallBack() called: actionName = " + actionName);
 
         switch (actionName) {

@@ -12,7 +12,7 @@ import android.widget.TextView;
 
 import info.elyasi.android.elyasilib.Dialogs.DatePickerDialog;
 import info.elyasi.android.elyasilib.Persian.PersianDate;
-import info.elyasi.android.elyasilib.UI.FormActionTypes;
+import info.elyasi.android.elyasilib.UI.FormActionType;
 import info.elyasi.android.elyasilib.UI.IActivityCallback;
 import info.elyasi.android.elyasilib.UI.UIUtility;
 import ir.caspiansoftware.caspianandroidapp.BaseCaspian.CaspianFragment;
@@ -90,7 +90,7 @@ public class DaftarTafFragment extends CaspianFragment implements IFragmentCallb
     }
 
     @Override
-    public void onMyActivityCallback(String actionName, Object parameter, FormActionTypes formActionTypes) {
+    public void onMyActivityCallback(String actionName, Object parameter, FormActionType formActionType) {
         switch (actionName) {
             case DaftarTafActivity.ACTION_SELECT_PERSON_LIST:
                 Log.d(TAG, "onMyActivityCallback(): " + actionName);

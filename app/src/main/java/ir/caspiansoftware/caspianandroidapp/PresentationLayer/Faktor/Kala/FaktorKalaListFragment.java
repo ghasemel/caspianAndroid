@@ -6,7 +6,7 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 
-import info.elyasi.android.elyasilib.UI.FormActionTypes;
+import info.elyasi.android.elyasilib.UI.FormActionType;
 import info.elyasi.android.elyasilib.UI.IActivityCallback;
 import info.elyasi.android.elyasilib.UI.IFragmentCallback;
 import info.elyasi.android.elyasilib.UI.UIUtility;
@@ -48,10 +48,10 @@ public class FaktorKalaListFragment extends CaspianSearchableListFragment<KalaMo
 
     @Override
     protected void mapViews(View parentView) {
-        mSearchCode = (EditText) parentView.findViewById(R.id.search_kala_code);
-        mSearchName = (EditText) parentView.findViewById(R.id.search_kala_name);
+        mSearchCode = parentView.findViewById(R.id.search_kala_code);
+        mSearchName = parentView.findViewById(R.id.search_kala_name);
 
-        mBtnExit = (LinearLayout) parentView.findViewById(R.id.toolbar_exit);
+        mBtnExit = parentView.findViewById(R.id.toolbar_exit);
         UIUtility.setButtonEffect(mBtnExit);
         mBtnExit.setOnClickListener(this);
 
@@ -87,7 +87,7 @@ public class FaktorKalaListFragment extends CaspianSearchableListFragment<KalaMo
     }
 
     @Override
-    public void onMyActivityCallback(String actionName, Object parameter, FormActionTypes formActionTypes) {
+    public void onMyActivityCallback(String actionName, Object parameter, FormActionType formActionType) {
 
     }
 
@@ -98,7 +98,7 @@ public class FaktorKalaListFragment extends CaspianSearchableListFragment<KalaMo
         Log.d(TAG, "OnCellClick()");
 
         if (cellId == R.id.cell_gallery) {
-            mActivityCallback.onMyFragmentCallBack(Actions.ACTION_OPEN_KALA_GALLERY, FormActionTypes.VIEW, kalaModel);
+            mActivityCallback.onMyFragmentCallBack(Actions.ACTION_OPEN_KALA_GALLERY, FormActionType.VIEW, kalaModel);
         }
     }
 }

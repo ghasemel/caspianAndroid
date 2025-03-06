@@ -6,16 +6,11 @@ import android.os.Bundle;
 import androidx.fragment.app.Fragment;
 import android.util.Log;
 
-import info.elyasi.android.elyasilib.UI.AListRowFragment;
-import info.elyasi.android.elyasilib.UI.FormActionTypes;
+import info.elyasi.android.elyasilib.UI.FormActionType;
 import info.elyasi.android.elyasilib.UI.IFragmentCallback;
 import ir.caspiansoftware.caspianandroidapp.BaseCaspian.CaspianActionbar;
 import ir.caspiansoftware.caspianandroidapp.BaseCaspian.CaspianActivitySingleFragment;
-import ir.caspiansoftware.caspianandroidapp.BaseCaspian.CaspianFragment;
 import ir.caspiansoftware.caspianandroidapp.Enum.SyncType;
-import ir.caspiansoftware.caspianandroidapp.Models.PersonModel;
-import ir.caspiansoftware.caspianandroidapp.PresentationLayer.Person.DaftarTaf.DaftarTafReportActivity;
-import ir.caspiansoftware.caspianandroidapp.PresentationLayer.Person.List.PersonListActivity;
 import ir.caspiansoftware.caspianandroidapp.R;
 import ir.caspiansoftware.caspianandroidapp.Setting;
 
@@ -51,7 +46,7 @@ public class SyncTypeActivity extends CaspianActivitySingleFragment {
     }
 
     @Override
-    public void onMyFragmentCallBack(String actionName, FormActionTypes actionTypes, Object[] parameters) {
+    public void onMyFragmentCallBack(String actionName, FormActionType actionType, Object[] parameters) {
         Log.d(TAG, "onMyFragmentCallBack(): actionName = " + actionName);
 
         if (ACTION_START_SYNC.equals(actionName)) {
