@@ -50,6 +50,7 @@ public class MaliTbl extends ATableEntity {
                 COLUMN_NUM,
                 COLUMN_TYPE,
                 COLUMN_PERSON_BED_ID_FK,
+                COLUMN_PERSON_BES_ID_FK,
                 COLUMN_DATE,
                 COLUMN_DESCRIPTION,
                 COLUMN_VCHECK_SARRESID_DATE,

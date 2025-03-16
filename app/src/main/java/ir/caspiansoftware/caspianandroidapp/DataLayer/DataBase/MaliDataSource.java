@@ -25,7 +25,6 @@ public class MaliDataSource extends ADataSource<MaliModel> {
 
     public MaliDataSource(Context context) {
         super(context);
-        open();
     }
 
     @Override
@@ -206,7 +205,7 @@ public class MaliDataSource extends ADataSource<MaliModel> {
         model.setYearId_FK(cursor.getInt(0));
         model.setId(cursor.getInt(1));
         model.setNum(cursor.getInt(2));
-        model.setMaliType(MaliType.valueOf(cursor.getString(3)));
+        model.setMaliType(MaliType.valueOf(cursor.getString(3).toUpperCase()));
         model.setPersonBedId_FK(cursor.getInt(4));
         model.setPersonBesId_FK(cursor.getInt(5));
         model.setMaliDate(cursor.getString(6));

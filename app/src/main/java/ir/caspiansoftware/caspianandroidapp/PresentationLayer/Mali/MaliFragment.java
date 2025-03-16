@@ -1,5 +1,9 @@
 package ir.caspiansoftware.caspianandroidapp.PresentationLayer.Mali;
 
+import static android.view.View.GONE;
+import static android.view.View.INVISIBLE;
+import static android.view.View.VISIBLE;
+
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -11,8 +15,10 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.RadioButton;
 import android.widget.TextView;
@@ -35,7 +41,6 @@ import ir.caspiansoftware.caspianandroidapp.Actions;
 import ir.caspiansoftware.caspianandroidapp.BaseCaspian.CaspianFragment;
 import ir.caspiansoftware.caspianandroidapp.BaseCaspian.CaspianToolbar;
 import ir.caspiansoftware.caspianandroidapp.BusinessLayer.MaliBLL;
-import ir.caspiansoftware.caspianandroidapp.BusinessLayer.PFaktorBLL;
 import ir.caspiansoftware.caspianandroidapp.BusinessLayer.PermissionBLL;
 import ir.caspiansoftware.caspianandroidapp.DataLayer.WebService.TimeWebService;
 import ir.caspiansoftware.caspianandroidapp.Enum.MaliType;
@@ -51,7 +56,7 @@ import ir.caspiansoftware.caspianandroidapp.Report.pfaktor.PFaktorReport;
 /**
  * Created by Canada on 7/14/2016.
  */
-public class MaliFragment extends CaspianFragment implements IFragmentCallback {
+public class MaliFragment extends CaspianFragment implements IFragmentCallback, CompoundButton.OnCheckedChangeListener {
     private static final String TAG = "MaliFragment";
 
     public static final String EXTRA_ACTION_NEW = "extra_action_new";
@@ -74,12 +79,17 @@ public class MaliFragment extends CaspianFragment implements IFragmentCallback {
 
     private ProgressBar mProgressBar;
 
+    private RadioButton mSandoghRadio;
+    private RadioButton mPayRadio;
+    private RadioButton mVCheckRadio;
+
     private EditText mEditTextNum;
 
     // bed
     private EditText mEditTextBedCode;
     private TextView mTextViewBedName;
     private ImageView mBtnBedSelect;
+    private LinearLayout mBedLinearLayout;
 
     // bes
     private EditText mEditTextBesCode;
@@ -89,39 +99,33 @@ public class MaliFragment extends CaspianFragment implements IFragmentCallback {
     // date
     private ImageView mBtnDateSelect;
     private EditText mEditTextDate;
-
-
     private EditText mEditTextDescription;
 
+
+    // VCHECK
+    private EditText mEditTextBank;
+    private EditText mEditTextSarresidDate;
+    private ImageView mBtnSarresidDateSelect;
+    private EditText mEditTextSerial;
+    private LinearLayout mVCheckLinerLayout;
+
+    // FOOTER
+    private ImageView mBtnMande;
+    private ClearableEditText mPriceEditText;
+    private TextView mLabelMaliId;
     private TextView mTextViewSyncDate;
     private CheckBox mCheckBoxSynced;
     private ImageView mBtnLocationOnMap;
 
 
-
-
-    private ImageView mBtnMande;
-
+    // note view related
     private PersonModel mPerson = null;
-
     private MaliModel mMaliModel;
     private MaliBLL mMaliBLL;
-
-    private TextView mLabelFaktorId;
-
     private boolean mModified = false;
 
 
 
-    private EditText mEditTextBank;
-    private EditText mEditTextSarresidDate;
-    private ImageView mBtnSarresidDateSelect;
-    private EditText mEditTextSerial;
-    private ClearableEditText mPriceEditText;
-
-    private RadioButton mSandoghRadio;
-    private RadioButton mPayRadio;
-    private RadioButton mVCheckRadio;
 
     @Override
     protected int getLayoutId() {
@@ -132,16 +136,13 @@ public class MaliFragment extends CaspianFragment implements IFragmentCallback {
     private boolean checkForSave(final boolean onExit) {
         if (mModified) {
             Log.d(TAG, "checkForSave(): need save");
-            messageBoxYesNo(R.string.mali_save_title, R.string.ask_to_save_mali, new IDialogCallback() {
-                @Override
-                public void dialog_callback(DialogResult dialogResult, Object result, int requestCode) {
-                    if (dialogResult == DialogResult.Yes) {
-                        saveAsync();
-                    } else {
-                        setModified(false);
-                        if (onExit)
-                            getActivity().finish();
-                    }
+            messageBoxYesNo(R.string.mali_save_title, R.string.ask_to_save_mali, (dialogResult, result, requestCode) -> {
+                if (dialogResult == DialogResult.Yes) {
+                    saveAsync();
+                } else {
+                    setModified(false);
+                    if (onExit)
+                        getActivity().finish();
                 }
             });
             return true;
@@ -214,41 +215,42 @@ public class MaliFragment extends CaspianFragment implements IFragmentCallback {
         }
     }
 
-    public void setMaliModel(MaliModel maliModel, boolean justUpdate) {
+    public void setMaliModel(MaliModel maliModel, boolean onSave) {
         Log.d(TAG, "setMaliModel()");
 
         mModified = false;
-
-//        mLinearLayoutTop.setEnabled(true);
-//        mLinearLayoutDataGrid.setEnabled(true);
         mTextViewSyncDate.setText("");
         mCheckBoxSynced.setChecked(false);
 
         mMaliModel = maliModel;
         if (mMaliModel != null) {
-            Log.d(TAG, "setMaliModel(): mMPFaktorModel not null");
-            mLabelFaktorId.setText(String.format(
-                    getContext().getString(R.string.faktor_id),
+            Log.d(TAG, "setMaliModel(): mMaliModel not null");
+            mLabelMaliId.setText(String.format(
+                    getContext().getString(R.string.reference_id),
                     maliModel.getId())
             );
 
-            if (!justUpdate) {
+            if (!onSave) {
+                selectMaliType(mMaliModel.getMaliType());
                 mEditTextNum.setText(String.valueOf(mMaliModel.getNum()));
                 mEditTextDate.setText(mMaliModel.getMaliDate());
                 mEditTextDescription.setText(mMaliModel.getDescription());
                 setPerson(mMaliModel.getPersonBedModel(), FormActionType.SELECT_BED);
-                setPerson(mMaliModel.getPersonBedModel(), FormActionType.SELECT_BES);
-                //mMPFaktorModel.setSynced(true);
+                setPerson(mMaliModel.getPersonBesModel(), FormActionType.SELECT_BES);
+                mEditTextBank.setText(mMaliModel.getVcheckBank());
+                mEditTextSerial.setText(mMaliModel.getVcheckSerial());
+                mEditTextSarresidDate.setText(mMaliModel.getVcheckSarresidDate());
+                mPriceEditText.setText(String.valueOf(mMaliModel.getAmount()));
+
             } else {
                 mMaliModel.setId(maliModel.getId());
                 mMaliModel.setPersonBedModel(maliModel.getPersonBedModel());
+                mMaliModel.setPersonBesModel(maliModel.getPersonBesModel());
             }
 
             if (maliModel.isSynced()) {
                 mTextViewSyncDate.setText(maliModel.getSyncDate());
                 mCheckBoxSynced.setChecked(true);
-//                mLinearLayoutTop.setEnabled(false);
-//                mLinearLayoutDataGrid.setEnabled(false);
             }
         } else {
             mEditTextNum.setText(String.valueOf(mMaliBLL.getNewNum()));
@@ -260,8 +262,15 @@ public class MaliFragment extends CaspianFragment implements IFragmentCallback {
 
             mEditTextDate.setText(PersianDate.getToday());
             mEditTextDescription.setText("");
-            mLabelFaktorId.setText("");
+            mLabelMaliId.setText("");
             mSandoghRadio.setChecked(true);
+
+            // vcheck
+            mEditTextSerial.setText("");
+            mEditTextBank.setText("");
+            mEditTextSarresidDate.setText(PersianDate.getToday());
+
+            mPriceEditText.setText("");
         }
     }
 
@@ -280,6 +289,7 @@ public class MaliFragment extends CaspianFragment implements IFragmentCallback {
         mTextViewBedName = (TextView) parentView.findViewById(R.id.textView_bedName);
         mBtnBedSelect = (ImageView) parentView.findViewById(R.id.btn_bedSelect);
         UIUtility.setButtonEffect(mBtnBedSelect, this);
+        mBedLinearLayout = parentView.findViewById(R.id.linearLayout_bed);
 
         mEditTextBesCode = (EditText) parentView.findViewById(R.id.editText_besCode);
         mEditTextBesCode.requestFocus();
@@ -297,14 +307,13 @@ public class MaliFragment extends CaspianFragment implements IFragmentCallback {
 
         // VCheck start
         mEditTextBank = (EditText) parentView.findViewById(R.id.editText_vcheckBank);
-
         mEditTextSarresidDate = (EditText) parentView.findViewById(R.id.editText_vcheckDate);
         mEditTextSarresidDate.setOnTouchListener(this);
         mEditTextSarresidDate.setText(PersianDate.getToday());
         mBtnSarresidDateSelect = (ImageView) parentView.findViewById(R.id.btn_vcheckDate);
         UIUtility.setButtonEffect(mBtnSarresidDateSelect, this);
-
         mEditTextSerial = (EditText) parentView.findViewById(R.id.editText_vcheckSerial);
+        mVCheckLinerLayout = parentView.findViewById(R.id.linearLayout_vcheck);
         // VCheck end
 
         mPriceEditText = (ClearableEditText) parentView.findViewById(R.id.editText_amountPrice);
@@ -315,26 +324,29 @@ public class MaliFragment extends CaspianFragment implements IFragmentCallback {
         mBtnLocationOnMap = (ImageView) parentView.findViewById(R.id.btn_mapLocation);
         UIUtility.setButtonEffect(mBtnLocationOnMap, this);
         if (!PermissionBLL.seeLocation()) {
-            mBtnLocationOnMap.setVisibility(View.INVISIBLE);
+            mBtnLocationOnMap.setVisibility(INVISIBLE);
             TextView label = (TextView) parentView.findViewById(R.id.label_location);
-            label.setVisibility(View.INVISIBLE);
+            label.setVisibility(INVISIBLE);
         }
 
         mBtnMande = (ImageView) parentView.findViewById(R.id.btn_mande);
         UIUtility.setButtonEffect(mBtnMande, this);
         if (!PermissionBLL.mandeAccess()) {
-            mBtnMande.setVisibility(View.INVISIBLE);
+            mBtnMande.setVisibility(INVISIBLE);
             TextView label = (TextView) parentView.findViewById(R.id.label_mande);
-            label.setVisibility(View.INVISIBLE);
+            label.setVisibility(INVISIBLE);
         }
 
         mProgressBar = (ProgressBar) parentView.findViewById(R.id.progressBar);
 
-        mLabelFaktorId = parentView.findViewById(R.id.labelFaktorId);
+        mLabelMaliId = parentView.findViewById(R.id.labelMaliId);
 
         mSandoghRadio = parentView.findViewById(R.id.radio_sandoogh);
+        mSandoghRadio.setOnCheckedChangeListener(this);
         mPayRadio = parentView.findViewById(R.id.radio_pay);
+        mPayRadio.setOnCheckedChangeListener(this);
         mVCheckRadio = parentView.findViewById(R.id.radio_vcheck);
+        mVCheckRadio.setOnCheckedChangeListener(this);
 
         GPSTracker.requestForGps(getActivity());
 
@@ -371,6 +383,7 @@ public class MaliFragment extends CaspianFragment implements IFragmentCallback {
 
         mToolbarPrint = parentView.findViewById(R.id.print_object);
         mToolbarPrint.setOnClickListener(this);
+        mToolbarPrint.setVisibility(GONE);
     }
 
     @Override
@@ -403,18 +416,13 @@ public class MaliFragment extends CaspianFragment implements IFragmentCallback {
         if (checkForSave(false))
             return;
 
-        mActivityCallback.onMyFragmentCallBack(MaliActivity.ACTION_INVOICE_SEARCH, null, (Object) null);
+        mActivityCallback.onMyFragmentCallBack(MaliActivity.ACTION_MALI_SEARCH, null, (Object) null);
     }
 
     private void delete() {
         try {
             if (mMaliBLL.delete(mMaliModel) > 0) {
-                messageBoxOK(R.string.pfaktor_delete_title, R.string.success_delete, new IDialogCallback() {
-                    @Override
-                    public void dialog_callback(DialogResult dialogResult, Object result, int requestCode) {
-                        loadLast();
-                    }
-                });
+                messageBoxOK(R.string.mali_delete_title, R.string.success_delete, (dialogResult, result, requestCode) -> loadLast());
             }
         } catch (Exception ex) {
             showError(ex, null);
@@ -493,7 +501,10 @@ public class MaliFragment extends CaspianFragment implements IFragmentCallback {
                     mEditTextBesCode.getText().toString(),
                     mEditTextDate.getText().toString(),
                     mEditTextDescription.getText().toString(),
-                    // TODO Add missing attributes 3 related vcheck and amount
+                    mEditTextBank.getText().toString(),
+                    mEditTextSarresidDate.getText().toString(),
+                    mEditTextSerial.getText().toString(),
+                    mPriceEditText.getText().toString(),
                     getActivity(),
                     dateTime
             );
@@ -607,7 +618,7 @@ public class MaliFragment extends CaspianFragment implements IFragmentCallback {
                 messageBoxOK(R.string.pfaktor_save_location_title, R.string.pfaktor_save_location_is_not_available, null);
 
 
-        } else if (view.equals(mBtnMande) && mBtnMande.getVisibility() == View.VISIBLE) { // mBtnMande
+        } else if (view.equals(mBtnMande) && mBtnMande.getVisibility() == VISIBLE) { // mBtnMande
             // get mande info from server
             getMande(mPerson);
 
@@ -689,30 +700,7 @@ public class MaliFragment extends CaspianFragment implements IFragmentCallback {
                 break;
 
 
-            case MaliActivity.ACTION_INVOICE_KALA:
-                Log.d(TAG, "onMyActivityCallback(): SPFaktorModel");
-                if (!(parameter instanceof SPFaktorModel)) {
-                    showError(R.string.invalid_parameter, null);
-                    return;
-                }
-
-                mModified = true;
-//                switch (formActionTypes) {
-//                    case New:
-//                        addKala((SPFaktorModel) parameter);
-//                        break;
-//
-//                    case Edit:
-//                        try {
-//                            updateSPFaktorRow(mSPFaktorEditPosition, (SPFaktorModel) parameter);
-//                        } finally {
-//                            mSPFaktorEditPosition = -1;
-//                        }
-//                        break;
-//                }
-                break;
-
-            case MaliActivity.ACTION_INVOICE_SEARCH:
+            case MaliActivity.ACTION_MALI_SEARCH:
                 Log.d(TAG, "onMyActivityCallback(): Search");
 
                 if (!(parameter instanceof MaliModel)) {
@@ -769,6 +757,33 @@ public class MaliFragment extends CaspianFragment implements IFragmentCallback {
                     break;
             }
             UIUtility.HideKeyboard(getActivity());
+        }
+    }
+
+    @Override
+    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+        if (!isChecked)
+            return;
+
+        if (buttonView.equals(mSandoghRadio)) {
+            mBedLinearLayout.setVisibility(GONE);
+            mVCheckLinerLayout.setVisibility(GONE);
+
+        } else if (buttonView.equals(mPayRadio)) {
+            mBedLinearLayout.setVisibility(VISIBLE);
+            mVCheckLinerLayout.setVisibility(GONE);
+
+        } else if (buttonView.equals(mVCheckRadio)) {
+            mBedLinearLayout.setVisibility(GONE);
+            mVCheckLinerLayout.setVisibility(VISIBLE);
+        }
+    }
+
+    private void selectMaliType(MaliType maliType) {
+        switch (maliType) {
+            case PAY -> mPayRadio.setChecked(true);
+            case SANDOGH -> mSandoghRadio.setChecked(true);
+            case VCHECK -> mVCheckRadio.setChecked(true);
         }
     }
 }

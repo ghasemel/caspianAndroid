@@ -7,8 +7,7 @@ import android.util.Log;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.function.BiFunction;
-import java.util.function.Function;
+import java.util.Optional;
 
 import info.elyasi.android.elyasilib.BLL.ABusinessLayer;
 import info.elyasi.android.elyasilib.UI.MoveDirection;
@@ -16,15 +15,11 @@ import info.elyasi.android.elyasilib.Utility.ConvertExt;
 import info.elyasi.android.elyasilib.WebService.ResponseWebService;
 import ir.caspiansoftware.caspianandroidapp.BaseCaspian.CaspianErrors;
 import ir.caspiansoftware.caspianandroidapp.DataLayer.DataBase.MaliDataSource;
-import ir.caspiansoftware.caspianandroidapp.DataLayer.DataBase.MaliDataSource;
-import ir.caspiansoftware.caspianandroidapp.DataLayer.DataBase.SPFaktorDataSource;
 import ir.caspiansoftware.caspianandroidapp.DataLayer.WebService.MaliWebService;
 import ir.caspiansoftware.caspianandroidapp.Enum.MaliType;
 import ir.caspiansoftware.caspianandroidapp.GPSTracker;
-import ir.caspiansoftware.caspianandroidapp.Models.KalaModel;
 import ir.caspiansoftware.caspianandroidapp.Models.MaliModel;
 import ir.caspiansoftware.caspianandroidapp.Models.PersonModel;
-import ir.caspiansoftware.caspianandroidapp.Models.SPFaktorModel;
 import ir.caspiansoftware.caspianandroidapp.Vars;
 
 /**
@@ -109,22 +104,22 @@ public class MaliBLL extends ABusinessLayer {
 
     private void setBedAndBesById(MaliModel maliModel) {
         PersonModel bed = personBLL.getById(maliModel.getPersonBedId_FK());
-        PersonModel bes = personBLL.getById(maliModel.getPersonBedId_FK());
+        PersonModel bes = personBLL.getById(maliModel.getPersonBesId_FK());
         setBedAndBes(maliModel, bed, bes);
     }
 
     private void setBedAndBesByCode(MaliModel maliModel, String bedCode, String besCode) {
-        PersonModel bed = personBLL.getByCode(bedCode, Vars.YEAR.getId());
-        PersonModel bes = personBLL.getByCode(besCode, Vars.YEAR.getId());
-        setBedAndBes(maliModel, bed, bes);
+        Optional<PersonModel> bed = personBLL.getByCode(bedCode, Vars.YEAR.getId());
+        Optional<PersonModel> bes = personBLL.getByCode(besCode, Vars.YEAR.getId());
+        setBedAndBes(maliModel, bed.orElse(null), bes.orElse(null));
     }
 
     private void setBedAndBes(MaliModel maliModel, PersonModel bed, PersonModel bes) {
         // bed
-        if (bed == null)
-            throw new RuntimeException(CaspianErrors.mali_bed_null);
-        maliModel.setPersonBedModel(bed);
-        maliModel.setPersonBedId_FK(bed.getId());
+        if (bed != null) {
+            maliModel.setPersonBedModel(bed);
+            maliModel.setPersonBedId_FK(bed.getId());
+        }
 
         // bes
         if (bes != null) {
@@ -151,14 +146,10 @@ public class MaliBLL extends ABusinessLayer {
         return null;
     }
 
-    public MaliModel Save(int id, int num, MaliType maliType, String bedCode, String besCode, String maliDate, String description, String vcheckBank, String vcheckSarresidDate, String vcheckSerial, long amount, Activity activity, Date insertDate) throws Exception {
+    public MaliModel Save(int id, int num, MaliType maliType, String bedCode, String besCode, String maliDate, String description, String vcheckBank, String vcheckSarresidDate, String vcheckSerial, String priceAmount, Activity activity, Date insertDate) throws Exception {
 
         try (MaliDataSource maliDataSource = new MaliDataSource(mContext)) {
-            if (num <= 0)
-                throw new Exception(CaspianErrors.INVOICE_NUM_INVALID);
-
-            if (maliDate.trim().equals(""))
-                throw new Exception(CaspianErrors.DATE_INVALID);
+            validateMali(num, maliType, bedCode, besCode, maliDate, priceAmount, vcheckSerial, vcheckSarresidDate);
 
             MaliModel maliModel = new MaliModel();
             maliModel.setYearId_FK(Vars.YEAR.getId());
@@ -169,57 +160,97 @@ public class MaliBLL extends ABusinessLayer {
             maliModel.setVcheckSarresidDate(vcheckSarresidDate);
             maliModel.setVcheckBank(vcheckBank);
             maliModel.setVcheckSerial(vcheckSerial);
-            maliModel.setAmount(amount);
+            maliModel.setAmount(Long.parseLong(priceAmount));
             setBedAndBesByCode(maliModel, bedCode, besCode);
 
             // insert
             if (id <= 0) {
-                // get location
-                GPSTracker gps = new GPSTracker(activity);
-
-                // gps is ON
-                if (gps.canGetLocation()) {
-                    Log.d(TAG, "lat: " + gps.getLatitude() + ", lon: " + gps.getLongitude());
-                    if ((gps.getLongitude() == 0 || gps.getLatitude() == 0) && PermissionBLL.forceLocationSaving())
-                        throw new Exception(CaspianErrors.location_not_available);
-
-                    maliModel.setLat(gps.getLatitude());
-                    maliModel.setLon(gps.getLongitude());
-                } else {
-                    if (PermissionBLL.forceLocationSaving())
-                        throw new RuntimeException(CaspianErrors.gps_is_off);
-                }
-
-                maliModel.setCreateDate(insertDate);
-                id = maliDataSource.insert(maliModel);
-                if (id <= 0)
-                    throw new Exception(CaspianErrors.SAVING_ERROR);
-                maliModel.setId(id);
+                insert(activity, insertDate, maliModel, maliDataSource);
 
             } else { // update
-                if (maliModel.getLon() == 0 || maliModel.getLat() == 0) {
-                    // get location
-                    GPSTracker gps = new GPSTracker(activity);
-
-                    // gps is ON
-                    if (gps.canGetLocation()) {
-                        Log.d(TAG, "lat: " + gps.getLatitude() + ", lon: " + gps.getLongitude());
-                        if ((gps.getLongitude() == 0 || gps.getLatitude() == 0) && PermissionBLL.forceLocationSaving())
-                            throw new Exception(CaspianErrors.location_not_available);
-
-                        maliModel.setLat(gps.getLatitude());
-                        maliModel.setLon(gps.getLongitude());
-                    } else {
-                        if (PermissionBLL.forceLocationSaving())
-                            throw new RuntimeException(CaspianErrors.gps_is_off);
-                    }
-                }
-
-                maliModel.setId(id);
-                maliDataSource.update(maliModel);
+                update(id, activity, maliModel, maliDataSource);
             }
             return maliModel;
         }
+    }
+
+    private static void update(int id, Activity activity, MaliModel maliModel, MaliDataSource maliDataSource) throws Exception {
+        if (maliModel.getLon() == 0 || maliModel.getLat() == 0) {
+            // get location
+            GPSTracker gps = new GPSTracker(activity);
+
+            // gps is ON
+            if (gps.canGetLocation()) {
+                Log.d(TAG, "lat: " + gps.getLatitude() + ", lon: " + gps.getLongitude());
+                if ((gps.getLongitude() == 0 || gps.getLatitude() == 0) && PermissionBLL.forceLocationSaving())
+                    throw new Exception(CaspianErrors.location_not_available);
+
+                maliModel.setLat(gps.getLatitude());
+                maliModel.setLon(gps.getLongitude());
+            } else {
+                if (PermissionBLL.forceLocationSaving())
+                    throw new RuntimeException(CaspianErrors.gps_is_off);
+            }
+        }
+
+        maliModel.setId(id);
+        maliDataSource.update(maliModel);
+    }
+
+    private static void insert(Activity activity, Date insertDate, MaliModel maliModel, MaliDataSource maliDataSource) throws Exception {
+        int id;
+        // get location
+        GPSTracker gps = new GPSTracker(activity);
+
+        // gps is ON
+        if (gps.canGetLocation()) {
+            Log.d(TAG, "lat: " + gps.getLatitude() + ", lon: " + gps.getLongitude());
+            if ((gps.getLongitude() == 0 || gps.getLatitude() == 0) && PermissionBLL.forceLocationSaving())
+                throw new Exception(CaspianErrors.location_not_available);
+
+            maliModel.setLat(gps.getLatitude());
+            maliModel.setLon(gps.getLongitude());
+        } else {
+            if (PermissionBLL.forceLocationSaving())
+                throw new RuntimeException(CaspianErrors.gps_is_off);
+        }
+
+        maliModel.setCreateDate(insertDate);
+        id = maliDataSource.insert(maliModel);
+        if (id <= 0)
+            throw new Exception(CaspianErrors.SAVING_ERROR);
+        maliModel.setId(id);
+    }
+
+    private void validateMali(int num, MaliType maliType, String bedCode, String besCode, String maliDate, String priceAmount, String vcheckSerial, String vcheckDate) throws Exception {
+        if (num <= 0)
+            throw new Exception(CaspianErrors.MALI_NUM_INVALID);
+
+        if (maliDate.trim().isEmpty())
+            throw new Exception(CaspianErrors.MALI_DATE_INVALID);
+
+        if (priceAmount == null || priceAmount.trim().isEmpty())
+            throw new Exception(CaspianErrors.MALI_PRICE_INVALID);
+
+        PersonBLL personBLL = new PersonBLL(mContext);
+        validatePerson(besCode, personBLL, CaspianErrors.MALI_BES_INVALID);
+
+        switch (maliType) {
+            case PAY -> validatePerson(bedCode, personBLL, CaspianErrors.MALI_BED_INVALID);
+            case VCHECK -> {
+                if (vcheckSerial == null || vcheckSerial.isEmpty())
+                    throw new Exception(CaspianErrors.MALI_INVALID_VCHECK_SERIAL);
+
+                if (vcheckDate.trim().isEmpty())
+                    throw new Exception(CaspianErrors.INVOICE_DATE_INVALID);
+            }
+        }
+    }
+
+    private static void validatePerson(String besCode, PersonBLL personBLL, String invalidMsg) throws Exception {
+        Optional<PersonModel> personOpt = personBLL.getByCode(besCode, Vars.YEAR.getId());
+        if (personOpt.isEmpty())
+            throw new Exception(invalidMsg);
     }
 
     public int delete(MaliModel maliModelModel) throws Exception {
@@ -253,7 +284,7 @@ public class MaliBLL extends ABusinessLayer {
         return null;
     }
 
-    public ArrayList<MaliModel> getmaliModels() {
+    public ArrayList<MaliModel> getMaliModels() {
 
         try (MaliDataSource maliDataSource = new MaliDataSource(mContext)) {
             if (Vars.YEAR.getId() > 0) {

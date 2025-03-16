@@ -26,7 +26,7 @@ public class MaliModel implements Serializable, Comparable<MaliModel>, IJson {
     private int yearId_FK;
     private int num;
     private MaliType maliType;
-    private int personBedId_FK;
+    private Integer personBedId_FK;
     private PersonModel personBedModel;
 
     private Integer personBesId_FK;
@@ -83,7 +83,7 @@ public class MaliModel implements Serializable, Comparable<MaliModel>, IJson {
         JSONObject json = new JSONObject();
 
         if (getPersonBedModel() == null)
-            throw new RuntimeException(CaspianErrors.mali_bed_null);
+            throw new RuntimeException(CaspianErrors.MALI_BED_INVALID);
 
         json.put("mali_id", id);
         json.put("type", maliType.getValue());

@@ -5,6 +5,7 @@ import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import info.elyasi.android.elyasilib.BLL.ABusinessLayer;
 import info.elyasi.android.elyasilib.WebService.ResponseWebService;
@@ -181,12 +182,12 @@ public class PersonBLL extends ABusinessLayer {
         }
     }
 
-    public PersonModel getByCode(String code, int yearId) {
+    public Optional<PersonModel> getByCode(String code, int yearId) {
         try (PersonDataSource personDataSource = new PersonDataSource(mContext)) {
-            if (code.trim().equals(""))
-                throw new RuntimeException(CaspianErrors.CUSTOMER_INVALID);
+            if (code.trim().isEmpty())
+                return Optional.empty();
 
-            return personDataSource.getByCode(code, yearId);
+            return Optional.ofNullable(personDataSource.getByCode(code, yearId));
         }
     }
 

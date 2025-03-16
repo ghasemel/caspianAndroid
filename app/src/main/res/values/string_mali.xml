@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="mali_delete_title">حذف</string>
+    <string name="mali_search_title">جستجو اسناد مالی</string>
+</resources>

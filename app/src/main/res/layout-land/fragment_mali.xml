@@ -198,15 +198,18 @@
                     <info.elyasi.android.elyasilib.Controls.ClearableEditText.ClearableEditText
                         android:id="@id/editText_vcheckBank"
                         style="@style/textBoxStandard"
-                        android:layout_width="100dp"
+                        android:layout_width="300dp"
                         android:layout_marginEnd="20dp" />
 
+                </LinearLayout>
+
+                <!-- Sarresid -->
+                <LinearLayout style="@style/row">
                     <TextView
                         style="@style/label"
                         android:layout_width="60dp"
                         android:labelFor="@+id/editText_vcheckDate"
                         android:text="@string/check_date_label" />
-
                     <EditText
                         android:id="@id/editText_vcheckDate"
                         style="@style/textBoxDate" />

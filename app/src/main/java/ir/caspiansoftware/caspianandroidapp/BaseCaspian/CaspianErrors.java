@@ -17,10 +17,10 @@ import ir.caspiansoftware.caspianandroidapp.Vars;
  * Created by Canada on 7/27/2016.
  */
 public class CaspianErrors {
-    private static final String TAG = "CaspianErrors";
 
+    private static final String TAG = "CaspianErrors";
     public static final String INVOICE_NUM_INVALID = "invoice num is invalid";
-    public static final String DATE_INVALID = "date is invalid";
+    public static final String INVOICE_DATE_INVALID = "date is invalid";
     public static final String CUSTOMER_INVALID = "customer is invalid";
     public static final String SAVING_ERROR = "saving error";
     public static final String invoice_id_invalid = "invoice_id_invalid";
@@ -31,8 +31,12 @@ public class CaspianErrors {
     public static final String pfaktor_person_null = "pfaktor_person_null";
     public static final String pfaktor_kala_null = "pfaktor_kala_null";
 
-    public static final String mali_bed_null = "mali_bed_null";
-    public static final String mali_bes_null = "mali_bes_null";
+    public static final String MALI_NUM_INVALID = "mali num is invalid";
+    public static final String MALI_BED_INVALID = "mali_bed_invalid";
+    public static final String MALI_BES_INVALID = "mali_bes_invalid";
+    public static final String MALI_DATE_INVALID = "mali_date_invalid";
+    public static final String MALI_PRICE_INVALID = "price is invalid";
+    public static final String MALI_INVALID_VCHECK_SERIAL = "invalid_vcheck_serial";
     public static final String gps_is_off = "gps_is_off";
     public static final String location_not_available = "location_not_available";
 
@@ -109,7 +113,7 @@ public class CaspianErrors {
 
         ErrorListModel errorList4000 = new ErrorListModel("invoice errors", 4000, false);
         errorList4000.addSubError(INVOICE_NUM_INVALID, R.string.invoice_num_is_invalid);
-        errorList4000.addSubError(DATE_INVALID, R.string.date_invalid);
+        errorList4000.addSubError(INVOICE_DATE_INVALID, R.string.date_invalid);
         errorList4000.addSubError(CUSTOMER_INVALID, R.string.customer_invalid);
         errorList4000.addSubError(SAVING_ERROR, R.string.error_saving);
         errorList4000.addSubError(invoice_id_invalid, R.string.error_saving);
@@ -135,6 +139,15 @@ public class CaspianErrors {
         ErrorListModel errorList500 = new ErrorListModel("exception errors", 500, false);
         errorList500.addSubError("ResponseCode: 500, Message: you can see just bed", R.string.you_can_just_see_bed);
         sErrorsList.add(errorList500);
+
+        ErrorListModel maliErrorList6000 = new ErrorListModel("mali errors", 6000, false);
+        maliErrorList6000.addSubError(MALI_NUM_INVALID, R.string.mali_num_is_invalid);
+        maliErrorList6000.addSubError(MALI_DATE_INVALID, R.string.date_invalid);
+        maliErrorList6000.addSubError(MALI_BED_INVALID, R.string.mali_bed_invalid);
+        maliErrorList6000.addSubError(MALI_BES_INVALID, R.string.mali_bes_invalid);
+        maliErrorList6000.addSubError(MALI_PRICE_INVALID, R.string.price_invalid);
+        maliErrorList6000.addSubError(MALI_INVALID_VCHECK_SERIAL, R.string.mali_serial_invalid);
+        sErrorsList.add(maliErrorList6000);
     }
 
     public ErrorModel getErrorModel(String errorString) {

@@ -127,16 +127,13 @@ public class PFaktorFragment extends CaspianDataGridFragment<SPFaktorModel> impl
     private boolean checkForSave(final boolean onExit) {
         if (mModified || (mMPFaktorModel == null && mSPFaktorList != null && mSPFaktorList.size() > 0)) {
             Log.d(TAG, "checkForSave(): need save");
-            messageBoxYesNo(R.string.pfaktor_save_title, R.string.ask_to_save, new IDialogCallback() {
-                @Override
-                public void dialog_callback(DialogResult dialogResult, Object result, int requestCode) {
-                    if (dialogResult == DialogResult.Yes) {
-                        saveAsync();
-                    } else {
-                        setModified(false);
-                        if (onExit)
-                            getActivity().finish();
-                    }
+            messageBoxYesNo(R.string.pfaktor_save_title, R.string.ask_to_save, (dialogResult, result, requestCode) -> {
+                if (dialogResult == DialogResult.Yes) {
+                    saveAsync();
+                } else {
+                    setModified(false);
+                    if (onExit)
+                        getActivity().finish();
                 }
             });
             return true;
@@ -209,13 +206,11 @@ public class PFaktorFragment extends CaspianDataGridFragment<SPFaktorModel> impl
         }
     }
 
-    public void setMPFaktorModel(MPFaktorModel mpFaktorModel, boolean justUpdate) {
+    public void setMPFaktorModel(MPFaktorModel mpFaktorModel, boolean onSave) {
         Log.d(TAG, "setMPFaktorModel()");
 
         mModified = false;
 
-//        mLinearLayoutTop.setEnabled(true);
-//        mLinearLayoutDataGrid.setEnabled(true);
         mTextViewSyncDate.setText("");
         mCheckBoxSynced.setChecked(false);
         mBtnAddKala.setEnabled(true);
@@ -224,17 +219,16 @@ public class PFaktorFragment extends CaspianDataGridFragment<SPFaktorModel> impl
         if (mMPFaktorModel != null) {
             Log.d(TAG, "setMPFaktorModel(): mMPFaktorModel not null");
             mLabelFaktorId.setText(String.format(
-                    getContext().getString(R.string.faktor_id),
+                    getContext().getString(R.string.reference_id),
                     mpFaktorModel.getId())
             );
 
-            if (!justUpdate) {
+            if (!onSave) {
                 mEditTextNum.setText(String.valueOf(mMPFaktorModel.getNum()));
                 mEditTextInvoiceDate.setText(mMPFaktorModel.getDate());
                 mEditTextDescription.setText(mMPFaktorModel.getDescription());
                 setPerson(mMPFaktorModel.getPersonModel());
                 setSPFaktorList(mMPFaktorModel.getSPFaktorList());
-                //mMPFaktorModel.setSynced(true);
             } else {
                 mMPFaktorModel.setId(mpFaktorModel.getId());
                 mMPFaktorModel.setPersonModel(mpFaktorModel.getPersonModel());
@@ -249,8 +243,6 @@ public class PFaktorFragment extends CaspianDataGridFragment<SPFaktorModel> impl
             if (mpFaktorModel.isSynced()) {
                 mTextViewSyncDate.setText(mpFaktorModel.getSyncDate());
                 mCheckBoxSynced.setChecked(true);
-//                mLinearLayoutTop.setEnabled(false);
-//                mLinearLayoutDataGrid.setEnabled(false);
                 mBtnAddKala.setEnabled(false);
             }
         } else {

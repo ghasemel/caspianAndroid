@@ -10,6 +10,14 @@
 
     <string name="error_saving">خطا در ذخیره سازی</string>
 
+    <!-- mali -->
+    <string name="mali_num_is_invalid">شماره مالی معتبر نیست</string>
+    <string name="mali_bed_invalid">کد حساب بدهکار معتبر نیست</string>
+    <string name="mali_bes_invalid">کد حساب بستانکار معتبر نیست</string>
+    <string name="mali_serial_invalid">شماره سریال چک معتبر نیست</string>
+
+
+    <string name="price_invalid">مبلغ نامعتبر است</string>
 
     <!-- webservice -->
     <string name="webservice_failed_connection">برقراری ارتباط با سرور با شکست مواجه شد، لطفا ارتباط اینترنت یا تنظیمات راه اندازی برنامه را بررسی کنید</string>

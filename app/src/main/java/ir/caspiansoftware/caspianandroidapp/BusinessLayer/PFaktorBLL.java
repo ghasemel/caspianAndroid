@@ -7,6 +7,7 @@ import android.util.Log;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 import info.elyasi.android.elyasilib.BLL.ABusinessLayer;
 import info.elyasi.android.elyasilib.UI.MoveDirection;
@@ -16,7 +17,6 @@ import ir.caspiansoftware.caspianandroidapp.BaseCaspian.CaspianErrors;
 import ir.caspiansoftware.caspianandroidapp.DataLayer.DataBase.MPFaktorDataSource;
 import ir.caspiansoftware.caspianandroidapp.DataLayer.DataBase.SPFaktorDataSource;
 import ir.caspiansoftware.caspianandroidapp.DataLayer.WebService.PFaktorWebService;
-import ir.caspiansoftware.caspianandroidapp.DataLayer.WebService.TimeWebService;
 import ir.caspiansoftware.caspianandroidapp.GPSTracker;
 import ir.caspiansoftware.caspianandroidapp.Models.KalaModel;
 import ir.caspiansoftware.caspianandroidapp.Models.MPFaktorModel;
@@ -199,18 +199,18 @@ public class PFaktorBLL extends ABusinessLayer {
                 throw new Exception(CaspianErrors.INVOICE_NUM_INVALID);
 
             if (date.trim().equals(""))
-                throw new Exception(CaspianErrors.DATE_INVALID);
+                throw new Exception(CaspianErrors.INVOICE_DATE_INVALID);
 
             PersonBLL personBLL = new PersonBLL(mContext);
-            PersonModel personModel = personBLL.getByCode(customer_code, Vars.YEAR.getId());
-            if (personModel == null)
+            Optional<PersonModel> personOpt = personBLL.getByCode(customer_code, Vars.YEAR.getId());
+            if (personOpt.isEmpty())
                 throw new Exception(CaspianErrors.CUSTOMER_INVALID);
 
             MPFaktorModel mpFaktorModel = new MPFaktorModel();
             mpFaktorModel.setYearId_FK(Vars.YEAR.getId());
             mpFaktorModel.setNum(num);
             mpFaktorModel.setDate(date);
-            mpFaktorModel.setPersonModel(personModel);
+            mpFaktorModel.setPersonModel(personOpt.get());
             mpFaktorModel.setDescription(description);
 
 
