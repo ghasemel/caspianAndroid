@@ -184,8 +184,10 @@ public class MainMenuFragment extends CaspianFragment implements IFragmentCallba
             mActivityCallback.onMyFragmentCallBack(Actions.ACTION_SYNC, null, (Object) null);
 
         } else if (v.equals(mBtnConfirmList)) {
-            Log.d(TAG, Actions.ACTION_CONFIRM_LIST + " called");
-            mActivityCallback.onMyFragmentCallBack(Actions.ACTION_CONFIRM_LIST, null, (Object) null);
+            Log.d(TAG, Actions.ACTION_ENTITY_SELECTION + " called");
+            mActivityCallback.onMyFragmentCallBack(Actions.ACTION_ENTITY_SELECTION, null, (Object) null);
+            //Log.d(TAG, Actions.ACTION_CONFIRM_LIST + " called");
+            //mActivityCallback.onMyFragmentCallBack(Actions.ACTION_CONFIRM_LIST, null, (Object) null);
 
         } else if (v.equals(mBtnKalaMojoodi)) {
             Log.d(TAG, Actions.ACTION_KALA_MOJOODI_LIST + " called");

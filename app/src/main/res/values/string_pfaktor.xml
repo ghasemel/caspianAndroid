@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="preInvoice_list_title">لیست پیش فاکتورها</string>onCreate
-    <string name="preInvoice_title">پیش فاکتور</string>onCreate
-    <string name="mali_title">امور مالی</string>onCreate
+    <string name="preInvoice_list_title">لیست پیش فاکتورها</string>
+    <string name="preInvoice_title">پیش فاکتور</string>
+    <string name="mali_title">امور مالی</string>
     <string name="upload_selection">ارسال به سرور</string>
     <string name="select_all">انتخاب همه</string>
     <string name="new_object">جدید</string>
@@ -55,7 +55,9 @@
     <string name="mali_radif">ردیف:</string>
     <string name="mali_save_title">ذخیره اطلاعات</string>
     <string name="ask_to_save_mali">آیا ردیف فعلی ذخیره شود؟</string>
-
+    <string name="fragment_mali_confirm_row_tag">fragment_mali_confirm_row_tag</string>
+    <string name="mali_num_list">شماره</string>
+    <string name="mali_list_title">لیست اسناد مالی</string>
 
     <string name="delete_invoice_kala_title">حذف کالا از فاکتور</string>
     <string name="delete_invoice_kala">آیا میخواهید کالای مورد نظر را حذف کنید؟</string>
@@ -73,6 +75,7 @@
 
 
     <string name="pfaktor_synced_already">این پیش فاکتور قبلا به سرور ارسال شده است و امکان تغییر وضعیت آن وجود ندارد</string>
+    <string name="mali_synced_already">این سند مالی قبلا به سرور ارسال شده است و امکان تغییر وضعیت آن وجود ندارد</string>
 
     <string name="no_rows_selected">هیچ سطری انتخاب نشده است</string>
 
@@ -96,6 +99,7 @@
     <string name="sync_person" formatted="false">بروز رسانی حسابها</string>
     <string name="sync_kalaPhoto" formatted="false">بروز رسانی تصاویر کالاها</string>
     <string name="sync_select_sync_type" formatted="false">انتخاب نوع بروز رسانی</string>
+    <string name="select_entity_type" formatted="false">انتخاب نوع اطلاعات</string>
 
 
     <string name="pfaktor_send_list_to_server_title">ارسال پیش فاکتورها به سرور</string>

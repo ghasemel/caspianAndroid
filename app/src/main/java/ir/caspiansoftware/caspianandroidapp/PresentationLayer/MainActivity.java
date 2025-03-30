@@ -23,9 +23,11 @@ import ir.caspiansoftware.caspianandroidapp.BaseCaspian.CaspianFragment;
 import ir.caspiansoftware.caspianandroidapp.BaseCaspian.ErrorExt;
 import ir.caspiansoftware.caspianandroidapp.BaseCaspian.GoToForm;
 import ir.caspiansoftware.caspianandroidapp.BusinessLayer.UserBLL;
+import ir.caspiansoftware.caspianandroidapp.Enum.EntityType;
 import ir.caspiansoftware.caspianandroidapp.Enum.SyncType;
 import ir.caspiansoftware.caspianandroidapp.Models.KalaModel;
 import ir.caspiansoftware.caspianandroidapp.Models.MPFaktorModel;
+import ir.caspiansoftware.caspianandroidapp.PresentationLayer.BasePLL.EntitySelection.EntityTypeSelectionActivity;
 import ir.caspiansoftware.caspianandroidapp.PresentationLayer.BasePLL.Gallery.GalleryActivity;
 import ir.caspiansoftware.caspianandroidapp.PresentationLayer.BasePLL.SendPreInvoiceListPLL;
 import ir.caspiansoftware.caspianandroidapp.PresentationLayer.BasePLL.Sync.SyncPLL;
@@ -34,6 +36,8 @@ import ir.caspiansoftware.caspianandroidapp.PresentationLayer.Faktor.Confirm.PFa
 import ir.caspiansoftware.caspianandroidapp.PresentationLayer.Faktor.Confirm.PFaktorConfirmListFragment;
 import ir.caspiansoftware.caspianandroidapp.PresentationLayer.Kala.MojoodiList.KalaMojoodiListActivity;
 import ir.caspiansoftware.caspianandroidapp.PresentationLayer.Kala.MojoodiList.KalaMojoodiListFragment;
+import ir.caspiansoftware.caspianandroidapp.PresentationLayer.Mali.Transfer.MaliTransferListActivity;
+import ir.caspiansoftware.caspianandroidapp.PresentationLayer.Mali.Transfer.MaliTransferListFragment;
 import ir.caspiansoftware.caspianandroidapp.PresentationLayer.Mali.MaliActivity;
 import ir.caspiansoftware.caspianandroidapp.PresentationLayer.Person.DaftarTaf.DaftarTafActivity;
 import ir.caspiansoftware.caspianandroidapp.PresentationLayer.Person.MandeList.PersonMandeListActivity;
@@ -53,6 +57,7 @@ public class MainActivity extends CaspianActivityTwoFragments {
     private static final int REQUEST_CODE_NEW_PFAKTOR = 2;
     private static final int REQUEST_CODE_SYNC_TYPE = 3;
     private static final int REQUEST_CODE_NEW_MALI = 4;
+    private static final int REQUEST_ENTITY_TYPE = 5;
 
     //private LinearLayout mBtnLogout;
     private LinearLayout mBtnExit;
@@ -154,13 +159,17 @@ public class MainActivity extends CaspianActivityTwoFragments {
                 startSync();
                 break;
 
+            case Actions.ACTION_ENTITY_SELECTION:
+                entitySelection();
+                break;
+
             case Actions.ACTION_PRE_INVOICE_LIST:
                 showPreInvoiceList();
                 break;
 
-            case Actions.ACTION_CONFIRM_LIST:
-                showConfirmList();
-                break;
+//            case Actions.ACTION_CONFIRM_LIST:
+//                showConfirmList();
+//                break;
 
             case Actions.ACTION_CONFIRM_PFaktor:
                 if (parameter != null && parameter[0] instanceof List) {
@@ -217,6 +226,13 @@ public class MainActivity extends CaspianActivityTwoFragments {
                             SettingWebService.getImageURL()
                     );
                     syncPLL.start();
+                }
+                break;
+
+            case REQUEST_ENTITY_TYPE:
+                if (data != null && data.getExtras() != null) {
+                    EntityType entityType = (EntityType) data.getExtras().get(EntityTypeSelectionActivity.EXTRA_ENTITY_TYPE);
+                    showConfirmList(entityType);
                 }
                 break;
         }
@@ -303,14 +319,40 @@ public class MainActivity extends CaspianActivityTwoFragments {
         }
     }
 
-    private void showConfirmList() {
+    private void showConfirmList(EntityType entityType) {
         Log.d(TAG, "showConfirmList()");
 
+        switch (entityType) {
+            case PFAKTOR -> openPFaktorTransferList();
+            case MALI -> openMaliTransferList();
+        }
+    }
+
+    private void openPFaktorTransferList() {
         // create fragment instance
         PFaktorConfirmListFragment fragment = new PFaktorConfirmListFragment();
 
         // create activity instance
         Intent i = new Intent(this, PFaktorConfirmListActivity.class);
+
+        try {
+            // for tow fragment in one activity
+            this.startDetailFragment(fragment, i);
+
+            // for single fragment
+            //startActivity(i);
+        } catch (Exception ex) {
+            ErrorExt errorExt = ErrorExt.get(ex);
+            showError(errorExt.getUserMessage());
+        }
+    }
+
+    private void openMaliTransferList() {
+        // create fragment instance
+        MaliTransferListFragment fragment = new MaliTransferListFragment();
+
+        // create activity instance
+        Intent i = new Intent(this, MaliTransferListActivity.class);
 
         try {
             // for tow fragment in one activity
@@ -336,6 +378,14 @@ public class MainActivity extends CaspianActivityTwoFragments {
         if (getFragmentContainer() != null && getFragmentContainer() instanceof CaspianFragment) {
             Intent i = new Intent(getApplicationContext(), SyncTypeActivity.class);
             startActivityForResult(i, REQUEST_CODE_SYNC_TYPE);
+        }
+    }
+
+    public void entitySelection() {
+        Log.d(TAG, "startServerTransfer start");
+        if (getFragmentContainer() != null && getFragmentContainer() instanceof CaspianFragment) {
+            Intent i = new Intent(getApplicationContext(), EntityTypeSelectionActivity.class);
+            startActivityForResult(i, REQUEST_ENTITY_TYPE);
         }
     }
 

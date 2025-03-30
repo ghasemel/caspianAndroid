@@ -69,6 +69,10 @@
         <activity android:name=".PresentationLayer.Person.DaftarTaf.DaftarTafReportActivity" android:label="@string/daf_taf_title" android:windowSoftInputMode="stateHidden" />
         <activity android:name=".PresentationLayer.BasePLL.Sync.SyncTypeActivity" android:label="@string/sync_kalaPhoto" android:theme="@style/PopupTheme" />
         <activity android:name=".PresentationLayer.BasePLL.Gallery.GalleryActivity" android:label="@string/gallery_activity_title" android:windowSoftInputMode="adjustResize|stateHidden" />
+
+        <activity android:name=".PresentationLayer.BasePLL.EntitySelection.EntityTypeSelectionActivity" android:label="@string/select_entity_type" android:theme="@style/PopupTheme" />
+        <activity android:name=".PresentationLayer.Mali.Transfer.MaliTransferListActivity" android:label="@string/mali_list_title" />
+
         <!-- android:theme="@android:style/Theme.NoTitleBar.Fullscreen"   android:screenOrientation="landscape" -->
         <activity android:name=".Report.ReportActivity" android:label="@string/report_view_title" android:exported="true">
             <intent-filter>

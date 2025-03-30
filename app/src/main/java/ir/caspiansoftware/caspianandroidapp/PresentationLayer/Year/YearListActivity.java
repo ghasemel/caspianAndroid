@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.util.Log;
 
+import info.elyasi.android.elyasilib.UI.UIUtility;
 import ir.caspiansoftware.caspianandroidapp.BaseCaspian.CaspianActionbar;
 import ir.caspiansoftware.caspianandroidapp.BaseCaspian.CaspianActivitySingleFragment;
 import ir.caspiansoftware.caspianandroidapp.R;
@@ -20,7 +21,7 @@ public class YearListActivity extends CaspianActivitySingleFragment {
     @Override
     public void onCreate(Bundle savedBundleState) {
         //showAsPopup(this, getResources().getInteger(R.integer.popup_height), getResources().getInteger(R.integer.popup_width));
-        Setting.setHeightWidth(this);
+        UIUtility.setHeightWidth(this, 500);
         CaspianActionbar.setActionbarLayout(this, R.layout.actionbar_dialog, R.string.year_title);
         //forceRTLIfSupported();
         //Log.d(TAG, String.valueOf(getResources().getInteger(R.integer.popup_height)));

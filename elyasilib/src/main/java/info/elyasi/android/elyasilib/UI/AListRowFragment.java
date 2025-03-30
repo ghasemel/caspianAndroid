@@ -343,9 +343,9 @@ public abstract class AListRowFragment<TListItem> extends ListFragment { //TResp
             Log.d(TAG, "getView(): position = " + position);
 
             try {
-                boolean isNull = false;
+                boolean initiateView = false;
                 if (convertView == null && getLayout() != 0) {
-                    isNull = true;
+                    initiateView = true;
                     convertView = getActivity().getLayoutInflater().inflate(getLayout(), null);
                 }
 
@@ -353,7 +353,7 @@ public abstract class AListRowFragment<TListItem> extends ListFragment { //TResp
                 Log.d(TAG, "getView(): doForEachItem position = " + position);
 
                 // return image views to set click event for them
-                List<ImageView> imageViews = doForEachItem(convertView, getItem(position), position, isNull);
+                List<ImageView> imageViews = doForEachItem(convertView, getItem(position), position, initiateView);
 
                 // configure the view for the item at the 'position'
                 setBtnList(imageViews, position);

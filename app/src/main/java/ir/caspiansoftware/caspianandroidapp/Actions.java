@@ -18,6 +18,12 @@ public class Actions {
     public static final String ACTION_CONFIRM_PFaktor = "action_confirm_pfaktor";
     public static final String ACTION_CONFIRM_PFaktor_DONE = "action_confirm_pfaktor_done";
 
+    public static final String ACTION_TRANSFER_MALI = "action_confirm_mali";
+    public static final String ACTION_CONFIRM_MALI_DONE = "action_confirm_mali_done";
+
+    public static final String ACTION_ENTITY_SELECTION = "action_entity_selection";
+    public static final String ACTION_NEW_MALI = "action_new_mali";
+
     public static final String ACTION_KALA_MOJOODI_LIST = "action_kala_mojoodi_list";
 
     public static final String ACTION_DAF_TAF = "action_daf_taf_report";

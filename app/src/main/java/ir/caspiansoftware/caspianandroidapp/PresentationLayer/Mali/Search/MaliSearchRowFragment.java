@@ -14,15 +14,14 @@ import java.util.List;
 import info.elyasi.android.elyasilib.Persian.PersianConvert;
 import info.elyasi.android.elyasilib.UI.AListRowFragment;
 import ir.caspiansoftware.caspianandroidapp.BusinessLayer.MaliBLL;
-import ir.caspiansoftware.caspianandroidapp.Models.MPFaktorModel;
 import ir.caspiansoftware.caspianandroidapp.Models.MaliModel;
 import ir.caspiansoftware.caspianandroidapp.R;
 
 /**
  * Created by Canada on 7/22/2016.
  */
-public class MaliSearchRow extends AListRowFragment<MaliModel> {
-    private static final String TAG = "MaliSearchRow";
+public class MaliSearchRowFragment extends AListRowFragment<MaliModel> {
+    private static final String TAG = "MaliSearchRowFragment";
 
 
 
@@ -63,7 +62,7 @@ public class MaliSearchRow extends AListRowFragment<MaliModel> {
         TextView num;
         TextView date;
         TextView bes;
-        TextView total_price;
+        TextView amount;
         ImageView synced;
         LinearLayout row;
     }
@@ -86,8 +85,8 @@ public class MaliSearchRow extends AListRowFragment<MaliModel> {
                 viewHolder.radif = (TextView) convertView.findViewById(R.id.cell_radif);
                 viewHolder.num = (TextView) convertView.findViewById(R.id.cell_num);
                 viewHolder.date = (TextView) convertView.findViewById(R.id.cell_date);
-                viewHolder.bes = (TextView) convertView.findViewById(R.id.cell_customer);
-                viewHolder.total_price = (TextView) convertView.findViewById(R.id.cell_total_price);
+                viewHolder.bes = (TextView) convertView.findViewById(R.id.cell_bes);
+                viewHolder.amount = (TextView) convertView.findViewById(R.id.cell_amount);
                 viewHolder.synced = (ImageView) convertView.findViewById(R.id.cell_synced);
                 viewHolder.row = (LinearLayout) convertView.findViewById(R.id.rowId);
 
@@ -102,7 +101,7 @@ public class MaliSearchRow extends AListRowFragment<MaliModel> {
 
             viewHolder.radif.setText(String.valueOf(position + 1));
             viewHolder.num.setText(String.valueOf(maliModel.getNum()));
-            //viewHolder.date.setText(String.valueOf(maliModel.getDate()));
+            viewHolder.date.setText(String.valueOf(maliModel.getMaliDate()));
 
             if (maliModel.isSynced()) {
                 viewHolder.synced.setImageResource(android.R.drawable.checkbox_on_background);
@@ -117,7 +116,7 @@ public class MaliSearchRow extends AListRowFragment<MaliModel> {
             viewHolder.bes.setText(tmp);
 
 
-            viewHolder.total_price.setText(maliModel.getAmountString());
+            viewHolder.amount.setText(maliModel.getAmountString());
 
             return null;
         }
@@ -130,24 +129,24 @@ public class MaliSearchRow extends AListRowFragment<MaliModel> {
 //            String num = PersianConvert.ConvertDigitsToPersian(constraints[0]);
 //            String date = PersianConvert.ConvertDigitsToPersian(constraints[1]);
 //            String customer = PersianConvert.ConvertDigitsToPersian(constraints[2]);
-//            String total_price = PersianConvert.ConvertNumbersToLatin(constraints[3]);
+//            String amount = PersianConvert.ConvertNumbersToLatin(constraints[3]);
 
             String num = constraints[0];
             String date = constraints[1];
             String customer = PersianConvert.ConvertDigitsToLatin(constraints[2]);
-            String total_price = constraints[3];
+            String amount = constraints[3];
 
             boolean flag = true;
-            if (num.length() > 0) {
+            if (!num.isEmpty()) {
                 flag = String.valueOf(maliModel.getNum()).contains(num);
             }
 
-            if (date.length() > 0) {
+            if (!date.isEmpty()) {
                 flag = (flag &&
                         String.valueOf(maliModel.getMaliDate()).contains(date));
             }
 
-            if (customer.length() > 0) {
+            if (!customer.isEmpty()) {
                 flag = (
                         flag &&
                         (
@@ -157,9 +156,9 @@ public class MaliSearchRow extends AListRowFragment<MaliModel> {
                 );
             }
 
-            if (total_price.length() > 0) {
+            if (!amount.isEmpty()) {
                 flag = (flag &&
-                        String.valueOf(maliModel.getAmount()).contains(total_price));
+                        String.valueOf(maliModel.getAmount()).contains(amount));
             }
 
             return flag;

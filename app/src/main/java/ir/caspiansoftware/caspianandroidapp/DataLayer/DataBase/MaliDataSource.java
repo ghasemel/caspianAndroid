@@ -11,7 +11,6 @@ import java.util.List;
 
 import info.elyasi.android.elyasilib.Persian.PersianDate;
 import ir.caspiansoftware.caspianandroidapp.DataLayer.DataBase.Tables.MaliTbl;
-import ir.caspiansoftware.caspianandroidapp.DataLayer.DataBase.Views.MPFaktorView;
 import ir.caspiansoftware.caspianandroidapp.Enum.MaliType;
 import ir.caspiansoftware.caspianandroidapp.Models.MaliModel;
 import ir.caspiansoftware.caspianandroidapp.Vars;
@@ -98,8 +97,8 @@ public class MaliDataSource extends ADataSource<MaliModel> {
     public ArrayList<MaliModel> getAllByYearId(int yearId, boolean DescOrder) {
 
         try (Cursor cursor = mDatabase.query(
-                MPFaktorView.VIEW_NAME,
-                MPFaktorView.get().getColumns(),
+                MaliTbl.TABLE_NAME,
+                MaliTbl.getInstance().getColumns(),
                 MaliTbl.COLUMN_YEAR_ID_FK + "=" + yearId, null, null, null,
                 MaliTbl.COLUMN_ID + (DescOrder ? " desc" : ""))) {
             cursor.moveToFirst();

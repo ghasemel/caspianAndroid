@@ -42,7 +42,7 @@ public class PFaktorSearchRow extends AListRowFragment<MPFaktorModel> {
         Log.d(TAG, "onListItemClicked(): function entered");
         Intent intent = new Intent();
         intent.putExtra(resultExtraName, mpFaktorModel);
-        Objects.requireNonNull(getActivity()).setResult(Activity.RESULT_OK, intent);
+        requireActivity().setResult(Activity.RESULT_OK, intent);
     }
 
     @Override
