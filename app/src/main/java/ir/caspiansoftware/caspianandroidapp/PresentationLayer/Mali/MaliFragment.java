@@ -348,7 +348,11 @@ public class MaliFragment extends CaspianFragment implements IFragmentCallback, 
         mVCheckRadio = parentView.findViewById(R.id.radio_vcheck);
         mVCheckRadio.setOnCheckedChangeListener(this);
 
-        GPSTracker.requestForGps(getActivity());
+        try {
+            GPSTracker.requestForGps(getActivity());
+        } catch (Exception ex) {
+            showError(ex, null);
+        }
 
         newMaliEntry();
     }
@@ -603,9 +607,9 @@ public class MaliFragment extends CaspianFragment implements IFragmentCallback, 
                     }
                 }
             } catch (SecurityException ex) {
-
+                Log.e(TAG, ex.getMessage());
             } catch (Exception ex) {
-                Log.d(TAG, ex.getMessage());
+                Log.e(TAG, ex.getMessage());
                 showError(ex, null);
             }
 

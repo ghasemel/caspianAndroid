@@ -340,7 +340,11 @@ public class PFaktorFragment extends CaspianDataGridFragment<SPFaktorModel> impl
 
         mLabelFaktorId = parentView.findViewById(R.id.labelFaktorId);
 
-        GPSTracker.requestForGps(getActivity());
+        try {
+            GPSTracker.requestForGps(getActivity());
+        } catch (Exception ex) {
+            showError(ex, null);
+        }
     }
 
     private void mapToolbar(View parentView) {
