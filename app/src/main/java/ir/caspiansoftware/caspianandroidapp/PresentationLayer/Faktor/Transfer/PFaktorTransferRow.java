@@ -17,8 +17,8 @@ import ir.caspiansoftware.caspianandroidapp.R;
 /**
  * Created by Canada on 7/30/2016.
  */
-public class PFaktorConfirmListRow extends PFaktorSearchRow {
-    private static final String TAG = "InvoiceConfirmListRow";
+public class PFaktorTransferRow extends PFaktorSearchRow {
+    private static final String TAG = "PFaktorTransferRow";
 
     @Override
     protected void onListItemClicked(MPFaktorModel mpFaktorModel, String resultExtraName) throws Exception {
@@ -41,7 +41,7 @@ public class PFaktorConfirmListRow extends PFaktorSearchRow {
         setCloseAfterSelection(false);
 
         if (mpFaktorList != null) {
-            return new PreInvoiceConfirmListAdapter(mpFaktorList);
+            return new PreInvoiceTransferListAdapter(mpFaktorList);
         }
         return null;
     }
@@ -68,8 +68,8 @@ public class PFaktorConfirmListRow extends PFaktorSearchRow {
 
 
 
-    public class PreInvoiceConfirmListAdapter extends MyAdapter {
-        public PreInvoiceConfirmListAdapter(ArrayList<MPFaktorModel> list) {
+    public class PreInvoiceTransferListAdapter extends MyAdapter {
+        public PreInvoiceTransferListAdapter(ArrayList<MPFaktorModel> list) {
             super(getActivity(), list);
         }
 

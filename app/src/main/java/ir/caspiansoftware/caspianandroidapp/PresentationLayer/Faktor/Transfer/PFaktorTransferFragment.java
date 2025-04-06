@@ -23,8 +23,8 @@ import ir.caspiansoftware.caspianandroidapp.R;
 /**
  * Created by Canada on 3/8/2016.
  */
-public class PFaktorConfirmListFragment extends CaspianDataGridFragment<MPFaktorModel> implements IFragmentCallback {
-    private static final String TAG = "InvoiceConfirmFragment";
+public class PFaktorTransferFragment extends CaspianDataGridFragment<MPFaktorModel> implements IFragmentCallback {
+    private static final String TAG = "PFaktorTransferFragment";
 
     private ProgressBar mProgressBar;
     private LinearLayout mToolbarExit;
@@ -43,7 +43,7 @@ public class PFaktorConfirmListFragment extends CaspianDataGridFragment<MPFaktor
 
     @Override
     protected String getFragmentRowTagValue() {
-        return getString(R.string.fragment_invoice_confirm_row_tag);
+        return getString(R.string.fragment_invoice_transfer_row_tag);
     }
 
     @Override

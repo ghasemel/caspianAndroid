@@ -34,8 +34,8 @@ import ir.caspiansoftware.caspianandroidapp.PresentationLayer.BasePLL.TransferMa
 import ir.caspiansoftware.caspianandroidapp.PresentationLayer.BasePLL.TransferPreInvoiceListPLL;
 import ir.caspiansoftware.caspianandroidapp.PresentationLayer.BasePLL.Sync.SyncPLL;
 import ir.caspiansoftware.caspianandroidapp.PresentationLayer.BasePLL.Sync.SyncTypeActivity;
-import ir.caspiansoftware.caspianandroidapp.PresentationLayer.Faktor.Transfer.PFaktorConfirmListActivity;
-import ir.caspiansoftware.caspianandroidapp.PresentationLayer.Faktor.Transfer.PFaktorConfirmListFragment;
+import ir.caspiansoftware.caspianandroidapp.PresentationLayer.Faktor.Transfer.PFaktorTransferActivity;
+import ir.caspiansoftware.caspianandroidapp.PresentationLayer.Faktor.Transfer.PFaktorTransferFragment;
 import ir.caspiansoftware.caspianandroidapp.PresentationLayer.Kala.MojoodiList.KalaMojoodiListActivity;
 import ir.caspiansoftware.caspianandroidapp.PresentationLayer.Kala.MojoodiList.KalaMojoodiListFragment;
 import ir.caspiansoftware.caspianandroidapp.PresentationLayer.Mali.Transfer.MaliTransferListActivity;
@@ -146,7 +146,7 @@ public class MainActivity extends CaspianActivityTwoFragments {
                 break;
 
             case Actions.ACTION_PRE_INVOICE:
-                PFaktorConfirmListActivity.showNewInvoiceForResult(this, REQUEST_CODE_NEW_PFAKTOR);
+                PFaktorTransferActivity.showNewInvoiceForResult(this, REQUEST_CODE_NEW_PFAKTOR);
                 break;
 
             case Actions.ACTION_MALI:
@@ -348,10 +348,10 @@ public class MainActivity extends CaspianActivityTwoFragments {
 
     private void openPFaktorTransferList() {
         // create fragment instance
-        PFaktorConfirmListFragment fragment = new PFaktorConfirmListFragment();
+        PFaktorTransferFragment fragment = new PFaktorTransferFragment();
 
         // create activity instance
-        Intent i = new Intent(this, PFaktorConfirmListActivity.class);
+        Intent i = new Intent(this, PFaktorTransferActivity.class);
 
         try {
             // for tow fragment in one activity
@@ -448,7 +448,7 @@ public class MainActivity extends CaspianActivityTwoFragments {
 
 
     private void setActionbarTitleForFragmentDetail(Fragment fragment) {
-        if (fragment instanceof PFaktorConfirmListFragment) {
+        if (fragment instanceof PFaktorTransferFragment) {
             setActionbarTitle(R.string.preInvoice_list_title, R.id.actionbar_title);
         }
     }

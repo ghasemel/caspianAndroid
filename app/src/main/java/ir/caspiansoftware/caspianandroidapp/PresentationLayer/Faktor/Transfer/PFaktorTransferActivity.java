@@ -25,8 +25,8 @@ import ir.caspiansoftware.caspianandroidapp.R;
 /**
  * Created by Canada on 3/9/2016.
  */
-public class PFaktorConfirmListActivity extends CaspianActivitySingleFragment {
-    private static final String TAG = "InvoiceConfirmListAct";
+public class PFaktorTransferActivity extends CaspianActivitySingleFragment {
+    private static final String TAG = "PFaktorTransferActivity";
 
     private static final int REQUEST_NEW_INVOICE = 1;
 
@@ -44,7 +44,7 @@ public class PFaktorConfirmListActivity extends CaspianActivitySingleFragment {
 
     @Override
     public Fragment createFragment() {
-        return new PFaktorConfirmListFragment();
+        return new PFaktorTransferFragment();
     }
 
 
@@ -65,7 +65,7 @@ public class PFaktorConfirmListActivity extends CaspianActivitySingleFragment {
 
             case Actions.ACTION_TRANSFER_PFaktor:
                 if (parameter != null && parameter[0] instanceof List) {
-                    confirmPreInvoice((List<MPFaktorModel>) parameter[0]);
+                    transferPreInvoice((List<MPFaktorModel>) parameter[0]);
                 }
                 break;
 
@@ -98,8 +98,8 @@ public class PFaktorConfirmListActivity extends CaspianActivitySingleFragment {
     }
 
 
-    private void confirmPreInvoice(List<MPFaktorModel> selectedInvoiceList) {
-        Log.d(TAG, "confirmPreInvoice()");
+    private void transferPreInvoice(List<MPFaktorModel> selectedInvoiceList) {
+        Log.d(TAG, "transferPreInvoice()");
         if (getFragmentContainer() instanceof IAsyncForm) {
             TransferPreInvoiceListPLL pll =
                     new TransferPreInvoiceListPLL

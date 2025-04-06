@@ -72,7 +72,7 @@
 
     <string name="pfaktor_search_title">جستجوی پیش فاکتورها</string>
     <string name="fragment_invoice_search_row_tag">fragment_invoice_search_row_tag</string>
-    <string name="fragment_invoice_confirm_row_tag">fragment_invoice_confirm_row_tag</string>
+    <string name="fragment_invoice_transfer_row_tag">fragment_invoice_confirm_row_tag</string>
 
 
     <string name="pfaktor_synced_already">این پیش فاکتور قبلا به سرور ارسال شده است و امکان تغییر وضعیت آن وجود ندارد</string>
