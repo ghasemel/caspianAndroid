@@ -4,7 +4,6 @@ import android.content.Context;
 import android.util.Log;
 import android.widget.ProgressBar;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import info.elyasi.android.elyasilib.Constant;
@@ -17,47 +16,49 @@ import info.elyasi.android.elyasilib.UI.FormActionType;
 import info.elyasi.android.elyasilib.UI.IActivityCallback;
 import info.elyasi.android.elyasilib.UI.IAsyncForm;
 import ir.caspiansoftware.caspianandroidapp.Actions;
-import ir.caspiansoftware.caspianandroidapp.BusinessLayer.PFaktorBLL;
-import ir.caspiansoftware.caspianandroidapp.Models.MPFaktorModel;
-import ir.caspiansoftware.caspianandroidapp.Models.SPFaktorModel;
+import ir.caspiansoftware.caspianandroidapp.BusinessLayer.TransferToServerService;
 import ir.caspiansoftware.caspianandroidapp.R;
 import ir.caspiansoftware.caspianandroidapp.Vars;
 
 /**
  * Created by Canada on 8/3/2016.
  */
-public class TransferPreInvoiceListPLL {
-    private static final String TAG = "TransferPreInvoiceListPLL";
-    private Context mContext;
-    private IAsyncForm mAsyncForm;
-    private IActivityCallback mActivityCallback;
+public class TransferToServerPLL<T> {
+    private static final String TAG = "TransferToServerPLL";
+    private final Context mContext;
+    private final IAsyncForm mAsyncForm;
+    private final IActivityCallback mActivityCallback;
     private ProgressDialog mProgressDialog;
     private boolean mCancel = false;
-    private List<MPFaktorModel> mMPFaktorModelList;
+    private List<T> dataModels;
 
-    public TransferPreInvoiceListPLL(Context context, IAsyncForm fragment, IActivityCallback activityCallback) {
+    private final TransferToServerService<T> transferToServerService;
+
+
+    public TransferToServerPLL(Context context, IAsyncForm fragment, IActivityCallback activityCallback, TransferToServerService<T> transferToServerService) {
         mContext = context;
         mAsyncForm = fragment;
         mActivityCallback = activityCallback;
+        this.transferToServerService = transferToServerService;
     }
 
-    public void start(final List<MPFaktorModel> mpFaktorModelList) {
+    public void start(final List<T> maliModels) {
         Log.d(TAG, "start()");
-        if (mpFaktorModelList != null && !mpFaktorModelList.isEmpty()) {
+        if (maliModels != null && !maliModels.isEmpty()) {
             if (mAsyncForm.getActivity() instanceof ActivityFragmentExt) {
                 ((ActivityFragmentExt) mAsyncForm.getActivity()).LockScreenRotation();
             }
 
-            mMPFaktorModelList = mpFaktorModelList;
-            Log.d(TAG, "mpFaktorModelList.size(): " + mpFaktorModelList.size());
+            this.dataModels = maliModels;
+            Log.d(TAG, "maliModels.size(): " + maliModels.size());
             mAsyncForm.startProgress();
 
 
             mAsyncForm.messageBoxYesNo(
                     R.string.mali_send_list_to_server_title,
                     String.format(
-                            mContext.getString(R.string.pfaktor_send_list_question),
-                            String.valueOf(mpFaktorModelList.size())
+                            mContext.getString(R.string.mali_send_list_question),
+                            String.valueOf(maliModels.size())
                     ),
                     new DoSendingDialogCallBack());
 
@@ -74,16 +75,14 @@ public class TransferPreInvoiceListPLL {
                 return;
             }
 
-            //if (dialogResult == DialogResult.Yes) {
             mProgressDialog = new ProgressDialog();
-            mProgressDialog.setTitle(mContext.getString(R.string.pfaktor_send_list_to_server_title));
-            mProgressDialog.setMax(mMPFaktorModelList.size());
+            mProgressDialog.setTitle(mContext.getString(R.string.mali_send_list_to_server_title));
+            mProgressDialog.setMax(dataModels.size());
             mProgressDialog.setDialogCallback(new ProgressDialogCallback());
             mProgressDialog.setAutoClose(false);
-            mProgressDialog.show(mAsyncForm.getActivity().getFragmentManager(), "send_PFaktor");
+            mProgressDialog.show(mAsyncForm.getActivity().getFragmentManager(), "send_Mali");
 
-
-            class RunAsync extends AAsyncTask<Void, String, String> {
+           class RunAsync extends AAsyncTask<Void, String, String> {
 
                 public RunAsync(ProgressBar progressBar) {
                     super(progressBar);
@@ -100,29 +99,14 @@ public class TransferPreInvoiceListPLL {
                 protected String doInBackground(Void... voids) {
                     Log.d(TAG, "doInBackground(): entered the function");
 
-                    PFaktorBLL faktorBLL = new PFaktorBLL(mContext);
+                    if (mCancel)
+                        return Constant.CANCEL;
 
-                    List<MPFaktorModel> list = new ArrayList<>();
-                    for (MPFaktorModel mpFaktor : mMPFaktorModelList) {
-                        ArrayList<SPFaktorModel> spList = faktorBLL.getSPfaktorListByMPFaktorId(mpFaktor.getId());
-                        if (spList != null) {
-                            Log.d(TAG, "spList.size(): " + spList.size());
-                            mpFaktor.setSPFaktorList(spList);
-                            list.add(mpFaktor);
-                            publishProgress("" + mpFaktor.getNum());
-                        } else {
-
-                        }
-
-                        if (mCancel)
-                            return Constant.CANCEL;
-                    }
-
-                    if (list.size() > 0) {
-                        Log.d(TAG, "list.size(): " + list.size());
+                    if (!dataModels.isEmpty()) {
+                        Log.d(TAG, "list.size(): " + dataModels.size());
                         try {
-                            publishProgress(mContext.getString(R.string.sending_to_server));
-                            faktorBLL.sendMPFaktorToServer(list);
+                            reportProgress(mContext.getString(R.string.sending_to_server));
+                            transferToServerService.sendToServer(dataModels);
                         } catch (Exception ex) {
                             setException(ex);
                         }

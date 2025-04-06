@@ -4,7 +4,9 @@ import android.app.Activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+
 import androidx.fragment.app.Fragment;
+
 import android.util.Log;
 import android.view.View;
 import android.widget.LinearLayout;
@@ -22,6 +24,8 @@ import ir.caspiansoftware.caspianandroidapp.BaseCaspian.CaspianActivityTwoFragme
 import ir.caspiansoftware.caspianandroidapp.BaseCaspian.CaspianFragment;
 import ir.caspiansoftware.caspianandroidapp.BaseCaspian.ErrorExt;
 import ir.caspiansoftware.caspianandroidapp.BaseCaspian.GoToForm;
+import ir.caspiansoftware.caspianandroidapp.BusinessLayer.MaliBLL;
+import ir.caspiansoftware.caspianandroidapp.BusinessLayer.PFaktorBLL;
 import ir.caspiansoftware.caspianandroidapp.BusinessLayer.UserBLL;
 import ir.caspiansoftware.caspianandroidapp.Enum.EntityType;
 import ir.caspiansoftware.caspianandroidapp.Enum.SyncType;
@@ -30,8 +34,7 @@ import ir.caspiansoftware.caspianandroidapp.Models.MPFaktorModel;
 import ir.caspiansoftware.caspianandroidapp.Models.MaliModel;
 import ir.caspiansoftware.caspianandroidapp.PresentationLayer.BasePLL.EntitySelection.EntityTypeSelectionActivity;
 import ir.caspiansoftware.caspianandroidapp.PresentationLayer.BasePLL.Gallery.GalleryActivity;
-import ir.caspiansoftware.caspianandroidapp.PresentationLayer.BasePLL.TransferMaliListPLL;
-import ir.caspiansoftware.caspianandroidapp.PresentationLayer.BasePLL.TransferPreInvoiceListPLL;
+import ir.caspiansoftware.caspianandroidapp.PresentationLayer.BasePLL.TransferToServerPLL;
 import ir.caspiansoftware.caspianandroidapp.PresentationLayer.BasePLL.Sync.SyncPLL;
 import ir.caspiansoftware.caspianandroidapp.PresentationLayer.BasePLL.Sync.SyncTypeActivity;
 import ir.caspiansoftware.caspianandroidapp.PresentationLayer.Faktor.Transfer.PFaktorTransferActivity;
@@ -249,11 +252,12 @@ public class MainActivity extends CaspianActivityTwoFragments {
     private void transferPreInvoice(List<MPFaktorModel> selectedInvoiceList) {
         Log.d(TAG, "transferPreInvoice()");
         if (getFragmentContainer() instanceof IAsyncForm) {
-            var pll = new TransferPreInvoiceListPLL
+            var pll = new TransferToServerPLL<>
                     (
                             getApplicationContext(),
                             (IAsyncForm) getFragmentContainer(),
-                            this
+                            this,
+                            new PFaktorBLL(getApplicationContext())
                     );
 
             pll.start(selectedInvoiceList);
@@ -263,11 +267,12 @@ public class MainActivity extends CaspianActivityTwoFragments {
     private void transferMali(List<MaliModel> selectedMaliList) {
         Log.d(TAG, "transferMali()");
         if (getFragmentContainer() instanceof IAsyncForm) {
-            var pll = new TransferMaliListPLL
+            var pll = new TransferToServerPLL<>
                     (
                             getApplicationContext(),
                             (IAsyncForm) getFragmentContainer(),
-                            this
+                            this,
+                            new MaliBLL(getApplicationContext())
                     );
 
             pll.start(selectedMaliList);

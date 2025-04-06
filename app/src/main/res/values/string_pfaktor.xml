@@ -102,12 +102,8 @@
     <string name="sync_select_sync_type" formatted="false">انتخاب نوع بروز رسانی</string>
     <string name="select_entity_type" formatted="false">انتخاب نوع اطلاعات</string>
 
-
-    <string name="pfaktor_send_list_to_server_title">ارسال پیش فاکتورها به سرور</string>
-    <string name="pfaktor_send_list_question" formatted="false">آیا اطلاعات %s پیش فاکتور به سرور ارسال شود؟</string>
-
-    <string name="mali_send_list_to_server_title">ارسال اطلاعات مالی به سرور</string>
-    <string name="mali_send_list_question" formatted="false">آیا اطلاعات %s سند مالی به سرور ارسال شود؟</string>
+    <string name="mali_send_list_to_server_title">ارسال اطلاعات به سرور</string>
+    <string name="mali_send_list_question" formatted="false">آیا اطلاعات مربوط به %s سند مالی به سرور ارسال شود؟</string>
 
     <string name="pfaktor_is_empty">فاکتور انتخابی خالی است و امکان ارسال فاکتورهای خالی به سرور وجود ندارد</string>
 

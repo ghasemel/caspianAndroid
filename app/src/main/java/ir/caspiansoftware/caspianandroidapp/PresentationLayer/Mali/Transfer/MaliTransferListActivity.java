@@ -13,12 +13,12 @@ import java.util.List;
 
 import info.elyasi.android.elyasilib.UI.FormActionType;
 import info.elyasi.android.elyasilib.UI.IAsyncForm;
-import info.elyasi.android.elyasilib.UI.IFragmentCallback;
 import ir.caspiansoftware.caspianandroidapp.Actions;
 import ir.caspiansoftware.caspianandroidapp.BaseCaspian.CaspianActionbar;
 import ir.caspiansoftware.caspianandroidapp.BaseCaspian.CaspianActivitySingleFragment;
+import ir.caspiansoftware.caspianandroidapp.BusinessLayer.MaliBLL;
 import ir.caspiansoftware.caspianandroidapp.Models.MaliModel;
-import ir.caspiansoftware.caspianandroidapp.PresentationLayer.BasePLL.TransferMaliListPLL;
+import ir.caspiansoftware.caspianandroidapp.PresentationLayer.BasePLL.TransferToServerPLL;
 import ir.caspiansoftware.caspianandroidapp.PresentationLayer.Mali.MaliActivity;
 import ir.caspiansoftware.caspianandroidapp.PresentationLayer.Mali.MaliFragment;
 import ir.caspiansoftware.caspianandroidapp.R;
@@ -92,8 +92,7 @@ public class MaliTransferListActivity extends CaspianActivitySingleFragment {
     }
 
 
-    private void updateMaliTransferList()
-    {
+    private void updateMaliTransferList() {
         this.informMyFragment(Actions.REFRESH_LIST, null, null);
     }
 
@@ -101,13 +100,13 @@ public class MaliTransferListActivity extends CaspianActivitySingleFragment {
     private void transferMali(List<MaliModel> selectedMaliList) {
         Log.d(TAG, "transferMali()");
         if (getFragmentContainer() instanceof IAsyncForm) {
-            TransferMaliListPLL pll =
-                    new TransferMaliListPLL
-                            (
-                                    getApplicationContext(),
-                                    (IAsyncForm) getFragmentContainer(),
-                                    this
-                            );
+            var pll = new TransferToServerPLL<>
+                    (
+                            getApplicationContext(),
+                            (IAsyncForm) getFragmentContainer(),
+                            this,
+                            new MaliBLL(getApplicationContext())
+                    );
 
             pll.start(selectedMaliList);
         }

@@ -5,7 +5,9 @@ import static ir.caspiansoftware.caspianandroidapp.Actions.ACTION_TRANSFER_CANCE
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+
 import androidx.fragment.app.Fragment;
+
 import android.os.Bundle;
 import android.util.Log;
 
@@ -16,8 +18,10 @@ import info.elyasi.android.elyasilib.UI.IAsyncForm;
 import ir.caspiansoftware.caspianandroidapp.Actions;
 import ir.caspiansoftware.caspianandroidapp.BaseCaspian.CaspianActionbar;
 import ir.caspiansoftware.caspianandroidapp.BaseCaspian.CaspianActivitySingleFragment;
+import ir.caspiansoftware.caspianandroidapp.BusinessLayer.PFaktorBLL;
+import ir.caspiansoftware.caspianandroidapp.BusinessLayer.TransferToServerService;
 import ir.caspiansoftware.caspianandroidapp.Models.MPFaktorModel;
-import ir.caspiansoftware.caspianandroidapp.PresentationLayer.BasePLL.TransferPreInvoiceListPLL;
+import ir.caspiansoftware.caspianandroidapp.PresentationLayer.BasePLL.TransferToServerPLL;
 import ir.caspiansoftware.caspianandroidapp.PresentationLayer.Faktor.PFaktorActivity;
 import ir.caspiansoftware.caspianandroidapp.PresentationLayer.Faktor.PFaktorFragment;
 import ir.caspiansoftware.caspianandroidapp.R;
@@ -92,8 +96,7 @@ public class PFaktorTransferActivity extends CaspianActivitySingleFragment {
     }
 
 
-    private void updatePFaktorTransferList()
-    {
+    private void updatePFaktorTransferList() {
         this.informMyFragment(Actions.REFRESH_LIST, null, null);
     }
 
@@ -101,13 +104,13 @@ public class PFaktorTransferActivity extends CaspianActivitySingleFragment {
     private void transferPreInvoice(List<MPFaktorModel> selectedInvoiceList) {
         Log.d(TAG, "transferPreInvoice()");
         if (getFragmentContainer() instanceof IAsyncForm) {
-            TransferPreInvoiceListPLL pll =
-                    new TransferPreInvoiceListPLL
-                            (
-                                    getApplicationContext(),
-                                    (IAsyncForm) getFragmentContainer(),
-                                    this
-                            );
+            var pll = new TransferToServerPLL<>
+                    (
+                            getApplicationContext(),
+                            (IAsyncForm) getFragmentContainer(),
+                            this,
+                            new PFaktorBLL(getApplicationContext())
+                    );
 
             pll.start(selectedInvoiceList);
         }

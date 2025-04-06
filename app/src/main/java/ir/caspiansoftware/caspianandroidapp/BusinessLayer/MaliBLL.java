@@ -25,12 +25,12 @@ import ir.caspiansoftware.caspianandroidapp.Vars;
 /**
  * Created by Canada on 7/22/2016.
  */
-public class MaliBLL extends ABusinessLayer {
+public class MaliBLL extends ABusinessLayer implements TransferToServerService<MaliModel> {
     private static final String TAG = "MaliBLL";
 
-    private MaliWebService maliWebService;
+    private final MaliWebService maliWebService;
 
-    private PersonBLL personBLL;
+    private final PersonBLL personBLL;
 
     public MaliBLL(Context context) {
         super(context);
@@ -41,8 +41,9 @@ public class MaliBLL extends ABusinessLayer {
 
 
     // region webservice
-    public void sendMaliInfoToServer(List<MaliModel> maliList) throws Exception {
-        Log.d(TAG, "sendMaliInfoToServer()");
+    @Override
+    public void sendToServer(List<MaliModel> maliList) throws Exception {
+        Log.d(TAG, "sendToServer()");
 
         try {
             if (maliList != null) {
@@ -63,7 +64,7 @@ public class MaliBLL extends ABusinessLayer {
                         // index for mali number list items
                         int index = 0;
 
-                        // for every faktor that we send to server
+                        // for every mali that we send to server
                         for (MaliModel mp : maliList) {
                             // update sync info
                             maliModelDataSource.updateSync(mp.getId(), listAtfNums.get(index++));
@@ -75,7 +76,7 @@ public class MaliBLL extends ABusinessLayer {
             }
 
         } finally {
-            Log.d(TAG, "sendMaliInfoToServer(): end");
+            Log.d(TAG, "sendToServer(): end");
         }
     }
     // endregion webservice

@@ -27,7 +27,7 @@ import ir.caspiansoftware.caspianandroidapp.Vars;
 /**
  * Created by Canada on 7/22/2016.
  */
-public class PFaktorBLL extends ABusinessLayer {
+public class PFaktorBLL extends ABusinessLayer implements TransferToServerService<MPFaktorModel> {
     private static final String TAG = "PFaktorBLL";
 
     private PFaktorWebService mPFaktorWebService;
@@ -41,8 +41,10 @@ public class PFaktorBLL extends ABusinessLayer {
 
 
     // region webservice
-    public void sendMPFaktorToServer(List<MPFaktorModel> faktorList) throws Exception {
-        Log.d(TAG, "syncMPFaktor()");
+
+    @Override
+    public void sendToServer(List<MPFaktorModel> faktorList) throws Exception {
+        Log.d(TAG, "sendToServer()");
 
         try {
             if (faktorList != null) {
@@ -76,7 +78,7 @@ public class PFaktorBLL extends ABusinessLayer {
             }
 
         } finally {
-            Log.d(TAG, "syncMPFaktor(): end");
+            Log.d(TAG, "sendToServer(): end");
         }
     }
     // endregion webservice
