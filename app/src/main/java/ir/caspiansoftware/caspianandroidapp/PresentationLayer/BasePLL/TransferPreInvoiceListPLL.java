@@ -13,6 +13,7 @@ import info.elyasi.android.elyasilib.Dialogs.IDialogCallback;
 import info.elyasi.android.elyasilib.Dialogs.ProgressDialog;
 import info.elyasi.android.elyasilib.UI.AAsyncTask;
 import info.elyasi.android.elyasilib.UI.ActivityFragmentExt;
+import info.elyasi.android.elyasilib.UI.FormActionType;
 import info.elyasi.android.elyasilib.UI.IActivityCallback;
 import info.elyasi.android.elyasilib.UI.IAsyncForm;
 import ir.caspiansoftware.caspianandroidapp.Actions;
@@ -25,8 +26,8 @@ import ir.caspiansoftware.caspianandroidapp.Vars;
 /**
  * Created by Canada on 8/3/2016.
  */
-public class SendPreInvoiceListPLL {
-    private static final String TAG = "SendPreInvoiceListPLL";
+public class TransferPreInvoiceListPLL {
+    private static final String TAG = "TransferPreInvoiceListPLL";
     private Context mContext;
     private IAsyncForm mAsyncForm;
     private IActivityCallback mActivityCallback;
@@ -34,8 +35,7 @@ public class SendPreInvoiceListPLL {
     private boolean mCancel = false;
     private List<MPFaktorModel> mMPFaktorModelList;
 
-
-    public SendPreInvoiceListPLL(Context context, IAsyncForm fragment, IActivityCallback activityCallback) {
+    public TransferPreInvoiceListPLL(Context context, IAsyncForm fragment, IActivityCallback activityCallback) {
         mContext = context;
         mAsyncForm = fragment;
         mActivityCallback = activityCallback;
@@ -43,7 +43,7 @@ public class SendPreInvoiceListPLL {
 
     public void start(final List<MPFaktorModel> mpFaktorModelList) {
         Log.d(TAG, "start()");
-        if (mpFaktorModelList != null && mpFaktorModelList.size() > 0) {
+        if (mpFaktorModelList != null && !mpFaktorModelList.isEmpty()) {
             if (mAsyncForm.getActivity() instanceof ActivityFragmentExt) {
                 ((ActivityFragmentExt) mAsyncForm.getActivity()).LockScreenRotation();
             }
@@ -54,7 +54,7 @@ public class SendPreInvoiceListPLL {
 
 
             mAsyncForm.messageBoxYesNo(
-                    R.string.pfaktor_send_list_to_server_title,
+                    R.string.mali_send_list_to_server_title,
                     String.format(
                             mContext.getString(R.string.pfaktor_send_list_question),
                             String.valueOf(mpFaktorModelList.size())
@@ -70,6 +70,7 @@ public class SendPreInvoiceListPLL {
         public void dialog_callback(DialogResult dialogResult, Integer result, int requestCode) {
             if (dialogResult != DialogResult.Yes) {
                 mAsyncForm.stopProgress();
+                mActivityCallback.onMyFragmentCallBack(Actions.ACTION_TRANSFER_CANCELED, FormActionType.CANCEL);
                 return;
             }
 
@@ -143,7 +144,7 @@ public class SendPreInvoiceListPLL {
                         mAsyncForm.showError(getException(), null);
                     } else {
                         if (result.equals(Constant.SUCCESS)) {
-                            mActivityCallback.onMyFragmentCallBack(Actions.ACTION_CONFIRM_PFaktor_DONE, null, (Object) null);
+                            mActivityCallback.onMyFragmentCallBack(Actions.ACTION_TRANSFER_PFaktor_DONE, null, (Object) null);
                         } else if (result.equals(Constant.FAILED)) {
                             mAsyncForm.showError(mContext.getString(R.string.pfaktor_is_empty), null);
                         }

@@ -43,7 +43,7 @@
         <activity android:name=".PresentationLayer.InitialSettingActivity" android:label="@string/initial_title" android:windowSoftInputMode="stateHidden"  />
 
 
-        <activity android:name=".PresentationLayer.Faktor.Confirm.PFaktorConfirmListActivity" android:label="@string/preInvoice_list_title" />
+        <activity android:name=".PresentationLayer.Faktor.Transfer.PFaktorConfirmListActivity" android:label="@string/preInvoice_list_title" />
         <activity android:name=".PresentationLayer.Faktor.PFaktorActivity"
                   android:label="@string/preInvoice_title"
                   android:windowSoftInputMode="adjustResize|stateHidden"

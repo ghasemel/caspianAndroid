@@ -3,11 +3,13 @@ package info.elyasi.android.elyasilib.UI;
 import android.os.AsyncTask;
 import android.widget.ProgressBar;
 
+import java.lang.ref.WeakReference;
+
 /**
  * Created by Canada on 6/20/2016.
  */
 public abstract class AAsyncTask<Params, Progress, Result> extends AsyncTask<Params, Progress, Result> {
-    private ProgressBar mBar;
+    private WeakReference<ProgressBar> mBar;
     private Exception mException;
 
     public AAsyncTask() {
@@ -16,7 +18,11 @@ public abstract class AAsyncTask<Params, Progress, Result> extends AsyncTask<Par
 
     public AAsyncTask(ProgressBar progressBar) {
         this();
-        mBar = progressBar;
+        mBar = new WeakReference<>(progressBar);
+    }
+
+    public ProgressBar getBar() {
+        return mBar != null ? mBar.get() : null;
     }
 
     @Override
@@ -25,13 +31,11 @@ public abstract class AAsyncTask<Params, Progress, Result> extends AsyncTask<Par
         mException = null;
     }
 
-    public void progress(Progress... values) {
+    @SafeVarargs
+    public final void reportProgress(Progress... values) {
         publishProgress(values);
     }
 
-    public ProgressBar getBar() {
-        return mBar;
-    }
 
     public Exception getException() {
         return mException;

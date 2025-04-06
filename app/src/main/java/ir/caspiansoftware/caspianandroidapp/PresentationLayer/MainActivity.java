@@ -27,13 +27,15 @@ import ir.caspiansoftware.caspianandroidapp.Enum.EntityType;
 import ir.caspiansoftware.caspianandroidapp.Enum.SyncType;
 import ir.caspiansoftware.caspianandroidapp.Models.KalaModel;
 import ir.caspiansoftware.caspianandroidapp.Models.MPFaktorModel;
+import ir.caspiansoftware.caspianandroidapp.Models.MaliModel;
 import ir.caspiansoftware.caspianandroidapp.PresentationLayer.BasePLL.EntitySelection.EntityTypeSelectionActivity;
 import ir.caspiansoftware.caspianandroidapp.PresentationLayer.BasePLL.Gallery.GalleryActivity;
-import ir.caspiansoftware.caspianandroidapp.PresentationLayer.BasePLL.SendPreInvoiceListPLL;
+import ir.caspiansoftware.caspianandroidapp.PresentationLayer.BasePLL.TransferMaliListPLL;
+import ir.caspiansoftware.caspianandroidapp.PresentationLayer.BasePLL.TransferPreInvoiceListPLL;
 import ir.caspiansoftware.caspianandroidapp.PresentationLayer.BasePLL.Sync.SyncPLL;
 import ir.caspiansoftware.caspianandroidapp.PresentationLayer.BasePLL.Sync.SyncTypeActivity;
-import ir.caspiansoftware.caspianandroidapp.PresentationLayer.Faktor.Confirm.PFaktorConfirmListActivity;
-import ir.caspiansoftware.caspianandroidapp.PresentationLayer.Faktor.Confirm.PFaktorConfirmListFragment;
+import ir.caspiansoftware.caspianandroidapp.PresentationLayer.Faktor.Transfer.PFaktorConfirmListActivity;
+import ir.caspiansoftware.caspianandroidapp.PresentationLayer.Faktor.Transfer.PFaktorConfirmListFragment;
 import ir.caspiansoftware.caspianandroidapp.PresentationLayer.Kala.MojoodiList.KalaMojoodiListActivity;
 import ir.caspiansoftware.caspianandroidapp.PresentationLayer.Kala.MojoodiList.KalaMojoodiListFragment;
 import ir.caspiansoftware.caspianandroidapp.PresentationLayer.Mali.Transfer.MaliTransferListActivity;
@@ -171,15 +173,21 @@ public class MainActivity extends CaspianActivityTwoFragments {
 //                showConfirmList();
 //                break;
 
-            case Actions.ACTION_CONFIRM_PFaktor:
+            case Actions.ACTION_TRANSFER_PFaktor:
                 if (parameter != null && parameter[0] instanceof List) {
-                    confirmPreInvoice((List<MPFaktorModel>) parameter[0]);
+                    transferPreInvoice((List<MPFaktorModel>) parameter[0]);
                 }
                 break;
 
-            case Actions.ACTION_CONFIRM_PFaktor_DONE:
-                Log.d(TAG, "action =" + Actions.ACTION_CONFIRM_PFaktor_DONE);
+            case Actions.ACTION_TRANSFER_PFaktor_DONE:
+                Log.d(TAG, "action =" + Actions.ACTION_TRANSFER_PFaktor_DONE);
                 updatePFaktorConfirmList();
+                break;
+
+            case Actions.ACTION_TRANSFER_MALI:
+                if (parameter != null && parameter[0] instanceof List) {
+                    transferMali((List<MaliModel>) parameter[0]);
+                }
                 break;
 
             case Actions.ACTION_KALA_MOJOODI_LIST:
@@ -238,18 +246,31 @@ public class MainActivity extends CaspianActivityTwoFragments {
         }
     }
 
-    private void confirmPreInvoice(List<MPFaktorModel> selectedInvoiceList) {
-        Log.d(TAG, "confirmPreInvoice()");
+    private void transferPreInvoice(List<MPFaktorModel> selectedInvoiceList) {
+        Log.d(TAG, "transferPreInvoice()");
         if (getFragmentContainer() instanceof IAsyncForm) {
-            SendPreInvoiceListPLL pll =
-                    new SendPreInvoiceListPLL
-                            (
-                                    getApplicationContext(),
-                                    (IAsyncForm) getFragmentContainer(),
-                                    this
-                            );
+            var pll = new TransferPreInvoiceListPLL
+                    (
+                            getApplicationContext(),
+                            (IAsyncForm) getFragmentContainer(),
+                            this
+                    );
 
             pll.start(selectedInvoiceList);
+        }
+    }
+
+    private void transferMali(List<MaliModel> selectedMaliList) {
+        Log.d(TAG, "transferMali()");
+        if (getFragmentContainer() instanceof IAsyncForm) {
+            var pll = new TransferMaliListPLL
+                    (
+                            getApplicationContext(),
+                            (IAsyncForm) getFragmentContainer(),
+                            this
+                    );
+
+            pll.start(selectedMaliList);
         }
     }
 
@@ -313,10 +334,7 @@ public class MainActivity extends CaspianActivityTwoFragments {
     }
 
     private void updatePFaktorConfirmList() {
-        if (getFragmentDetailContainer() != null && getFragmentDetailContainer() instanceof IFragmentCallback) {
-            ((IFragmentCallback) getFragmentDetailContainer())
-                    .onMyActivityCallback(PFaktorConfirmListFragment.REFRESH_LIST, null, null);
-        }
+        informMyDetailFragment(Actions.REFRESH_LIST, null, null);
     }
 
     private void showConfirmList(EntityType entityType) {

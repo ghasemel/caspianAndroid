@@ -1,4 +1,6 @@
-package ir.caspiansoftware.caspianandroidapp.PresentationLayer.Faktor.Confirm;
+package ir.caspiansoftware.caspianandroidapp.PresentationLayer.Faktor.Transfer;
+
+import static ir.caspiansoftware.caspianandroidapp.Actions.ACTION_TRANSFER_CANCELED;
 
 import android.app.Activity;
 import android.content.Context;
@@ -11,12 +13,11 @@ import java.util.List;
 
 import info.elyasi.android.elyasilib.UI.FormActionType;
 import info.elyasi.android.elyasilib.UI.IAsyncForm;
-import info.elyasi.android.elyasilib.UI.IFragmentCallback;
 import ir.caspiansoftware.caspianandroidapp.Actions;
 import ir.caspiansoftware.caspianandroidapp.BaseCaspian.CaspianActionbar;
 import ir.caspiansoftware.caspianandroidapp.BaseCaspian.CaspianActivitySingleFragment;
 import ir.caspiansoftware.caspianandroidapp.Models.MPFaktorModel;
-import ir.caspiansoftware.caspianandroidapp.PresentationLayer.BasePLL.SendPreInvoiceListPLL;
+import ir.caspiansoftware.caspianandroidapp.PresentationLayer.BasePLL.TransferPreInvoiceListPLL;
 import ir.caspiansoftware.caspianandroidapp.PresentationLayer.Faktor.PFaktorActivity;
 import ir.caspiansoftware.caspianandroidapp.PresentationLayer.Faktor.PFaktorFragment;
 import ir.caspiansoftware.caspianandroidapp.R;
@@ -28,6 +29,7 @@ public class PFaktorConfirmListActivity extends CaspianActivitySingleFragment {
     private static final String TAG = "InvoiceConfirmListAct";
 
     private static final int REQUEST_NEW_INVOICE = 1;
+
 
     @Override
     public void onCreate(Bundle savedBundleState) {
@@ -61,14 +63,19 @@ public class PFaktorConfirmListActivity extends CaspianActivitySingleFragment {
                 showNewInvoiceForResult(this, REQUEST_NEW_INVOICE);
                 break;
 
-            case Actions.ACTION_CONFIRM_PFaktor:
+            case Actions.ACTION_TRANSFER_PFaktor:
                 if (parameter != null && parameter[0] instanceof List) {
                     confirmPreInvoice((List<MPFaktorModel>) parameter[0]);
                 }
                 break;
 
-            case Actions.ACTION_CONFIRM_PFaktor_DONE:
-                updatePFaktorConfirmList();
+            case Actions.ACTION_TRANSFER_PFaktor_DONE:
+                updatePFaktorTransferList();
+                break;
+
+            case ACTION_TRANSFER_CANCELED:
+                Log.d(TAG, "Transfer canceled");
+                this.informMyFragment(ACTION_TRANSFER_CANCELED, null, null);
                 break;
         }
     }
@@ -79,26 +86,23 @@ public class PFaktorConfirmListActivity extends CaspianActivitySingleFragment {
 
         switch (requestCode) {
             case REQUEST_NEW_INVOICE:
-                updatePFaktorConfirmList();
+                updatePFaktorTransferList();
                 break;
         }
     }
 
 
-    private void updatePFaktorConfirmList()
+    private void updatePFaktorTransferList()
     {
-        if (getFragmentContainer() != null && getFragmentContainer() instanceof IFragmentCallback) {
-            ((IFragmentCallback) getFragmentContainer())
-                    .onMyActivityCallback(PFaktorConfirmListFragment.REFRESH_LIST, null, null);
-        }
+        this.informMyFragment(Actions.REFRESH_LIST, null, null);
     }
 
 
     private void confirmPreInvoice(List<MPFaktorModel> selectedInvoiceList) {
         Log.d(TAG, "confirmPreInvoice()");
         if (getFragmentContainer() instanceof IAsyncForm) {
-            SendPreInvoiceListPLL pll =
-                    new SendPreInvoiceListPLL
+            TransferPreInvoiceListPLL pll =
+                    new TransferPreInvoiceListPLL
                             (
                                     getApplicationContext(),
                                     (IAsyncForm) getFragmentContainer(),

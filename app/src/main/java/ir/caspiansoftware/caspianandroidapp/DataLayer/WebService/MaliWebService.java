@@ -17,7 +17,7 @@ import ir.caspiansoftware.caspianandroidapp.SettingWebService;
  * Created by Canada on 8/3/2016.
  */
 public class MaliWebService extends RESTDotNetWebService {
-    private static final String TAG = "PFaktorWebService";
+    private static final String TAG = "MaliWebService";
 
 
     public MaliWebService() {
@@ -27,12 +27,12 @@ public class MaliWebService extends RESTDotNetWebService {
 
     @Override
     protected String getControllerName() {
-        return "PFaktor";
+        return "Mali";
     }
 
 
-    public ResponseWebService uploadPFaktorList(List<MaliModel> maliModels, String dbName) throws Exception {
-        Log.d(TAG, "uploadPFaktorList(): started");
+    public ResponseWebService uploadMaliList(List<MaliModel> maliModels, String dbName) throws Exception {
+        Log.d(TAG, "uploadMaliList(): started");
 
         try {
 
@@ -41,19 +41,21 @@ public class MaliWebService extends RESTDotNetWebService {
                 jsonArray.put(maliModel.toJSON());
             }
 
-            Log.d(TAG, "Faktor to JSON: " + (jsonArray.toString()));
+            Log.d(TAG, "MaliModel to JSON: " + jsonArray);
 
             NameValue[] parameter = {
                     new NameValue<>("dbName", dbName),
-                    new NameValue<>("pfaktor_list", jsonArray)
+                    new NameValue<>("maliArticles", jsonArray)
             };
 
             return sendRequest(SettingWebService.getAPI_URL(),
-                    "UploadPFaktors", parameter, true, RequestType.create(RequestType.RType.POST));
+                    "UploadMali", parameter, true, RequestType.create(RequestType.RType.POST));
 
             //return responseWebService;
         } finally {
-            Log.d(TAG, "uploadPFaktorList(): finished");
+            Log.d(TAG, "uploadMaliList(): finished");
         }
     }
+
+
 }

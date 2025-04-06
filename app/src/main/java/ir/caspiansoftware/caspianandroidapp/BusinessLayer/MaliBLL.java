@@ -41,30 +41,30 @@ public class MaliBLL extends ABusinessLayer {
 
 
     // region webservice
-    public void sendmaliModelToServer(List<MaliModel> faktorList) throws Exception {
-        Log.d(TAG, "syncmaliModel()");
+    public void sendMaliInfoToServer(List<MaliModel> maliList) throws Exception {
+        Log.d(TAG, "sendMaliInfoToServer()");
 
         try {
-            if (faktorList != null) {
-                ResponseWebService response = maliWebService.uploadPFaktorList(
-                        faktorList,
+            if (maliList != null) {
+                ResponseWebService response = maliWebService.uploadMaliList(
+                        maliList,
                         Vars.YEAR.getDataBase());
 
                 if (response == null)
                     throw new Exception("responseWebService is null");
 
-                // extract faktor inserted number on server side from response
+                // extract mali inserted number on server side from response
                 List<Integer> listAtfNums = ConvertExt.toList(response.getData());
                 if (listAtfNums != null) {
 
                     // create MaliDataSource object
 
                     try (MaliDataSource maliModelDataSource = new MaliDataSource(mContext)) {
-                        // index for faktor number list items
+                        // index for mali number list items
                         int index = 0;
 
                         // for every faktor that we send to server
-                        for (MaliModel mp : faktorList) {
+                        for (MaliModel mp : maliList) {
                             // update sync info
                             maliModelDataSource.updateSync(mp.getId(), listAtfNums.get(index++));
                         }
@@ -75,7 +75,7 @@ public class MaliBLL extends ABusinessLayer {
             }
 
         } finally {
-            Log.d(TAG, "syncmaliModel(): end");
+            Log.d(TAG, "sendMaliInfoToServer(): end");
         }
     }
     // endregion webservice

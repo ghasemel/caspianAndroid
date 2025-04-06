@@ -23,7 +23,6 @@ import ir.caspiansoftware.caspianandroidapp.Models.KalaModel;
 import ir.caspiansoftware.caspianandroidapp.Models.KalaPhotoModel;
 import ir.caspiansoftware.caspianandroidapp.Models.PersonModel;
 import ir.caspiansoftware.caspianandroidapp.R;
-import ir.caspiansoftware.caspianandroidapp.SettingWebService;
 import ir.caspiansoftware.caspianandroidapp.Vars;
 
 /**
@@ -58,7 +57,7 @@ public class SyncPLL {
                     return Constant.CANCEL;
 
                 kalaBLL.SyncWithDatabase(kalaList.get(i));
-                task.progress(kalaList.get(i).getName());
+                task.reportProgress(kalaList.get(i).getName());
             }
 
         } catch (Exception ex) {
@@ -81,7 +80,7 @@ public class SyncPLL {
                     return Constant.CANCEL;
 
                 personBLL.SyncWithDatabase(personList.get(i));
-                task.progress(personList.get(i).getName());
+                task.reportProgress(personList.get(i).getName());
             }
 
         } catch (Exception ex) {
@@ -112,7 +111,7 @@ public class SyncPLL {
                     return Constant.FAILED;
 
                 photoBLL.SyncWithDatabase(photoList.get(i));
-                task.progress(photoList.get(i).getCode() + " " + photoList.get(i).getTitle());
+                task.reportProgress(photoList.get(i).getCode() + " " + photoList.get(i).getTitle());
             }
 
         } catch (Exception ex) {

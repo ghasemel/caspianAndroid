@@ -1,4 +1,4 @@
-package ir.caspiansoftware.caspianandroidapp.PresentationLayer.Faktor.Confirm;
+package ir.caspiansoftware.caspianandroidapp.PresentationLayer.Faktor.Transfer;
 
 import android.app.Activity;
 import android.util.Log;
@@ -6,7 +6,6 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
-import android.widget.RelativeLayout;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,8 +25,6 @@ import ir.caspiansoftware.caspianandroidapp.R;
  */
 public class PFaktorConfirmListFragment extends CaspianDataGridFragment<MPFaktorModel> implements IFragmentCallback {
     private static final String TAG = "InvoiceConfirmFragment";
-
-    public static final String REFRESH_LIST = "refresh_list";
 
     private ProgressBar mProgressBar;
     private LinearLayout mToolbarExit;
@@ -106,8 +103,13 @@ public class PFaktorConfirmListFragment extends CaspianDataGridFragment<MPFaktor
         Log.d(TAG, "onMyFragmentCallBack start");
 
         switch (actionName) {
-            case REFRESH_LIST:
+            case Actions.REFRESH_LIST:
+                mSelectedRowsList.clear();
                 RefreshList();
+                break;
+
+            case Actions.ACTION_TRANSFER_CANCELED:
+                mSelectedRowsList.clear();
                 break;
         }
     }
@@ -125,14 +127,14 @@ public class PFaktorConfirmListFragment extends CaspianDataGridFragment<MPFaktor
             mActivityCallback.onMyFragmentCallBack(Actions.ACTION_PRE_INVOICE, FormActionType.New);
 
         } else  if (v.equals(mToolbarSyncBtn)) {
-            Log.d(TAG, Actions.ACTION_CONFIRM_PFaktor);
+            Log.d(TAG, Actions.ACTION_TRANSFER_PFaktor);
 
-            if (mSelectedRowsList.size() == 0) {
+            if (mSelectedRowsList.isEmpty()) {
                 messageBoxOK(R.string.preInvoice_list_title, R.string.no_rows_selected, null);
                 return;
             }
 
-            mActivityCallback.onMyFragmentCallBack(Actions.ACTION_CONFIRM_PFaktor, null, mSelectedRowsList);
+            mActivityCallback.onMyFragmentCallBack(Actions.ACTION_TRANSFER_PFaktor, null, mSelectedRowsList);
         }
     }
 

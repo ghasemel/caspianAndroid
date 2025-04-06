@@ -9,17 +9,21 @@ public class Actions {
     public static final String ACTION_LOGOUT = "action_logout";
     public static final String ACTION_YEAR_MALI = "action_yearMali";
     public static final String ACTION_PRE_INVOICE = "action_preInvoice";
-
     public static final String ACTION_MALI = "action_mali";
     public static final String ACTION_SYNC = "action_Sync";
+
     public static final String ACTION_TOOLBAR_EXIT = "action_TOOLBAR_EXIT";
     public static final String ACTION_PRE_INVOICE_LIST = "action_preInvoice_list";
-    public static final String ACTION_CONFIRM_LIST = "action_confirm_list";
-    public static final String ACTION_CONFIRM_PFaktor = "action_confirm_pfaktor";
-    public static final String ACTION_CONFIRM_PFaktor_DONE = "action_confirm_pfaktor_done";
 
-    public static final String ACTION_TRANSFER_MALI = "action_confirm_mali";
-    public static final String ACTION_CONFIRM_MALI_DONE = "action_confirm_mali_done";
+    public static final String REFRESH_LIST = "refresh_list";
+
+    public static final String ACTION_TRANSFER_CANCELED = "action_transfer_canceled";
+    public static final String ACTION_TRANSFER_LIST = "action_transfer_list";
+    public static final String ACTION_TRANSFER_PFaktor = "action_transfer_pfaktor";
+    public static final String ACTION_TRANSFER_PFaktor_DONE = "action_transfer_pfaktor_done";
+    public static final String ACTION_TRANSFER_MALI = "action_transfer_mali";
+    public static final String ACTION_CONFIRM_MALI_DONE = "action_transfer_mali_done";
+
 
     public static final String ACTION_ENTITY_SELECTION = "action_entity_selection";
     public static final String ACTION_NEW_MALI = "action_new_mali";

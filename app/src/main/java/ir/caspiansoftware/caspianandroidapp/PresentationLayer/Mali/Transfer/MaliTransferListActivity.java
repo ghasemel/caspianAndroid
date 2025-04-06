@@ -1,7 +1,6 @@
 package ir.caspiansoftware.caspianandroidapp.PresentationLayer.Mali.Transfer;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -17,8 +16,7 @@ import ir.caspiansoftware.caspianandroidapp.Actions;
 import ir.caspiansoftware.caspianandroidapp.BaseCaspian.CaspianActionbar;
 import ir.caspiansoftware.caspianandroidapp.BaseCaspian.CaspianActivitySingleFragment;
 import ir.caspiansoftware.caspianandroidapp.Models.MaliModel;
-import ir.caspiansoftware.caspianandroidapp.PresentationLayer.BasePLL.SendPreInvoiceListPLL;
-import ir.caspiansoftware.caspianandroidapp.PresentationLayer.Faktor.PFaktorActivity;
+import ir.caspiansoftware.caspianandroidapp.PresentationLayer.BasePLL.TransferMaliListPLL;
 import ir.caspiansoftware.caspianandroidapp.PresentationLayer.Mali.MaliActivity;
 import ir.caspiansoftware.caspianandroidapp.PresentationLayer.Mali.MaliFragment;
 import ir.caspiansoftware.caspianandroidapp.R;
@@ -65,7 +63,7 @@ public class MaliTransferListActivity extends CaspianActivitySingleFragment {
 
             case Actions.ACTION_TRANSFER_MALI:
                 if (parameter != null && parameter[0] instanceof List) {
-                    confirmMali((List<MaliModel>) parameter[0]);
+                    transferMali((List<MaliModel>) parameter[0]);
                 }
                 break;
 
@@ -96,25 +94,19 @@ public class MaliTransferListActivity extends CaspianActivitySingleFragment {
     }
 
 
-    private void confirmMali(List<MaliModel> selectedMaliList) {
-        Log.d(TAG, "confirmMali()");
+    private void transferMali(List<MaliModel> selectedMaliList) {
+        Log.d(TAG, "transferMali()");
         if (getFragmentContainer() instanceof IAsyncForm) {
-            SendPreInvoiceListPLL pll =
-                    new SendPreInvoiceListPLL
+            TransferMaliListPLL pll =
+                    new TransferMaliListPLL
                             (
                                     getApplicationContext(),
                                     (IAsyncForm) getFragmentContainer(),
                                     this
                             );
 
-            //pll.start(selectedMaliList); // TODO fix me
+            pll.start(selectedMaliList);
         }
-    }
-
-    public static void showNewInvoice(Context context) {
-        Intent i = new Intent(context, PFaktorActivity.class);
-        i.putExtra(MaliFragment.EXTRA_ACTION_NEW, "");
-        context.startActivity(i);
     }
 
     public static void showNewMaliForResult(Activity activity, int requestCode) {
