@@ -1,5 +1,7 @@
 package ir.caspiansoftware.caspianandroidapp.PresentationLayer.Mali.Transfer;
 
+import static ir.caspiansoftware.caspianandroidapp.Actions.ACTION_TRANSFER_CANCELED;
+
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -70,6 +72,11 @@ public class MaliTransferListActivity extends CaspianActivitySingleFragment {
             case Actions.ACTION_CONFIRM_MALI_DONE:
                 updateMaliTransferList();
                 break;
+
+            case ACTION_TRANSFER_CANCELED:
+                Log.d(TAG, "Transfer canceled");
+                this.informMyFragment(ACTION_TRANSFER_CANCELED, null, null);
+                break;
         }
     }
 
@@ -87,10 +94,7 @@ public class MaliTransferListActivity extends CaspianActivitySingleFragment {
 
     private void updateMaliTransferList()
     {
-        if (getFragmentContainer() != null && getFragmentContainer() instanceof IFragmentCallback) {
-            ((IFragmentCallback) getFragmentContainer())
-                    .onMyActivityCallback(MaliTransferListFragment.REFRESH_LIST, null, null);
-        }
+        this.informMyFragment(Actions.REFRESH_LIST, null, null);
     }
 
 

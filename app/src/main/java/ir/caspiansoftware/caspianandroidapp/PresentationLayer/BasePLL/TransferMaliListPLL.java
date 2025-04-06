@@ -12,6 +12,7 @@ import info.elyasi.android.elyasilib.Dialogs.IDialogCallback;
 import info.elyasi.android.elyasilib.Dialogs.ProgressDialog;
 import info.elyasi.android.elyasilib.UI.AAsyncTask;
 import info.elyasi.android.elyasilib.UI.ActivityFragmentExt;
+import info.elyasi.android.elyasilib.UI.FormActionType;
 import info.elyasi.android.elyasilib.UI.IActivityCallback;
 import info.elyasi.android.elyasilib.UI.IAsyncForm;
 import ir.caspiansoftware.caspianandroidapp.Actions;
@@ -68,6 +69,7 @@ public class TransferMaliListPLL {
         public void dialog_callback(DialogResult dialogResult, Integer result, int requestCode) {
             if (dialogResult != DialogResult.Yes) {
                 mAsyncForm.stopProgress();
+                mActivityCallback.onMyFragmentCallBack(Actions.ACTION_TRANSFER_CANCELED, FormActionType.CANCEL);
                 return;
             }
 

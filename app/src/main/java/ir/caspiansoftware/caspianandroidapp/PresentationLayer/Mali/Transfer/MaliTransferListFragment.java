@@ -109,6 +109,10 @@ public class MaliTransferListFragment extends CaspianDataGridFragment<MaliModel>
             case REFRESH_LIST:
                 RefreshList();
                 break;
+
+            case Actions.ACTION_TRANSFER_CANCELED:
+                mSelectedRowsList.clear();
+                break;
         }
     }
 
