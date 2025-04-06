@@ -17,14 +17,8 @@ public class Actions {
 
     public static final String REFRESH_LIST = "refresh_list";
 
-    public static final String ACTION_TRANSFER_CANCELED = "action_transfer_canceled";
-    public static final String ACTION_TRANSFER_LIST = "action_transfer_list";
     public static final String ACTION_TRANSFER_PFaktor = "action_transfer_pfaktor";
-    public static final String ACTION_TRANSFER_PFaktor_DONE = "action_transfer_pfaktor_done";
     public static final String ACTION_TRANSFER_MALI = "action_transfer_mali";
-    public static final String ACTION_CONFIRM_MALI_DONE = "action_transfer_mali_done";
-
-
     public static final String ACTION_ENTITY_SELECTION = "action_entity_selection";
     public static final String ACTION_NEW_MALI = "action_new_mali";
 

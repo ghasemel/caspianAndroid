@@ -36,6 +36,7 @@ public class MaliWebService extends RESTDotNetWebService {
 
         try {
 
+
             JSONArray jsonArray = new JSONArray();
             for (MaliModel maliModel : maliModels) {
                 jsonArray.put(maliModel.toJSON());

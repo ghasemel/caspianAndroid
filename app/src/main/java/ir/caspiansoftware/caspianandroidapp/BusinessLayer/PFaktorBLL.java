@@ -120,6 +120,20 @@ public class PFaktorBLL extends ABusinessLayer implements TransferToServerServic
         }
     }
 
+    public List<MPFaktorModel> assignRelatedSPfaktorModels(List<MPFaktorModel> mpFaktorModels) {
+        List<MPFaktorModel> list = new ArrayList<>();
+        for (MPFaktorModel mpFaktor : mpFaktorModels) {
+            ArrayList<SPFaktorModel> spList = getSPfaktorListByMPFaktorId(mpFaktor.getId());
+            if (spList != null) {
+                Log.d(TAG, "spList.size(): " + spList.size());
+                mpFaktor.setSPFaktorList(spList);
+                list.add(mpFaktor);
+            }
+
+        }
+        return list;
+    }
+
     public ArrayList<SPFaktorModel> getSPfaktorListByMPFaktorId(int mpFaktorId) {
         try (SPFaktorDataSource spFaktorDataSource = new SPFaktorDataSource(mContext)) {
             ArrayList<SPFaktorModel> spFaktorList = spFaktorDataSource.getByMPFaktorId(mpFaktorId);
@@ -319,7 +333,7 @@ public class PFaktorBLL extends ABusinessLayer implements TransferToServerServic
         }
     }
 
-    public ArrayList<MPFaktorModel> getMPFaktorsByLast() throws Exception {
+    public ArrayList<MPFaktorModel> getMPFaktorsDescending() throws Exception {
 
         try (MPFaktorDataSource mpFaktorDataSource = new MPFaktorDataSource(mContext)) {
             if (Vars.YEAR.getId() > 0) {

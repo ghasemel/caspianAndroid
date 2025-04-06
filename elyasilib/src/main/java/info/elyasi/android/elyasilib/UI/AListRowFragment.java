@@ -1,6 +1,7 @@
 package info.elyasi.android.elyasilib.UI;
 
 import android.app.Activity;
+import android.app.Notification;
 import android.os.Bundle;
 
 import androidx.fragment.app.ListFragment;
@@ -18,7 +19,10 @@ import org.json.JSONException;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.BiFunction;
+import java.util.function.Consumer;
 
+import info.elyasi.android.elyasilib.Thread.ICallBack;
 import info.elyasi.android.elyasilib.Utility.JsonExt;
 
 /**
@@ -63,8 +67,7 @@ public abstract class AListRowFragment<TListItem> extends ListFragment { //TResp
             LoadDataAsync();
     }
 
-    public void LoadDataAsync(Object... params)
-    {
+    public void LoadDataAsync(Consumer<String> callBack, Object... params) {
         class RunAsync extends AAsyncTask<Object, Void, ArrayList<TListItem>> {
 
             @Override
@@ -85,16 +88,24 @@ public abstract class AListRowFragment<TListItem> extends ListFragment { //TResp
                     try {
                         MyAdapter myAdapter = postExecute(response);
                         //if (myAdapter != null)
-                            setListAdapter(myAdapter);
+                        setListAdapter(myAdapter);
                     } catch (Exception ex) {
                         showError(ex);
                     }
                 }
+
+                if (callBack != null)
+                    callBack.accept("DONE");
             }
         }
 
         RunAsync runAsync = new RunAsync();
         runAsync.execute(params);
+    }
+
+    public void LoadDataAsync(Object... params)
+    {
+        LoadDataAsync(null, params);
     }
 
     @SuppressWarnings("unchecked")

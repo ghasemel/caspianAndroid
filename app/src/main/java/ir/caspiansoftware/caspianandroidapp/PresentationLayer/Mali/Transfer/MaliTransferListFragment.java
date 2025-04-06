@@ -3,13 +3,16 @@ package ir.caspiansoftware.caspianandroidapp.PresentationLayer.Mali.Transfer;
 import android.app.Activity;
 import android.util.Log;
 import android.view.View;
+import android.widget.HorizontalScrollView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Consumer;
 
+import info.elyasi.android.elyasilib.Thread.ICallBack;
 import info.elyasi.android.elyasilib.UI.FormActionType;
 import info.elyasi.android.elyasilib.UI.IActivityCallback;
 import info.elyasi.android.elyasilib.UI.IFragmentCallback;
@@ -37,6 +40,8 @@ public class MaliTransferListFragment extends CaspianDataGridFragment<MaliModel>
 
     private List<MaliModel> mSelectedRowsList;
 
+    private HorizontalScrollView mMainScrollView;
+
 
     @Override
     protected int getLayoutId() {
@@ -53,8 +58,14 @@ public class MaliTransferListFragment extends CaspianDataGridFragment<MaliModel>
 
     }
 
+    private int maxScrollSpace = 0;
     private void RefreshList() {
-        getRowFragment().LoadDataAsync();
+        getRowFragment().LoadDataAsync(s -> {
+            Log.d(TAG, mMainScrollView.getScrollX() + " RAOUF1," + mMainScrollView.getScrollY());
+            maxScrollSpace = Math.max(maxScrollSpace, mMainScrollView.getScrollX());
+            mMainScrollView.setScrollX(maxScrollSpace);
+            Log.d(TAG, mMainScrollView.getScrollX() + " RAOUF2," + mMainScrollView.getScrollY());
+        });
         mSelectedRowsList = new ArrayList<>();
     }
 
@@ -98,6 +109,7 @@ public class MaliTransferListFragment extends CaspianDataGridFragment<MaliModel>
         mToolbarExit = (LinearLayout) parentView.findViewById(R.id.toolbar_exit);
         mToolbarNewMali = (LinearLayout) parentView.findViewById(R.id.toolbar_new_mali);
         mToolbarSyncBtn = (LinearLayout) parentView.findViewById(R.id.toolbar_sync_selection);
+        mMainScrollView = parentView.findViewById(R.id.mainScrollView);
     }
 
     @Override
@@ -107,10 +119,6 @@ public class MaliTransferListFragment extends CaspianDataGridFragment<MaliModel>
         switch (actionName) {
             case REFRESH_LIST:
                 RefreshList();
-                break;
-
-            case Actions.ACTION_TRANSFER_CANCELED:
-                mSelectedRowsList.clear();
                 break;
         }
     }
@@ -135,7 +143,7 @@ public class MaliTransferListFragment extends CaspianDataGridFragment<MaliModel>
                 return;
             }
 
-            mActivityCallback.onMyFragmentCallBack(Actions.ACTION_TRANSFER_MALI, null, mSelectedRowsList);
+            mActivityCallback.onMyFragmentCallBack(Actions.ACTION_TRANSFER_MALI, FormActionType.New, mSelectedRowsList);
         }
     }
 

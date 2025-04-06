@@ -32,14 +32,17 @@ public class TransferToServerPLL<T> {
     private boolean mCancel = false;
     private List<T> dataModels;
 
+    private final String actionName;
+
     private final TransferToServerService<T> transferToServerService;
 
 
-    public TransferToServerPLL(Context context, IAsyncForm fragment, IActivityCallback activityCallback, TransferToServerService<T> transferToServerService) {
+    public TransferToServerPLL(Context context, IAsyncForm fragment, IActivityCallback activityCallback, TransferToServerService<T> transferToServerService, String actionName) {
         mContext = context;
         mAsyncForm = fragment;
         mActivityCallback = activityCallback;
         this.transferToServerService = transferToServerService;
+        this.actionName = actionName;
     }
 
     public void start(final List<T> maliModels) {
@@ -55,9 +58,9 @@ public class TransferToServerPLL<T> {
 
 
             mAsyncForm.messageBoxYesNo(
-                    R.string.mali_send_list_to_server_title,
+                    R.string.transfer_to_server_title,
                     String.format(
-                            mContext.getString(R.string.mali_send_list_question),
+                            mContext.getString(R.string.transfer_to_server_question),
                             String.valueOf(maliModels.size())
                     ),
                     new DoSendingDialogCallBack());
@@ -71,16 +74,16 @@ public class TransferToServerPLL<T> {
         public void dialog_callback(DialogResult dialogResult, Integer result, int requestCode) {
             if (dialogResult != DialogResult.Yes) {
                 mAsyncForm.stopProgress();
-                mActivityCallback.onMyFragmentCallBack(Actions.ACTION_TRANSFER_CANCELED, FormActionType.CANCEL);
+                mActivityCallback.onMyFragmentCallBack(actionName, FormActionType.CANCEL);
                 return;
             }
 
             mProgressDialog = new ProgressDialog();
-            mProgressDialog.setTitle(mContext.getString(R.string.mali_send_list_to_server_title));
+            mProgressDialog.setTitle(mContext.getString(R.string.transfer_to_server_title));
             mProgressDialog.setMax(dataModels.size());
             mProgressDialog.setDialogCallback(new ProgressDialogCallback());
             mProgressDialog.setAutoClose(false);
-            mProgressDialog.show(mAsyncForm.getActivity().getFragmentManager(), "send_Mali");
+            mProgressDialog.show(mAsyncForm.getActivity().getFragmentManager(), "transfer_to_server");
 
            class RunAsync extends AAsyncTask<Void, String, String> {
 
@@ -109,8 +112,10 @@ public class TransferToServerPLL<T> {
                             transferToServerService.sendToServer(dataModels);
                         } catch (Exception ex) {
                             setException(ex);
+                            return Constant.FAILED;
                         }
                     } else {
+                        setException(new RuntimeException((mContext.getString(R.string.transfer_to_server_fail))));
                         return Constant.FAILED;
                     }
 
@@ -125,12 +130,11 @@ public class TransferToServerPLL<T> {
 
                     if (isException()) {
                         mProgressDialog.Close();
-                        mAsyncForm.showError(getException(), null);
+                        mAsyncForm.showError(getException().getMessage(), null);
+                        mActivityCallback.onMyFragmentCallBack(actionName, FormActionType.FAILED, (Object) null);
                     } else {
                         if (result.equals(Constant.SUCCESS)) {
-                            mActivityCallback.onMyFragmentCallBack(Actions.ACTION_TRANSFER_PFaktor_DONE, null, (Object) null);
-                        } else if (result.equals(Constant.FAILED)) {
-                            mAsyncForm.showError(mContext.getString(R.string.pfaktor_is_empty), null);
+                            mActivityCallback.onMyFragmentCallBack(actionName, FormActionType.DONE, (Object) null);
                         }
                     }
 

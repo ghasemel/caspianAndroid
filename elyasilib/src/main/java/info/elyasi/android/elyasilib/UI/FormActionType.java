@@ -12,7 +12,9 @@ public enum FormActionType implements Serializable {
     VIEW,
     SELECT_BED,
     SELECT_BES,
-    CANCEL;
+    CANCEL,
+    FAILED,
+    DONE;
 
 
     //Select

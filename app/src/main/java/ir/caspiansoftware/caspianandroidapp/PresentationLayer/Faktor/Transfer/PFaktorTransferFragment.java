@@ -3,12 +3,14 @@ package ir.caspiansoftware.caspianandroidapp.PresentationLayer.Faktor.Transfer;
 import android.app.Activity;
 import android.util.Log;
 import android.view.View;
+import android.widget.HorizontalScrollView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Consumer;
 
 import info.elyasi.android.elyasilib.UI.FormActionType;
 import info.elyasi.android.elyasilib.UI.IActivityCallback;
@@ -35,6 +37,8 @@ public class PFaktorTransferFragment extends CaspianDataGridFragment<MPFaktorMod
 
     private List<MPFaktorModel> mSelectedRowsList;
 
+    private HorizontalScrollView mMainScrollView;
+
 
     @Override
     protected int getLayoutId() {
@@ -51,8 +55,14 @@ public class PFaktorTransferFragment extends CaspianDataGridFragment<MPFaktorMod
 
     }
 
+    private int maxScrollSpace = 0;
     private void RefreshList() {
-        getRowFragment().LoadDataAsync();
+        getRowFragment().LoadDataAsync(s -> {
+            Log.d(TAG, mMainScrollView.getScrollX() + " RAOUF1," +  mMainScrollView.getScrollY());
+            maxScrollSpace = Math.max(maxScrollSpace, mMainScrollView.getScrollX());
+            mMainScrollView.setScrollX(maxScrollSpace);
+            Log.d(TAG, mMainScrollView.getScrollX() + " RAOUF2," +  mMainScrollView.getScrollY());
+        });
         mSelectedRowsList = new ArrayList<>();
     }
 
@@ -96,6 +106,7 @@ public class PFaktorTransferFragment extends CaspianDataGridFragment<MPFaktorMod
         mToolbarExit = (LinearLayout) parentView.findViewById(R.id.toolbar_exit);
         mToolbarNewInvoice = (LinearLayout) parentView.findViewById(R.id.toolbar_new_invoice);
         mToolbarSyncBtn = (LinearLayout) parentView.findViewById(R.id.toolbar_sync_selection);
+        mMainScrollView = parentView.findViewById(R.id.mainScrollView);
     }
 
     @Override
@@ -104,12 +115,7 @@ public class PFaktorTransferFragment extends CaspianDataGridFragment<MPFaktorMod
 
         switch (actionName) {
             case Actions.REFRESH_LIST:
-                mSelectedRowsList.clear();
                 RefreshList();
-                break;
-
-            case Actions.ACTION_TRANSFER_CANCELED:
-                mSelectedRowsList.clear();
                 break;
         }
     }
@@ -134,7 +140,7 @@ public class PFaktorTransferFragment extends CaspianDataGridFragment<MPFaktorMod
                 return;
             }
 
-            mActivityCallback.onMyFragmentCallBack(Actions.ACTION_TRANSFER_PFaktor, null, mSelectedRowsList);
+            mActivityCallback.onMyFragmentCallBack(Actions.ACTION_TRANSFER_PFaktor, FormActionType.New, mSelectedRowsList);
         }
     }
 

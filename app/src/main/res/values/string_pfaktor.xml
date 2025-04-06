@@ -102,10 +102,9 @@
     <string name="sync_select_sync_type" formatted="false">انتخاب نوع بروز رسانی</string>
     <string name="select_entity_type" formatted="false">انتخاب نوع اطلاعات</string>
 
-    <string name="mali_send_list_to_server_title">ارسال اطلاعات به سرور</string>
-    <string name="mali_send_list_question" formatted="false">آیا اطلاعات مربوط به %s سند مالی به سرور ارسال شود؟</string>
-
-    <string name="pfaktor_is_empty">فاکتور انتخابی خالی است و امکان ارسال فاکتورهای خالی به سرور وجود ندارد</string>
+    <string name="transfer_to_server_title">ارسال اطلاعات به سرور</string>
+    <string name="transfer_to_server_question" formatted="false">آیا اطلاعات مربوط به %s سند مالی به سرور ارسال شود؟</string>
+    <string name="transfer_to_server_fail">فاکتور انتخابی خالی است و امکان ارسال فاکتورهای خالی به سرور وجود ندارد</string>
 
     <string name="person_mande_question" formatted="false">آیا میخواهید مانده حساب %s را از سرور بگیرید؟</string>
     <string name="person_mande_title">مانده حساب</string>

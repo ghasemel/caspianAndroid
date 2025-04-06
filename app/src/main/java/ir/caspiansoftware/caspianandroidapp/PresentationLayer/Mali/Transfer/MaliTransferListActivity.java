@@ -1,8 +1,7 @@
 package ir.caspiansoftware.caspianandroidapp.PresentationLayer.Mali.Transfer;
 
-import static ir.caspiansoftware.caspianandroidapp.Actions.ACTION_TRANSFER_CANCELED;
-
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -12,6 +11,7 @@ import androidx.fragment.app.Fragment;
 import java.util.List;
 
 import info.elyasi.android.elyasilib.UI.FormActionType;
+import info.elyasi.android.elyasilib.UI.IActivityCallback;
 import info.elyasi.android.elyasilib.UI.IAsyncForm;
 import ir.caspiansoftware.caspianandroidapp.Actions;
 import ir.caspiansoftware.caspianandroidapp.BaseCaspian.CaspianActionbar;
@@ -64,19 +64,19 @@ public class MaliTransferListActivity extends CaspianActivitySingleFragment {
                 break;
 
             case Actions.ACTION_TRANSFER_MALI:
-                if (parameter != null && parameter[0] instanceof List) {
-                    transferMali((List<MaliModel>) parameter[0]);
+                switch (actionType) {
+                    case New:
+                        if (parameter != null && parameter[0] instanceof List) {
+                            transferMali(getFragmentContainer(), getApplicationContext(), this, (List<MaliModel>) parameter[0]);
+                        }
+                        break;
+
+                    case CANCEL, FAILED, DONE:
+                        Log.d(TAG, "Transfer canceled");
+                        updateMaliTransferList();
                 }
                 break;
 
-            case Actions.ACTION_CONFIRM_MALI_DONE:
-                updateMaliTransferList();
-                break;
-
-            case ACTION_TRANSFER_CANCELED:
-                Log.d(TAG, "Transfer canceled");
-                this.informMyFragment(ACTION_TRANSFER_CANCELED, null, null);
-                break;
         }
     }
 
@@ -96,16 +96,17 @@ public class MaliTransferListActivity extends CaspianActivitySingleFragment {
         this.informMyFragment(Actions.REFRESH_LIST, null, null);
     }
 
-
-    private void transferMali(List<MaliModel> selectedMaliList) {
-        Log.d(TAG, "transferMali()");
-        if (getFragmentContainer() instanceof IAsyncForm) {
+    public static void transferMali(Fragment fragment, Context context, IActivityCallback activityCallback, List<MaliModel> selectedMaliList) {
+        Log.d(TAG, "transferPreInvoice()");
+        if (fragment instanceof IAsyncForm) {
+            var maliBLL = new MaliBLL(context);
             var pll = new TransferToServerPLL<>
                     (
-                            getApplicationContext(),
-                            (IAsyncForm) getFragmentContainer(),
-                            this,
-                            new MaliBLL(getApplicationContext())
+                            context,
+                            (IAsyncForm) fragment,
+                            activityCallback,
+                            maliBLL,
+                            Actions.ACTION_TRANSFER_MALI
                     );
 
             pll.start(selectedMaliList);

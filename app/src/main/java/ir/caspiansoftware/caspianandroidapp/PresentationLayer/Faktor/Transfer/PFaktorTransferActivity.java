@@ -1,7 +1,5 @@
 package ir.caspiansoftware.caspianandroidapp.PresentationLayer.Faktor.Transfer;
 
-import static ir.caspiansoftware.caspianandroidapp.Actions.ACTION_TRANSFER_CANCELED;
-
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -14,13 +12,14 @@ import android.util.Log;
 import java.util.List;
 
 import info.elyasi.android.elyasilib.UI.FormActionType;
+import info.elyasi.android.elyasilib.UI.IActivityCallback;
 import info.elyasi.android.elyasilib.UI.IAsyncForm;
 import ir.caspiansoftware.caspianandroidapp.Actions;
 import ir.caspiansoftware.caspianandroidapp.BaseCaspian.CaspianActionbar;
 import ir.caspiansoftware.caspianandroidapp.BaseCaspian.CaspianActivitySingleFragment;
 import ir.caspiansoftware.caspianandroidapp.BusinessLayer.PFaktorBLL;
-import ir.caspiansoftware.caspianandroidapp.BusinessLayer.TransferToServerService;
 import ir.caspiansoftware.caspianandroidapp.Models.MPFaktorModel;
+import ir.caspiansoftware.caspianandroidapp.Models.MaliModel;
 import ir.caspiansoftware.caspianandroidapp.PresentationLayer.BasePLL.TransferToServerPLL;
 import ir.caspiansoftware.caspianandroidapp.PresentationLayer.Faktor.PFaktorActivity;
 import ir.caspiansoftware.caspianandroidapp.PresentationLayer.Faktor.PFaktorFragment;
@@ -68,18 +67,17 @@ public class PFaktorTransferActivity extends CaspianActivitySingleFragment {
                 break;
 
             case Actions.ACTION_TRANSFER_PFaktor:
-                if (parameter != null && parameter[0] instanceof List) {
-                    transferPreInvoice((List<MPFaktorModel>) parameter[0]);
+                switch (actionType) {
+                    case New:
+                        if (parameter != null && parameter[0] instanceof List) {
+                            transferPreInvoice(getFragmentContainer(), getApplicationContext(), this, (List<MPFaktorModel>) parameter[0]);
+                        }
+                        break;
+
+                    case CANCEL, FAILED, DONE:
+                        Log.d(TAG, "Transfer canceled");
+                        updatePFaktorTransferList();
                 }
-                break;
-
-            case Actions.ACTION_TRANSFER_PFaktor_DONE:
-                updatePFaktorTransferList();
-                break;
-
-            case ACTION_TRANSFER_CANCELED:
-                Log.d(TAG, "Transfer canceled");
-                this.informMyFragment(ACTION_TRANSFER_CANCELED, null, null);
                 break;
         }
     }
@@ -101,17 +99,20 @@ public class PFaktorTransferActivity extends CaspianActivitySingleFragment {
     }
 
 
-    private void transferPreInvoice(List<MPFaktorModel> selectedInvoiceList) {
+    public static void transferPreInvoice(Fragment fragment, Context context, IActivityCallback activityCallback, List<MPFaktorModel> selectedInvoiceList) {
         Log.d(TAG, "transferPreInvoice()");
-        if (getFragmentContainer() instanceof IAsyncForm) {
+        if (fragment instanceof IAsyncForm) {
+            var pfaktorBLL = new PFaktorBLL(context);
             var pll = new TransferToServerPLL<>
                     (
-                            getApplicationContext(),
-                            (IAsyncForm) getFragmentContainer(),
-                            this,
-                            new PFaktorBLL(getApplicationContext())
+                            context,
+                            (IAsyncForm) fragment,
+                            activityCallback,
+                            pfaktorBLL,
+                            Actions.ACTION_TRANSFER_PFaktor
                     );
 
+            selectedInvoiceList = pfaktorBLL.assignRelatedSPfaktorModels(selectedInvoiceList);
             pll.start(selectedInvoiceList);
         }
     }

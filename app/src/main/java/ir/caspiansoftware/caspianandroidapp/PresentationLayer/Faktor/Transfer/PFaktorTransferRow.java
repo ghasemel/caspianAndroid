@@ -31,7 +31,7 @@ public class PFaktorTransferRow extends PFaktorSearchRow {
 
         if (getActivity() != null) {
             PFaktorBLL faktorBLL = new PFaktorBLL(getActivity().getApplicationContext());
-            return faktorBLL.getMPFaktorsByLast();
+            return faktorBLL.getMPFaktorsDescending();
         }
         return null;
     }

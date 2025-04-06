@@ -46,39 +46,42 @@ public class MaliBLL extends ABusinessLayer implements TransferToServerService<M
         Log.d(TAG, "sendToServer()");
 
         try {
-            if (maliList != null) {
-                ResponseWebService response = maliWebService.uploadMaliList(
-                        maliList,
-                        Vars.YEAR.getDataBase());
+            if (maliList == null)
+                return;
 
-                if (response == null)
-                    throw new Exception("responseWebService is null");
+            ResponseWebService response = maliWebService.uploadMaliList(
+                    maliList,
+                    Vars.YEAR.getDataBase()
+            );
 
-                // extract mali inserted number on server side from response
-                List<Integer> listAtfNums = ConvertExt.toList(response.getData());
-                if (listAtfNums != null) {
+            if (response == null)
+                throw new Exception("responseWebService is null");
 
-                    // create MaliDataSource object
+            // extract mali inserted number on server side from response
+            List<Integer> listAtfNums = ConvertExt.toList(response.getData());
+            if (listAtfNums != null) {
 
-                    try (MaliDataSource maliModelDataSource = new MaliDataSource(mContext)) {
-                        // index for mali number list items
-                        int index = 0;
+                // create MaliDataSource object
+                try (MaliDataSource maliModelDataSource = new MaliDataSource(mContext)) {
+                    // index for mali number list items
+                    int index = 0;
 
-                        // for every mali that we send to server
-                        for (MaliModel mp : maliList) {
-                            // update sync info
-                            maliModelDataSource.updateSync(mp.getId(), listAtfNums.get(index++));
-                        }
-
+                    // for every mali that we send to server
+                    for (MaliModel mp : maliList) {
+                        // update sync info
+                        maliModelDataSource.updateSync(mp.getId(), listAtfNums.get(index++));
                     }
-                    // close connection
+
                 }
+                // close connection
             }
+
 
         } finally {
             Log.d(TAG, "sendToServer(): end");
         }
     }
+
     // endregion webservice
 
     // region database
@@ -297,7 +300,7 @@ public class MaliBLL extends ABusinessLayer implements TransferToServerService<M
         }
     }
 
-    public ArrayList<MaliModel> getmaliModelsByLast() throws Exception {
+    public ArrayList<MaliModel> getMaliModelsDescending() throws Exception {
 
         try (MaliDataSource maliDataSource = new MaliDataSource(mContext)) {
             if (Vars.YEAR.getId() > 0) {

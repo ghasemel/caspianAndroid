@@ -16,7 +16,6 @@ import java.util.List;
 
 import info.elyasi.android.elyasilib.UI.AListRowFragment;
 import info.elyasi.android.elyasilib.UI.FormActionType;
-import info.elyasi.android.elyasilib.UI.IAsyncForm;
 import info.elyasi.android.elyasilib.UI.IFragmentCallback;
 import ir.caspiansoftware.caspianandroidapp.Actions;
 import ir.caspiansoftware.caspianandroidapp.BaseCaspian.CaspianActionbar;
@@ -24,8 +23,6 @@ import ir.caspiansoftware.caspianandroidapp.BaseCaspian.CaspianActivityTwoFragme
 import ir.caspiansoftware.caspianandroidapp.BaseCaspian.CaspianFragment;
 import ir.caspiansoftware.caspianandroidapp.BaseCaspian.ErrorExt;
 import ir.caspiansoftware.caspianandroidapp.BaseCaspian.GoToForm;
-import ir.caspiansoftware.caspianandroidapp.BusinessLayer.MaliBLL;
-import ir.caspiansoftware.caspianandroidapp.BusinessLayer.PFaktorBLL;
 import ir.caspiansoftware.caspianandroidapp.BusinessLayer.UserBLL;
 import ir.caspiansoftware.caspianandroidapp.Enum.EntityType;
 import ir.caspiansoftware.caspianandroidapp.Enum.SyncType;
@@ -34,7 +31,6 @@ import ir.caspiansoftware.caspianandroidapp.Models.MPFaktorModel;
 import ir.caspiansoftware.caspianandroidapp.Models.MaliModel;
 import ir.caspiansoftware.caspianandroidapp.PresentationLayer.BasePLL.EntitySelection.EntityTypeSelectionActivity;
 import ir.caspiansoftware.caspianandroidapp.PresentationLayer.BasePLL.Gallery.GalleryActivity;
-import ir.caspiansoftware.caspianandroidapp.PresentationLayer.BasePLL.TransferToServerPLL;
 import ir.caspiansoftware.caspianandroidapp.PresentationLayer.BasePLL.Sync.SyncPLL;
 import ir.caspiansoftware.caspianandroidapp.PresentationLayer.BasePLL.Sync.SyncTypeActivity;
 import ir.caspiansoftware.caspianandroidapp.PresentationLayer.Faktor.Transfer.PFaktorTransferActivity;
@@ -177,19 +173,32 @@ public class MainActivity extends CaspianActivityTwoFragments {
 //                break;
 
             case Actions.ACTION_TRANSFER_PFaktor:
-                if (parameter != null && parameter[0] instanceof List) {
-                    transferPreInvoice((List<MPFaktorModel>) parameter[0]);
+                Log.d(TAG, "Transfer " + actionType);
+                switch (actionType) {
+                    case New:
+                        if (parameter != null && parameter[0] instanceof List) {
+                            PFaktorTransferActivity.transferPreInvoice(getFragmentContainer(), getApplicationContext(), this, (List<MPFaktorModel>) parameter[0]);
+                        }
+                        break;
+
+                    case CANCEL, FAILED, DONE:
+                        Log.d(TAG, "Transfer canceled");
+                        updatePFaktorTransferList();
                 }
                 break;
 
-            case Actions.ACTION_TRANSFER_PFaktor_DONE:
-                Log.d(TAG, "action =" + Actions.ACTION_TRANSFER_PFaktor_DONE);
-                updatePFaktorConfirmList();
-                break;
-
             case Actions.ACTION_TRANSFER_MALI:
-                if (parameter != null && parameter[0] instanceof List) {
-                    transferMali((List<MaliModel>) parameter[0]);
+                Log.d(TAG, "Transfer " + actionType);
+                switch (actionType) {
+                    case New:
+                        if (parameter != null && parameter[0] instanceof List) {
+                            MaliTransferListActivity.transferMali(getFragmentContainer(), getApplicationContext(), this, (List<MaliModel>) parameter[0]);
+                        }
+                        break;
+
+                    case CANCEL, FAILED, DONE:
+
+                        updateMaliTransferList();
                 }
                 break;
 
@@ -225,7 +234,7 @@ public class MainActivity extends CaspianActivityTwoFragments {
                 break;
 
             case REQUEST_CODE_NEW_PFAKTOR:
-                updatePFaktorConfirmList();
+                updatePFaktorTransferList();
                 break;
 
             case REQUEST_CODE_SYNC_TYPE:
@@ -246,36 +255,6 @@ public class MainActivity extends CaspianActivityTwoFragments {
                     showConfirmList(entityType);
                 }
                 break;
-        }
-    }
-
-    private void transferPreInvoice(List<MPFaktorModel> selectedInvoiceList) {
-        Log.d(TAG, "transferPreInvoice()");
-        if (getFragmentContainer() instanceof IAsyncForm) {
-            var pll = new TransferToServerPLL<>
-                    (
-                            getApplicationContext(),
-                            (IAsyncForm) getFragmentContainer(),
-                            this,
-                            new PFaktorBLL(getApplicationContext())
-                    );
-
-            pll.start(selectedInvoiceList);
-        }
-    }
-
-    private void transferMali(List<MaliModel> selectedMaliList) {
-        Log.d(TAG, "transferMali()");
-        if (getFragmentContainer() instanceof IAsyncForm) {
-            var pll = new TransferToServerPLL<>
-                    (
-                            getApplicationContext(),
-                            (IAsyncForm) getFragmentContainer(),
-                            this,
-                            new MaliBLL(getApplicationContext())
-                    );
-
-            pll.start(selectedMaliList);
         }
     }
 
@@ -338,7 +317,11 @@ public class MainActivity extends CaspianActivityTwoFragments {
         }
     }
 
-    private void updatePFaktorConfirmList() {
+    private void updatePFaktorTransferList() {
+        informMyDetailFragment(Actions.REFRESH_LIST, null, null);
+    }
+
+    private void updateMaliTransferList() {
         informMyDetailFragment(Actions.REFRESH_LIST, null, null);
     }
 

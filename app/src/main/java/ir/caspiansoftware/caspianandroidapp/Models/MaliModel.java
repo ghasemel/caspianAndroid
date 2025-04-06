@@ -85,22 +85,22 @@ public class MaliModel implements Serializable, Comparable<MaliModel>, IJson {
         if (getPersonBedModel() == null)
             throw new RuntimeException(CaspianErrors.MALI_BED_INVALID);
 
-        json.put("mali_id", id);
-        json.put("type", maliType.getValue());
-        json.put("bed_code", personBedModel.getCode());
-        json.put("bes_code", personBesModel != null ? personBesModel.getCode() : "");
-        json.put("mali_date", maliDate);
-        json.put("des", description);
-        json.put("vcheck_sarresid", vcheckSarresidDate);
-        json.put("vcheck_bank", vcheckBank);
-        json.put("vcheck_serial", vcheckSerial);
+        json.put("maliId", id);
+        json.put("maliType", maliType.getValue());
+        json.put("codeBed", personBedModel.getCode());
+        json.put("codeBes", personBesModel != null ? personBesModel.getCode() : "");
+        json.put("maliDate", maliDate);
+        json.put("description", description);
+        json.put("vcheckSarresidDate", vcheckSarresidDate);
+        json.put("vcheckBank", vcheckBank);
+        json.put("vcheckSerial", vcheckSerial);
         json.put("amount", amount);
         json.put("lat", getLat());
         json.put("lon", getLon());
 
         if (getCreateDate() == null)
             setCreateDate(new Date(System.currentTimeMillis()));
-        json.put("create_date", getCreateDateInIsoFormat());
+        json.put("createDate", getCreateDateInIsoFormat());
 
         return json;
     }

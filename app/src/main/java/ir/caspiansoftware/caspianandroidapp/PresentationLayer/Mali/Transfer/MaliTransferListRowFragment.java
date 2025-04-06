@@ -31,7 +31,7 @@ public class MaliTransferListRowFragment extends MaliSearchRowFragment {
 
         if (getActivity() != null) {
             MaliBLL maliBLL = new MaliBLL(getActivity().getApplicationContext());
-            return maliBLL.getMaliModels();
+            return maliBLL.getMaliModelsDescending();
         }
         return null;
     }
