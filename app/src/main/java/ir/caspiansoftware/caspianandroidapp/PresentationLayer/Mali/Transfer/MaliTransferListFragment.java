@@ -33,8 +33,8 @@ public class MaliTransferListFragment extends CaspianDataGridFragment<MaliModel>
     private LinearLayout mToolbarExit;
     private IActivityCallback mActivityCallback;
 
-    private RelativeLayout mToolbarNewMali;
-    private RelativeLayout mToolbarSyncBtn;
+    private LinearLayout mToolbarNewMali;
+    private LinearLayout mToolbarSyncBtn;
 
     private List<MaliModel> mSelectedRowsList;
 
@@ -97,8 +97,8 @@ public class MaliTransferListFragment extends CaspianDataGridFragment<MaliModel>
 
     private void mapToolbar(View parentView) {
         mToolbarExit = (LinearLayout) parentView.findViewById(R.id.toolbar_exit);
-        mToolbarNewMali = (RelativeLayout) parentView.findViewById(R.id.toolbar_new_mali);
-        mToolbarSyncBtn = (RelativeLayout) parentView.findViewById(R.id.toolbar_sync_selection);
+        mToolbarNewMali = (LinearLayout) parentView.findViewById(R.id.toolbar_new_mali);
+        mToolbarSyncBtn = (LinearLayout) parentView.findViewById(R.id.toolbar_sync_selection);
     }
 
     @Override

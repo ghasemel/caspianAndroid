@@ -1,148 +1,120 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<HorizontalScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layoutDirection="rtl">
+    android:fillViewport="true"
+    android:layoutDirection="rtl"
+    android:orientation="vertical"
+    android:padding="5dp">
 
-    <RelativeLayout
-        android:id="@+id/toolbar"
-        style="@style/toolbar_style">
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
         <LinearLayout
-            android:id="@+id/toolbar_exit"
-            style="@style/toolbar_button_close">
+            android:id="@+id/toolbar"
+            style="@style/toolbar_style_linear">
 
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:src="@drawable/toolbar_close"/>
+            <LinearLayout
+                android:id="@+id/toolbar_new_mali"
+                style="@style/toolbar_button">
 
-            <TextView
-                style="@style/toolbar_label"
-                android:text="@string/main_exit" />
+                <ImageView
+                    style="@style/toolbar_btn_image_view"
+                    android:src="@drawable/toolbar_add" />
+
+                <TextView
+                    style="@style/toolbar_label_beside_icon"
+                    android:text="@string/new_object" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/toolbar_sync_selection"
+                style="@style/toolbar_button">
+
+                <ImageView
+                    style="@style/toolbar_btn_image_view"
+                    android:src="@drawable/toolbar_upload_all" />
+
+                <TextView
+                    style="@style/toolbar_label_beside_icon"
+                    android:text="@string/upload_selection" />
+            </LinearLayout>
         </LinearLayout>
 
 
-       <!-- <RelativeLayout
-            android:id="@+id/toolbar_select_all"
-            style="@style/toolbar_button_frame">
-
-            <CheckedTextView
-                android:checked="true"
-                android:checkMark="@android:drawable/checkbox_on_background"
-                android:id="@+id/select_all_image"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/select_all"/>
-        </RelativeLayout>-->
-
-        <RelativeLayout
-            android:id="@+id/toolbar_new_mali"
-            style="@style/toolbar_button_frame">
-
-            <ImageView
-                android:id="@+id/new_mali_image"
-                style="@style/toolbar_btn_image_view"
-                android:src="@drawable/toolbar_add"/>
+        <LinearLayout style="@style/list_header_row">
 
             <TextView
-                style="@style/toolbar_label_beside_icon"
-                android:layout_toEndOf="@id/new_mali_image"
-                android:text="@string/new_object" />
-        </RelativeLayout>
+                style="@style/list_textView"
+                android:layout_width="70dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@android:color/transparent"
+                android:ellipsize="none"
+                android:gravity="center"
+                android:scrollHorizontally="false"
+                android:text="@string/list_select" />
 
-        <RelativeLayout
-            android:id="@+id/toolbar_sync_selection"
-            style="@style/toolbar_button_frame"
-            android:layout_toEndOf="@id/toolbar_new_mali">
-
-            <ImageView
-                android:id="@+id/uploadAll"
-                style="@style/toolbar_btn_image_view"
-                android:src="@drawable/toolbar_upload_all"/>
 
             <TextView
-                style="@style/toolbar_label_beside_icon"
-                android:layout_toEndOf="@id/uploadAll"
-                android:text="@string/upload_selection" />
-        </RelativeLayout>
-    </RelativeLayout>
+                style="@style/list_textView"
+                android:layout_width="60dp"
+                android:layout_weight="1"
+                android:background="@android:color/transparent"
+                android:text="@string/radif"
+                android:visibility="gone" />
 
 
-    <!--<include-->
-        <!--layout="@layout/fragment_faktor_search"-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="match_parent"-->
-        <!--android:layout_below="@id/toolbar"/>-->
-    <LinearLayout
-        android:id="@+id/header_row"
-        style="@style/list_header_row"
-        android:layout_below="@id/toolbar">
+            <TextView
+                android:id="@+id/column_num"
+                style="@style/list_textView"
+                android:layout_width="100dp"
+                android:layout_weight="1"
+                android:background="@android:color/transparent"
+                android:text="@string/mali_num_list" />
 
 
-        <TextView
-            style="@style/list_textView"
-            android:background="@android:color/transparent"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:textSize="13sp"
-            android:ellipsize="none"
-            android:scrollHorizontally="false"
-            android:layout_height="match_parent" />
+            <TextView
+                android:id="@+id/column_date"
+                style="@style/list_textView"
+                android:layout_width="120dp"
+                android:layout_weight="2"
+                android:background="@android:color/transparent"
+                android:text="@string/date_list" />
 
 
-        <TextView
-            android:visibility="gone"
-            style="@style/list_textView"
-            android:background="@android:color/transparent"
-            android:layout_weight="1"
-            android:text="@string/radif"/>
+            <TextView
+                android:id="@+id/column_customer"
+                style="@style/list_textView"
+                android:layout_width="300dp"
+                android:layout_weight="6"
+                android:background="@android:color/transparent"
+                android:text="@string/list_name_heasb" />
+
+            <TextView
+                android:id="@+id/column_price_total"
+                style="@style/list_textView"
+                android:layout_width="120dp"
+                android:layout_weight="2"
+                android:background="@android:color/transparent"
+                android:gravity="center"
+                android:text="@string/price_amount" />
 
 
-        <TextView
-            android:id="@+id/column_num"
-            style="@style/list_textView"
-            android:background="@android:color/transparent"
-            android:layout_weight="1"
-            android:text="@string/mali_num_list" />
+        </LinearLayout>
 
 
-        <TextView
-            android:id="@+id/column_date"
-            style="@style/list_textView"
-            android:background="@android:color/transparent"
-            android:layout_weight="2"
-            android:text="@string/date_list" />
-
-
-        <TextView
-            android:id="@+id/column_customer"
-            style="@style/list_textView"
-            android:background="@android:color/transparent"
-            android:layout_weight="6"
-            android:text="@string/list_name_heasb" />
-
-        <TextView
-            android:id="@+id/column_price_total"
-            style="@style/list_textView"
-            android:background="@android:color/transparent"
-            android:layout_weight="2"
-            android:text="@string/price_amount"
-            android:gravity="center"/>
-
-    </LinearLayout>
-
-
-    <fragment
-        android:tag="@string/fragment_mali_confirm_row_tag"
-        android:id="@+id/fragment_mali_confirm_row"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        tools:layout="@layout/fragment_mali_transfer_list_row"
-        android:layout_below="@id/header_row"
-        class="ir.caspiansoftware.caspianandroidapp.PresentationLayer.Mali.Transfer.MaliTransferListRowFragment"/>
-    <!--<fragment-->
+        <fragment
+            android:id="@+id/fragment_mali_confirm_row"
+            class="ir.caspiansoftware.caspianandroidapp.PresentationLayer.Mali.Transfer.MaliTransferListRowFragment"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:tag="@string/fragment_mali_confirm_row_tag"
+            tools:layout="@layout/fragment_mali_transfer_list_row" />
+        <!--<fragment-->
         <!--android:tag="@string/fragment_person_list_row_tag"-->
         <!--android:layout_width="match_parent"-->
         <!--android:layout_height="match_parent"-->
@@ -151,8 +123,10 @@
         <!--class="ir.caspiansoftware.caspianandroidapp.PresentationLayer.mali.Search.PFaktorSearchFragment/>-->
         <!-- />-->
 
-    <ProgressBar
-        style="@style/progressBarCircle"
-        android:id="@+id/progressBar" />
+        <ProgressBar
+            android:id="@+id/progressBar"
+            style="@style/progressBarCircle" />
 
-</RelativeLayout>
+    </LinearLayout>
+
+</HorizontalScrollView>

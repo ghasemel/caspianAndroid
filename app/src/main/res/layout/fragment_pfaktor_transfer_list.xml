@@ -22,7 +22,6 @@
                 style="@style/toolbar_button">
 
                 <ImageView
-                    android:id="@+id/new_invoice_image"
                     style="@style/toolbar_btn_image_view"
                     android:src="@drawable/toolbar_add" />
 
@@ -36,7 +35,6 @@
                 style="@style/toolbar_button">
 
                 <ImageView
-                    android:id="@+id/uploadAll"
                     style="@style/toolbar_btn_image_view"
                     android:src="@drawable/toolbar_upload_all"/>
 

@@ -19,6 +19,7 @@ import ir.caspiansoftware.caspianandroidapp.BaseCaspian.CaspianActivitySingleFra
 import ir.caspiansoftware.caspianandroidapp.Models.MaliModel;
 import ir.caspiansoftware.caspianandroidapp.PresentationLayer.BasePLL.SendPreInvoiceListPLL;
 import ir.caspiansoftware.caspianandroidapp.PresentationLayer.Faktor.PFaktorActivity;
+import ir.caspiansoftware.caspianandroidapp.PresentationLayer.Mali.MaliActivity;
 import ir.caspiansoftware.caspianandroidapp.PresentationLayer.Mali.MaliFragment;
 import ir.caspiansoftware.caspianandroidapp.R;
 
@@ -117,7 +118,7 @@ public class MaliTransferListActivity extends CaspianActivitySingleFragment {
     }
 
     public static void showNewMaliForResult(Activity activity, int requestCode) {
-        Intent i = new Intent(activity.getApplicationContext(), PFaktorActivity.class);
+        Intent i = new Intent(activity.getApplicationContext(), MaliActivity.class);
         i.putExtra(MaliFragment.EXTRA_ACTION_NEW, "");
         activity.startActivityForResult(i, requestCode);
     }
