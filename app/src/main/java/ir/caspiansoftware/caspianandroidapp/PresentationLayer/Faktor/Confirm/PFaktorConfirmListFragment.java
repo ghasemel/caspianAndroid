@@ -33,15 +33,15 @@ public class PFaktorConfirmListFragment extends CaspianDataGridFragment<MPFaktor
     private LinearLayout mToolbarExit;
     private IActivityCallback mActivityCallback;
 
-    private RelativeLayout mToolbarNewInvoice;
-    private RelativeLayout mToolbarSyncBtn;
+    private LinearLayout mToolbarNewInvoice;
+    private LinearLayout mToolbarSyncBtn;
 
     private List<MPFaktorModel> mSelectedRowsList;
 
 
     @Override
     protected int getLayoutId() {
-        return R.layout.fragment_pfaktor_confirm_list;
+        return R.layout.fragment_pfaktor_transfer_list;
     }
 
     @Override
@@ -97,8 +97,8 @@ public class PFaktorConfirmListFragment extends CaspianDataGridFragment<MPFaktor
 
     private void mapToolbar(View parentView) {
         mToolbarExit = (LinearLayout) parentView.findViewById(R.id.toolbar_exit);
-        mToolbarNewInvoice = (RelativeLayout) parentView.findViewById(R.id.toolbar_new_invoice);
-        mToolbarSyncBtn = (RelativeLayout) parentView.findViewById(R.id.toolbar_sync_selection);
+        mToolbarNewInvoice = (LinearLayout) parentView.findViewById(R.id.toolbar_new_invoice);
+        mToolbarSyncBtn = (LinearLayout) parentView.findViewById(R.id.toolbar_sync_selection);
     }
 
     @Override

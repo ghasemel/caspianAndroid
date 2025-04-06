@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+<HorizontalScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true"
+    android:layoutDirection="rtl"
+    android:orientation="vertical"
+    android:padding="5dp">
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:id="@+id/toolbar"
+            style="@style/toolbar_style_linear">
+
+            <LinearLayout
+                android:id="@+id/toolbar_new_invoice"
+                style="@style/toolbar_button">
+
+                <ImageView
+                    android:id="@+id/new_invoice_image"
+                    style="@style/toolbar_btn_image_view"
+                    android:src="@drawable/toolbar_add" />
+
+                <TextView
+                    style="@style/toolbar_label_beside_icon"
+                    android:text="@string/new_object" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/toolbar_sync_selection"
+                style="@style/toolbar_button">
+
+                <ImageView
+                    android:id="@+id/uploadAll"
+                    style="@style/toolbar_btn_image_view"
+                    android:src="@drawable/toolbar_upload_all"/>
+
+                <TextView
+                    style="@style/toolbar_label_beside_icon"
+                    android:text="@string/upload_selection" />
+            </LinearLayout>
+        </LinearLayout>
+
+
+        <LinearLayout style="@style/list_header_row">
+
+            <TextView
+                style="@style/list_textView"
+                android:layout_width="70dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@android:color/transparent"
+                android:ellipsize="none"
+                android:gravity="center"
+                android:scrollHorizontally="false"
+                android:text="@string/list_select"/>
+
+
+            <TextView
+                style="@style/list_textView"
+                android:visibility="gone"
+                android:layout_width="60dp"
+                android:layout_weight="1"
+                android:background="@android:color/transparent"
+                android:text="@string/radif" />
+
+
+            <TextView
+                android:id="@+id/column_num"
+                style="@style/list_textView"
+                android:layout_width="100dp"
+                android:layout_weight="1"
+                android:background="@android:color/transparent"
+                android:text="@string/faktor_num_list" />
+
+
+            <TextView
+                android:id="@+id/column_date"
+                style="@style/list_textView"
+                android:layout_width="120dp"
+                android:layout_weight="2"
+                android:background="@android:color/transparent"
+                android:text="@string/date_list" />
+
+
+            <TextView
+                android:id="@+id/column_customer"
+                style="@style/list_textView"
+                android:layout_width="300dp"
+                android:layout_weight="6"
+                android:background="@android:color/transparent"
+                android:text="@string/list_name_heasb" />
+
+            <TextView
+                android:id="@+id/column_price_total"
+                style="@style/list_textView"
+                android:layout_width="120dp"
+                android:layout_weight="2"
+                android:background="@android:color/transparent"
+                android:gravity="center"
+                android:text="@string/list_price_total" />
+
+
+        </LinearLayout>
+
+
+        <fragment
+            android:id="@+id/fragment_invoice_confirm_row"
+            class="ir.caspiansoftware.caspianandroidapp.PresentationLayer.Faktor.Confirm.PFaktorConfirmListRow"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:tag="@string/fragment_invoice_confirm_row_tag"
+            tools:layout="@layout/fragment_pfaktor_transfer_list_row" />
+
+        <ProgressBar
+            android:id="@+id/progressBar"
+            style="@style/progressBarCircle" />
+
+    </LinearLayout>
+
+</HorizontalScrollView>

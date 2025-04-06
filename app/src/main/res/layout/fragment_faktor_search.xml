@@ -46,7 +46,6 @@
                 android:layout_width="120dp"
                 android:gravity="start" />
 
-
             <TextView
                 style="@style/label"
                 android:layout_width="30dp" />
@@ -97,7 +96,7 @@
 
             <TextView
                 style="@style/list_textView"
-                android:layout_width="40dp"
+                android:layout_width="70dp"
                 android:layout_height="match_parent"
                 android:background="@android:color/transparent"
                 android:ellipsize="none"

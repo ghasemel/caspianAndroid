@@ -33,6 +33,7 @@
     <string name="price_amount">مبلغ:</string>
     <string name="list_price_total">مبلغ کل</string>
     <string name="list_synced">ارسال شده</string>
+    <string name="list_select">انتخاب</string>
     <string name="list_synchronization">همگام\n سازی</string>
 
     <string name="invoice_kala_title_new">افزودن کالا به فاکتور</string>

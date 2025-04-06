@@ -75,7 +75,7 @@ public class PFaktorConfirmListRow extends PFaktorSearchRow {
 
         @Override
         public int getLayout() {
-            return R.layout.fragment_pfaktor_confirm_list_row;
+            return R.layout.fragment_pfaktor_transfer_list_row;
         }
 
 
