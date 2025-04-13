@@ -161,9 +161,13 @@ public class MaliBLL extends ABusinessLayer implements TransferToServerService<M
             maliModel.setMaliType(maliType);
             maliModel.setMaliDate(maliDate);
             maliModel.setDescription(description);
-            maliModel.setVcheckSarresidDate(vcheckSarresidDate);
-            maliModel.setVcheckBank(vcheckBank);
-            maliModel.setVcheckSerial(vcheckSerial);
+
+            if (maliType == MaliType.VCHECK) {
+                maliModel.setVcheckSarresidDate(vcheckSarresidDate);
+                maliModel.setVcheckBank(vcheckBank);
+                maliModel.setVcheckSerial(vcheckSerial);
+            }
+
             maliModel.setAmount(Long.parseLong(priceAmount));
             setBedAndBesByCode(maliModel, bedCode, besCode);
 
@@ -271,16 +275,16 @@ public class MaliBLL extends ABusinessLayer implements TransferToServerService<M
         if (list != null) {
 
             for (MaliModel maliModel : list) {
-                // set bed
-                PersonModel bed = personBLL.getById(maliModel.getPersonBesId_FK());
-                if (bed == null)
+                // set bes (compulsory)
+                PersonModel bes = personBLL.getById(maliModel.getPersonBesId_FK());
+                if (bes == null)
                     throw new RuntimeException(CaspianErrors.person_not_exist + "#" + maliModel.getPersonBesId_FK());
-                maliModel.setPersonBedModel(bed);
+                maliModel.setPersonBesModel(bes);
 
-                // set bes
-                if (maliModel.getPersonBesId_FK() != null) {
-                    PersonModel bes = personBLL.getById(maliModel.getPersonBesId_FK());
-                    maliModel.setPersonBesModel(bes);
+                // set bed (optional)
+                if (maliModel.getPersonBedId_FK() != null && maliModel.getPersonBedId_FK() != 0) {
+                    PersonModel bed = personBLL.getById(maliModel.getPersonBedId_FK());
+                    maliModel.setPersonBedModel(bed);
                 }
             }
             return list;

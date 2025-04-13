@@ -82,13 +82,13 @@ public class MaliModel implements Serializable, Comparable<MaliModel>, IJson {
     public JSONObject toJSON() throws JSONException {
         JSONObject json = new JSONObject();
 
-        if (getPersonBedModel() == null)
-            throw new RuntimeException(CaspianErrors.MALI_BED_INVALID);
+        if (getPersonBesModel() == null)
+            throw new RuntimeException(CaspianErrors.MALI_BES_INVALID);
 
         json.put("maliId", id);
         json.put("maliType", maliType.getValue());
-        json.put("codeBed", personBedModel.getCode());
-        json.put("codeBes", personBesModel != null ? personBesModel.getCode() : "");
+        json.put("codeBes", personBesModel.getCode());
+        json.put("codeBed", personBedModel != null ? personBedModel.getCode() : "");
         json.put("maliDate", maliDate);
         json.put("description", description);
         json.put("vcheckSarresidDate", vcheckSarresidDate);

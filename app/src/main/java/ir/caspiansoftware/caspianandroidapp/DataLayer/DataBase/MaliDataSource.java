@@ -96,6 +96,8 @@ public class MaliDataSource extends ADataSource<MaliModel> {
 
     public ArrayList<MaliModel> getAllByYearId(int yearId, boolean DescOrder) {
 
+        //mDatabase.execSQL("UPDATE mali SET is_synced = 0, sync_date = ''");
+
         try (Cursor cursor = mDatabase.query(
                 MaliTbl.TABLE_NAME,
                 MaliTbl.getInstance().getColumns(),
