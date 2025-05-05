@@ -32,7 +32,7 @@ public class SyncTypeActivity extends CaspianActivitySingleFragment {
     @Override
     public void onCreate(Bundle savedBundleState) {
         Log.d(TAG, "start...");
-        UIUtility.setHeightWidth(this, 650);
+        //UIUtility.setHeightWidth(this, 650);
         //showAsPopup(this, getResources().getInteger(R.integer.popup_daf_taf_height), getResources().getInteger(R.integer.popup_daf_taf_width));
         CaspianActionbar.setActionbarLayout(this, R.layout.actionbar_dialog, R.string.sync_select_sync_type);
 

@@ -21,7 +21,7 @@ public class YearListActivity extends CaspianActivitySingleFragment {
     @Override
     public void onCreate(Bundle savedBundleState) {
         //showAsPopup(this, getResources().getInteger(R.integer.popup_height), getResources().getInteger(R.integer.popup_width));
-        UIUtility.setHeightWidth(this, 500);
+        //UIUtility.setHeightWidth(this, 500);
         CaspianActionbar.setActionbarLayout(this, R.layout.actionbar_dialog, R.string.year_title);
         //forceRTLIfSupported();
         //Log.d(TAG, String.valueOf(getResources().getInteger(R.integer.popup_height)));
