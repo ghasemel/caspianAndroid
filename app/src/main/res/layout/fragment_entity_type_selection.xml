@@ -1,40 +1,68 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent"
-              android:padding="10dp"
-              android:layoutDirection="rtl">
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    android:layoutDirection="rtl"
+    android:padding="10dp">
 
 
     <LinearLayout
+        style="@style/frame_content"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        style="@style/frame_content"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentStart="true">
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true">
 
-        <TextView style="@style/label_title" android:text="@string/select_entity_type" />
+        <TextView
+            style="@style/label_title"
+            android:text="@string/select_entity_type" />
 
         <RadioGroup
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <LinearLayout style="@style/row" android:layout_gravity="center_horizontal" android:gravity="start">
-                <ImageView style="@style/main_menu_button" android:src="@drawable/ic_dashboard" />
-                <RadioButton style="@style/label" android:text="@string/preInvoice_title" android:id="@+id/rdPFaktor" android:checked="true" />
+            <LinearLayout
+                style="@style/row"
+                android:layout_gravity="center_horizontal"
+                android:gravity="start">
+
+                <ImageView
+                    style="@style/main_menu_button"
+                    android:src="@drawable/ic_dashboard" />
+
+                <RadioButton
+                    android:id="@+id/rdPFaktor"
+                    style="@style/label"
+                    android:checked="true"
+                    android:text="@string/preInvoice_title" />
             </LinearLayout>
 
-            <LinearLayout style="@style/row" android:layout_gravity="center_horizontal" android:gravity="start">
-                <ImageView style="@style/main_menu_button" android:src="@drawable/ic_account_circle" />
-                <RadioButton style="@style/label" android:text="@string/mali_title" android:id="@+id/rdMali" />
+            <LinearLayout
+                style="@style/row"
+                android:layout_gravity="center_horizontal"
+                android:gravity="start">
+
+                <ImageView
+                    style="@style/main_menu_button"
+                    android:src="@drawable/ic_account_circle" />
+
+                <RadioButton
+                    android:id="@+id/rdMali"
+                    style="@style/label"
+                    android:text="@string/mali_title" />
             </LinearLayout>
 
         </RadioGroup>
 
-        <LinearLayout style="@style/row" android:gravity="center_horizontal">
-            <Button style="@style/button"
+        <LinearLayout
+            style="@style/row"
+            android:gravity="center_horizontal">
+
+            <Button
                 android:id="@+id/btn_OK"
+                style="@style/button"
                 android:text="@string/ok_button" />
         </LinearLayout>
     </LinearLayout>
