@@ -11,13 +11,13 @@
         android:id="@+id/toolbar"
         layout="@layout/object_form_toolbar" />
 
-    <include
-        layout="@layout/image_logo"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/toolbar"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentEnd="true" />
+<!--    <include-->
+<!--        layout="@layout/image_logo"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_below="@id/toolbar"-->
+<!--        android:layout_alignParentTop="true"-->
+<!--        android:layout_alignParentEnd="true" />-->
 
     <!--<LinearLayout android:layout_width="match_parent"-->
     <!--android:layout_height="wrap_content"-->
