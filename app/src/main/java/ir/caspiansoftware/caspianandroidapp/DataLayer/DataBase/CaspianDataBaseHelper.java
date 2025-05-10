@@ -9,6 +9,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.util.Objects;
 
 import ir.caspiansoftware.caspianandroidapp.DataLayer.DataBase.Tables.InitialSettingTbl;
 import ir.caspiansoftware.caspianandroidapp.DataLayer.DataBase.Tables.KalaPhotoTbl;
@@ -145,14 +146,17 @@ public class CaspianDataBaseHelper extends SQLiteOpenHelper {
 
                 case 7:
                     execSQLFile(mContext, db, R.raw.version_07_mali_table);
+
+                case 8:
+                    execSQLFile(mContext, db, R.raw.version_08_mali_table_missing_is_synced);
             }
 
             // commit
             db.setTransactionSuccessful();
 
         } catch (Exception ex) {
-            ex.printStackTrace();
-            Log.e(TAG, ex.getMessage());
+            Log.e(TAG, "Error on database migration", ex);
+            throw new RuntimeException("Error on database migration", ex);
 
         } finally {
             // commit or rollback

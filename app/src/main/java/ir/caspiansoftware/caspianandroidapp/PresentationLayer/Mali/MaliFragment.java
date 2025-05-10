@@ -10,7 +10,6 @@ import android.content.Intent;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -28,7 +27,6 @@ import java.util.Date;
 import info.elyasi.android.elyasilib.Controls.ClearableEditText.ClearableEditText;
 import info.elyasi.android.elyasilib.Dialogs.DatePickerDialog;
 import info.elyasi.android.elyasilib.Dialogs.DialogResult;
-import info.elyasi.android.elyasilib.Dialogs.IDialogCallback;
 import info.elyasi.android.elyasilib.GPS.MapUtility;
 import info.elyasi.android.elyasilib.Persian.PersianDate;
 import info.elyasi.android.elyasilib.UI.FormActionType;
@@ -42,12 +40,10 @@ import ir.caspiansoftware.caspianandroidapp.BaseCaspian.CaspianFragment;
 import ir.caspiansoftware.caspianandroidapp.BaseCaspian.CaspianToolbar;
 import ir.caspiansoftware.caspianandroidapp.BusinessLayer.MaliBLL;
 import ir.caspiansoftware.caspianandroidapp.BusinessLayer.PermissionBLL;
-import ir.caspiansoftware.caspianandroidapp.DataLayer.WebService.TimeWebService;
 import ir.caspiansoftware.caspianandroidapp.Enum.MaliType;
 import ir.caspiansoftware.caspianandroidapp.GPSTracker;
 import ir.caspiansoftware.caspianandroidapp.Models.MaliModel;
 import ir.caspiansoftware.caspianandroidapp.Models.PersonModel;
-import ir.caspiansoftware.caspianandroidapp.Models.SPFaktorModel;
 import ir.caspiansoftware.caspianandroidapp.PresentationLayer.BasePLL.MandePLL;
 import ir.caspiansoftware.caspianandroidapp.R;
 import ir.caspiansoftware.caspianandroidapp.Report.ReportActivity;
@@ -138,7 +134,7 @@ public class MaliFragment extends CaspianFragment implements IFragmentCallback, 
             Log.d(TAG, "checkForSave(): need save");
             messageBoxYesNo(R.string.mali_save_title, R.string.ask_to_save_mali, (dialogResult, result, requestCode) -> {
                 if (dialogResult == DialogResult.Yes) {
-                    saveAsync();
+                    save();
                 } else {
                     setModified(false);
                     if (onExit)
@@ -442,44 +438,11 @@ public class MaliFragment extends CaspianFragment implements IFragmentCallback, 
             return;
         }
 
-        messageBoxYesNo(R.string.pfaktor_delete_title, R.string.pfaktor_delete_confirm, new IDialogCallback() {
-            @Override
-            public void dialog_callback(DialogResult dialogResult, Object result, int requestCode) {
-                if (dialogResult == DialogResult.Yes) {
-                    delete();
-                }
+        messageBoxYesNo(R.string.pfaktor_delete_title, R.string.pfaktor_delete_confirm, (dialogResult, result, requestCode) -> {
+            if (dialogResult == DialogResult.Yes) {
+                delete();
             }
         });
-    }
-
-    private void saveAsync() {
-        class AsyncRequest extends AsyncTask<Void, Void, Date> {
-
-            @Override
-            protected Date doInBackground(Void... params) {
-                Date dateTime = null;
-                TimeWebService timeWebService = new TimeWebService();
-                try {
-                    dateTime = timeWebService.getCurrentDateTime();
-                } catch (Exception e) {
-                    Log.d(TAG, e.toString());
-                }
-                return dateTime;
-            }
-
-
-            @Override
-            protected void onPostExecute(Date dateTime) {
-                if (dateTime == null) {
-                    showError(R.string.internet_dateTime_not_reachable, null);
-                    return;
-                }
-                save(dateTime);
-            }
-        }
-
-        AsyncRequest asyncRequest = new AsyncRequest();
-        asyncRequest.execute();
     }
 
     private MaliType getMaliType() {
@@ -492,7 +455,7 @@ public class MaliFragment extends CaspianFragment implements IFragmentCallback, 
         return MaliType.SANDOGH;
     }
 
-    private void save(Date dateTime) {
+    private void save() {
         if (checkForSync())
             return;
 
@@ -510,7 +473,7 @@ public class MaliFragment extends CaspianFragment implements IFragmentCallback, 
                     mEditTextSerial.getText().toString(),
                     mPriceEditText.getText().toString(),
                     getActivity(),
-                    dateTime
+                    new Date()
             );
 
             setMaliModel(maliModel, true);
@@ -635,7 +598,7 @@ public class MaliFragment extends CaspianFragment implements IFragmentCallback, 
 
         } else if (view.equals(mToolbarSave)) {
             Log.d(TAG, "mToolbarSave clicked");
-            saveAsync();
+            save();
 
         } else if (view.equals(mToolbarDelete)) {
             Log.d(TAG, "mToolbarDelete clicked");

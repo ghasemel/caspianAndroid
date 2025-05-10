@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -38,7 +37,6 @@ import ir.caspiansoftware.caspianandroidapp.BaseCaspian.CaspianDataGridFragment;
 import ir.caspiansoftware.caspianandroidapp.BaseCaspian.CaspianToolbar;
 import ir.caspiansoftware.caspianandroidapp.BusinessLayer.PFaktorBLL;
 import ir.caspiansoftware.caspianandroidapp.BusinessLayer.PermissionBLL;
-import ir.caspiansoftware.caspianandroidapp.DataLayer.WebService.TimeWebService;
 import ir.caspiansoftware.caspianandroidapp.GPSTracker;
 import ir.caspiansoftware.caspianandroidapp.Models.MPFaktorModel;
 import ir.caspiansoftware.caspianandroidapp.Models.PersonModel;
@@ -129,7 +127,7 @@ public class PFaktorFragment extends CaspianDataGridFragment<SPFaktorModel> impl
             Log.d(TAG, "checkForSave(): need save");
             messageBoxYesNo(R.string.pfaktor_save_title, R.string.ask_to_save, (dialogResult, result, requestCode) -> {
                 if (dialogResult == DialogResult.Yes) {
-                    saveAsync();
+                    save();
                 } else {
                     setModified(false);
                     if (onExit)
@@ -477,37 +475,7 @@ public class PFaktorFragment extends CaspianDataGridFragment<SPFaktorModel> impl
         });
     }
 
-    private void saveAsync() {
-        class AsyncRequest extends AsyncTask<Void, Void, Date> {
-
-            @Override
-            protected Date doInBackground(Void... params) {
-                Date dateTime = null;
-                TimeWebService timeWebService = new TimeWebService();
-                try {
-                    dateTime = timeWebService.getCurrentDateTime();
-                } catch (Exception e) {
-                    Log.d(TAG, e.toString());
-                }
-                return dateTime;
-            }
-
-
-            @Override
-            protected void onPostExecute(Date dateTime) {
-                if (dateTime == null) {
-                    showError(R.string.internet_dateTime_not_reachable, null);
-                    return;
-                }
-                save(dateTime);
-            }
-        }
-
-        AsyncRequest asyncRequest = new AsyncRequest();
-        asyncRequest.execute();
-    }
-
-    private void save(Date dateTime) {
+    private void save() {
         if (checkForSync())
             return;
 
@@ -520,7 +488,7 @@ public class PFaktorFragment extends CaspianDataGridFragment<SPFaktorModel> impl
                     mEditTextDescription.getText().toString(),
                     mSPFaktorList,
                     getActivity(),
-                    dateTime
+                    new Date()
             );
 
             setMPFaktorModel(mpFaktorModel, true);
@@ -659,7 +627,7 @@ public class PFaktorFragment extends CaspianDataGridFragment<SPFaktorModel> impl
             // getRowFragment().notifyDataSetChanged();
         } else if (view.equals(mToolbarSave)) {
             Log.d(TAG, "mToolbarSave clicked");
-            saveAsync();
+            save();
 
         } else if (view.equals(mToolbarDelete)) {
             Log.d(TAG, "mToolbarDelete clicked");
