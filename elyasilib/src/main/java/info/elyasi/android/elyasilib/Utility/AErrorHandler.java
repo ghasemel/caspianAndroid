@@ -39,9 +39,24 @@ public abstract class AErrorHandler {
     public String toString() {
         if (mContext != null) {
             return mContext.getResources().getString(R.string.error_code) + " " + mErrorModel.getErrorNum()
-                    + mContext.getResources().getString(R.string.comma) + " " + mErrorModel.getMessageString(mContext, mOccurredErrorMessage);
+                    + mContext.getResources().getString(R.string.comma) + " " + mErrorModel.getMessageString(mContext, mOccurredErrorMessage)
+                    + mContext.getResources().getString(R.string.comma) + " " + getFullExceptionMessage(mException);
         }
         return "";
+    }
+
+    private String getFullExceptionMessage(Throwable throwable) {
+        StringBuilder messageBuilder = new StringBuilder();
+        while (throwable != null) {
+            if (throwable.getMessage() != null) {
+                if (messageBuilder.length() > 0) {
+                    messageBuilder.append(" -> ");
+                }
+                messageBuilder.append(throwable.getMessage());
+            }
+            throwable = throwable.getCause();
+        }
+        return messageBuilder.toString();
     }
 
     public String extractExceptionDetail(Exception ex) {

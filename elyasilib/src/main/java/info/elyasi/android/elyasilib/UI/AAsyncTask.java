@@ -45,7 +45,11 @@ public abstract class AAsyncTask<Params, Progress, Result> extends AsyncTask<Par
         return mException != null;
     }
 
+    public void setException(String message, Exception exception) {
+        mException = new Exception(message, exception);
+    }
+
     public void setException(Exception exception) {
-        mException = exception;
+        setException("", exception);
     }
 }
