@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Table grid. Two columns of large tiles: the waiter reads this at arm's
+    length while walking, so tiles are big and state is written in words as
+    well as colour.
+-->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:layoutDirection="rtl"
+              android:padding="8dp">
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/restaurant_tables_title"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+        <Button
+            android:id="@+id/tableRefreshButton"
+            android:layout_width="wrap_content"
+            android:layout_height="48dp"
+            android:minWidth="96dp"
+            android:text="@string/restaurant_refresh" />
+    </LinearLayout>
+
+    <ProgressBar
+        android:id="@+id/tableProgress"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:indeterminate="true"
+        android:visibility="gone" />
+
+    <TextView
+        android:id="@+id/tableEmptyLabel"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:padding="24dp"
+        android:text="@string/restaurant_tables_empty"
+        android:textSize="16sp"
+        android:visibility="gone" />
+
+    <GridView
+        android:id="@+id/tableGrid"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:numColumns="2"
+        android:horizontalSpacing="8dp"
+        android:verticalSpacing="8dp"
+        android:padding="4dp"
+        android:stretchMode="columnWidth" />
+
+</LinearLayout>

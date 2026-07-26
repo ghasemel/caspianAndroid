@@ -33,4 +33,24 @@
     <color name="touchColor">#f8b6cbf2</color>
 
     <color name="listHeaderRowBackColor">#f8b6cbf2</color>
+
+    <!-- Restaurant ordering -->
+    <color name="tableFreeBack">#e8f5e9</color>
+    <color name="tableFreeBorder">#66bb6a</color>
+    <color name="tableBusyBack">#fff3e0</color>
+    <color name="tableBusyBorder">#fb8c00</color>
+    <color name="tableBusyText">#e65100</color>
+
+    <color name="chipBack">#eceff1</color>
+    <color name="chipBorder">#b0bec5</color>
+    <color name="chipSelectedBack">#0397ec</color>
+    <color name="chipSelectedBorder">#0277bd</color>
+
+    <color name="productTileBack">#ffffff</color>
+    <color name="productTileBorder">#cfd8dc</color>
+    <color name="badgeBack">#e53935</color>
+
+    <color name="cartBarBack">#263238</color>
+    <color name="stepperBack">#f5f5f5</color>
+    <color name="sentLineText">#78909c</color>
 </resources>

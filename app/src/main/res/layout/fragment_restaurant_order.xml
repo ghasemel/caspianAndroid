@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    The ordering screen.
+
+    Vertical order is chosen for thumb reach on a phone: the things touched
+    constantly (dish grid, cart bar) sit low, the things touched rarely (table
+    name, search) sit high.
+
+        table title            informational
+        search box             occasional
+        group chips            per category switch
+        dish grid              constant  <- fills the screen
+        cart bar               constant  <- pinned bottom, never scrolls away
+
+    The cart panel expands upward over the grid rather than opening a new
+    screen, so the waiter never loses their place in the menu.
+-->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:layoutDirection="rtl"
+              android:background="#fafafa">
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="8dp"
+        android:gravity="center_vertical"
+        android:background="@color/cartBarBack">
+
+        <TextView
+            android:id="@+id/orderTableTitle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:textColor="#ffffff" />
+    </LinearLayout>
+
+    <EditText
+        android:id="@+id/orderSearchBox"
+        android:layout_width="match_parent"
+        android:layout_height="44dp"
+        android:layout_margin="6dp"
+        android:hint="@string/restaurant_search_hint"
+        android:inputType="text"
+        android:imeOptions="actionSearch"
+        android:singleLine="true"
+        android:gravity="start"
+        android:textSize="15sp" />
+
+    <HorizontalScrollView
+        android:id="@+id/orderGroupScroll"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:scrollbars="none"
+        android:layoutDirection="rtl">
+
+        <LinearLayout
+            android:id="@+id/orderGroupStrip"
+            android:orientation="horizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="4dp" />
+    </HorizontalScrollView>
+
+    <ProgressBar
+        android:id="@+id/orderProgress"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:indeterminate="true"
+        android:visibility="gone" />
+
+    <!-- Grid and the expandable cart share this space; the cart overlays it. -->
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
+        <GridView
+            android:id="@+id/orderItemGrid"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:numColumns="2"
+            android:horizontalSpacing="6dp"
+            android:verticalSpacing="6dp"
+            android:padding="6dp"
+            android:stretchMode="columnWidth" />
+
+        <LinearLayout
+            android:id="@+id/orderCartPanel"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#ffffff"
+            android:visibility="gone">
+
+            <ListView
+                android:id="@+id/orderCartList"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:divider="#e0e0e0"
+                android:dividerHeight="1dp" />
+        </LinearLayout>
+    </FrameLayout>
+
+    <!-- Cart bar: pinned to the bottom where the thumb rests, always visible. -->
+    <LinearLayout
+        android:id="@+id/orderCartBar"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="72dp"
+        android:background="@drawable/cart_bar"
+        android:gravity="center_vertical"
+        android:padding="8dp"
+        android:clickable="true"
+        android:focusable="true">
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1">
+
+            <TextView
+                android:id="@+id/orderCartSummary"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="14sp"
+                android:textColor="#b0bec5" />
+
+            <TextView
+                android:id="@+id/orderCartTotal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:typeface="sans"
+                android:textSize="21sp"
+                android:textStyle="bold"
+                android:textColor="#ffffff" />
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/orderSubmitButton"
+            android:layout_width="wrap_content"
+            android:layout_height="56dp"
+            android:minWidth="140dp"
+            android:text="@string/restaurant_submit"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+    </LinearLayout>
+
+</LinearLayout>

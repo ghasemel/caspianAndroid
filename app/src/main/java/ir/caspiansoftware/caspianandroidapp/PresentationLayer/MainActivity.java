@@ -146,6 +146,12 @@ public class MainActivity extends CaspianActivityTwoFragments {
                 MaliActivity.showNewMaliForResult(this, REQUEST_CODE_NEW_MALI);
                 break;
 
+            case Actions.ACTION_RESTAURANT:
+                startActivity(new android.content.Intent(
+                        this, ir.caspiansoftware.caspianandroidapp
+                                  .PresentationLayer.Restaurant.TableGridActivity.class));
+                break;
+
             case Actions.ACTION_TOOLBAR_EXIT:
                 removeDetail();
                 break;

@@ -56,6 +56,15 @@
             android:theme="@style/fullscreenTheme"
             />
 
+        <activity android:name=".PresentationLayer.Restaurant.TableGridActivity"
+            android:label="@string/restaurant_tables_title" />
+
+        <activity android:name=".PresentationLayer.Restaurant.OrderActivity"
+            android:label="@string/restaurant_menu_title"
+            android:windowSoftInputMode="adjustResize|stateHidden"
+            android:theme="@style/fullscreenTheme"
+            />
+
         <activity android:name=".PresentationLayer.Person.List.PersonListActivity" android:label="@string/person_list"  />
         <activity android:name=".PresentationLayer.Kala.List.KalaListActivity" android:label="@string/kala_list" android:theme="@style/PopupTheme" />
         <activity android:name=".PresentationLayer.Faktor.Kala.FaktorKalaActivity" android:label="@string/invoice_kala_activity_title"  />

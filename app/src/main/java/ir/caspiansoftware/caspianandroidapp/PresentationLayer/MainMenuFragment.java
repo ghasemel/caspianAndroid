@@ -43,6 +43,7 @@ public class MainMenuFragment extends CaspianFragment implements IFragmentCallba
     private LinearLayout mFrameChangeYear;
     private LinearLayout mBtnFrame;
     private LinearLayout mBtnConfirmList;
+    private LinearLayout mBtnRestaurant;
 
     //private TextView mErrorLabel;
     private ProgressBar mProgressBar;
@@ -156,6 +157,9 @@ public class MainMenuFragment extends CaspianFragment implements IFragmentCallba
         //mAppInfoHSV = (HorizontalScrollView) v.findViewById(R.id.main_footer_scrollbar);
 
         mBtnConfirmList = (LinearLayout) v.findViewById(R.id.main_button_confirm_list);
+
+        // restaurant table ordering
+        mBtnRestaurant = (LinearLayout) v.findViewById(R.id.main_button_restaurant);
     }
 
     @Override
@@ -199,6 +203,10 @@ public class MainMenuFragment extends CaspianFragment implements IFragmentCallba
         } else if (v.equals(mBtnDafTafReport)) {
             Log.d(TAG, Actions.ACTION_DAF_TAF + " called");
             mActivityCallback.onMyFragmentCallBack(Actions.ACTION_DAF_TAF, null, (Object) null);
+
+        } else if (v.equals(mBtnRestaurant)) {
+            Log.d(TAG, Actions.ACTION_RESTAURANT + " called");
+            mActivityCallback.onMyFragmentCallBack(Actions.ACTION_RESTAURANT, null, (Object) null);
         }
     }
 

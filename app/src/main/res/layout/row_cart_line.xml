@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    One cart line. Steppers are 56dp squares with spacing between them: at
+    smaller sizes a thumb hits minus when it meant plus, which silently changes
+    a customer's order.
+
+    Lines already sent to the kitchen hide their steppers and show a badge -
+    editing them on the phone would not un-cook the food.
+-->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="horizontal"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:layoutDirection="rtl"
+              android:padding="8dp"
+              android:gravity="center_vertical">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1">
+
+        <TextView
+            android:id="@+id/cartLineName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="16sp"
+            android:textColor="#212121" />
+
+        <TextView
+            android:id="@+id/cartLineSpec"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="13sp"
+            android:textColor="#0397ec"
+            android:visibility="gone" />
+
+        <TextView
+            android:id="@+id/cartLineSent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/restaurant_line_sent"
+            android:textSize="12sp"
+            android:textColor="@color/sentLineText"
+            android:visibility="gone" />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/cartLineTotal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:typeface="sans"
+        android:textSize="15sp"
+        android:textColor="#455a64" />
+
+    <Button
+        android:id="@+id/cartLineMinus"
+        android:layout_width="56dp"
+        android:layout_height="56dp"
+        android:text="-"
+        android:textSize="22sp"
+        android:background="@drawable/stepper_button" />
+
+    <TextView
+        android:id="@+id/cartLineCount"
+        android:layout_width="44dp"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:typeface="sans"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:textColor="#212121" />
+
+    <Button
+        android:id="@+id/cartLinePlus"
+        android:layout_width="56dp"
+        android:layout_height="56dp"
+        android:text="+"
+        android:textSize="22sp"
+        android:background="@drawable/stepper_button" />
+
+</LinearLayout>

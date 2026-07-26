@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Restaurant ordering strings.
+
+    Persian lives in the default values/ folder, matching the rest of this app:
+    there is no values-fa and no locale switching, Persian is the only language.
+-->
+<resources>
+    <string name="restaurant_menu_title">سفارش رستوران</string>
+    <string name="restaurant_tables_title">میزها</string>
+
+    <string name="restaurant_table_free">آزاد</string>
+    <string name="restaurant_table_busy">%1$d قلم</string>
+    <string name="restaurant_tables_empty">میزی تعریف نشده است</string>
+    <string name="restaurant_refresh">بروزرسانی</string>
+    <string name="restaurant_no_table">میز انتخاب نشده است</string>
+
+    <string name="restaurant_search_hint">جستجوی کالا…</string>
+    <string name="restaurant_cart_items">%1$d قلم</string>
+    <string name="restaurant_submit">ثبت سفارش</string>
+
+    <string name="restaurant_submit_title">ثبت سفارش</string>
+    <string name="restaurant_submit_question">%1$d قلم برای %2$s ثبت شود؟</string>
+    <string name="restaurant_submit_done">سفارش شماره %1$d ثبت شد</string>
+
+    <string name="restaurant_line_sent">ارسال شده</string>
+    <string name="restaurant_line_count">تعداد</string>
+    <string name="restaurant_line_spec">توضیح (مثلا بدون پیاز)</string>
+
+    <string name="restaurant_dialog_ok">تایید</string>
+    <string name="restaurant_dialog_cancel">انصراف</string>
+</resources>

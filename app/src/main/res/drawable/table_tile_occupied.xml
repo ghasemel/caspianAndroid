@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Occupied table: amber, plus the item count and running total as text. -->
+<shape xmlns:android="http://schemas.android.com/apk/res/android" android:shape="rectangle">
+    <solid android:color="@color/tableBusyBack" />
+    <stroke android:width="2dp" android:color="@color/tableBusyBorder" />
+    <corners android:radius="8dp" />
+</shape>

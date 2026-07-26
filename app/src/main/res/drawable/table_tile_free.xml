@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Free table. Colour alone never signals state: the tile also carries the
+     word "آزاد", so it stays readable in poor light and for colour-blind staff. -->
+<shape xmlns:android="http://schemas.android.com/apk/res/android" android:shape="rectangle">
+    <solid android:color="@color/tableFreeBack" />
+    <stroke android:width="2dp" android:color="@color/tableFreeBorder" />
+    <corners android:radius="8dp" />
+</shape>

@@ -11,6 +11,7 @@ public class Actions {
     public static final String ACTION_PRE_INVOICE = "action_preInvoice";
 
     public static final String ACTION_MALI = "action_mali";
+    public static final String ACTION_RESTAURANT = "action_restaurant";
     public static final String ACTION_SYNC = "action_Sync";
     public static final String ACTION_TOOLBAR_EXIT = "action_TOOLBAR_EXIT";
     public static final String ACTION_PRE_INVOICE_LIST = "action_preInvoice_list";

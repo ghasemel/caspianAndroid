@@ -45,6 +45,20 @@
                             android:text="@string/main_mali"/>
                     </LinearLayout>
 
+                    <!-- Untagged on purpose: the permission tag hides a button
+                         when the server has no matching permission row, and
+                         there is no 'restaurant' part defined server-side yet.
+                         Add the tag once that permission exists. -->
+                    <LinearLayout style="@style/main_button_frame" android:id="@+id/main_button_restaurant">
+                        <ImageView
+                            style="@style/main_menu_button"
+                            android:src="@drawable/confirm_list"
+                            android:layout_marginStart="-5dp"/>
+                        <TextView
+                            style="@style/main_menu_caption"
+                            android:text="@string/restaurant_menu_title"/>
+                    </LinearLayout>
+
                     <LinearLayout style="@style/main_button_frame" android:id="@+id/main_button_confirm_list" android:tag="@string/permission_p_faktor_confirm_list">
                         <ImageView
                             style="@style/main_menu_button"
