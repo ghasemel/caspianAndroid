@@ -40,7 +40,7 @@ dependencies {
     implementation project(':elyasilib')
 
     // https://mvnrepository.com/artifact/commons-net/commons-net
-    implementation group: 'commons-net', name: 'commons-net', version: '3.13.0'
+    implementation "commons-net:commons-net:3.13.0"
 
     // Lombok dependency
     compileOnly 'org.projectlombok:lombok:1.18.46'
