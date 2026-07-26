@@ -4,7 +4,7 @@ android {
     namespace "info.elyasi.android.elyasilib"
     compileSdk = 37
     defaultConfig {
-        minSdk = 19
+        minSdk = 29
         targetSdk = 37
     }
     buildTypes {
