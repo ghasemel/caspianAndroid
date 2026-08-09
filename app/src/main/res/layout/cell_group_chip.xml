@@ -1,14 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- Category chip. 56dp tall / 100dp wide minimum so it is comfortably
-     thumb-reachable without a second hand. -->
+<!-- Category chip. 56dp tall so it is comfortably thumb-reachable without a
+     second hand. Width and horizontal margin are set in code: the chips sit in
+     equal-width weighted columns, two per row, so they must not size to their
+     own text. -->
 <Button xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="wrap_content"
         android:layout_height="56dp"
-        android:minWidth="100dp"
-        android:layout_marginEnd="6dp"
-        android:paddingStart="16dp"
-        android:paddingEnd="16dp"
+        android:minHeight="0dp"
+        android:minWidth="0dp"
+        android:layout_marginBottom="6dp"
+        android:paddingStart="8dp"
+        android:paddingEnd="8dp"
         android:background="@drawable/group_chip"
         android:textSize="15sp"
         android:textColor="#212121"
+        android:ellipsize="end"
         android:singleLine="true" />

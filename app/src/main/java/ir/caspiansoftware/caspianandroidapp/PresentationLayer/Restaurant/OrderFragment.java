@@ -10,7 +10,7 @@ import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.GridView;
-import android.widget.HorizontalScrollView;
+import android.widget.ScrollView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.ProgressBar;
@@ -74,7 +74,7 @@ public class OrderFragment extends CaspianFragment {
 
     private EditText mSearchBox;
     private LinearLayout mGroupStrip;
-    private HorizontalScrollView mGroupScroll;
+    private ScrollView mGroupScroll;
     private GridView mItemGrid;
     private ProgressBar mProgress;
     private TextView mCartSummary;
@@ -282,26 +282,118 @@ public class OrderFragment extends CaspianFragment {
 
     // region group strip
 
+    /** Chips per row. Two columns keeps each chip wide enough for a real
+     *  category name without truncating it. */
+    private static final int GROUP_CHIPS_PER_ROW = 2;
+
+    /**
+     * Rows shown before the strip starts scrolling instead of growing.
+     *
+     * Three rows (six categories) is about the most that can sit above the dish
+     * grid without squeezing it; beyond that the strip scrolls.
+     */
+    private static final int GROUP_MAX_VISIBLE_ROWS = 3;
+
+    /**
+     * Lays the category chips out in rows of GROUP_CHIPS_PER_ROW inside the
+     * vertical strip, so two rows are visible at once instead of one row that
+     * hides the rest behind a sideways scroll.
+     */
     private void buildGroupStrip() {
         mGroupStrip.removeAllViews();
 
-        for (final MenuGroupModel group : mGroups) {
-            Button chip = (Button) LayoutInflater.from(getActivity())
-                    .inflate(R.layout.cell_group_chip, mGroupStrip, false);
+        LayoutInflater inflater = LayoutInflater.from(getActivity());
+        LinearLayout row = null;
+
+        for (int i = 0; i < mGroups.size(); i++) {
+            final MenuGroupModel group = mGroups.get(i);
+
+            if (i % GROUP_CHIPS_PER_ROW == 0) {
+                row = new LinearLayout(getActivity());
+                row.setOrientation(LinearLayout.HORIZONTAL);
+                row.setLayoutParams(new LinearLayout.LayoutParams(
+                        LinearLayout.LayoutParams.MATCH_PARENT,
+                        LinearLayout.LayoutParams.WRAP_CONTENT));
+                mGroupStrip.addView(row);
+            }
+
+            Button chip = (Button) inflater.inflate(R.layout.cell_group_chip, row, false);
             chip.setText(group.getName());
             chip.setTag(group.getCode());
             chip.setOnClickListener(v -> loadGroup(group.getCode()));
-            mGroupStrip.addView(chip);
+
+            // Equal-width columns: the chips share the row rather than sizing
+            // to their text, so the grid of categories stays aligned. Setting
+            // params here replaces the ones from the XML, so the gaps are
+            // re-applied rather than inherited.
+            int gap = (int) (6 * getResources().getDisplayMetrics().density);
+            LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(
+                    0, LinearLayout.LayoutParams.WRAP_CONTENT, 1f);
+            lp.setMarginEnd(gap);
+            lp.bottomMargin = gap;
+            chip.setLayoutParams(lp);
+
+            row.addView(chip);
         }
+
+        // Pad the final row so a lone trailing chip keeps its column width
+        // instead of stretching across the whole row.
+        int remainder = mGroups.size() % GROUP_CHIPS_PER_ROW;
+        if (row != null && remainder != 0) {
+            for (int i = remainder; i < GROUP_CHIPS_PER_ROW; i++) {
+                View filler = new View(getActivity());
+                filler.setLayoutParams(new LinearLayout.LayoutParams(
+                        0, LinearLayout.LayoutParams.MATCH_PARENT, 1f));
+                row.addView(filler);
+            }
+        }
+
+        // Show up to two rows, then scroll. Sizing to content means a menu with
+        // only one or two categories does not leave an empty band above the
+        // dish grid, which a fixed height would.
+        //
+        // The height is taken from a real laid-out row rather than computed
+        // from the chip's declared 56dp: a Button carries its own minHeight and
+        // padding, so the arithmetic guess left a third row half-visible and
+        // clipped at the bottom.
+        final int rowCount = (mGroups.size() + GROUP_CHIPS_PER_ROW - 1) / GROUP_CHIPS_PER_ROW;
+        final int visibleRows = Math.min(rowCount, GROUP_MAX_VISIBLE_ROWS);
+
+        // Height is set from the known chip geometry rather than measured after
+        // layout. Reading it back from the laid-out views kept leaving a thin
+        // sliver of the next row visible, because the ScrollView had already
+        // measured itself against the full content by the time the values were
+        // readable.
+        //
+        // Chip is 56dp tall with a 6dp bottom margin (cell_group_chip.xml plus
+        // the params applied above), and the strip has 4dp padding all round.
+        float density = getResources().getDisplayMetrics().density;
+        int rowHeight = (int) ((56 + 6) * density);
+        int stripPadding = (int) (4 * density) * 2;
+
+        ViewGroup.LayoutParams slp = mGroupScroll.getLayoutParams();
+        slp.height = visibleRows * rowHeight + stripPadding;
+        mGroupScroll.setLayoutParams(slp);
 
         highlightSelectedGroup();
     }
 
+    /** The strip's direct children are rows now, so the chips are one level down. */
     private void highlightSelectedGroup() {
-        for (int i = 0; i < mGroupStrip.getChildCount(); i++) {
-            View chip = mGroupStrip.getChildAt(i);
-            boolean selected = chip.getTag() != null && (Integer) chip.getTag() == mSelectedGroup;
-            chip.setBackgroundResource(selected ? R.drawable.group_chip_selected : R.drawable.group_chip);
+        for (int r = 0; r < mGroupStrip.getChildCount(); r++) {
+            View child = mGroupStrip.getChildAt(r);
+            if (!(child instanceof LinearLayout))
+                continue;
+
+            LinearLayout row = (LinearLayout) child;
+            for (int c = 0; c < row.getChildCount(); c++) {
+                View chip = row.getChildAt(c);
+                if (chip.getTag() == null)
+                    continue;   // filler view padding a short final row
+
+                boolean selected = (Integer) chip.getTag() == mSelectedGroup;
+                chip.setBackgroundResource(selected ? R.drawable.group_chip_selected : R.drawable.group_chip);
+            }
         }
     }
 

@@ -35,7 +35,17 @@
         android:gravity="start"
         android:textSize="15sp" />
 
-    <HorizontalScrollView
+    <!--
+        Category chips on TWO rows rather than one scrolling strip: at one row
+        only about four of them fit, so the rest were hidden behind a sideways
+        scroll the waiter had to discover. Two rows show nearly every category
+        at once, which is the whole point of the strip.
+
+        Height is set in code to fit the rows, capped at two. Beyond that it
+        scrolls vertically, the same gesture as the dish grid below, instead of
+        growing and eating into the grid.
+    -->
+    <ScrollView
         android:id="@+id/orderGroupScroll"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -44,11 +54,11 @@
 
         <LinearLayout
             android:id="@+id/orderGroupStrip"
-            android:orientation="horizontal"
-            android:layout_width="wrap_content"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="4dp" />
-    </HorizontalScrollView>
+    </ScrollView>
 
     <ProgressBar
         android:id="@+id/orderProgress"
