@@ -57,7 +57,10 @@ public class OrderFragment extends CaspianFragment {
     private RestaurantOrderModel mOrder;
 
     private final List<MenuGroupModel> mGroups = new ArrayList<>();
+    /** Items of the selected category — what the grid shows when not searching. */
     private final List<MenuItemModel> mItems = new ArrayList<>();
+    /** The whole menu, loaded once, so search is not limited to one category. */
+    private final List<MenuItemModel> mAllItems = new ArrayList<>();
     private final List<MenuItemModel> mVisibleItems = new ArrayList<>();
 
     private int mSelectedGroup = -1;
@@ -184,6 +187,8 @@ public class OrderFragment extends CaspianFragment {
                 LoadResult r = new LoadResult();
                 r.groups = bll.fetchGroups();
                 r.order = bll.fetchOrderForTable(mTable);
+                // Whole menu once, so the search box can span every category.
+                r.allItems = bll.fetchAllItems();
                 if (!r.groups.isEmpty())
                     r.items = bll.fetchGroupItems(r.groups.get(0).getCode());
                 return r;
@@ -205,6 +210,9 @@ public class OrderFragment extends CaspianFragment {
             mOrder = result.order;
             mGroups.clear();
             mGroups.addAll(result.groups);
+            mAllItems.clear();
+            if (result.allItems != null)
+                mAllItems.addAll(result.allItems);
             buildGroupStrip();
 
             if (!mGroups.isEmpty()) {
@@ -222,12 +230,20 @@ public class OrderFragment extends CaspianFragment {
     private static class LoadResult {
         List<MenuGroupModel> groups = new ArrayList<>();
         List<MenuItemModel> items = new ArrayList<>();
+        List<MenuItemModel> allItems = new ArrayList<>();
         RestaurantOrderModel order;
     }
 
     private void loadGroup(int grkCode) {
         mSelectedGroup = grkCode;
         highlightSelectedGroup();
+
+        // Picking a category is an explicit "show me this instead", so clear any
+        // active search -- otherwise the grid keeps showing search hits and the
+        // tap looks broken.
+        if (mSearchBox.getText().length() > 0)
+            mSearchBox.setText("");
+
         new LoadItemsTask(mProgress, grkCode).execute();
     }
 
@@ -294,18 +310,62 @@ public class OrderFragment extends CaspianFragment {
     // region items
 
     /**
-     * Search spans every group, not just the selected one: with a large menu
-     * the waiter usually knows the dish but not which category it sits in.
+     * Empty query: show the selected category. Non-empty: search the WHOLE menu,
+     * because the waiter knows the dish by name and usually not which category
+     * it was filed under -- making them guess the category first is exactly what
+     * the search box exists to avoid.
+     *
+     * Persian text is normalised before comparing. The same word is commonly
+     * typed with Arabic Yeh/Kaf and stored with the Persian forms (or the
+     * reverse), so a raw contains() silently finds nothing for a dish that is
+     * plainly in the list.
      */
     private void applyFilter(String query) {
         mVisibleItems.clear();
 
         String q = query == null ? "" : query.trim();
-        for (MenuItemModel item : mItems)
-            if (q.isEmpty() || item.getName().contains(q) || item.getCode().contains(q))
-                mVisibleItems.add(item);
+
+        if (q.isEmpty()) {
+            mVisibleItems.addAll(mItems);
+        } else {
+            String needle = normalize(q);
+            List<MenuItemModel> haystack = mAllItems.isEmpty() ? mItems : mAllItems;
+            for (MenuItemModel item : haystack)
+                if (normalize(item.getName()).contains(needle) || item.getCode().contains(q))
+                    mVisibleItems.add(item);
+        }
 
         mItemAdapter.notifyDataSetChanged();
+    }
+
+    /**
+     * Folds the Persian/Arabic letter forms that users type interchangeably,
+     * plus Persian and Arabic-Indic digits, so search matches what is on screen
+     * rather than which codepoint happened to be stored.
+     */
+    private static String normalize(String value) {
+        if (value == null)
+            return "";
+
+        StringBuilder sb = new StringBuilder(value.length());
+        for (char c : value.toCharArray()) {
+            switch (c) {
+                case 'ي': case 'ى': sb.append('ی'); break;  // Arabic Yeh / Alef Maksura -> Farsi Yeh
+                case 'ك':                sb.append('ک'); break;  // Arabic Kaf -> Farsi Kaf
+                case 'أ': case 'إ':
+                case 'آ': case 'ٱ': sb.append('ا'); break;  // Alef variants -> plain Alef
+                case 'ة':                sb.append('ه'); break;  // Teh Marbuta -> Heh
+                case '‌':                break;                        // drop ZWNJ
+                default:
+                    if (c >= '۰' && c <= '۹')                     // Persian digits
+                        sb.append((char) (c - '۰' + '0'));
+                    else if (c >= '٠' && c <= '٩')                // Arabic-Indic digits
+                        sb.append((char) (c - '٠' + '0'));
+                    else
+                        sb.append(Character.toLowerCase(c));
+            }
+        }
+        return sb.toString();
     }
 
     private void addItem(MenuItemModel item) {

@@ -93,6 +93,29 @@ public class RestaurantBLL extends ABusinessLayer {
     }
 
     /**
+     * The whole menu, used to back the search box. Fetched once when the order
+     * screen opens rather than per keystroke: a restaurant menu is small enough
+     * to hold in memory, and searching locally keeps typing instant on the
+     * unreliable wi-fi these devices actually run on.
+     */
+    public List<MenuItemModel> fetchAllItems() throws Exception {
+        Log.d(TAG, "fetchAllItems start");
+        try {
+            ResponseWebService response = mWebService.getAllItems(currentDbName());
+            if (response == null)
+                throw new Exception("responseWebService is null");
+
+            List<MenuItemModel> list = new ArrayList<>();
+            JSONArray arr = new JSONArray(response.getData());
+            for (int i = 0; i < arr.length(); i++)
+                list.add(MenuItemModel.fromJSON(arr.getJSONObject(i)));
+            return list;
+        } finally {
+            Log.d(TAG, "fetchAllItems finished");
+        }
+    }
+
+    /**
      * Loads the bill already running at a table, or an empty order if the table
      * is free. A free table is a normal outcome, not an error.
      */

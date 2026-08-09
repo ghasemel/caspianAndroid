@@ -53,6 +53,14 @@ public class RestaurantWebService extends RESTDotNetWebService {
                 RequestType.create(RequestType.RType.GET));
     }
 
+    /** The whole menu in one call, so search can span every category. */
+    public ResponseWebService getAllItems(String dbName) throws Exception {
+        Log.d(TAG, "getAllItems start");
+        NameValue[] parameter = { new NameValue<>("dbName", dbName) };
+        return sendRequest(SettingWebService.getAPI_URL(), "GetAllItems", parameter, true,
+                RequestType.create(RequestType.RType.GET));
+    }
+
     public ResponseWebService getOpenOrder(String dbName, int tableId) throws Exception {
         Log.d(TAG, "getOpenOrder start, table=" + tableId);
         NameValue[] parameter = {
