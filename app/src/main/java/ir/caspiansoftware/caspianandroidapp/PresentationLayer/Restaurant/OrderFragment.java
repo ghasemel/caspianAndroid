@@ -534,13 +534,15 @@ public class OrderFragment extends CaspianFragment {
 
             showToast(getString(R.string.restaurant_submit_done, result.getNum()));
 
-            // A new draft after this point is a genuinely new round, so it
-            // needs its own idempotency key.
-            mAndroidOrderId = generateOrderId(mTable.getId()) + 1;
-
-            mCartPanel.setVisibility(View.GONE);
-            mItemAdapter.notifyDataSetChanged();
-            refreshCart();
+            // Close the screen and go back to the table grid: the order is
+            // placed, and the waiter's next move is almost always another
+            // table. Staying here left them looking at a screen that had
+            // visibly done nothing except empty the cart.
+            //
+            // The grid reloads occupancy in onResume, so the table this order
+            // belongs to shows as busy with the new total straight away.
+            if (getActivity() != null)
+                getActivity().finish();
         }
     }
 
