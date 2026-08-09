@@ -74,7 +74,7 @@ public class OrderFragment extends CaspianFragment {
 
     private EditText mSearchBox;
     private LinearLayout mGroupStrip;
-    private ScrollView mGroupScroll;
+    private MaxHeightScrollView mGroupScroll;
     private GridView mItemGrid;
     private ProgressBar mProgress;
     private TextView mCartSummary;
@@ -348,32 +348,30 @@ public class OrderFragment extends CaspianFragment {
             }
         }
 
-        // Show up to two rows, then scroll. Sizing to content means a menu with
-        // only one or two categories does not leave an empty band above the
-        // dish grid, which a fixed height would.
+        // Cap the strip at GROUP_MAX_VISIBLE_ROWS and let the rest scroll, so a
+        // menu with many categories cannot push the dish grid off the screen.
         //
-        // The height is taken from a real laid-out row rather than computed
-        // from the chip's declared 56dp: a Button carries its own minHeight and
-        // padding, so the arithmetic guess left a third row half-visible and
-        // clipped at the bottom.
-        final int rowCount = (mGroups.size() + GROUP_CHIPS_PER_ROW - 1) / GROUP_CHIPS_PER_ROW;
-        final int visibleRows = Math.min(rowCount, GROUP_MAX_VISIBLE_ROWS);
-
-        // Height is set from the known chip geometry rather than measured after
-        // layout. Reading it back from the laid-out views kept leaving a thin
-        // sliver of the next row visible, because the ScrollView had already
-        // measured itself against the full content by the time the values were
-        // readable.
+        // Height comes from the known chip geometry, not from measuring the
+        // laid-out views: by the time those values are readable the ScrollView
+        // has already sized itself to the full content, which left a clipped
+        // sliver of the next row.
         //
         // Chip is 56dp tall with a 6dp bottom margin (cell_group_chip.xml plus
         // the params applied above), and the strip has 4dp padding all round.
+        final int rowCount = (mGroups.size() + GROUP_CHIPS_PER_ROW - 1) / GROUP_CHIPS_PER_ROW;
+        final int visibleRows = Math.min(rowCount, GROUP_MAX_VISIBLE_ROWS);
+
         float density = getResources().getDisplayMetrics().density;
         int rowHeight = (int) ((56 + 6) * density);
         int stripPadding = (int) (4 * density) * 2;
 
-        ViewGroup.LayoutParams slp = mGroupScroll.getLayoutParams();
-        slp.height = visibleRows * rowHeight + stripPadding;
-        mGroupScroll.setLayoutParams(slp);
+        // The cap is enforced by MaxHeightScrollView during onMeasure. Setting
+        // layout params from here does not work: the strip is populated before
+        // it is attached, so those params are replaced on the first layout pass
+        // and the view grows to fit every row.
+        mGroupScroll.setMaxHeight(rowCount <= GROUP_MAX_VISIBLE_ROWS
+                ? 0                                              // fits; size to content
+                : visibleRows * rowHeight + stripPadding);
 
         highlightSelectedGroup();
     }

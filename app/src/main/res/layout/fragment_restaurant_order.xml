@@ -45,7 +45,7 @@
         scrolls vertically, the same gesture as the dish grid below, instead of
         growing and eating into the grid.
     -->
-    <ScrollView
+    <ir.caspiansoftware.caspianandroidapp.PresentationLayer.Restaurant.MaxHeightScrollView
         android:id="@+id/orderGroupScroll"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -58,7 +58,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="4dp" />
-    </ScrollView>
+    </ir.caspiansoftware.caspianandroidapp.PresentationLayer.Restaurant.MaxHeightScrollView>
 
     <ProgressBar
         android:id="@+id/orderProgress"
