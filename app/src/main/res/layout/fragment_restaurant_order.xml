@@ -3,14 +3,15 @@
     The ordering screen.
 
     Vertical order is chosen for thumb reach on a phone: the things touched
-    constantly (dish grid, cart bar) sit low, the things touched rarely (table
-    name, search) sit high.
+    constantly (dish grid, cart bar) sit low, the things touched rarely
+    (search) sit high.
 
-        table title            informational
         search box             occasional
         group chips            per category switch
         dish grid              constant  <- fills the screen
         cart bar               constant  <- pinned bottom, never scrolls away
+
+    The table name is the action bar title, so there is no header here.
 
     The cart panel expands upward over the grid rather than opening a new
     screen, so the waiter never loses their place in the menu.
@@ -21,24 +22,6 @@
               android:layout_height="match_parent"
               android:layoutDirection="rtl"
               android:background="#fafafa">
-
-    <LinearLayout
-        android:orientation="horizontal"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="8dp"
-        android:gravity="center_vertical"
-        android:background="@color/cartBarBack">
-
-        <TextView
-            android:id="@+id/orderTableTitle"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:textSize="18sp"
-            android:textStyle="bold"
-            android:textColor="#ffffff" />
-    </LinearLayout>
 
     <EditText
         android:id="@+id/orderSearchBox"

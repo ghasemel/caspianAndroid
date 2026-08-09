@@ -32,7 +32,6 @@ public class TableGridFragment extends CaspianFragment {
     private GridView mGrid;
     private TextView mEmptyLabel;
     private ProgressBar mProgress;
-    private View mRefreshButton;
 
     private final List<RestaurantTableModel> mTables = new ArrayList<>();
     private TableAdapter mAdapter;
@@ -62,7 +61,6 @@ public class TableGridFragment extends CaspianFragment {
         mGrid = parentView.findViewById(R.id.tableGrid);
         mEmptyLabel = parentView.findViewById(R.id.tableEmptyLabel);
         mProgress = parentView.findViewById(R.id.tableProgress);
-        mRefreshButton = parentView.findViewById(R.id.tableRefreshButton);
     }
 
     @Override
@@ -72,8 +70,13 @@ public class TableGridFragment extends CaspianFragment {
 
         mGrid.setOnItemClickListener((parent, view, position, id) -> openTable(mTables.get(position)));
 
-        if (mRefreshButton != null)
-            mRefreshButton.setOnClickListener(v -> loadTables());
+        // The refresh action lives on the activity's action bar, not in this
+        // fragment's layout, so it is looked up through the activity.
+        if (getActivity() != null) {
+            View refresh = getActivity().findViewById(R.id.refresh_btn);
+            if (refresh != null)
+                refresh.setOnClickListener(v -> loadTables());
+        }
     }
 
     @Override

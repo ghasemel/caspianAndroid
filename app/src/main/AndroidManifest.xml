@@ -59,10 +59,11 @@
         <activity android:name=".PresentationLayer.Restaurant.TableGridActivity"
             android:label="@string/restaurant_tables_title" />
 
+        <!-- No fullscreenTheme: this screen keeps the standard action bar so the
+             waiter has a back button, like every other screen. -->
         <activity android:name=".PresentationLayer.Restaurant.OrderActivity"
             android:label="@string/restaurant_menu_title"
             android:windowSoftInputMode="adjustResize|stateHidden"
-            android:theme="@style/fullscreenTheme"
             />
 
         <activity android:name=".PresentationLayer.Person.List.PersonListActivity" android:label="@string/person_list"  />

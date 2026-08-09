@@ -15,7 +15,7 @@ public class TableGridActivity extends CaspianActivitySingleFragment {
 
     @Override
     public void onCreate(Bundle savedBundleState) {
-        CaspianActionbar.setActionbarLayout(this, R.layout.actionbar_dialog, R.string.restaurant_tables_title);
+        CaspianActionbar.setActionbarLayout(this, R.layout.actionbar_restaurant_tables, R.string.restaurant_tables_title);
         super.onCreate(savedBundleState);
         CaspianActionbar.setActionbarEvents(this);
     }

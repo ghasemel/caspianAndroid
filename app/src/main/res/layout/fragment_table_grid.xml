@@ -11,27 +11,9 @@
               android:layoutDirection="rtl"
               android:padding="8dp">
 
-    <LinearLayout
-        android:orientation="horizontal"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center_vertical">
-
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="@string/restaurant_tables_title"
-            android:textSize="20sp"
-            android:textStyle="bold" />
-
-        <Button
-            android:id="@+id/tableRefreshButton"
-            android:layout_width="wrap_content"
-            android:layout_height="48dp"
-            android:minWidth="96dp"
-            android:text="@string/restaurant_refresh" />
-    </LinearLayout>
+    <!-- No header row here: the title and the refresh action both live in the
+         action bar (actionbar_restaurant_tables), matching every other screen
+         in this app. That also gives the grid the full height. -->
 
     <ProgressBar
         android:id="@+id/tableProgress"

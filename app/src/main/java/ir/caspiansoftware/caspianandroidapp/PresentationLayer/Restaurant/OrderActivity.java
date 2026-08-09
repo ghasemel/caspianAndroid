@@ -4,21 +4,32 @@ import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
+import ir.caspiansoftware.caspianandroidapp.BaseCaspian.CaspianActionbar;
 import ir.caspiansoftware.caspianandroidapp.BaseCaspian.CaspianActivitySingleFragment;
 import ir.caspiansoftware.caspianandroidapp.Models.RestaurantTableModel;
 import ir.caspiansoftware.caspianandroidapp.R;
 
 /**
- * The ordering screen. Fullscreen (as PFaktorActivity is) so the menu grid gets
- * every available pixel -- the waiter is picking dishes, not reading chrome.
+ * The ordering screen.
+ *
+ * Uses the standard action bar rather than a fullscreen theme: the waiter needs
+ * a back button to leave a table, and every other screen in the app puts it
+ * there. The miz name becomes the action bar title, so the screen does not
+ * carry a second header of its own.
  */
 public class OrderActivity extends CaspianActivitySingleFragment {
 
-    // fullscreenTheme is applied in AndroidManifest.xml, matching PFaktorActivity.
-
     @Override
     public void onCreate(Bundle savedBundleState) {
+        RestaurantTableModel table =
+                (RestaurantTableModel) getIntent().getSerializableExtra(OrderFragment.EXTRA_TABLE);
+
+        CaspianActionbar.setActionbarLayout(this, R.layout.actionbar_dialog,
+                table == null ? "" : table.getTitle());
+
         super.onCreate(savedBundleState);
+
+        CaspianActionbar.setActionbarEvents(this);
     }
 
     @Override

@@ -69,7 +69,6 @@ public class OrderFragment extends CaspianFragment {
      */
     private int mAndroidOrderId;
 
-    private TextView mTitleLabel;
     private EditText mSearchBox;
     private LinearLayout mGroupStrip;
     private HorizontalScrollView mGroupScroll;
@@ -100,7 +99,6 @@ public class OrderFragment extends CaspianFragment {
 
     @Override
     protected void mapViews(View parentView) {
-        mTitleLabel = parentView.findViewById(R.id.orderTableTitle);
         mSearchBox = parentView.findViewById(R.id.orderSearchBox);
         mGroupStrip = parentView.findViewById(R.id.orderGroupStrip);
         mGroupScroll = parentView.findViewById(R.id.orderGroupScroll);
@@ -125,7 +123,7 @@ public class OrderFragment extends CaspianFragment {
 
         mAndroidOrderId = generateOrderId(mTable.getId());
 
-        mTitleLabel.setText(mTable.getTitle());
+        // The table name is the action bar title, set by OrderActivity.
 
         mItemAdapter = new ItemAdapter();
         mItemGrid.setAdapter(mItemAdapter);
