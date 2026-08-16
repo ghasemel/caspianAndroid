@@ -26,13 +26,18 @@ allprojects {
         }
     }
 
-    configurations.configureEach {
-        resolutionStrategy.eachDependency { details ->
-            if (details.requested.group == 'org.jetbrains.kotlin') {
-                details.useVersion '1.8.22' // Ensure consistent Kotlin version
-            }
-        }
-    }
+    // NOTE: there used to be a resolutionStrategy here forcing every
+    // org.jetbrains.kotlin dependency to 1.8.22. It broke the release build:
+    // AGP 9's lint needs kotlin.concurrent.atomics.AtomicsKt, which only exists
+    // in Kotlin 2.1+, and the rule rewrote lint's own stdlib down to 1.8.22, so
+    // :elyasilib:lintVitalAnalyzeRelease died loading that class. Debug builds
+    // never ran lintVital, which is why it went unnoticed.
+    //
+    // Removed rather than bumped: this project has no Kotlin source at all, so
+    // the stdlib is only ever a transitive dependency of androidx and normal
+    // highest-wins resolution is correct. If a version conflict ever resurfaces,
+    // pin it to the version the dependencies ask for (2.1.20 today), not back
+    // down to 1.8.22.
 }
 
 tasks.register('clean', Delete) {
