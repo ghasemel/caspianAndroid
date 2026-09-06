@@ -7,6 +7,12 @@
     <string name="initial_DeviceID">Device ID:</string>
     <string name="initial_save">Save</string>
     <string name="initial_cancel">Cancel</string>
+
+    <!-- Diagnostic database export -->
+    <string name="initial_backup">Backup</string>
+    <string name="initial_backup_title">نسخه پشتیبان</string>
+    <string name="initial_backup_share">ارسال فایل پشتیبان</string>
+    <string name="initial_backup_failed">تهیه نسخه پشتیبان انجام نشد</string>
     <string name="initial_port">Port:</string>
     <string name="initial_ip_error">IP وارد شده اشتباه است</string>
     <string name="initial_DeviceID_error">Device نمیتواند خالی باشد</string>

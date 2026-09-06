@@ -1,6 +1,9 @@
 package ir.caspiansoftware.caspianandroidapp.PresentationLayer;
 
 import android.app.Activity;
+import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
@@ -11,9 +14,14 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.core.content.FileProvider;
+
+import java.io.File;
+
 import info.elyasi.android.elyasilib.Dialogs.DialogResult;
 import info.elyasi.android.elyasilib.Dialogs.IDialogCallback;
 import info.elyasi.android.elyasilib.Security.Cryptography;
+import info.elyasi.android.elyasilib.Persian.PersianDate;
 import info.elyasi.android.elyasilib.UI.FormActionType;
 import info.elyasi.android.elyasilib.UI.IActivityCallback;
 import info.elyasi.android.elyasilib.UI.IFragmentCallback;
@@ -21,8 +29,11 @@ import info.elyasi.android.elyasilib.UI.UIFilter;
 import info.elyasi.android.elyasilib.UI.UIUtility;
 import ir.caspiansoftware.caspianandroidapp.BaseCaspian.CaspianFragment;
 import ir.caspiansoftware.caspianandroidapp.BaseCaspian.GoToForm;
+import ir.caspiansoftware.caspianandroidapp.BusinessLayer.DatabaseBackup;
 import ir.caspiansoftware.caspianandroidapp.BusinessLayer.InitialSettingBLL;
 import ir.caspiansoftware.caspianandroidapp.DataLayer.DataBase.CaspianDataBaseHelper;
+import ir.caspiansoftware.caspianandroidapp.DataLayer.DataBase.KalaDataSource;
+import ir.caspiansoftware.caspianandroidapp.Setting;
 import ir.caspiansoftware.caspianandroidapp.R;
 import ir.caspiansoftware.caspianandroidapp.SettingWebService;
 import ir.caspiansoftware.caspianandroidapp.Vars;
@@ -35,6 +46,7 @@ public class InitialSettingFragment extends CaspianFragment implements IFragment
 
     private Button mSaveButton;
     private Button mCancelButton;
+    private Button mBackupButton;
     private EditText mIPEditText;
     private TextView mApiEditText;
     private TextView mDeviceIdEditText;
@@ -58,6 +70,10 @@ public class InitialSettingFragment extends CaspianFragment implements IFragment
         mCancelButton = (Button) parentView.findViewById(R.id.initial_btnCancel);
         mCancelButton.setOnClickListener(this);
         mCancelButton.setOnTouchListener(this);
+
+        mBackupButton = (Button) parentView.findViewById(R.id.initial_btnBackup);
+        mBackupButton.setOnClickListener(this);
+        mBackupButton.setOnTouchListener(this);
 
         mSaveButton = (Button) parentView.findViewById(R.id.initial_btnSave);
         mSaveButton.setOnClickListener(this);
@@ -99,6 +115,8 @@ public class InitialSettingFragment extends CaspianFragment implements IFragment
             cancel();
         } else if (view.equals(mSaveButton)) {
             save();
+        } else if (view.equals(mBackupButton)) {
+            shareDatabaseBackup();
         } else if (view.equals(mBtnApiKeyGenerator)) {
             mActivityCallback.onMyFragmentCallBack(InitialSettingActivity.ACTION_API_GENERATOR, null, (Object) null);
         } else if (view.equals(mBtnAppIdGenerator)) {
@@ -112,6 +130,70 @@ public class InitialSettingFragment extends CaspianFragment implements IFragment
     public boolean onTouch(View sender, MotionEvent motionEvent) {
         UIUtility.onTouchEffect(sender, motionEvent);
         return false;
+    }
+
+    /**
+     * Copies the local SQLite database and hands it to the Android share sheet
+     * so a user can send it to support.
+     *
+     * This is diagnostic tooling. Some faults -- a FOREIGN KEY constraint
+     * failure during upload, for instance -- live in one user's data and cannot
+     * be reproduced or reasoned about from the code alone. Getting the actual
+     * database beats guessing at the cause.
+     */
+    private void shareDatabaseBackup() {
+        try {
+            Context context = getActivity().getApplicationContext();
+
+            // Flush the journal first. There is a caspian_db.sqlite-journal
+            // beside the database, and copying only the main file can produce a
+            // snapshot missing the newest writes -- which for a data
+            // investigation is exactly the part that matters.
+            checkpointDatabase(context);
+
+            File source = context.getDatabasePath(Setting.CASPIAN_DB);
+            if (!source.exists()) {
+                showError(getString(R.string.initial_backup_failed), null);
+                return;
+            }
+
+            // Naming and the byte copy live in DatabaseBackup so they can be
+            // unit tested; see DatabaseBackupTest.
+            File target = new File(context.getFilesDir(),
+                    DatabaseBackup.buildFileName(
+                            SettingWebService.getDeviceId(), PersianDate.getToday()));
+
+            DatabaseBackup.copyFile(source, target);
+
+            Uri uri = FileProvider.getUriForFile(
+                    context, context.getPackageName() + ".provider", target);
+
+            Intent share = new Intent(Intent.ACTION_SEND);
+            share.setType("application/octet-stream");
+            share.putExtra(Intent.EXTRA_STREAM, uri);
+            share.putExtra(Intent.EXTRA_SUBJECT, target.getName());
+            share.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+
+            startActivity(Intent.createChooser(
+                    share, getString(R.string.initial_backup_share)));
+
+        } catch (Exception ex) {
+            Log.e(TAG, "shareDatabaseBackup failed", ex);
+            showError(ex, null);
+        }
+    }
+
+    /**
+     * Opens and closes a connection so SQLite writes the journal back into the
+     * main database file before it is copied.
+     */
+    private void checkpointDatabase(Context context) {
+        KalaDataSource dataSource = new KalaDataSource(context);
+        try {
+            dataSource.open();
+        } finally {
+            dataSource.close();
+        }
     }
 
     private void caspianLogoCounterIncrement() {

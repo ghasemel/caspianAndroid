@@ -79,5 +79,18 @@
         <TextView style="@style/errorLabel" android:id="@+id/login_error" />
     </LinearLayout>
 
+    <!-- Diagnostic database export. Anchored to the bottom of the screen rather
+         than sitting inside the settings frame: it is a support tool, not part
+         of configuring the app, and keeping it apart stops it reading as a
+         fourth setting alongside Save/Cancel. -->
+    <Button
+        style="@style/button"
+        android:id="@+id/initial_btnBackup"
+        android:text="@string/initial_backup"
+        android:layout_width="240dp"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="110dp" />
+
 
 </RelativeLayout>
