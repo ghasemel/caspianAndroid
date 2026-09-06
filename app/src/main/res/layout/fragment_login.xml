@@ -13,7 +13,6 @@
         style="@style/label"
         android:layout_alignParentEnd="false"
         android:layout_alignParentBottom="true"
-        android:text="@string/login_app_version"
         android:textSize="10sp"
         />
 

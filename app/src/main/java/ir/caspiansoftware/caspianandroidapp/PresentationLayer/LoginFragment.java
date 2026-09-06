@@ -5,6 +5,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import info.elyasi.android.elyasilib.Persian.PersianConvert;
@@ -74,6 +75,29 @@ public class LoginFragment extends CaspianFragment {
 
         mInitialSettingHidden = parentView.findViewById(R.id.initial_setting_hidden);
         mInitialSettingHidden.setOnClickListener(this);
+
+        showAppVersion(parentView);
+    }
+
+    /**
+     * Shows the real versionName from the manifest rather than a hardcoded
+     * string. The label used to hold a Jalali date that had to be edited by
+     * hand on every release, so it drifted out of step with the actual version.
+     */
+    private void showAppVersion(View parentView) {
+        TextView versionLabel = parentView.findViewById(R.id.app_version);
+        if (versionLabel == null)
+            return;
+
+        try {
+            String version = getActivity().getPackageManager()
+                    .getPackageInfo(getActivity().getPackageName(), 0).versionName;
+
+            versionLabel.setText(getString(R.string.login_app_version, version));
+        } catch (Exception ex) {
+            // Leave whatever the layout declared; a missing version label is
+            // not worth failing the login screen over.
+        }
     }
 
     // region IAsyncForm
