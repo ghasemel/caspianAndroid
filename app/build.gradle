@@ -10,10 +10,19 @@ android {
         versionCode 4
         versionName '2.6.0'
     }
+    buildFeatures {
+        buildConfig true
+    }
     buildTypes {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            // Released builds are deployed under an IIS virtual directory.
+            buildConfigField "String", "IIS_APP_NAME", '"CaspianService"'
+        }
+        debug {
+            // IIS Express serves the API from the site root, so no app name.
+            buildConfigField "String", "IIS_APP_NAME", '""'
         }
     }
     productFlavors {

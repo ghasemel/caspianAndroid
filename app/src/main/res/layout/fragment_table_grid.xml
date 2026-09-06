@@ -9,6 +9,7 @@
               android:layout_width="match_parent"
               android:layout_height="match_parent"
               android:layoutDirection="rtl"
+              android:fitsSystemWindows="true"
               android:padding="8dp">
 
     <!-- No header row here: the title and the refresh action both live in the
