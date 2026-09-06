@@ -113,11 +113,8 @@ public class UserBLL extends ABusinessLayer {
 
     // region database *****************************************************************************
     public void saveUser(UserModel pUserModel) {
-        UserDataSource userDataSource = new UserDataSource(mContext);
 
-        try {
-            userDataSource.open();
-
+        try (UserDataSource userDataSource = new UserDataSource(mContext)) {
             // logout other users
             userDataSource.setOtherUsersLogout(pUserModel.getUserId());
 
@@ -128,16 +125,11 @@ public class UserBLL extends ABusinessLayer {
                 // this user already logon to this device
                 userDataSource.update(pUserModel);
             }
-        } finally {
-            userDataSource.close();
         }
     }
 
     public void savePermissions(int userId, List<UserPermissionModel> permissions) {
-        UserPermissionDataSource dataSource = new UserPermissionDataSource(mContext);
-        dataSource.open();
-
-        try {
+        try (UserPermissionDataSource dataSource = new UserPermissionDataSource(mContext)) {
             // delete old permissions
             dataSource.deleteAll(userId);
 
@@ -145,36 +137,24 @@ public class UserBLL extends ABusinessLayer {
             for (UserPermissionModel p : permissions) {
                 dataSource.insert(p);
             }
-        } finally {
-            dataSource.close();
         }
     }
 
     public UserModel getLogonUser() {
-        UserDataSource userDataSource = new UserDataSource(mContext);
-        try {
-            userDataSource.open();
+        try (UserDataSource userDataSource = new UserDataSource(mContext)) {
             return userDataSource.getLogonUser();
-        } finally {
-            userDataSource.close();
         }
         //return null;
     }
 
     public void logout(UserModel pUserModel) {
-        UserDataSource userDataSource = new UserDataSource(mContext);
-        try {
-            userDataSource.open();
+        try (UserDataSource userDataSource = new UserDataSource(mContext)) {
             userDataSource.logout(pUserModel);
-        } finally {
-            userDataSource.close();
         }
     }
 
     public LinkedHashMap<String, UserPermissionModel> getUserPermissions(int userId) {
-        UserPermissionDataSource dataSource = new UserPermissionDataSource(mContext);
-        try {
-            dataSource.open();
+        try (UserPermissionDataSource dataSource = new UserPermissionDataSource(mContext)) {
             List<UserPermissionModel> permissions = dataSource.getAll(userId);
 
             if (permissions != null) {
@@ -188,8 +168,6 @@ public class UserBLL extends ABusinessLayer {
             }
 
             throw new RuntimeException(CaspianErrors.permissions_are_null);
-        } finally {
-            dataSource.close();
         }
     }
 

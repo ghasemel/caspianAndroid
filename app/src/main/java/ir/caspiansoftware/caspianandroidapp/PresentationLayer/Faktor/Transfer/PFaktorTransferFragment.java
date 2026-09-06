@@ -1,15 +1,16 @@
-package ir.caspiansoftware.caspianandroidapp.PresentationLayer.Faktor.Confirm;
+package ir.caspiansoftware.caspianandroidapp.PresentationLayer.Faktor.Transfer;
 
 import android.app.Activity;
 import android.util.Log;
 import android.view.View;
+import android.widget.HorizontalScrollView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
-import android.widget.RelativeLayout;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Consumer;
 
 import info.elyasi.android.elyasilib.UI.FormActionType;
 import info.elyasi.android.elyasilib.UI.IActivityCallback;
@@ -24,29 +25,29 @@ import ir.caspiansoftware.caspianandroidapp.R;
 /**
  * Created by Canada on 3/8/2016.
  */
-public class PFaktorConfirmListFragment extends CaspianDataGridFragment<MPFaktorModel> implements IFragmentCallback {
-    private static final String TAG = "InvoiceConfirmFragment";
-
-    public static final String REFRESH_LIST = "refresh_list";
+public class PFaktorTransferFragment extends CaspianDataGridFragment<MPFaktorModel> implements IFragmentCallback {
+    private static final String TAG = "PFaktorTransferFragment";
 
     private ProgressBar mProgressBar;
     private LinearLayout mToolbarExit;
     private IActivityCallback mActivityCallback;
 
-    private RelativeLayout mToolbarNewInvoice;
-    private RelativeLayout mToolbarSyncBtn;
+    private LinearLayout mToolbarNewInvoice;
+    private LinearLayout mToolbarSyncBtn;
 
     private List<MPFaktorModel> mSelectedRowsList;
+
+    private HorizontalScrollView mMainScrollView;
 
 
     @Override
     protected int getLayoutId() {
-        return R.layout.fragment_pfaktor_confirm_list;
+        return R.layout.fragment_pfaktor_transfer_list;
     }
 
     @Override
     protected String getFragmentRowTagValue() {
-        return getString(R.string.fragment_invoice_confirm_row_tag);
+        return getString(R.string.fragment_invoice_transfer_row_tag);
     }
 
     @Override
@@ -54,8 +55,14 @@ public class PFaktorConfirmListFragment extends CaspianDataGridFragment<MPFaktor
 
     }
 
+    private int maxScrollSpace = 0;
     private void RefreshList() {
-        getRowFragment().LoadDataAsync();
+        getRowFragment().LoadDataAsync(s -> {
+            Log.d(TAG, mMainScrollView.getScrollX() + " RAOUF1," +  mMainScrollView.getScrollY());
+            maxScrollSpace = Math.max(maxScrollSpace, mMainScrollView.getScrollX());
+            mMainScrollView.setScrollX(maxScrollSpace);
+            Log.d(TAG, mMainScrollView.getScrollX() + " RAOUF2," +  mMainScrollView.getScrollY());
+        });
         mSelectedRowsList = new ArrayList<>();
     }
 
@@ -97,8 +104,9 @@ public class PFaktorConfirmListFragment extends CaspianDataGridFragment<MPFaktor
 
     private void mapToolbar(View parentView) {
         mToolbarExit = (LinearLayout) parentView.findViewById(R.id.toolbar_exit);
-        mToolbarNewInvoice = (RelativeLayout) parentView.findViewById(R.id.toolbar_new_invoice);
-        mToolbarSyncBtn = (RelativeLayout) parentView.findViewById(R.id.toolbar_sync_selection);
+        mToolbarNewInvoice = (LinearLayout) parentView.findViewById(R.id.toolbar_new_invoice);
+        mToolbarSyncBtn = (LinearLayout) parentView.findViewById(R.id.toolbar_sync_selection);
+        mMainScrollView = parentView.findViewById(R.id.mainScrollView);
     }
 
     @Override
@@ -106,7 +114,7 @@ public class PFaktorConfirmListFragment extends CaspianDataGridFragment<MPFaktor
         Log.d(TAG, "onMyFragmentCallBack start");
 
         switch (actionName) {
-            case REFRESH_LIST:
+            case Actions.REFRESH_LIST:
                 RefreshList();
                 break;
         }
@@ -125,14 +133,14 @@ public class PFaktorConfirmListFragment extends CaspianDataGridFragment<MPFaktor
             mActivityCallback.onMyFragmentCallBack(Actions.ACTION_PRE_INVOICE, FormActionType.New);
 
         } else  if (v.equals(mToolbarSyncBtn)) {
-            Log.d(TAG, Actions.ACTION_CONFIRM_PFaktor);
+            Log.d(TAG, Actions.ACTION_TRANSFER_PFaktor);
 
-            if (mSelectedRowsList.size() == 0) {
+            if (mSelectedRowsList.isEmpty()) {
                 messageBoxOK(R.string.preInvoice_list_title, R.string.no_rows_selected, null);
                 return;
             }
 
-            mActivityCallback.onMyFragmentCallBack(Actions.ACTION_CONFIRM_PFaktor, null, mSelectedRowsList);
+            mActivityCallback.onMyFragmentCallBack(Actions.ACTION_TRANSFER_PFaktor, FormActionType.New, mSelectedRowsList);
         }
     }
 

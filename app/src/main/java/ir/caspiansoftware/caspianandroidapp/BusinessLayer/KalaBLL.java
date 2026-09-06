@@ -100,9 +100,7 @@ public class KalaBLL extends ABusinessLayer {
     public void SyncWithDatabase(KalaModel kala) {
         Log.d(TAG, "SyncWithDatabase start");
 
-        KalaDataSource dataSource = new KalaDataSource(mContext);
-
-        try {
+        try (KalaDataSource dataSource = new KalaDataSource(mContext)) {
             if (kala == null)
                 return;
 
@@ -110,7 +108,6 @@ public class KalaBLL extends ABusinessLayer {
             //kala.setName(PersianConvert.ConvertDigitsToPersian(kala.getName()));
             kala.setName(kala.getName().replace("ي", "ی"));
 
-            dataSource.open();
             Log.d(TAG, "check for insert or update");
             if (dataSource.isExistByCode(kala.getCode(), kala.getYearId_FK())) {
                 // update
@@ -124,7 +121,6 @@ public class KalaBLL extends ABusinessLayer {
             }
             //}
         } finally {
-            dataSource.close();
             Log.d(TAG, "SyncWithDatabase finished");
         }
     }
@@ -132,16 +128,12 @@ public class KalaBLL extends ABusinessLayer {
     public void DeleteNotExistInList(List<KalaModel> kalaList) {
         Log.d(TAG, "SyncWithDatabase start");
 
-        KalaDataSource dataSource = new KalaDataSource(mContext);
-
-        try {
+        try (KalaDataSource dataSource = new KalaDataSource(mContext)) {
             if (kalaList == null)
                 return;
 
-            dataSource.open();
             dataSource.deleteOther(kalaList);
         } finally {
-            dataSource.close();
             Log.d(TAG, "SyncWithDatabase finished");
         }
     }
@@ -149,12 +141,9 @@ public class KalaBLL extends ABusinessLayer {
     public ArrayList<KalaModel> getKalaListByYearId(int yearId) {
         Log.d(TAG, "getKalaListByYearId(): function entered");
 
-        KalaDataSource dataSource = new KalaDataSource(mContext);
-        try {
-            dataSource.open();
+        try (KalaDataSource dataSource = new KalaDataSource(mContext)) {
             return dataSource.getKalaListByYearId(yearId);
         } finally {
-            dataSource.close();
             Log.d(TAG, "getKalaListByYearId() finished");
         }
     }
@@ -162,12 +151,9 @@ public class KalaBLL extends ABusinessLayer {
     public KalaModel getKalaById(int id) {
         Log.d(TAG, "getKalaById(): function entered");
 
-        KalaDataSource dataSource = new KalaDataSource(mContext);
-        try {
-            dataSource.open();
+        try (KalaDataSource dataSource = new KalaDataSource(mContext)) {
             return dataSource.getById(id);
         } finally {
-            dataSource.close();
             Log.d(TAG, "getKalaById() finished");
         }
     }

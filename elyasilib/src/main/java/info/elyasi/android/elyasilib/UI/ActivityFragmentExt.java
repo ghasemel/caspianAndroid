@@ -82,6 +82,21 @@ public abstract class ActivityFragmentExt extends FragmentActivity implements Vi
         }
     }
 
+    public void informMyFragment(String actionName, Object parameter, FormActionType formActionType) {
+        if (getFragmentContainer() != null && getFragmentContainer() instanceof IFragmentCallback) {
+            ((IFragmentCallback) getFragmentContainer())
+                    .onMyActivityCallback(actionName, parameter, formActionType);
+        }
+    }
+
+    public void informMyDetailFragment(String actionName, Object parameter, FormActionType formActionType) {
+
+        if (getFragmentDetailContainer() != null && getFragmentDetailContainer() instanceof IFragmentCallback) {
+            ((IFragmentCallback) getFragmentDetailContainer())
+                    .onMyActivityCallback(actionName, parameter, formActionType);
+        }
+    }
+
     protected void startDetailFragment(Fragment newFragment, Intent intentActivity) throws Exception {
 
         // if device has small screen

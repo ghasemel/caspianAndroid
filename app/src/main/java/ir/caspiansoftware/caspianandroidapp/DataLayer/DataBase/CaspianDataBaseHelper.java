@@ -9,11 +9,13 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.util.Objects;
 
 import ir.caspiansoftware.caspianandroidapp.DataLayer.DataBase.Tables.InitialSettingTbl;
 import ir.caspiansoftware.caspianandroidapp.DataLayer.DataBase.Tables.KalaPhotoTbl;
 import ir.caspiansoftware.caspianandroidapp.DataLayer.DataBase.Tables.KalaTbl;
 import ir.caspiansoftware.caspianandroidapp.DataLayer.DataBase.Tables.MPFaktorTbl;
+import ir.caspiansoftware.caspianandroidapp.DataLayer.DataBase.Tables.MaliTbl;
 import ir.caspiansoftware.caspianandroidapp.DataLayer.DataBase.Tables.PersonTbl;
 import ir.caspiansoftware.caspianandroidapp.DataLayer.DataBase.Tables.SPFaktorTbl;
 import ir.caspiansoftware.caspianandroidapp.DataLayer.DataBase.Tables.UserTbl;
@@ -103,6 +105,10 @@ public class CaspianDataBaseHelper extends SQLiteOpenHelper {
             Log.d(TAG, sql);
             db.execSQL(sql);
 
+            sql = MaliTbl.getInstance().createTableSql();
+            Log.d(TAG, sql);
+            db.execSQL(sql);
+
         } catch (Exception ex) {
             Log.e(TAG, ex.getMessage());
             throw ex;
@@ -136,15 +142,21 @@ public class CaspianDataBaseHelper extends SQLiteOpenHelper {
                     execSQLFile(mContext, db, R.raw.version_04_unset_default_value_for_create_date_col_pfaktor);
 
                 case 6:
-                    execSQLFile(mContext, db, R.raw.version_05_faktor_print_view);
+                    execSQLFile(mContext, db, R.raw.version_06_faktor_print_view);
+
+                case 7:
+                    execSQLFile(mContext, db, R.raw.version_07_mali_table);
+
+                case 8:
+                    execSQLFile(mContext, db, R.raw.version_08_mali_table_missing_is_synced);
             }
 
             // commit
             db.setTransactionSuccessful();
 
         } catch (Exception ex) {
-            ex.printStackTrace();
-            Log.e(TAG, ex.getMessage());
+            Log.e(TAG, "Error on database migration", ex);
+            throw new RuntimeException("Error on database migration", ex);
 
         } finally {
             // commit or rollback

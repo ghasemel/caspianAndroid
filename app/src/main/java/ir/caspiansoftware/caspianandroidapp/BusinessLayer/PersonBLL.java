@@ -5,6 +5,7 @@ import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import info.elyasi.android.elyasilib.BLL.ABusinessLayer;
 import info.elyasi.android.elyasilib.WebService.ResponseWebService;
@@ -22,9 +23,7 @@ import ir.caspiansoftware.caspianandroidapp.Vars;
  */
 public class PersonBLL extends ABusinessLayer {
     private static final String TAG = "PersonBLL";
-
     private PersonWebService mPersonWebService;
-
     public PersonBLL(Context context) {
         super(context);
         mPersonWebService = new PersonWebService();
@@ -132,9 +131,7 @@ public class PersonBLL extends ABusinessLayer {
     public void SyncWithDatabase(PersonModel person) {
         Log.d(TAG, "SyncWithDatabase start");
 
-        PersonDataSource dataSource = new PersonDataSource(mContext);
-
-        try {
+        try (PersonDataSource dataSource = new PersonDataSource(mContext)) {
             if (person == null)
                 return;
 
@@ -145,7 +142,6 @@ public class PersonBLL extends ABusinessLayer {
             //person.setAddress(PersianConvert.ConvertDigitsToPersian(person.getAddress()));
             person.setName(person.getName().replace("ي", "ی"));
 
-            dataSource.open();
             if (dataSource.isExistByCode(person.getCode(), person.getYearId_FK())) {
                 // update
                 Log.d(TAG, "update " + person.getCode());
@@ -157,7 +153,6 @@ public class PersonBLL extends ABusinessLayer {
                 Log.d(TAG, "insert " + person.getCode());
             }
         } finally {
-            dataSource.close();
             Log.d(TAG, "SyncWithDatabase finished");
         }
     }
@@ -166,16 +161,12 @@ public class PersonBLL extends ABusinessLayer {
     public void DeleteNotExistInList(List<PersonModel> personList) {
         Log.d(TAG, "SyncWithDatabase start");
 
-        PersonDataSource dataSource = new PersonDataSource(mContext);
-
-        try {
+        try (PersonDataSource dataSource = new PersonDataSource(mContext)) {
             if (personList == null)
                 return;
 
-            dataSource.open();
             dataSource.deleteOther(personList);
         } finally {
-            dataSource.close();
             Log.d(TAG, "SyncWithDatabase finished");
         }
     }
@@ -184,38 +175,26 @@ public class PersonBLL extends ABusinessLayer {
     public ArrayList<PersonModel> getPersonListByYearId(int yearId) {
         Log.d(TAG, "getPersonListByYearId(): function entered");
 
-        PersonDataSource dataSource = new PersonDataSource(mContext);
-        try {
-            dataSource.open();
+        try (PersonDataSource dataSource = new PersonDataSource(mContext)) {
             return dataSource.getPersonListByYearId(yearId);
         } finally {
-            dataSource.close();
             Log.d(TAG, "getPersonListByYearId() finished");
         }
     }
 
-    public PersonModel getByCode(String code, int yearId) throws Exception {
-        PersonDataSource personDataSource = new PersonDataSource(mContext);
-        try {
-            if (code.trim().equals(""))
-                throw new Exception(CaspianErrors.CUSTOMER_INVALID);
+    public Optional<PersonModel> getByCode(String code, int yearId) {
+        try (PersonDataSource personDataSource = new PersonDataSource(mContext)) {
+            if (code.trim().isEmpty())
+                return Optional.empty();
 
-            personDataSource.open();
-            return personDataSource.getByCode(code, yearId);
-        } finally {
-            personDataSource.close();
+            return Optional.ofNullable(personDataSource.getByCode(code, yearId));
         }
     }
 
 
     public PersonModel getById(int id) {
-        PersonDataSource personDataSource = new PersonDataSource(mContext);
-        try {
-
-            personDataSource.open();
+        try (PersonDataSource personDataSource = new PersonDataSource(mContext)) {
             return personDataSource.getById(id);
-        } finally {
-            personDataSource.close();
         }
     }
     // endregion database **************************************************************************

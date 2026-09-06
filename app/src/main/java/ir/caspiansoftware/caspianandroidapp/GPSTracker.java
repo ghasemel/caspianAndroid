@@ -19,6 +19,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
+import ir.caspiansoftware.caspianandroidapp.BaseCaspian.CaspianErrors;
 import ir.caspiansoftware.caspianandroidapp.BaseCaspian.ErrorExt;
 import ir.caspiansoftware.caspianandroidapp.BusinessLayer.PermissionBLL;
 
@@ -63,6 +64,10 @@ public class GPSTracker implements LocationListener { //Service
 
         // getting GPS status
         boolean isGPSEnabled = locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
+
+        if (isGPSEnabled == false) {
+            throw new RuntimeException(CaspianErrors.gps_is_off);
+        }
 
         if (!isGPSEnabled || Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
             return;

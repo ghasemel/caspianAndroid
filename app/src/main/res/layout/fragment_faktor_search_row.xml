@@ -12,29 +12,22 @@
     <TextView
         android:id="@+id/cell_radif"
         style="@style/list_textView"
-        android:layout_width="50dp" />
-
-
+        android:layout_width="60dp" />
 
     <TextView
         android:id="@+id/cell_num"
         style="@style/list_textView"
         android:layout_width="70dp" />
 
-
-
     <TextView
         android:id="@+id/cell_date"
         style="@style/list_textView"
         android:layout_width="100dp"/>
 
-
     <TextView
         android:id="@+id/cell_customer"
         style="@style/list_textView"
-        android:layout_width="200dp" />
-
-
+        android:layout_width="300dp" />
 
     <TextView
         android:id="@+id/cell_total_price"
@@ -43,10 +36,9 @@
         android:layout_marginStart="20dp"
         android:gravity="center"/>
 
-
     <ImageView
         android:id="@+id/cell_synced"
-        android:layout_width="40dp"
+        android:layout_width="70dp"
         android:layout_gravity="center"
         android:src="@android:drawable/checkbox_off_background"
         style="@style/ImageViewCell"/>

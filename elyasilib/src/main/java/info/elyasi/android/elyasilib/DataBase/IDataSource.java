@@ -8,8 +8,6 @@ import java.util.List;
 public interface IDataSource<T> {
 
     String[] getAllColumns();
-    void open();
-    void close();
     int delete(T TObject);
     int insert(T TObject);
     int update(T TObject) throws Exception;

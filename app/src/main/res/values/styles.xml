@@ -9,6 +9,8 @@
         <!-- progressBar color -->
         <item name="colorAccent">@color/colorAccent</item>
         <item name="android:typeface">monospace</item>
+
+        <item name="android:windowTranslucentStatus">true</item>
     </style>
 
     <style name="fullscreenTheme" parent="AppTheme">

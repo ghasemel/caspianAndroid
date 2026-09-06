@@ -1,47 +1,105 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent"
-              android:padding="10dp"
-              android:layoutDirection="rtl">
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    android:layoutDirection="rtl"
+    android:padding="10dp">
 
 
     <LinearLayout
+        style="@style/frame_content"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        style="@style/frame_content"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentStart="true">
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true">
 
-        <TextView style="@style/label_title" android:text="@string/daf_taf_title" />
+        <TextView
+            style="@style/label_title"
+            android:text="@string/daf_taf_title" />
 
 
-        <LinearLayout style="@style/row" android:layout_gravity="center_horizontal" android:gravity="center_horizontal">
-            <TextView style="@style/label" android:layout_width="90dp" android:text="@string/report_from_date" android:labelFor="@+id/editText_fromDate" />
-            <EditText style="@style/textBoxDate" android:id="@id/editText_fromDate" />
-            <ImageView style="@style/ImageViewBtnTouch" android:id="@+id/btn_fromDate_select" />
+        <LinearLayout
+            style="@style/row"
+            android:layout_gravity="center_horizontal"
+            android:gravity="center_horizontal">
+
+            <TextView
+                style="@style/label"
+                android:layout_width="90dp"
+                android:labelFor="@+id/editText_fromDate"
+                android:text="@string/report_from_date" />
+
+            <EditText
+                android:id="@id/editText_fromDate"
+                style="@style/textBoxDate" />
+
+            <ImageView
+                android:id="@+id/btn_fromDate_select"
+                style="@style/ImageViewBtnTouch" />
         </LinearLayout>
 
-        <LinearLayout style="@style/row" android:layout_gravity="center_horizontal" android:gravity="center_horizontal">
-            <TextView style="@style/label" android:layout_width="90dp" android:text="@string/report_to_date" android:labelFor="@+id/editText_toDate" />
-            <EditText style="@style/textBoxDate" android:id="@id/editText_toDate" />
-            <ImageView style="@style/ImageViewBtnTouch" android:id="@+id/btn_toDate_select" />
+        <LinearLayout
+            style="@style/row"
+            android:layout_gravity="center_horizontal"
+            android:gravity="center_horizontal">
+
+            <TextView
+                style="@style/label"
+                android:layout_width="90dp"
+                android:labelFor="@+id/editText_toDate"
+                android:text="@string/report_to_date" />
+
+            <EditText
+                android:id="@id/editText_toDate"
+                style="@style/textBoxDate" />
+
+            <ImageView
+                android:id="@+id/btn_toDate_select"
+                style="@style/ImageViewBtnTouch" />
         </LinearLayout>
 
-        <LinearLayout style="@style/row" android:layout_gravity="center_horizontal" android:gravity="center_horizontal">
-            <TextView style="@style/label" android:layout_width="90dp" android:text="@string/daf_taf_person_code" android:labelFor="@+id/editText_daf_taf_report_person_code" />
-            <EditText style="@style/textBoxCode" android:id="@id/editText_daf_taf_report_person_code" android:enabled="false" />
-            <ImageView style="@style/ImageViewBtnTouch" android:id="@+id/btn_person_select" />
+        <LinearLayout
+            style="@style/row"
+            android:layout_gravity="center_horizontal"
+            android:gravity="center_horizontal">
+
+            <TextView
+                style="@style/label"
+                android:layout_width="90dp"
+                android:labelFor="@+id/editText_daf_taf_report_person_code"
+                android:text="@string/daf_taf_person_code" />
+
+            <EditText
+                android:id="@id/editText_daf_taf_report_person_code"
+                style="@style/textBoxCode"
+                android:enabled="false" />
+
+            <ImageView
+                android:id="@+id/btn_person_select"
+                style="@style/ImageViewBtnTouch" />
         </LinearLayout>
 
-        <LinearLayout style="@style/row" android:layout_gravity="center_horizontal" android:gravity="center_horizontal">
-            <TextView style="@style/label_red" android:layout_width="wrap_content" android:id="@+id/editText_person_name"  />
+        <LinearLayout
+            style="@style/row"
+            android:layout_gravity="center_horizontal"
+            android:gravity="center_horizontal">
+
+            <TextView
+                android:id="@+id/editText_person_name"
+                style="@style/label_red"
+                android:layout_width="wrap_content" />
         </LinearLayout>
     </LinearLayout>
 
-    <LinearLayout android:layout_alignParentBottom="true" style="@style/row" android:gravity="center_horizontal">
-        <Button style="@style/button"
+    <LinearLayout
+        style="@style/row"
+        android:layout_alignParentBottom="true"
+        android:gravity="center_horizontal">
+
+        <Button
             android:id="@+id/btn_OK"
+            style="@style/button"
             android:text="@string/ok_button" />
     </LinearLayout>
 </RelativeLayout>

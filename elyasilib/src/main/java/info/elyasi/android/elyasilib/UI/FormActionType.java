@@ -11,7 +11,12 @@ public enum FormActionType implements Serializable {
     New,
     VIEW,
     SELECT_BED,
-    SELECT_BES;
+    SELECT_BES,
+    CANCEL,
+    FAILED,
+    DONE;
+
+
     //Select
 //
 //    public static final String Add = "add";

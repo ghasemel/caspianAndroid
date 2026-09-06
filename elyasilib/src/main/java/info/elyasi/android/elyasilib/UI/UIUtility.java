@@ -5,6 +5,7 @@ import android.app.Fragment;
 import android.content.Context;
 import android.content.res.Configuration;
 import android.os.Handler;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
@@ -26,6 +27,18 @@ public class UIUtility {
 
     private static final String TAG = "UIUtility";
 
+
+    static DisplayMetrics displayMetrics = new DisplayMetrics();
+
+    public static void setHeightWidth(ActivityFragmentExt activity, int minHeight) {
+        //if (height <= 0 || width < 0) {
+        activity.getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
+        int height = displayMetrics.heightPixels;
+        int width = displayMetrics.widthPixels;
+        //}
+
+        ActivityFragmentExt.showAsPopup(activity, Math.min(height - 100, minHeight), width - 200);
+    }
     public static void waitForSeconds(long pSeconds, final IPauseUI pIPauseUI){
         Handler handler = new Handler();
         handler.postDelayed(new Runnable() {

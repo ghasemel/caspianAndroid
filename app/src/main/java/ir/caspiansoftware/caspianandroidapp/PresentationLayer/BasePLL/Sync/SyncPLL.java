@@ -23,7 +23,6 @@ import ir.caspiansoftware.caspianandroidapp.Models.KalaModel;
 import ir.caspiansoftware.caspianandroidapp.Models.KalaPhotoModel;
 import ir.caspiansoftware.caspianandroidapp.Models.PersonModel;
 import ir.caspiansoftware.caspianandroidapp.R;
-import ir.caspiansoftware.caspianandroidapp.SettingWebService;
 import ir.caspiansoftware.caspianandroidapp.Vars;
 
 /**
@@ -58,12 +57,12 @@ public class SyncPLL {
                     return Constant.CANCEL;
 
                 kalaBLL.SyncWithDatabase(kalaList.get(i));
-                task.progress(kalaList.get(i).getName());
+                task.reportProgress(kalaList.get(i).getName());
             }
 
         } catch (Exception ex) {
-            Log.d(TAG, "syncKala exception");
-            task.setException(ex);
+            Log.e(TAG, "syncKala exception", ex);
+            task.setException("syncKala exception", ex);
         }
 
         return Constant.SUCCESS;
@@ -74,19 +73,23 @@ public class SyncPLL {
             PersonBLL personBLL = new PersonBLL(mContext);
             List<PersonModel> personList = personBLL.FetchPersonList();
 
+
             personBLL.DeleteNotExistInList(personList);
+
+
+
             for (int i = 0; i < personList.size(); i++) {
 
                 if (mCancel)
                     return Constant.CANCEL;
 
                 personBLL.SyncWithDatabase(personList.get(i));
-                task.progress(personList.get(i).getName());
+                task.reportProgress(personList.get(i).getName());
             }
 
         } catch (Exception ex) {
-            Log.d(TAG, "syncPerson exception");
-            task.setException(ex);
+            Log.e(TAG, "syncPerson exception", ex);
+            task.setException("syncPerson exception", ex);
         }
 
         return Constant.SUCCESS;
@@ -112,12 +115,12 @@ public class SyncPLL {
                     return Constant.FAILED;
 
                 photoBLL.SyncWithDatabase(photoList.get(i));
-                task.progress(photoList.get(i).getCode() + " " + photoList.get(i).getTitle());
+                task.reportProgress(photoList.get(i).getCode() + " " + photoList.get(i).getTitle());
             }
 
         } catch (Exception ex) {
-            Log.d(TAG, "syncKalaPhoto exception");
-            task.setException(ex);
+            Log.e(TAG, "syncKalaPhoto exception", ex);
+            task.setException("syncKalaPhoto exception", ex);
         }
 
         return Constant.SUCCESS;
@@ -147,20 +150,11 @@ public class SyncPLL {
                 if (mCancel || mCount == 0)
                     return Constant.CANCEL;
 
-                String result = Constant.CANCEL;
-                switch (syncType) {
-                    case KALA:
-                        result = syncKala(this);
-                        break;
-
-                    case PERSON:
-                        result = syncPerson(this);
-                        break;
-
-                    case KALA_PHOTO:
-                        result = syncKalaPhoto(this);
-                        break;
-                }
+                String result = switch (syncType) {
+                    case KALA -> syncKala(this);
+                    case PERSON -> syncPerson(this);
+                    case KALA_PHOTO -> syncKalaPhoto(this);
+                };
 
                 Log.d(TAG, "doInBackground(): end of the function");
                 return result; //Constant.SUCCESS;
@@ -216,36 +210,25 @@ public class SyncPLL {
 
 
                 int count = 0;
-                switch (syncType) {
-                    case KALA:
-                        try {
+                try {
+                    count = switch (syncType) {
+                        case KALA -> {
                             KalaBLL kalaBLL = new KalaBLL(mContext);
-                            count = kalaBLL.FetchKalaListCount(Vars.YEAR.getDataBase());
-                        } catch (Exception ex) {
-                            setException(ex);
+                            yield kalaBLL.FetchKalaListCount(Vars.YEAR.getDataBase());
                         }
-                        break;
-
-                    case PERSON:
-                        try {
+                        case PERSON -> {
                             PersonBLL personBLL = new PersonBLL(mContext);
-                            count = personBLL.FetchPersonListCount();
-
-                        } catch (Exception ex) {
-                            setException(ex);
+                            yield personBLL.FetchPersonListCount();
                         }
-                        break;
-
-                    case KALA_PHOTO:
-                        try {
+                        case KALA_PHOTO -> {
                             KalaPhotoBLL photoBLL = new KalaPhotoBLL(mContext);
-                            count = photoBLL.FetchKalaPhotosCount(Vars.YEAR.getDataBase());
-                        } catch (Exception ex) {
-                            setException(ex);
+                            yield photoBLL.FetchKalaPhotosCount(Vars.YEAR.getDataBase());
                         }
-                        break;
+                    };
+                } catch (Exception ex) {
+                    Log.e(TAG, ex.getMessage(), ex);
+                    setException(TAG + "-start()-doInBackground()", ex);
                 }
-
 
                 Log.d(TAG, "doInBackground(): end of the function");
                 return count;

@@ -8,6 +8,7 @@ import android.util.Log;
 
 import info.elyasi.android.elyasilib.UI.FormActionType;
 import info.elyasi.android.elyasilib.UI.IFragmentCallback;
+import info.elyasi.android.elyasilib.UI.UIUtility;
 import ir.caspiansoftware.caspianandroidapp.BaseCaspian.CaspianActionbar;
 import ir.caspiansoftware.caspianandroidapp.BaseCaspian.CaspianActivitySingleFragment;
 import ir.caspiansoftware.caspianandroidapp.Enum.SyncType;
@@ -31,7 +32,7 @@ public class SyncTypeActivity extends CaspianActivitySingleFragment {
     @Override
     public void onCreate(Bundle savedBundleState) {
         Log.d(TAG, "start...");
-        Setting.setHeightWidth(this);
+        //UIUtility.setHeightWidth(this, 650);
         //showAsPopup(this, getResources().getInteger(R.integer.popup_daf_taf_height), getResources().getInteger(R.integer.popup_daf_taf_width));
         CaspianActionbar.setActionbarLayout(this, R.layout.actionbar_dialog, R.string.sync_select_sync_type);
 

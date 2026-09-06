@@ -4,19 +4,20 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
     android:layoutDirection="rtl">
 
     <include
         android:id="@+id/toolbar"
         layout="@layout/object_form_toolbar" />
 
-    <include
-        layout="@layout/image_logo"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/toolbar"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentEnd="true" />
+<!--    <include-->
+<!--        layout="@layout/image_logo"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_below="@id/toolbar"-->
+<!--        android:layout_alignParentTop="true"-->
+<!--        android:layout_alignParentEnd="true" />-->
 
     <!--<LinearLayout android:layout_width="match_parent"-->
     <!--android:layout_height="wrap_content"-->
@@ -203,7 +204,7 @@
                     <info.elyasi.android.elyasilib.Controls.ClearableEditText.ClearableEditText
                         android:id="@id/editText_vcheckBank"
                         style="@style/textBoxStandard"
-                        android:layout_width="100dp"
+                        android:layout_width="300dp"
                         android:layout_marginEnd="20dp" />
 
 
@@ -323,6 +324,28 @@
             </LinearLayout>
         </LinearLayout>
     </ScrollView>
+
+    <RelativeLayout
+        android:id="@+id/dataGrid_summery"
+        style="@style/toolbar_style"
+
+        android:layout_height="34dp"
+        android:layout_alignParentBottom="true"
+        android:orientation="horizontal"
+        android:padding="2dp"> <!--android:layout_below="@id/dataGrid_frame"-->
+
+        <LinearLayout
+            android:id="@+id/btn_add_kala"
+            style="@style/pfaktor_summery_button_frame"
+            android:layout_alignParentStart="true">
+
+            <TextView
+                android:id="@+id/labelMaliId"
+                style="@style/label_red"
+                android:layout_width="wrap_content" />
+        </LinearLayout>
+
+    </RelativeLayout>
 
     <ProgressBar
         android:id="@+id/progressBar"

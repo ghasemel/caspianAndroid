@@ -22,8 +22,6 @@ public class KalaPhotoDataSource extends ADataSource<KalaPhotoModel> implements 
 
     public KalaPhotoDataSource(Context context) {
         super(context);
-
-        open();
     }
 
 

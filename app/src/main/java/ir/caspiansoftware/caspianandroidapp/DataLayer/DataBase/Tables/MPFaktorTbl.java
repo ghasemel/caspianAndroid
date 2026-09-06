@@ -33,7 +33,8 @@ public class MPFaktorTbl extends ATableEntity {
         return sMPFaktorTbl;
     }
 
-    public MPFaktorTbl() {}
+    public MPFaktorTbl() {
+    }
 
     @Override
     public String getTableName() {
@@ -42,7 +43,7 @@ public class MPFaktorTbl extends ATableEntity {
 
     @Override
     public String[] getColumns() {
-        return new String[] {
+        return new String[]{
                 COLUMN_YEAR_ID_FK,
                 COLUMN_ID,
                 COLUMN_NUM,
@@ -62,7 +63,7 @@ public class MPFaktorTbl extends ATableEntity {
 
     @Override
     public String[] getPKColumns() {
-        return new String[] {
+        return new String[]{
                 COLUMN_ID
         };
     }
@@ -70,9 +71,9 @@ public class MPFaktorTbl extends ATableEntity {
     @Override
     protected String[] getColumnsDefinition() {
 
-        addIndex("mpfaktor_unique_num_index", true, COLUMN_NUM, COLUMN_YEAR_ID_FK);
+        addIndex(TABLE_NAME + "_unique_num_index", true, COLUMN_NUM, COLUMN_YEAR_ID_FK);
 
-        return new String[] {
+        return new String[]{
                 COLUMN_YEAR_ID_FK + " integer references " + YearMaliTbl.TABLE_NAME + "(" + YearMaliTbl.COLUMN_YEAR_ID + ") ON DELETE NO ACTION ON UPDATE CASCADE MATCH SIMPLE NOT NULL",
                 COLUMN_ID + " integer PRIMARY KEY AUTOINCREMENT",
                 COLUMN_NUM + " integer not null", // unique",

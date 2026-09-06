@@ -4,6 +4,7 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:padding="10dp"
+    android:fitsSystemWindows="true"
     android:layoutDirection="rtl">
 
     <LinearLayout style="@style/frame_content" android:layout_height="match_parent" android:layout_width="match_parent" >

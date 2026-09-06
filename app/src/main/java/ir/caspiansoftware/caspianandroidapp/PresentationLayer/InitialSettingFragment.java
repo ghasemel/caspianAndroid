@@ -188,12 +188,10 @@ public class InitialSettingFragment extends CaspianFragment implements IFragment
      * main database file before it is copied.
      */
     private void checkpointDatabase(Context context) {
+        // The constructor opens the database; closing it is what flushes the
+        // journal back into the main file.
         KalaDataSource dataSource = new KalaDataSource(context);
-        try {
-            dataSource.open();
-        } finally {
-            dataSource.close();
-        }
+        dataSource.close();
     }
 
     private void caspianLogoCounterIncrement() {

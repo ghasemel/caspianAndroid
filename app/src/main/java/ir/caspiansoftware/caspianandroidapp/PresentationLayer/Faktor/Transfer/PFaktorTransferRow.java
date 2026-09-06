@@ -1,4 +1,4 @@
-package ir.caspiansoftware.caspianandroidapp.PresentationLayer.Faktor.Confirm;
+package ir.caspiansoftware.caspianandroidapp.PresentationLayer.Faktor.Transfer;
 
 import android.util.Log;
 import android.view.View;
@@ -17,8 +17,8 @@ import ir.caspiansoftware.caspianandroidapp.R;
 /**
  * Created by Canada on 7/30/2016.
  */
-public class PFaktorConfirmListRow extends PFaktorSearchRow {
-    private static final String TAG = "InvoiceConfirmListRow";
+public class PFaktorTransferRow extends PFaktorSearchRow {
+    private static final String TAG = "PFaktorTransferRow";
 
     @Override
     protected void onListItemClicked(MPFaktorModel mpFaktorModel, String resultExtraName) throws Exception {
@@ -31,7 +31,7 @@ public class PFaktorConfirmListRow extends PFaktorSearchRow {
 
         if (getActivity() != null) {
             PFaktorBLL faktorBLL = new PFaktorBLL(getActivity().getApplicationContext());
-            return faktorBLL.getMPFaktorsByLast();
+            return faktorBLL.getMPFaktorsDescending();
         }
         return null;
     }
@@ -41,7 +41,7 @@ public class PFaktorConfirmListRow extends PFaktorSearchRow {
         setCloseAfterSelection(false);
 
         if (mpFaktorList != null) {
-            return new PreInvoiceConfirmListAdapter(mpFaktorList);
+            return new PreInvoiceTransferListAdapter(mpFaktorList);
         }
         return null;
     }
@@ -68,14 +68,14 @@ public class PFaktorConfirmListRow extends PFaktorSearchRow {
 
 
 
-    public class PreInvoiceConfirmListAdapter extends MyAdapter {
-        public PreInvoiceConfirmListAdapter(ArrayList<MPFaktorModel> list) {
+    public class PreInvoiceTransferListAdapter extends MyAdapter {
+        public PreInvoiceTransferListAdapter(ArrayList<MPFaktorModel> list) {
             super(getActivity(), list);
         }
 
         @Override
         public int getLayout() {
-            return R.layout.fragment_pfaktor_confirm_list_row;
+            return R.layout.fragment_pfaktor_transfer_list_row;
         }
 
 

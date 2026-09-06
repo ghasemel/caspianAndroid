@@ -6,6 +6,7 @@
     android:fillViewport="true"
     android:layoutDirection="rtl"
     android:orientation="vertical"
+    android:fitsSystemWindows="true"
     android:padding="5dp">
 
     <LinearLayout
@@ -45,7 +46,6 @@
                 style="@style/textBoxNumber"
                 android:layout_width="120dp"
                 android:gravity="start" />
-
 
             <TextView
                 style="@style/label"
@@ -97,7 +97,7 @@
 
             <TextView
                 style="@style/list_textView"
-                android:layout_width="40dp"
+                android:layout_width="70dp"
                 android:layout_height="match_parent"
                 android:background="@android:color/transparent"
                 android:ellipsize="none"

@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -38,7 +37,6 @@ import ir.caspiansoftware.caspianandroidapp.BaseCaspian.CaspianDataGridFragment;
 import ir.caspiansoftware.caspianandroidapp.BaseCaspian.CaspianToolbar;
 import ir.caspiansoftware.caspianandroidapp.BusinessLayer.PFaktorBLL;
 import ir.caspiansoftware.caspianandroidapp.BusinessLayer.PermissionBLL;
-import ir.caspiansoftware.caspianandroidapp.DataLayer.WebService.TimeWebService;
 import ir.caspiansoftware.caspianandroidapp.GPSTracker;
 import ir.caspiansoftware.caspianandroidapp.Models.MPFaktorModel;
 import ir.caspiansoftware.caspianandroidapp.Models.PersonModel;
@@ -127,16 +125,13 @@ public class PFaktorFragment extends CaspianDataGridFragment<SPFaktorModel> impl
     private boolean checkForSave(final boolean onExit) {
         if (mModified || (mMPFaktorModel == null && mSPFaktorList != null && mSPFaktorList.size() > 0)) {
             Log.d(TAG, "checkForSave(): need save");
-            messageBoxYesNo(R.string.pfaktor_save_title, R.string.ask_to_save, new IDialogCallback() {
-                @Override
-                public void dialog_callback(DialogResult dialogResult, Object result, int requestCode) {
-                    if (dialogResult == DialogResult.Yes) {
-                        saveAsync();
-                    } else {
-                        setModified(false);
-                        if (onExit)
-                            getActivity().finish();
-                    }
+            messageBoxYesNo(R.string.pfaktor_save_title, R.string.ask_to_save, (dialogResult, result, requestCode) -> {
+                if (dialogResult == DialogResult.Yes) {
+                    save();
+                } else {
+                    setModified(false);
+                    if (onExit)
+                        getActivity().finish();
                 }
             });
             return true;
@@ -209,13 +204,11 @@ public class PFaktorFragment extends CaspianDataGridFragment<SPFaktorModel> impl
         }
     }
 
-    public void setMPFaktorModel(MPFaktorModel mpFaktorModel, boolean justUpdate) {
+    public void setMPFaktorModel(MPFaktorModel mpFaktorModel, boolean onSave) {
         Log.d(TAG, "setMPFaktorModel()");
 
         mModified = false;
 
-//        mLinearLayoutTop.setEnabled(true);
-//        mLinearLayoutDataGrid.setEnabled(true);
         mTextViewSyncDate.setText("");
         mCheckBoxSynced.setChecked(false);
         mBtnAddKala.setEnabled(true);
@@ -224,17 +217,16 @@ public class PFaktorFragment extends CaspianDataGridFragment<SPFaktorModel> impl
         if (mMPFaktorModel != null) {
             Log.d(TAG, "setMPFaktorModel(): mMPFaktorModel not null");
             mLabelFaktorId.setText(String.format(
-                    getContext().getString(R.string.faktor_id),
+                    getContext().getString(R.string.reference_id),
                     mpFaktorModel.getId())
             );
 
-            if (!justUpdate) {
+            if (!onSave) {
                 mEditTextNum.setText(String.valueOf(mMPFaktorModel.getNum()));
                 mEditTextInvoiceDate.setText(mMPFaktorModel.getDate());
                 mEditTextDescription.setText(mMPFaktorModel.getDescription());
                 setPerson(mMPFaktorModel.getPersonModel());
                 setSPFaktorList(mMPFaktorModel.getSPFaktorList());
-                //mMPFaktorModel.setSynced(true);
             } else {
                 mMPFaktorModel.setId(mpFaktorModel.getId());
                 mMPFaktorModel.setPersonModel(mpFaktorModel.getPersonModel());
@@ -249,8 +241,6 @@ public class PFaktorFragment extends CaspianDataGridFragment<SPFaktorModel> impl
             if (mpFaktorModel.isSynced()) {
                 mTextViewSyncDate.setText(mpFaktorModel.getSyncDate());
                 mCheckBoxSynced.setChecked(true);
-//                mLinearLayoutTop.setEnabled(false);
-//                mLinearLayoutDataGrid.setEnabled(false);
                 mBtnAddKala.setEnabled(false);
             }
         } else {
@@ -348,7 +338,11 @@ public class PFaktorFragment extends CaspianDataGridFragment<SPFaktorModel> impl
 
         mLabelFaktorId = parentView.findViewById(R.id.labelFaktorId);
 
-        GPSTracker.requestForGps(getActivity());
+        try {
+            GPSTracker.requestForGps(getActivity());
+        } catch (Exception ex) {
+            showError(ex, null);
+        }
     }
 
     private void mapToolbar(View parentView) {
@@ -481,37 +475,7 @@ public class PFaktorFragment extends CaspianDataGridFragment<SPFaktorModel> impl
         });
     }
 
-    private void saveAsync() {
-        class AsyncRequest extends AsyncTask<Void, Void, Date> {
-
-            @Override
-            protected Date doInBackground(Void... params) {
-                Date dateTime = null;
-                TimeWebService timeWebService = new TimeWebService();
-                try {
-                    dateTime = timeWebService.getCurrentDateTime();
-                } catch (Exception e) {
-                    Log.d(TAG, e.toString());
-                }
-                return dateTime;
-            }
-
-
-            @Override
-            protected void onPostExecute(Date dateTime) {
-                if (dateTime == null) {
-                    showError(R.string.internet_dateTime_not_reachable, null);
-                    return;
-                }
-                save(dateTime);
-            }
-        }
-
-        AsyncRequest asyncRequest = new AsyncRequest();
-        asyncRequest.execute();
-    }
-
-    private void save(Date dateTime) {
+    private void save() {
         if (checkForSync())
             return;
 
@@ -524,7 +488,7 @@ public class PFaktorFragment extends CaspianDataGridFragment<SPFaktorModel> impl
                     mEditTextDescription.getText().toString(),
                     mSPFaktorList,
                     getActivity(),
-                    dateTime
+                    new Date()
             );
 
             setMPFaktorModel(mpFaktorModel, true);
@@ -663,7 +627,7 @@ public class PFaktorFragment extends CaspianDataGridFragment<SPFaktorModel> impl
             // getRowFragment().notifyDataSetChanged();
         } else if (view.equals(mToolbarSave)) {
             Log.d(TAG, "mToolbarSave clicked");
-            saveAsync();
+            save();
 
         } else if (view.equals(mToolbarDelete)) {
             Log.d(TAG, "mToolbarDelete clicked");

@@ -15,8 +15,10 @@ import info.elyasi.android.elyasilib.UI.IFragmentCallback;
 import ir.caspiansoftware.caspianandroidapp.BaseCaspian.CaspianActionbar;
 import ir.caspiansoftware.caspianandroidapp.BaseCaspian.CaspianActivitySingleFragment;
 import ir.caspiansoftware.caspianandroidapp.Models.MPFaktorModel;
+import ir.caspiansoftware.caspianandroidapp.Models.MaliModel;
 import ir.caspiansoftware.caspianandroidapp.Models.PersonModel;
 import ir.caspiansoftware.caspianandroidapp.PresentationLayer.Faktor.Search.PFaktorSearchActivity;
+import ir.caspiansoftware.caspianandroidapp.PresentationLayer.Mali.Search.MaliSearchActivity;
 import ir.caspiansoftware.caspianandroidapp.PresentationLayer.Person.List.PersonListActivity;
 import ir.caspiansoftware.caspianandroidapp.R;
 
@@ -30,19 +32,15 @@ public class MaliActivity extends CaspianActivitySingleFragment {
     public static final String ACTION_SELECT_PERSON_LIST = "action_select_person_list";
 
 
-    private static final int REQUEST_INVOICE_ADD_KALA = 2;
-    private static final int REQUEST_INVOICE_EDIT_KALA = 3;
-    public static final String ACTION_INVOICE_KALA = "action_invoice_kala";
-
     private static final int REQUEST_INVOICE_SEARCH = 4;
-    public static final String ACTION_INVOICE_SEARCH = "action_invoice_search";
+    public static final String ACTION_MALI_SEARCH = "action_mali_search";
 
     private static final int REQUEST_MANDE = 4;
 
     private IFragmentCallback myFragment;
 
     private ActivityResultLauncher<Intent> personListLauncher;
-    private ActivityResultLauncher<Intent> invoiceSearchLauncher;
+    private ActivityResultLauncher<Intent> maliSearchLauncher;
 
 
 
@@ -76,12 +74,12 @@ public class MaliActivity extends CaspianActivitySingleFragment {
                     }
                 });
 
-        invoiceSearchLauncher = registerForActivityResult(
+        maliSearchLauncher = registerForActivityResult(
                 new ActivityResultContracts.StartActivityForResult(),
                 result -> {
                     if (result.getResultCode() == Activity.RESULT_OK && result.getData() != null) {
-                        MPFaktorModel mpFaktorModel = (MPFaktorModel) result.getData().getSerializableExtra(AListRowFragment.EXTRA_SELECTED_OBJECT);
-                        myFragment.onMyActivityCallback(ACTION_INVOICE_SEARCH, mpFaktorModel, null);
+                        MaliModel maliModel = (MaliModel) result.getData().getSerializableExtra(AListRowFragment.EXTRA_SELECTED_OBJECT);
+                        myFragment.onMyActivityCallback(ACTION_MALI_SEARCH, maliModel, null);
                     }
                 });
     }
@@ -98,9 +96,9 @@ public class MaliActivity extends CaspianActivitySingleFragment {
                 break;
 
 
-            case ACTION_INVOICE_SEARCH:
-                Intent intent_search = new Intent(this, PFaktorSearchActivity.class);
-                invoiceSearchLauncher.launch(intent_search);
+            case ACTION_MALI_SEARCH:
+                Intent intent_search = new Intent(this, MaliSearchActivity.class);
+                maliSearchLauncher.launch(intent_search);
                 break;
         }
     }

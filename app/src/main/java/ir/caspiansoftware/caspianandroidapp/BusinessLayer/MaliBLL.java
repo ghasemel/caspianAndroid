@@ -7,164 +7,142 @@ import android.util.Log;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 import info.elyasi.android.elyasilib.BLL.ABusinessLayer;
 import info.elyasi.android.elyasilib.UI.MoveDirection;
 import info.elyasi.android.elyasilib.Utility.ConvertExt;
 import info.elyasi.android.elyasilib.WebService.ResponseWebService;
 import ir.caspiansoftware.caspianandroidapp.BaseCaspian.CaspianErrors;
-import ir.caspiansoftware.caspianandroidapp.DataLayer.DataBase.MPFaktorDataSource;
 import ir.caspiansoftware.caspianandroidapp.DataLayer.DataBase.MaliDataSource;
-import ir.caspiansoftware.caspianandroidapp.DataLayer.DataBase.SPFaktorDataSource;
 import ir.caspiansoftware.caspianandroidapp.DataLayer.WebService.MaliWebService;
+import ir.caspiansoftware.caspianandroidapp.Enum.MaliType;
 import ir.caspiansoftware.caspianandroidapp.GPSTracker;
-import ir.caspiansoftware.caspianandroidapp.Models.KalaModel;
 import ir.caspiansoftware.caspianandroidapp.Models.MaliModel;
 import ir.caspiansoftware.caspianandroidapp.Models.PersonModel;
-import ir.caspiansoftware.caspianandroidapp.Models.SPFaktorModel;
 import ir.caspiansoftware.caspianandroidapp.Vars;
 
 /**
  * Created by Canada on 7/22/2016.
  */
-public class MaliBLL extends ABusinessLayer {
+public class MaliBLL extends ABusinessLayer implements TransferToServerService<MaliModel> {
     private static final String TAG = "MaliBLL";
 
-    private MaliWebService maliWebService;
+    private final MaliWebService maliWebService;
 
+    private final PersonBLL personBLL;
 
     public MaliBLL(Context context) {
         super(context);
 
         maliWebService = new MaliWebService();
+        personBLL = new PersonBLL(mContext);
     }
 
 
     // region webservice
-    public void sendMPFaktorToServer(List<MaliModel> faktorList) throws Exception {
-        Log.d(TAG, "syncMPFaktor()");
+    @Override
+    public void sendToServer(List<MaliModel> maliList) throws Exception {
+        Log.d(TAG, "sendToServer()");
 
         try {
-            if (faktorList != null) {
-                ResponseWebService response = maliWebService.uploadPFaktorList(
-                        faktorList,
-                        Vars.YEAR.getDataBase());
+            if (maliList == null)
+                return;
 
-                if (response == null)
-                    throw new Exception("responseWebService is null");
+            ResponseWebService response = maliWebService.uploadMaliList(
+                    maliList,
+                    Vars.YEAR.getDataBase()
+            );
 
-                // extract faktor inserted number on server side from response
-                List<Integer> listAtfNums = ConvertExt.toList(response.getData());
-                if (listAtfNums != null) {
+            if (response == null)
+                throw new Exception("responseWebService is null");
 
-                    // create MPFaktorDataSource object
-                    MPFaktorDataSource mpFaktorDataSource = new MPFaktorDataSource(mContext);
+            // extract mali inserted number on server side from response
+            List<Integer> listAtfNums = ConvertExt.toList(response.getData());
+            if (listAtfNums != null) {
 
-                    try {
-                        // open connection
-                        mpFaktorDataSource.open();
+                // create MaliDataSource object
+                try (MaliDataSource maliModelDataSource = new MaliDataSource(mContext)) {
+                    // index for mali number list items
+                    int index = 0;
 
-                        // index for faktor number list items
-                        int index = 0;
-
-                        // for every faktor that we send to server
-                        for (MaliModel mp : faktorList) {
-                            // update sync info
-                            mpFaktorDataSource.updateSync(mp.getId(), listAtfNums.get(index++));
-                        }
-
-                    } finally {
-                        // close connection
-                        mpFaktorDataSource.close();
+                    // for every mali that we send to server
+                    for (MaliModel mp : maliList) {
+                        // update sync info
+                        maliModelDataSource.updateSync(mp.getId(), listAtfNums.get(index++));
                     }
+
                 }
+                // close connection
             }
 
+
         } finally {
-            Log.d(TAG, "syncMPFaktor(): end");
+            Log.d(TAG, "sendToServer(): end");
         }
     }
+
     // endregion webservice
 
     // region database
     public MaliModel getByMove(MoveDirection moveDirection, int currentId) throws Exception {
-        MaliDataSource maliDataSource = new MaliDataSource(mContext);
-        try {
-            maliDataSource.open();
+        try (MaliDataSource maliDataSource = new MaliDataSource(mContext)) {
 
-            MaliModel maliModel = null;
-            switch (moveDirection) {
-                case First:
-                    maliModel = maliDataSource.getFirstOrLast(true, Vars.YEAR.getId());
-                    break;
-
-                case Previous:
-                    maliModel = maliDataSource.getPrevOrNext(currentId, true, Vars.YEAR.getId());
-                    break;
-
-                case Next:
-                    maliModel = maliDataSource.getPrevOrNext(currentId, false, Vars.YEAR.getId());
-                    break;
-
-                case Last:
-                    maliModel = maliDataSource.getFirstOrLast(false, Vars.YEAR.getId());
-                    break;
-            }
+            MaliModel maliModel = switch (moveDirection) {
+                case First -> maliDataSource.getFirstOrLast(true, Vars.YEAR.getId());
+                case Previous -> maliDataSource.getPrevOrNext(currentId, true, Vars.YEAR.getId());
+                case Next -> maliDataSource.getPrevOrNext(currentId, false, Vars.YEAR.getId());
+                case Last -> maliDataSource.getFirstOrLast(false, Vars.YEAR.getId());
+            };
 
             if (maliModel != null) {
                 Log.d(TAG, "getByMove(): MaliModel id = " + maliModel.getId());
 
-                PersonBLL personBLL = new PersonBLL(mContext);
-                PersonModel personModel = personBLL.getById(maliModel.getPersonId_FK());
-                if (personModel == null)
-                    throw new Exception(CaspianErrors.CUSTOMER_INVALID);
-
-                maliModel.setPersonModel(personModel);
+                setBedAndBesById(maliModel);
 
                 return maliModel;
             }
-        } finally {
-            maliDataSource.close();
         }
         return null;
+    }
+
+    private void setBedAndBesById(MaliModel maliModel) {
+        PersonModel bed = personBLL.getById(maliModel.getPersonBedId_FK());
+        PersonModel bes = personBLL.getById(maliModel.getPersonBesId_FK());
+        setBedAndBes(maliModel, bed, bes);
+    }
+
+    private void setBedAndBesByCode(MaliModel maliModel, String bedCode, String besCode) {
+        Optional<PersonModel> bed = personBLL.getByCode(bedCode, Vars.YEAR.getId());
+        Optional<PersonModel> bes = personBLL.getByCode(besCode, Vars.YEAR.getId());
+        setBedAndBes(maliModel, bed.orElse(null), bes.orElse(null));
+    }
+
+    private void setBedAndBes(MaliModel maliModel, PersonModel bed, PersonModel bes) {
+        // bed
+        if (bed != null) {
+            maliModel.setPersonBedModel(bed);
+            maliModel.setPersonBedId_FK(bed.getId());
+        }
+
+        // bes
+        if (bes != null) {
+            maliModel.setPersonBesModel(bes);
+            maliModel.setPersonBesId_FK(bes.getId());
+        }
     }
 
     public int getNewNum() {
-        MPFaktorDataSource mpFaktorDataSource = new MPFaktorDataSource(mContext);
-        try {
-            mpFaktorDataSource.open();
-            return mpFaktorDataSource.getMaxNum(Vars.YEAR.getId()) + 1;
-        } finally {
-            mpFaktorDataSource.close();
-        }
-    }
-
-    public ArrayList<SPFaktorModel> getSPfaktorListByMPFaktorId(int mpFaktorId) {
-        try (SPFaktorDataSource spFaktorDataSource = new SPFaktorDataSource(mContext)) {
-            spFaktorDataSource.open();
-            ArrayList<SPFaktorModel> spFaktorList = spFaktorDataSource.getByMPFaktorId(mpFaktorId);
-            if (spFaktorList != null) {
-                KalaBLL kalaBLL = new KalaBLL(mContext);
-
-                for (SPFaktorModel sp : spFaktorList) {
-                    KalaModel kalaModel = kalaBLL.getKalaById(sp.getKalaId_FK());
-                    sp.setKalaModel(kalaModel);
-                }
-            }
-            return spFaktorList;
-        }
-    }
-
-    public MaliModel getMPfaktorById(int id) {
         try (MaliDataSource maliDataSource = new MaliDataSource(mContext)) {
-            maliDataSource.open();
+            return maliDataSource.getMaxNum(Vars.YEAR.getId()) + 1;
+        }
+    }
+
+    public MaliModel getMaliById(int id) {
+        try (MaliDataSource maliDataSource = new MaliDataSource(mContext)) {
             MaliModel maliModel = maliDataSource.getById(id);
             if (maliModel != null) {
-                PersonBLL personBLL = new PersonBLL(mContext);
-                PersonModel personModel = personBLL.getById(maliModel.getPersonId_FK());
-                if (personModel == null)
-                    throw new RuntimeException(CaspianErrors.CUSTOMER_INVALID);
-                maliModel.setPersonModel(personModel);
+                setBedAndBesById(maliModel);
                 return maliModel;
             }
         }
@@ -172,215 +150,177 @@ public class MaliBLL extends ABusinessLayer {
         return null;
     }
 
-    public SPFaktorModel getSPfaktorById(int id) throws Exception {
-        try (SPFaktorDataSource spFaktorDataSource = new SPFaktorDataSource(mContext)) {
-            spFaktorDataSource.open();
-            SPFaktorModel spFaktorModel = spFaktorDataSource.getById(id);
-            if (spFaktorModel != null) {
-                KalaBLL kalaBLL = new KalaBLL(mContext);
-                KalaModel kalaModel = kalaBLL.getKalaById(spFaktorModel.getKalaId_FK());
-                spFaktorModel.setKalaModel(kalaModel);
-            }
-            return spFaktorModel;
-        }
-    }
+    public MaliModel Save(int id, int num, MaliType maliType, String bedCode, String besCode, String maliDate, String description, String vcheckBank, String vcheckSarresidDate, String vcheckSerial, String priceAmount, Activity activity, Date insertDate) throws Exception {
 
-    public void saveSPFaktorList(int mpFaktorId, List<SPFaktorModel> spFaktorModelList) throws Exception {
-        if (spFaktorModelList != null) {
-            try (SPFaktorDataSource spFaktorDataSource = new SPFaktorDataSource(mContext)) {
-                if (mpFaktorId <= 0)
-                    throw new Exception(CaspianErrors.invoice_id_invalid);
-
-                spFaktorDataSource.open();
-                for (SPFaktorModel spFaktor : spFaktorModelList) {
-                    if (spFaktorDataSource.isExistById(spFaktor.getId())) {
-                        // update
-                        spFaktorDataSource.update(spFaktor);
-
-                    } else {
-                        // insert
-                        spFaktor.setMPFaktorId_FK(mpFaktorId);
-
-                        int id = spFaktorDataSource.insert(spFaktor);
-                        if (id > 0) {
-                            spFaktor.setId(id);
-                        } else {
-                            throw new Exception(CaspianErrors.SAVING_ERROR);
-                        }
-                    }
-                }
-
-                // delete removed rows from database
-                int del = spFaktorDataSource.deleteOther(spFaktorModelList);
-                Log.d(TAG, "removed count: " + del);
-            }
-        }
-    }
-
-    public MaliModel Save(int id, int num, String date, String customer_code, String description, Activity activity, Date insertDate) throws Exception {
-        MaliDataSource maliDataSource = new MaliDataSource(mContext);
-
-        try {
-            if (num <= 0)
-                throw new Exception(CaspianErrors.INVOICE_NUM_INVALID);
-
-            if (date.trim().equals(""))
-                throw new Exception(CaspianErrors.DATE_INVALID);
-
-            PersonBLL personBLL = new PersonBLL(mContext);
-            PersonModel personModel = personBLL.getByCode(customer_code, Vars.YEAR.getId());
-            if (personModel == null)
-                throw new Exception(CaspianErrors.CUSTOMER_INVALID);
+        try (MaliDataSource maliDataSource = new MaliDataSource(mContext)) {
+            validateMali(num, maliType, bedCode, besCode, maliDate, priceAmount, vcheckSerial, vcheckSarresidDate);
 
             MaliModel maliModel = new MaliModel();
             maliModel.setYearId_FK(Vars.YEAR.getId());
             maliModel.setNum(num);
-            maliModel.setDate(date);
-            maliModel.setPersonModel(personModel);
+            maliModel.setMaliType(maliType);
+            maliModel.setMaliDate(maliDate);
             maliModel.setDescription(description);
-            maliDataSource.open();
 
+            if (maliType == MaliType.VCHECK) {
+                maliModel.setVcheckSarresidDate(vcheckSarresidDate);
+                maliModel.setVcheckBank(vcheckBank);
+                maliModel.setVcheckSerial(vcheckSerial);
+            }
 
+            maliModel.setAmount(Long.parseLong(priceAmount));
+            setBedAndBesByCode(maliModel, bedCode, besCode);
 
             // insert
             if (id <= 0) {
-                // get location
-                GPSTracker gps = new GPSTracker(activity);
-
-                // gps is ON
-                if (gps.canGetLocation()) {
-                    Log.d(TAG, "lat: " + gps.getLatitude() + ", lon: " + gps.getLongitude());
-                    if ((gps.getLongitude() == 0 || gps.getLatitude() == 0) && PermissionBLL.forceLocationSaving())
-                        throw new Exception(CaspianErrors.location_not_available);
-
-                    maliModel.setLat(gps.getLatitude());
-                    maliModel.setLon(gps.getLongitude());
-                } else {
-                    if (PermissionBLL.forceLocationSaving())
-                        throw new RuntimeException(CaspianErrors.gps_is_off);
-                }
-
-                maliModel.setCreateDate(insertDate);
-                id = maliDataSource.insert(maliModel);
-                if (id <= 0)
-                    throw new Exception(CaspianErrors.SAVING_ERROR);
-                maliModel.setId(id);
+                insert(activity, insertDate, maliModel, maliDataSource);
 
             } else { // update
-                if (maliModel.getLon() == 0 || maliModel.getLat() == 0) {
-                    // get location
-                    GPSTracker gps = new GPSTracker(activity);
-
-                    // gps is ON
-                    if (gps.canGetLocation()) {
-                        Log.d(TAG, "lat: " + gps.getLatitude() + ", lon: " + gps.getLongitude());
-                        if ((gps.getLongitude() == 0 || gps.getLatitude() == 0) && PermissionBLL.forceLocationSaving())
-                            throw new Exception(CaspianErrors.location_not_available);
-
-                        maliModel.setLat(gps.getLatitude());
-                        maliModel.setLon(gps.getLongitude());
-                    } else {
-                        if (PermissionBLL.forceLocationSaving())
-                            throw new RuntimeException(CaspianErrors.gps_is_off);
-                    }
-                }
-
-                maliModel.setId(id);
-                maliDataSource.update(maliModel);
+                update(id, activity, maliModel, maliDataSource);
             }
             return maliModel;
-        } finally {
-            maliDataSource.close();
         }
     }
 
-    public int deleteSPFaktorByMPFaktorId(int mpFaktorId) {
-        SPFaktorDataSource spFaktorDataSource = new SPFaktorDataSource(mContext);
+    private static void update(int id, Activity activity, MaliModel maliModel, MaliDataSource maliDataSource) throws Exception {
+        if (maliModel.getLon() == 0 || maliModel.getLat() == 0) {
+            // get location
+            GPSTracker gps = new GPSTracker(activity);
 
-        try {
-            spFaktorDataSource.open();
-            if (mpFaktorId > 0) {
-                return spFaktorDataSource.deleteByMPFaktorId(mpFaktorId);
+            // gps is ON
+            if (gps.canGetLocation()) {
+                Log.d(TAG, "lat: " + gps.getLatitude() + ", lon: " + gps.getLongitude());
+                if ((gps.getLongitude() == 0 || gps.getLatitude() == 0) && PermissionBLL.forceLocationSaving())
+                    throw new Exception(CaspianErrors.location_not_available);
+
+                maliModel.setLat(gps.getLatitude());
+                maliModel.setLon(gps.getLongitude());
+            } else {
+                if (PermissionBLL.forceLocationSaving())
+                    throw new RuntimeException(CaspianErrors.gps_is_off);
+            }
+        }
+
+        maliModel.setId(id);
+        maliDataSource.update(maliModel);
+    }
+
+    private static void insert(Activity activity, Date insertDate, MaliModel maliModel, MaliDataSource maliDataSource) throws Exception {
+        int id;
+        // get location
+        GPSTracker gps = new GPSTracker(activity);
+
+        // gps is ON
+        if (gps.canGetLocation()) {
+            Log.d(TAG, "lat: " + gps.getLatitude() + ", lon: " + gps.getLongitude());
+            if ((gps.getLongitude() == 0 || gps.getLatitude() == 0) && PermissionBLL.forceLocationSaving())
+                throw new Exception(CaspianErrors.location_not_available);
+
+            maliModel.setLat(gps.getLatitude());
+            maliModel.setLon(gps.getLongitude());
+        } else {
+            if (PermissionBLL.forceLocationSaving())
+                throw new RuntimeException(CaspianErrors.gps_is_off);
+        }
+
+        maliModel.setCreateDate(insertDate);
+        id = maliDataSource.insert(maliModel);
+        if (id <= 0)
+            throw new Exception(CaspianErrors.SAVING_ERROR);
+        maliModel.setId(id);
+    }
+
+    private void validateMali(int num, MaliType maliType, String bedCode, String besCode, String maliDate, String priceAmount, String vcheckSerial, String vcheckDate) throws Exception {
+        if (num <= 0)
+            throw new Exception(CaspianErrors.MALI_NUM_INVALID);
+
+        if (maliDate.trim().isEmpty())
+            throw new Exception(CaspianErrors.MALI_DATE_INVALID);
+
+        if (priceAmount == null || priceAmount.trim().isEmpty())
+            throw new Exception(CaspianErrors.MALI_PRICE_INVALID);
+
+        PersonBLL personBLL = new PersonBLL(mContext);
+        validatePerson(besCode, personBLL, CaspianErrors.MALI_BES_INVALID);
+
+        switch (maliType) {
+            case PAY -> validatePerson(bedCode, personBLL, CaspianErrors.MALI_BED_INVALID);
+            case VCHECK -> {
+                if (vcheckSerial == null || vcheckSerial.isEmpty())
+                    throw new Exception(CaspianErrors.MALI_INVALID_VCHECK_SERIAL);
+
+                if (vcheckDate.trim().isEmpty())
+                    throw new Exception(CaspianErrors.INVOICE_DATE_INVALID);
+            }
+        }
+    }
+
+    private static void validatePerson(String besCode, PersonBLL personBLL, String invalidMsg) throws Exception {
+        Optional<PersonModel> personOpt = personBLL.getByCode(besCode, Vars.YEAR.getId());
+        if (personOpt.isEmpty())
+            throw new Exception(invalidMsg);
+    }
+
+    public int delete(MaliModel maliModelModel) throws Exception {
+
+        try (MaliDataSource maliDataSource = new MaliDataSource(mContext)) {
+            if (maliModelModel != null && maliModelModel.getId() > 0) {
+                return maliDataSource.delete(maliModelModel);
             }
             return -1;
-        } finally {
-            spFaktorDataSource.close();
         }
     }
 
-    public int delete(MaliModel mpFaktorModel) throws Exception {
-        MaliDataSource maliDataSource = new MaliDataSource(mContext);
-
-        try {
-            maliDataSource.open();
-            if (mpFaktorModel != null && mpFaktorModel.getId() > 0) {
-                deleteSPFaktorByMPFaktorId(mpFaktorModel.getId());
-                return maliDataSource.delete(mpFaktorModel);
-            }
-            return -1;
-        } finally {
-            maliDataSource.close();
-        }
-    }
-
-    private ArrayList<MaliModel> fillMPFaktorList(ArrayList<MaliModel> list) {
+    private ArrayList<MaliModel> fillMaliModelList(ArrayList<MaliModel> list) {
         if (list != null) {
-            PersonBLL personBLL = new PersonBLL(mContext);
 
-            for (MaliModel mpFaktor : list) {
-                PersonModel person = personBLL.getById(mpFaktor.getPersonId_FK());
+            for (MaliModel maliModel : list) {
+                // set bes (compulsory)
+                PersonModel bes = personBLL.getById(maliModel.getPersonBesId_FK());
+                if (bes == null)
+                    throw new RuntimeException(CaspianErrors.person_not_exist + "#" + maliModel.getPersonBesId_FK());
+                maliModel.setPersonBesModel(bes);
 
-                if (person == null)
-                    throw new RuntimeException(CaspianErrors.person_not_exist + "#" + mpFaktor.getPersonId_FK());
-
-                mpFaktor.setPersonModel(person);
+                // set bed (optional)
+                if (maliModel.getPersonBedId_FK() != null && maliModel.getPersonBedId_FK() != 0) {
+                    PersonModel bed = personBLL.getById(maliModel.getPersonBedId_FK());
+                    maliModel.setPersonBedModel(bed);
+                }
             }
             return list;
         }
         return null;
     }
 
-    public ArrayList<MaliModel> getMPFaktors() {
-        MaliDataSource maliDataSource = new MaliDataSource(mContext);
+    public ArrayList<MaliModel> getMaliModels() {
 
-        try {
-            maliDataSource.open();
+        try (MaliDataSource maliDataSource = new MaliDataSource(mContext)) {
             if (Vars.YEAR.getId() > 0) {
                 ArrayList<MaliModel> list = maliDataSource.getAllByYearId(Vars.YEAR.getId(), false);
-                list = fillMPFaktorList(list);
+                list = fillMaliModelList(list);
                 return list;
             }
             return null;
-        } finally {
-            maliDataSource.close();
         }
     }
 
-    public ArrayList<MaliModel> getMPFaktorsByLast() throws Exception {
-        MaliDataSource maliDataSource = new MaliDataSource(mContext);
+    public ArrayList<MaliModel> getMaliModelsDescending() throws Exception {
 
-        try {
-            maliDataSource.open();
+        try (MaliDataSource maliDataSource = new MaliDataSource(mContext)) {
             if (Vars.YEAR.getId() > 0) {
                 ArrayList<MaliModel> list = maliDataSource.getAllByYearId(Vars.YEAR.getId(), true);
-                list = fillMPFaktorList(list);
+                list = fillMaliModelList(list);
                 return list;
             }
             return null;
-        } finally {
-            maliDataSource.close();
         }
     }
 
-    public void updateSyncInfo(int mpFaktorId, int atfNum) {
-        MaliDataSource maliDataSource = new MaliDataSource(mContext);
+    public void updateSyncInfo(int maliModelId, int atfNum) {
 
-        try {
-            maliDataSource.open();
-            maliDataSource.updateSync(mpFaktorId, atfNum);
+        try (MaliDataSource maliDataSource = new MaliDataSource(mContext)) {
+            maliDataSource.updateSync(maliModelId, atfNum);
 
-        } finally {
-            maliDataSource.close();
         }
     }
     // endregion database
