@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Body of InputDialog.
+
+    Exists so the field is sized declaratively instead of in code. The dialog
+    used to build a bare EditText and call setWidth/setHeight with raw PIXEL
+    values, which rendered correctly only on mdpi: at xxxhdpi the same numbers
+    came out around 150x20dp, far too small to show the field's own text.
+
+    minWidth is what actually gives the dialog its width. match_parent alone is
+    not enough: AlertDialog measures its custom view against a parent that is
+    itself wrap_content, so an EMPTY field (the API Key dialog, which opens
+    blank) collapsed to nothing and dragged the title and buttons down with it.
+    The Device dialog looked fine only because it pre-fills a value.
+-->
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+             android:layout_width="match_parent"
+             android:layout_height="wrap_content"
+             android:minWidth="280dp"
+             android:paddingStart="20dp"
+             android:paddingEnd="20dp"
+             android:paddingTop="12dp"
+             android:paddingBottom="4dp">
+
+    <EditText
+        android:id="@+id/dialog_input_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:minWidth="280dp"
+        android:minHeight="48dp"
+        android:gravity="center_vertical"
+        android:textSize="16sp"
+        android:singleLine="true" />
+
+</FrameLayout>

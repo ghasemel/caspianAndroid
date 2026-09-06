@@ -7,9 +7,11 @@ import android.graphics.Typeface;
 import android.text.Spannable;
 import android.text.SpannableString;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
 
+import info.elyasi.android.elyasilib.R;
 import info.elyasi.android.elyasilib.Font.CustomTFSpan;
 
 /**
@@ -75,13 +77,18 @@ public class InputDialog extends ADialogFragment<String> {
 
     @Override
     protected Dialog createDialog() {
-        // Set up the input
-        final EditText input = new EditText(getActivity());
+        // Inflated rather than built in code: the layout sets the field width
+        // and height in dp, so callers no longer need setWidth/setHeight -- those
+        // take raw pixels and produced an unusably short field on dense screens.
+        View content = LayoutInflater.from(getActivity())
+                .inflate(R.layout.dialog_input, null);
+
+        final EditText input = content.findViewById(R.id.dialog_input_text);
 
         if (mInputDialogProperty != null)
             mInputDialogProperty.setEditTextProperty(input);
 
-        this.setLayoutView(input);
+        this.setLayoutView(content);
 
 
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity())

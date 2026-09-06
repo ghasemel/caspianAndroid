@@ -103,8 +103,6 @@ public class InitialSettingActivity extends CaspianActivitySingleFragment implem
             @Override
             public void setEditTextProperty(EditText editText) {
                 editText.setInputType(InputType.TYPE_CLASS_TEXT);
-                editText.setWidth(600);
-                editText.setHeight(80);
                 editText.setLayoutDirection(View.LAYOUT_DIRECTION_LTR);
                 editText.setTypeface(Typeface.SERIF);
             }
@@ -123,8 +121,6 @@ public class InitialSettingActivity extends CaspianActivitySingleFragment implem
             @Override
             public void setEditTextProperty(EditText editText) {
                 editText.setInputType(InputType.TYPE_CLASS_TEXT);
-                editText.setWidth(600);
-                editText.setHeight(80);
                 editText.setLayoutDirection(View.LAYOUT_DIRECTION_LTR);
                 editText.setTypeface(Typeface.SERIF);
                 editText.setEnabled(false);
