@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import ir.caspiansoftware.caspianandroidapp.DataLayer.DataBase.Tables.MPFaktorTbl;
+import ir.caspiansoftware.caspianandroidapp.DataLayer.DataBase.Tables.MaliTbl;
 import ir.caspiansoftware.caspianandroidapp.DataLayer.DataBase.Tables.PersonTbl;
 import ir.caspiansoftware.caspianandroidapp.Models.MPFaktorModel;
 import ir.caspiansoftware.caspianandroidapp.Models.PersonModel;
@@ -42,21 +43,62 @@ public class PersonDataSource extends ADataSource<PersonModel> {
     public int deleteOther(List<PersonModel> personList) {
         Log.d(TAG, "deleteOther()");
 
-        StringBuilder codes = new StringBuilder();
-        for (PersonModel kala : personList) {
-            codes.append(kala.getCode());
-            codes.append(",");
+        if (personList == null || personList.isEmpty())
+            return 0;
+
+        return mDatabase.delete(PersonTbl.TABLE_NAME,
+                buildDeleteOtherWhere(personList.size()),
+                buildDeleteOtherArgs(personList));
+    }
+
+    /**
+     * WHERE clause for deleteOther: keep every person the server still sends,
+     * and every person the phone's own rows still point at.
+     *
+     * A person is referenced by three foreign keys, all ON DELETE NO ACTION,
+     * so deleting a referenced row raises SQLITE_CONSTRAINT_FOREIGNKEY (787):
+     * mpfaktor.personId_FK, mali.personBedId_FK and mali.personBesdId_FK.
+     * The mali pair was missed when that form was added, which is what threw
+     * 787 on customers who use it.
+     *
+     * NOT EXISTS rather than NOT IN because NOT IN yields no rows at all when
+     * the subquery contains a NULL, and mali rows routinely leave one of the
+     * two person columns empty - which would silently stop the delete working.
+     *
+     * Split out from deleteOther, and package-visible, so it can be unit
+     * tested: the module has no Robolectric, so SQLiteDatabase itself cannot
+     * be exercised in a JVM test.
+     */
+    static String buildDeleteOtherWhere(int codeCount) {
+        StringBuilder placeholders = new StringBuilder();
+        for (int i = 0; i < codeCount; i++) {
+            if (i > 0)
+                placeholders.append(",");
+            placeholders.append("?");
         }
 
+        return PersonTbl.COLUMN_YEAR_ID_FK + " = ? AND " +
+                // one placeholder per code: binding the whole comma-joined list
+                // as a single argument compares against the literal "a,b,c" and
+                // therefore never matches, marking every person for deletion.
+                PersonTbl.COLUMN_CODE + " NOT IN(" + placeholders + ") AND " +
+                "NOT EXISTS(SELECT 1 FROM " + MPFaktorTbl.TABLE_NAME +
+                " WHERE " + MPFaktorTbl.TABLE_NAME + "." + MPFaktorTbl.COLUMN_PERSON_ID_FK +
+                " = " + PersonTbl.TABLE_NAME + "." + PersonTbl.COLUMN_ID + ") AND " +
+                "NOT EXISTS(SELECT 1 FROM " + MaliTbl.TABLE_NAME +
+                " WHERE " + MaliTbl.TABLE_NAME + "." + MaliTbl.COLUMN_PERSON_BED_ID_FK +
+                " = " + PersonTbl.TABLE_NAME + "." + PersonTbl.COLUMN_ID +
+                " OR " + MaliTbl.TABLE_NAME + "." + MaliTbl.COLUMN_PERSON_BES_ID_FK +
+                " = " + PersonTbl.TABLE_NAME + "." + PersonTbl.COLUMN_ID + ")";
+    }
 
-        if (codes.length() > 0) {
-            return mDatabase.delete(PersonTbl.TABLE_NAME,
-                    PersonTbl.COLUMN_YEAR_ID_FK + " = " + personList.get(0).getYearId_FK() + " AND " +
-                    PersonTbl.COLUMN_CODE + " NOT IN(?) AND " +
-                    PersonTbl.COLUMN_ID + " NOT IN(SELECT " + MPFaktorTbl.COLUMN_PERSON_ID_FK + " FROM " + MPFaktorTbl.TABLE_NAME + ")",
-                    new String[] { codes.substring(0, codes.length() - 1) });
-        }
-        return 0;
+    /** Args for {@link #buildDeleteOtherWhere}: the year id, then one code per person. */
+    static String[] buildDeleteOtherArgs(List<PersonModel> personList) {
+        String[] args = new String[personList.size() + 1];
+        args[0] = String.valueOf(personList.get(0).getYearId_FK());
+        for (int i = 0; i < personList.size(); i++)
+            args[i + 1] = personList.get(i).getCode();
+        return args;
     }
 
     @Override

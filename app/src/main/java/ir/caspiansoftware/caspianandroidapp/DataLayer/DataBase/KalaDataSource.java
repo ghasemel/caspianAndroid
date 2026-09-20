@@ -37,20 +37,43 @@ public class KalaDataSource extends ADataSource<KalaModel> {
     }
 
     public int deleteOther(List<KalaModel> kalaList) {
-        StringBuilder codes = new StringBuilder();
-        for (KalaModel kala : kalaList) {
-            codes.append(kala.getCode());
-            codes.append(",");
+        if (kalaList == null || kalaList.isEmpty())
+            return 0;
+
+        return mDatabase.delete(KalaTbl.TABLE_NAME,
+                buildDeleteOtherWhere(kalaList.size()),
+                buildDeleteOtherArgs(kalaList));
+    }
+
+    /**
+     * WHERE clause for deleteOther. kala is referenced only by
+     * spfaktor.kalaId_FK, so unlike person there is no missing guard here -
+     * but the same two SQL faults applied: the code list was bound as one
+     * argument (so "a,b,c" never matched and every item looked deletable),
+     * and NOT IN returns nothing when the subquery holds a NULL.
+     */
+    static String buildDeleteOtherWhere(int codeCount) {
+        StringBuilder placeholders = new StringBuilder();
+        for (int i = 0; i < codeCount; i++) {
+            if (i > 0)
+                placeholders.append(",");
+            placeholders.append("?");
         }
 
-        if (codes.length() > 0) {
-            return mDatabase.delete(KalaTbl.TABLE_NAME,
-                    KalaTbl.COLUMN_YEAR_ID_FK + " = " + kalaList.get(0).getYearId_FK() + " AND " +
-                    KalaTbl.COLUMN_CODE + " NOT IN(?) AND " +
-                    KalaTbl.COLUMN_ID + " NOT IN(SELECT " + SPFaktorTbl.COLUMN_KALA_ID_FK + " FROM " + SPFaktorTbl.TABLE_NAME + ")",
-                    new String[] { codes.substring(0, codes.length() - 1) });
-        }
-        return 0;
+        return KalaTbl.COLUMN_YEAR_ID_FK + " = ? AND " +
+                KalaTbl.COLUMN_CODE + " NOT IN(" + placeholders + ") AND " +
+                "NOT EXISTS(SELECT 1 FROM " + SPFaktorTbl.TABLE_NAME +
+                " WHERE " + SPFaktorTbl.TABLE_NAME + "." + SPFaktorTbl.COLUMN_KALA_ID_FK +
+                " = " + KalaTbl.TABLE_NAME + "." + KalaTbl.COLUMN_ID + ")";
+    }
+
+    /** Args for {@link #buildDeleteOtherWhere}: the year id, then one code per item. */
+    static String[] buildDeleteOtherArgs(List<KalaModel> kalaList) {
+        String[] args = new String[kalaList.size() + 1];
+        args[0] = String.valueOf(kalaList.get(0).getYearId_FK());
+        for (int i = 0; i < kalaList.size(); i++)
+            args[i + 1] = kalaList.get(i).getCode();
+        return args;
     }
 
     @Override
