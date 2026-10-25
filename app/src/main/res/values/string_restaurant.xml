@@ -16,7 +16,10 @@
     <string name="restaurant_no_table">میز انتخاب نشده است</string>
 
     <string name="restaurant_search_hint">جستجوی کالا…</string>
+    <string name="restaurant_order_des_hint">توضیح سفارش</string>
     <string name="restaurant_cart_items">%1$d قلم</string>
+    <string name="restaurant_cart_show">▲ مشاهده سفارش</string>
+    <string name="restaurant_cart_hide">▼ بستن</string>
     <string name="restaurant_submit">ثبت سفارش</string>
 
     <string name="restaurant_submit_title">ثبت سفارش</string>

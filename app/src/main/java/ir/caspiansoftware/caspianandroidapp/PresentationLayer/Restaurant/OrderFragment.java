@@ -73,11 +73,13 @@ public class OrderFragment extends CaspianFragment {
     private int mAndroidOrderId;
 
     private EditText mSearchBox;
+    private EditText mDesBox;
     private LinearLayout mGroupStrip;
     private MaxHeightScrollView mGroupScroll;
     private GridView mItemGrid;
     private ProgressBar mProgress;
     private TextView mCartSummary;
+    private TextView mCartToggle;
     private TextView mCartTotal;
     private Button mSubmitButton;
     private View mCartPanel;
@@ -103,11 +105,13 @@ public class OrderFragment extends CaspianFragment {
     @Override
     protected void mapViews(View parentView) {
         mSearchBox = parentView.findViewById(R.id.orderSearchBox);
+        mDesBox = parentView.findViewById(R.id.orderDesBox);
         mGroupStrip = parentView.findViewById(R.id.orderGroupStrip);
         mGroupScroll = parentView.findViewById(R.id.orderGroupScroll);
         mItemGrid = parentView.findViewById(R.id.orderItemGrid);
         mProgress = parentView.findViewById(R.id.orderProgress);
         mCartSummary = parentView.findViewById(R.id.orderCartSummary);
+        mCartToggle = parentView.findViewById(R.id.orderCartToggle);
         mCartTotal = parentView.findViewById(R.id.orderCartTotal);
         mSubmitButton = parentView.findViewById(R.id.orderSubmitButton);
         mCartPanel = parentView.findViewById(R.id.orderCartPanel);
@@ -478,6 +482,7 @@ public class OrderFragment extends CaspianFragment {
     private void toggleCart() {
         boolean visible = mCartPanel.getVisibility() == View.VISIBLE;
         mCartPanel.setVisibility(visible ? View.GONE : View.VISIBLE);
+        mCartToggle.setText(visible ? R.string.restaurant_cart_show : R.string.restaurant_cart_hide);
         if (!visible)
             mCartAdapter.notifyDataSetChanged();
     }
@@ -505,18 +510,24 @@ public class OrderFragment extends CaspianFragment {
                     @Override
                     public void dialog_callback(DialogResult dialogResult, Integer result, int requestCode) {
                         if (dialogResult == DialogResult.Yes)
-                            new SubmitTask(mProgress).execute();
+                            new SubmitTask(mProgress, mDesBox.getText().toString().trim()).execute();
                     }
                 });
     }
 
     private class SubmitTask extends AAsyncTask<Void, Void, RestaurantOrderModel> {
-        SubmitTask(ProgressBar bar) { super(bar); }
+        // Read on the UI thread when the task is created, not in the background.
+        private final String mDes;
+
+        SubmitTask(ProgressBar bar, String des) {
+            super(bar);
+            mDes = des;
+        }
 
         @Override
         protected RestaurantOrderModel doInBackground(Void... voids) {
             try {
-                return new RestaurantBLL(getActivity()).submitDraft(mOrder, mAndroidOrderId);
+                return new RestaurantBLL(getActivity()).submitDraft(mOrder, mAndroidOrderId, mDes);
             } catch (Exception ex) {
                 setException(ex);
                 return null;

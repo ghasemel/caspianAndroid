@@ -150,7 +150,7 @@ public class RestaurantBLL extends ABusinessLayer {
      * twice. It is derived from the table and the moment the draft was started,
      * so a genuine second round gets a new id while a retry keeps the old one.
      */
-    public RestaurantOrderModel submitDraft(RestaurantOrderModel order, int androidOrderId) throws Exception {
+    public RestaurantOrderModel submitDraft(RestaurantOrderModel order, int androidOrderId, String des) throws Exception {
         Log.d(TAG, "submitDraft start, table=" + order.getTableId() + ", orderId=" + androidOrderId);
         try {
             List<OrderLineModel> draft = order.getDraftLines();
@@ -163,7 +163,7 @@ public class RestaurantBLL extends ABusinessLayer {
                     line.setAndroidLineId(androidOrderId * 100 + lineId++);
 
             ResponseWebService response = mWebService.submitOrder(
-                    currentDbName(), order.getTableId(), androidOrderId, "", draft);
+                    currentDbName(), order.getTableId(), androidOrderId, des, draft);
 
             if (response == null)
                 throw new Exception("responseWebService is null");
