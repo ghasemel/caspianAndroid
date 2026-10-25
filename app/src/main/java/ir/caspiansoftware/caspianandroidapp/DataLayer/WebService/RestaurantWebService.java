@@ -36,6 +36,20 @@ public class RestaurantWebService extends RESTDotNetWebService {
                 RequestType.create(RequestType.RType.GET));
     }
 
+    /**
+     * Free a table without touching its bill: the open pre-invoice stays for
+     * the cashier, the table shows free, and the next order starts a new one.
+     */
+    public ResponseWebService releaseTable(String dbName, int tableId) throws Exception {
+        Log.d(TAG, "releaseTable start, table=" + tableId);
+        NameValue[] parameter = {
+                new NameValue<>("dbName", dbName),
+                new NameValue<>("tableId", String.valueOf(tableId))
+        };
+        return sendRequest(SettingWebService.getAPI_URL(), "ReleaseTable", parameter, true,
+                RequestType.create(RequestType.RType.POST));
+    }
+
     public ResponseWebService getGroups(String dbName) throws Exception {
         Log.d(TAG, "getGroups start");
         NameValue[] parameter = { new NameValue<>("dbName", dbName) };

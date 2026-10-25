@@ -58,6 +58,17 @@ public class RestaurantBLL extends ABusinessLayer {
         }
     }
 
+    public void releaseTable(int tableId) throws Exception {
+        Log.d(TAG, "releaseTable start");
+        try {
+            ResponseWebService response = mWebService.releaseTable(currentDbName(), tableId);
+            if (response == null)
+                throw new Exception("responseWebService is null");
+        } finally {
+            Log.d(TAG, "releaseTable finished");
+        }
+    }
+
     public List<MenuGroupModel> fetchGroups() throws Exception {
         Log.d(TAG, "fetchGroups start");
         try {

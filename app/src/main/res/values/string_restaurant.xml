@@ -11,6 +11,10 @@
 
     <string name="restaurant_table_free">آزاد</string>
     <string name="restaurant_table_busy">%1$d قلم</string>
+    <string name="restaurant_table_release">آزاد کردن میز</string>
+    <string name="restaurant_table_release_title">آزاد کردن میز</string>
+    <string name="restaurant_table_release_question">%1$s آزاد شود؟\nصورتحساب باز این میز برای صندوق باقی می‌ماند و سفارش بعدی صورتحساب جدید می‌گیرد.</string>
+    <string name="restaurant_table_released">%1$s آزاد شد</string>
     <string name="restaurant_tables_empty">میزی تعریف نشده است</string>
     <string name="restaurant_refresh">بروزرسانی</string>
     <string name="restaurant_no_table">میز انتخاب نشده است</string>

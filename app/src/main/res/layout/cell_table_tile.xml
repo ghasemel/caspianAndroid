@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-    One table tile. 150dp tall: this is a jab target for someone holding a
+    One table tile. 185dp tall (room for the release button on a busy tile): this is a jab target for someone holding a
     phone one-handed, not a precision tap, and it has to be legible from
     standing height.
 -->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:orientation="vertical"
               android:layout_width="match_parent"
-              android:layout_height="150dp"
+              android:layout_height="185dp"
               android:layoutDirection="rtl"
               android:gravity="center"
               android:padding="8dp"
@@ -45,6 +45,25 @@
         android:textSize="17sp"
         android:textStyle="bold"
         android:textColor="@color/tableBusyText"
+        android:visibility="gone" />
+
+    <!-- Shown only on busy tiles. Not focusable, so the rest of the tile
+         still opens the order: a focusable child would swallow the
+         GridView item click. -->
+    <TextView
+        android:id="@+id/tableTileRelease"
+        android:layout_width="wrap_content"
+        android:layout_height="34dp"
+        android:layout_marginTop="6dp"
+        android:gravity="center"
+        android:paddingStart="14dp"
+        android:paddingEnd="14dp"
+        android:background="@drawable/table_release_button"
+        android:text="@string/restaurant_table_release"
+        android:textSize="14sp"
+        android:textColor="@color/tableBusyText"
+        android:focusable="false"
+        android:focusableInTouchMode="false"
         android:visibility="gone" />
 
 </LinearLayout>

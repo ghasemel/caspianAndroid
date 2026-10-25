@@ -13,6 +13,8 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.List;
 
+import info.elyasi.android.elyasilib.Dialogs.DialogResult;
+import info.elyasi.android.elyasilib.Dialogs.IDialogCallback;
 import info.elyasi.android.elyasilib.UI.AAsyncTask;
 import ir.caspiansoftware.caspianandroidapp.BaseCaspian.CaspianFragment;
 import ir.caspiansoftware.caspianandroidapp.BusinessLayer.RestaurantBLL;
@@ -103,6 +105,51 @@ public class TableGridFragment extends CaspianFragment {
         new LoadTablesTask(mProgress).execute();
     }
 
+    private void confirmRelease(final RestaurantTableModel table) {
+        messageBoxYesNo(
+                R.string.restaurant_table_release_title,
+                getString(R.string.restaurant_table_release_question, table.getTitle()),
+                new IDialogCallback<Integer>() {
+                    @Override
+                    public void dialog_callback(DialogResult dialogResult, Integer result, int requestCode) {
+                        if (dialogResult == DialogResult.Yes)
+                            new ReleaseTableTask(mProgress, table).execute();
+                    }
+                });
+    }
+
+    private class ReleaseTableTask extends AAsyncTask<Void, Void, Void> {
+        private final RestaurantTableModel mTable;
+
+        ReleaseTableTask(ProgressBar bar, RestaurantTableModel table) {
+            super(bar);
+            mTable = table;
+        }
+
+        @Override
+        protected Void doInBackground(Void... voids) {
+            try {
+                new RestaurantBLL(getActivity()).releaseTable(mTable.getId());
+            } catch (Exception ex) {
+                setException(ex);
+            }
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void result) {
+            stopProgress();
+
+            if (isException()) {
+                showError(getException(), null);
+                return;
+            }
+
+            showToast(getString(R.string.restaurant_table_released, mTable.getTitle()));
+            loadTables();
+        }
+    }
+
     private class LoadTablesTask extends AAsyncTask<Void, Void, List<RestaurantTableModel>> {
         LoadTablesTask(ProgressBar bar) { super(bar); }
 
@@ -154,6 +201,7 @@ public class TableGridFragment extends CaspianFragment {
             TextView title = view.findViewById(R.id.tableTileTitle);
             TextView status = view.findViewById(R.id.tableTileStatus);
             TextView total = view.findViewById(R.id.tableTileTotal);
+            TextView release = view.findViewById(R.id.tableTileRelease);
 
             title.setText(table.getTitle());
 
@@ -162,11 +210,15 @@ public class TableGridFragment extends CaspianFragment {
                 status.setText(getString(R.string.restaurant_table_busy, table.getItemCount()));
                 total.setText(formatPrice(table.getOpenTotal()));
                 total.setVisibility(View.VISIBLE);
+                release.setVisibility(View.VISIBLE);
+                release.setOnClickListener(v -> confirmRelease(table));
             } else {
                 view.setBackgroundResource(R.drawable.table_tile_free);
                 status.setText(R.string.restaurant_table_free);
                 total.setText("");
                 total.setVisibility(View.GONE);
+                release.setVisibility(View.GONE);
+                release.setOnClickListener(null);
             }
 
             return view;
